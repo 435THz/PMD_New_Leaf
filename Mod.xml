@@ -1,0 +1,10 @@
+<Header>
+  <Name>PMD: New Leaf</Name>
+  <Author>MistressNebula</Author>
+  <Description>A roguelite + town builder experience in Pokémon Mystery Dungeon style</Description>
+  <Namespace>pmd_new_leaf</Namespace>
+  <UUID>4D99A756-ABFF-44A4-8EC8-810671FFF19A</UUID>
+  <Version>0.1</Version>
+  <ModType>Quest</ModType>
+  <Relationships />
+</Header>
