@@ -79,6 +79,7 @@ function intro_scene.PlotScripting()
 end
 
 function intro_scene.CharacterSelect()
+    GAME:FadeOut(false, 1)
     GAME:CutsceneMode(true)
     UI:ResetSpeaker()
     SOUND:FadeOutBGM()
@@ -101,24 +102,34 @@ function intro_scene.CharacterSelect()
 	local assembly_count = GAME:GetPlayerAssemblyCount()
 	for i = 1, assembly_count, 1 do
 	   _DATA.Save.ActiveTeam.Assembly.RemoveAt(i-1)--not sure if this permanently deletes or not...
-	end
+	end]]
 
-    GAME:WaitFrames(120)
+    local species_list = {}
+    local mons = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:GetOrderedKeys(true)
+
+    for id in luanet.each(mons) do
+        if intro_scene.isStarterAllowed(id) then
+            --only if the check is passed, add the mon as a playable species
+            table.insert(species_list, id)
+        end
+    end
+
+
     SOUND:PlayFanfare("Fanfare/Item")
-    UI:WaitShowVoiceOver("The Exploration Team Federation has sent a message...[pause=30]", -1)
+    UI:WaitShowVoiceOver("The Exploration Team Federation\nhas sent a message...", -1)
     SOUND:PlayFanfare("Fanfare/LevelUp")
-    UI:WaitShowVoiceOver("You have been chosen for their next exploration initiative!", -1)
-    UI:WaitShowVoiceOver("You are tasked with colonizing a newly discovered region!", -1)
-    UI:WaitShowVoiceOver("Before you go, however, you'll need to fill in some identification papers.", -1)
+    UI:WaitShowVoiceOver("You have been chosen for their\nnext exploration initiative!", -1)
+    UI:WaitShowVoiceOver("You will be tasked with colonizing\na newly discovered region!", -1)
+    UI:WaitShowVoiceOver("All you need to do now is fill in\nsome identification papers.", -1)
     UI:WaitShowVoiceOver("Shall we begin?", -1)
     GAME:WaitFrames(40)
 
-    SOUND:PlayBGM("Welcome to the World of Pokémon!.ogg", true)]]
+    SOUND:PlayBGM("Welcome to the World of Pokémon!.ogg", true)
     GAME:FadeIn(40)
     GAME:WaitFrames(20)
 
     local CharacterMenu = CharacterSelectionMenu()
-    local menu = CharacterMenu:new()
+    local menu = CharacterMenu:new(species_list)
     while not menu.confirmed do
         UI:SetCustomMenu(menu:getFocusedWindow())
         UI:WaitForChoice()
@@ -127,6 +138,17 @@ function intro_scene.CharacterSelect()
     GAME:CutsceneMode(false)
 
 end
+
+function intro_scene.isStarterAllowed(id)
+    local forced_blacklist = {"missingno", "cosmog", "kubfu"} -- excluded no matter what
+
+    local mon = _DATA:GetMonster(id)
+    --return true if mon is playable and unevolved and, if it is part of the undiscovered egg group, it has an evolution. Finally, it must not be part of the blacklist
+    --this filters out all unreleased mons, all evolved mons and all non-baby, undiscovered egg group mons, plus some cherry-picked outliars
+    return mon.Released and mon.PromoteFrom == "" and (mon.SkillGroup1 ~= "undiscovered" or mon.Promotions.Count>0)
+            and not table.index_of(forced_blacklist, id, false)
+end
+
 
 return intro_scene
 

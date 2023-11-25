@@ -20,16 +20,17 @@ function CharacterSelectionMenu()
     -------------------------------------------------------
     --region Initialization
     -------------------------------------------------------
-    function CharacterSelectionMenu:initialize()
+    function CharacterSelectionMenu:initialize(species_list)
         assert(self, "SingleItemDealMenu:initialize(): self is nil!")
+        self.species_list = species_list
         self.menu_spacing = 20
         self.data = {
             nickname="",
-            species = "alcremie",
+            species = "bulbasaur",
             form = 0,
             skin = 'normal',
             gender = 2, -- 0 male, 1 female, 2 genderless
-            intrinsic = "sweet_veil",
+            intrinsic = "overgrow",
             egg_move = "",
             egg_move_index = -1
         }
@@ -52,7 +53,7 @@ function CharacterSelectionMenu()
                 {Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE * 5 + 4, function() self:signDocument() end}
             }
         }
-        self.form_active = true
+        self.form_active = false
         self.ability_active = true
         self.egg_move_active = true
         self:setupWindows()
@@ -281,11 +282,11 @@ function CharacterSelectionMenu()
             if self.data.egg_move ~="" and i == self.data.egg_move_index then -- override with egg move
                 local move = _DATA:GetSkill(self.data.egg_move)
                 move_name = utf8.char(_DATA:GetElement(move.Data.Element).Symbol).."\u{2060}[color=#FFFF00]"..move.Name:ToLocal().."[color]"
-                move_pp   = tostring(move.BaseCharges).." PP"
+                move_pp   = tostring(move.BaseCharges).."PP"
             elseif move_id ~= nil then -- basic move
                 local move = _DATA:GetSkill(move_id)
                 move_name = move:GetIconName()
-                move_pp   = tostring(move.BaseCharges).." PP"
+                move_pp   = tostring(move.BaseCharges).."PP"
             else -- empty slot
                 move_name = "-----"
                 move_pp   = "-----"
@@ -494,6 +495,14 @@ function CharacterSelectionMenu()
         _MENU:RemoveMenu()
     end
 
+    function CharacterSelectionMenu:updatePermissions()
+        self.monster = _DATA:GetMonster(self.data.species)
+        self.form_active = self:monsterFormCount()>1
+        local form = self.monster.Forms[self.data.form]
+        self.ability_active = form.Intrinsic2 ~= "" or form.Intrinsic3 ~= ""
+        self.egg_move_active = #self:getMonsterEggMoves()>0
+    end
+
     -------------------------------------------------------
     --region Data Processing
     -------------------------------------------------------
@@ -554,19 +563,18 @@ function CharacterSelectionMenu()
     end
 
     function CharacterSelectionMenu:openSpeciesMenu()
-        local data_id = {"bulbasaur", "charmander", "squirtle"}
-
-        --TODO generate list
+        local data_id = self.species_list
 
         local cb = function(ret)
             if self.data.species ~= data_id[ret] then
                 self.data.species = data_id[ret]
                 self.data.form = 0
+                self:updatePermissions()
                 self.data.intrinsic = self.monster.Forms[self.data.form].Intrinsic1
                 self.data.egg_move = ""
                 self.data.egg_move_index = -1
-                self:updateWindows(true, true, true)
             end
+            self:updateWindows(true, true, true)
         end
 
         local sub_menu = CharacterSpeciesMenu:new(self, data_id, table.index_of(data_id, self.data.species, 1), cb)
@@ -596,6 +604,7 @@ function CharacterSelectionMenu()
         local cb = function(ret)
             if self.data.form ~= data_id[ret] then
                 self.data.form = data_id[ret]
+                self:updatePermissions()
                 self.data.intrinsic = self.monster.Forms[self.data.form].Intrinsic1
                 self.data.egg_move = ""
                 self.data.egg_move_index = -1
@@ -992,11 +1001,11 @@ function CharacterSelectionMenu()
             if i == self.pos then -- override with egg move
                 local move = _DATA:GetSkill(self.parent.egg_move)
                 move_name = utf8.char(_DATA:GetElement(move.Data.Element).Symbol).."\u{2060}[color=#FFFF00]"..move.Name:ToLocal().."[color]"
-                move_pp   = tostring(move.BaseCharges).." PP"
+                move_pp   = tostring(move.BaseCharges).."PP"
             elseif move_id ~= nil then -- basic move
                 local move = _DATA:GetSkill(move_id)
                 move_name = move:GetIconName()
-                move_pp   = tostring(move.BaseCharges).." PP"
+                move_pp   = tostring(move.BaseCharges).."PP"
             else -- empty slot. Should never be hit but we keep it anyway for safety reasons
                 move_name = "-----"
                 move_pp   = "-----"
@@ -1059,9 +1068,9 @@ function CharacterSelectionMenu()
 
         self.monster = false
 
-        local w = Graphics.Manager.ScreenWidth//2
-        local h = Graphics.VERT_SPACE*5+Graphics.Manager.MenuBG.TileHeight*2
-        local x = Graphics.Manager.ScreenWidth//4
+        local w = Graphics.Manager.ScreenWidth//2 + Graphics.Manager.MenuBG.TileWidth*2
+        local h = Graphics.VERT_SPACE*6+Graphics.Manager.MenuBG.TileHeight*2
+        local x = (Graphics.Manager.ScreenWidth -w)//2
         local y = (Graphics.Manager.ScreenHeight-h)//2
 
         self.menu = RogueEssence.Menu.ScriptableMenu(x, y, w, h, function(input) self:Update(input) end)
@@ -1075,22 +1084,27 @@ function CharacterSelectionMenu()
 
         self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("Choose your species", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.None))
 
-        local num_x = 24
-        local text_x = self.menu.Bounds.Width//2
+        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*3)//2-Graphics.DIVIDER_HEIGHT), self.menu.Bounds.Width - 12 * 2))
 
+        local num_x = 20
+        local text_x = self.menu.Bounds.Width//2
         if self.selected>1 then
             local monster = _DATA:GetMonster(self.list[self.selected-1])
-            self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#888888]"..tostring(monster.IndexNum).."[color]", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*3//2)), RogueElements.DirH.None))
+            self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#888888]"..tostring(monster.IndexNum).."[color]", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*3//2))))
             self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#886A35]"..monster.Name:ToLocal().."[color]", RogueElements.Loc(text_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*3//2)), RogueElements.DirH.None))
         end
         local mon = _DATA:GetMonster(self.list[self.selected])
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#FFFFFF]"..tostring(mon.IndexNum).."[color]", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*5//2)), RogueElements.DirH.None))
+        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#FFFFFF]"..tostring(mon.IndexNum).."[color]", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*5//2))))
         self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#FFC663]"..mon.Name:ToLocal().."[color]", RogueElements.Loc(text_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*5//2)), RogueElements.DirH.None))
         if self.selected<#self.list then
             local monster = _DATA:GetMonster(self.list[self.selected+1])
-            self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#888888]"..tostring(monster.IndexNum).."[color]", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*7//2)), RogueElements.DirH.None))
+            self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#888888]"..tostring(monster.IndexNum).."[color]", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*7//2))))
             self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("[color=#886A35]"..monster.Name:ToLocal().."[color]", RogueElements.Loc(text_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*7//2)), RogueElements.DirH.None))
         end
+
+        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*9)//2), self.menu.Bounds.Width - 12 * 2))
+
+        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("Press left/right to scroll faster", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*5), RogueElements.DirH.None))
 
         self.menu.MenuElements:Add(self.cursor)
     end
@@ -1118,6 +1132,24 @@ function CharacterSelectionMenu()
             if self.selected<#self.list then
                 _GAME:SE("Menu/Skip")
                 self.selected = self.selected +1
+            else
+                _GAME:SE("Menu/Cancel")
+                self.selected = #self.list
+            end
+            self:DrawMenu()
+        elseif self:directionHold(input, RogueElements.Dir8.Left) then
+            if self.selected > 1 then
+                _GAME:SE("Menu/Skip")
+                self.selected = math.max(1, self.selected -3)
+            else
+                _GAME:SE("Menu/Cancel")
+                self.selected = 1
+            end
+            self:DrawMenu()
+        elseif self:directionHold(input, RogueElements.Dir8.Right) then
+            if self.selected<#self.list then
+                _GAME:SE("Menu/Skip")
+                self.selected = math.min(self.selected +3, #self.list)
             else
                 _GAME:SE("Menu/Cancel")
                 self.selected = #self.list
