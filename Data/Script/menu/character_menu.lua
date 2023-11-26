@@ -279,7 +279,7 @@ function CharacterSelectionMenu()
         for i=1, 4, 1 do
             local move_id = self.moves[i]
             local move_name, move_pp
-            if self.data.egg_move ~="" and i == self.data.egg_move_index then -- override with egg move
+            if self.data.egg_move ~="" and i == self.data.egg_move_index+1 then -- override with egg move
                 local move = _DATA:GetSkill(self.data.egg_move)
                 move_name = utf8.char(_DATA:GetElement(move.Data.Element).Symbol).."\u{2060}[color=#FFFF00]"..move.Name:ToLocal().."[color]"
                 move_pp   = tostring(move.BaseCharges).."PP"
@@ -662,7 +662,7 @@ function CharacterSelectionMenu()
     function CharacterSelectionMenu:openEggMoveMenu()
         local cb = function(move, index)
             self.data.egg_move = move
-            self.data.egg_move_index = index
+            self.data.egg_move_index = index-1
             self:updateWindows(false, true, false)
         end
         local sub_menu = CharacterEggMoveMenu:new(self, cb)
@@ -820,7 +820,7 @@ function CharacterSelectionMenu()
         self.parent = parent
         self.updateCallback = updateCallback
         self.egg_move = self.parent.data.egg_move
-        self.egg_move_index = self.parent.data.egg_move_index
+        self.egg_move_index = self.parent.data.egg_move_index+1
         self.can_change_slot = (self.egg_move ~= "" and #self.parent.moves>3)
         self.autoOpenEggMovePosition = false
         self.callbacks = {

@@ -28,7 +28,7 @@ SV.Intro = {
     HubReached = false
 }
 
-SV.Village = {
+SV.HubData = {
     Level = 1,
     Name = "Base",   -- without rank suffix
     UseSuffix = true --can only be changed at City rank

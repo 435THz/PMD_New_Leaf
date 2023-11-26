@@ -6,6 +6,7 @@
 -- Commonly included lua functions and data
 require 'common'
 require 'menu.character_menu'
+require 'Global'
 
 -- Package name
 local intro_scene = {}
@@ -65,17 +66,25 @@ function intro_scene.GameLoad(map)
 end
 
 -------------------------------
--- Entities Callbacks
+-- Cutscene Script
 -------------------------------
 
 function intro_scene.PlotScripting()
     if not SV.Intro.CharacterCreated then
         intro_scene.CharacterSelect()
-    elseif not SV.Intro.HubReached then
-        GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after creating the character, warp them to intro dungeon entrance.
     else
-        GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after beating the intro dungeon, warp them to current village map.
+        intro_scene.IntroTeleport()
     end
+end
+
+function intro_scene.isStarterAllowed(id)
+    local forced_blacklist = {"missingno", "cosmog", "kubfu"} -- excluded no matter what
+
+    local mon = _DATA:GetMonster(id)
+    --return true if mon is playable and unevolved and, if it is part of the undiscovered egg group, it has an evolution. Finally, it must not be part of the blacklist.
+    --this filters out all unreleased mons, all evolved mons and all non-baby, undiscovered egg group mons, plus some cherry-picked outliars
+    return mon.Released and mon.PromoteFrom == "" and (mon.SkillGroup1 ~= "undiscovered" or mon.Promotions.Count>0)
+            and not table.index_of(forced_blacklist, id, false)
 end
 
 function intro_scene.CharacterSelect()
@@ -94,7 +103,7 @@ function intro_scene.CharacterSelect()
 	_DATA.Save.NoSwitching = true--switching is not allowed
 
 	--remove any team members that may exist by default for some reason
---[[	local party_count = _DATA.Save.ActiveTeam.Players.Count
+	local party_count = _DATA.Save.ActiveTeam.Players.Count
 	for ii = 1, party_count, 1 do
 		_DATA.Save.ActiveTeam.Players:RemoveAt(0)
 	end
@@ -102,7 +111,7 @@ function intro_scene.CharacterSelect()
 	local assembly_count = GAME:GetPlayerAssemblyCount()
 	for i = 1, assembly_count, 1 do
 	   _DATA.Save.ActiveTeam.Assembly.RemoveAt(i-1)--not sure if this permanently deletes or not...
-	end]]
+	end
 
     local species_list = {}
     local mons = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:GetOrderedKeys(true)
@@ -135,20 +144,58 @@ function intro_scene.CharacterSelect()
         UI:WaitForChoice()
     end
 
+    local mon_id = menu:toMonsterID()
+    _DATA.Save.ActiveTeam.Players:Add(_DATA.Save.ActiveTeam:CreatePlayer(_DATA.Save.Rand, mon_id, 5, menu.data.intrinsic, 0))
+    if menu.data.egg_move ~= '' then
+        GAME:SetCharacterSkill(GAME:GetPlayerPartyMember(0), menu.data.egg_move, menu.data.egg_move_index) --TODO edit menu data to remove this shift
+    end
+    GAME:SetTeamLeaderIndex(0)
+    _DATA.Save:UpdateTeamProfile(true)
+    _DATA.Save.ActiveTeam.Players[0].IsFounder = true -- cannot be removed from assembly
+    _DATA.Save.ActiveTeam.Players[0].IsPartner = true -- cannot be removed from active team
+    _DATA.Save.ActiveTeam.Players[0]:FullRestore()
+    GAME:SetCharacterNickname(_DATA.Save.ActiveTeam.Players[0], menu.data.nickname)
+    GAME:SetTeamName("Envoy") --Team Envoy. This will be editable in the future
+    COMMON.RespawnAllies()
+    SV.Intro.CharacterCreated = true
+
+    UI:WaitShowDialogue("Your data has been registered.")
+    UI:WaitShowDialogue("The expedition will start very soon.[pause=0] You will be paired with another agent that will fill you in on the details.")
+    UI:WaitShowDialogue("Thank you for your participation![pause=0] We expect great things from you!")
+    UI:WaitShowDialogue("Signed: E.T.F.")
+
+    SOUND:FadeOutBGM(120)
+    GAME:FadeOut(false, 120)
+    GAME:WaitFrames(120)
+
+    UI:WaitShowVoiceOver("Some weeks later...", -1)
+
     GAME:CutsceneMode(false)
-
+    GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO warp player to intro dungeon entrance.
 end
 
-function intro_scene.isStarterAllowed(id)
-    local forced_blacklist = {"missingno", "cosmog", "kubfu"} -- excluded no matter what
+function intro_scene.IntroTeleport()
+    GAME:WaitFrames(120)
+    UI:WaitShowVoiceOver("...", -1)
+    UI:WaitShowVoiceOver("You're here...", -1)
+    UI:WaitShowVoiceOver("Why are you here?", -1)
+    UI:WaitShowVoiceOver("Shouldn't you be somewhere else?", -1)
+    if SV.Intro.HubReached then
+        local hub_name = GLOBAL.getHubName()
+        UI:WaitShowVoiceOver("Yes, that's right.\nYou should be at "..hub_name..", shouldn't you?", -1)
+    else
+        UI:WaitShowVoiceOver("Yes, that's right.\nYou should be starting your journey.", -1)
+    end
+    UI:WaitShowVoiceOver("Don't worry.\nYou'll be back there shortly", -1)
+    UI:WaitShowVoiceOver("Just make sure to notify [color=#800080]MistressNebula[color] about this.\nYou can find her on the [color=#00FFFF]PMDO Discord Server[color] or\nleave a bug report on the mod's [color=#FFFF00]GitHub[color] page.", -1)
+    UI:WaitShowVoiceOver("Time to get back to your adventure, now...", -1)
 
-    local mon = _DATA:GetMonster(id)
-    --return true if mon is playable and unevolved and, if it is part of the undiscovered egg group, it has an evolution. Finally, it must not be part of the blacklist
-    --this filters out all unreleased mons, all evolved mons and all non-baby, undiscovered egg group mons, plus some cherry-picked outliars
-    return mon.Released and mon.PromoteFrom == "" and (mon.SkillGroup1 ~= "undiscovered" or mon.Promotions.Count>0)
-            and not table.index_of(forced_blacklist, id, false)
+    if not SV.Intro.HubReached then
+        GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after creating the character, warp them to intro dungeon entrance.
+    else
+        GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after beating the intro dungeon, warp them to current village map.
+    end
 end
-
 
 return intro_scene
 

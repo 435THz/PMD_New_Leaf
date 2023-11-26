@@ -18,6 +18,7 @@ end
 function math.clamp(min, value, max)
     return math.max(min, math.min(value, max))
 end
+
 -------------------------------------------
 --region Table
 -------------------------------------------
@@ -28,3 +29,4 @@ function table.index_of(table, object, default)
     end
     return default
 end
+
