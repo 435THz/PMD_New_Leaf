@@ -19,11 +19,18 @@ function math.clamp(min, value, max)
     return math.max(min, math.min(value, max))
 end
 
+--modulo operation with a base different from zero. 'shift' defaults to 1.
+function math.shifted_mod(value, mod, shift)
+    if shift == nil then shift = 1 end
+    return ((value-shift) % mod) + shift
+end
+
 -------------------------------------------
 --region Table
 -------------------------------------------
 
 function table.index_of(table, object, default)
+    if default==nil then default = -1 end
     for index, element in pairs(table) do
         if element == object then return index end
     end

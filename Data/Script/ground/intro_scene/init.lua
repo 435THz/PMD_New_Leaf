@@ -34,7 +34,6 @@ end
 --Engine callback function
 function intro_scene.Enter(map)
     intro_scene.PlotScripting()
-    GAME:FadeIn(20)
 end
 
 ---intro_scene.Exit(map)
@@ -62,7 +61,6 @@ end
 --Engine callback function
 function intro_scene.GameLoad(map)
     intro_scene.PlotScripting()
-    GAME:FadeIn(20)
 end
 
 -------------------------------
@@ -102,17 +100,6 @@ function intro_scene.CharacterSelect()
 	_DATA.Save.ActiveTeam.Bank = 0
 	_DATA.Save.NoSwitching = true--switching is not allowed
 
-	--remove any team members that may exist by default for some reason
-	local party_count = _DATA.Save.ActiveTeam.Players.Count
-	for ii = 1, party_count, 1 do
-		_DATA.Save.ActiveTeam.Players:RemoveAt(0)
-	end
-
-	local assembly_count = GAME:GetPlayerAssemblyCount()
-	for i = 1, assembly_count, 1 do
-	   _DATA.Save.ActiveTeam.Assembly.RemoveAt(i-1)--not sure if this permanently deletes or not...
-	end
-
     local species_list = {}
     local mons = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:GetOrderedKeys(true)
 
@@ -144,15 +131,27 @@ function intro_scene.CharacterSelect()
         UI:WaitForChoice()
     end
 
+    --remove any team members that may exist by default for some reason
+    local party_count = _DATA.Save.ActiveTeam.Players.Count
+    for ii = 1, party_count, 1 do
+        _DATA.Save.ActiveTeam.Players:RemoveAt(0)
+    end
+
+    local assembly_count = GAME:GetPlayerAssemblyCount()
+    for i = 1, assembly_count, 1 do
+        _DATA.Save.ActiveTeam.Assembly.RemoveAt(i-1)--not sure if this permanently deletes or not...
+    end
+
+    --generate new player character
     local mon_id = menu:toMonsterID()
     _DATA.Save.ActiveTeam.Players:Add(_DATA.Save.ActiveTeam:CreatePlayer(_DATA.Save.Rand, mon_id, 5, menu.data.intrinsic, 0))
     if menu.data.egg_move ~= '' then
-        GAME:SetCharacterSkill(GAME:GetPlayerPartyMember(0), menu.data.egg_move, menu.data.egg_move_index) --TODO edit menu data to remove this shift
+        GAME:SetCharacterSkill(GAME:GetPlayerPartyMember(0), menu.data.egg_move, menu.data.egg_move_index)
     end
     GAME:SetTeamLeaderIndex(0)
     _DATA.Save:UpdateTeamProfile(true)
     _DATA.Save.ActiveTeam.Players[0].IsFounder = true -- cannot be removed from assembly
-    _DATA.Save.ActiveTeam.Players[0].IsPartner = true -- cannot be removed from active team
+    _DATA.Save.ActiveTeam.Players[0].IsPartner = true -- cannot be removed from active team. This will be an unlock later on.
     _DATA.Save.ActiveTeam.Players[0]:FullRestore()
     GAME:SetCharacterNickname(_DATA.Save.ActiveTeam.Players[0], menu.data.nickname)
     GAME:SetTeamName("Envoy") --Team Envoy. This will be editable in the future
@@ -171,7 +170,7 @@ function intro_scene.CharacterSelect()
     UI:WaitShowVoiceOver("Some weeks later...", -1)
 
     GAME:CutsceneMode(false)
-    GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO warp player to intro dungeon entrance.
+    GAME:EnterGroundMap('ruined_path','intro_dungeon_entrance', 'Spawn_Cutscene')
 end
 
 function intro_scene.IntroTeleport()
@@ -191,9 +190,9 @@ function intro_scene.IntroTeleport()
     UI:WaitShowVoiceOver("Time to get back to your adventure, now...", -1)
 
     if not SV.Intro.HubReached then
-        GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after creating the character, warp them to intro dungeon entrance.
+        GAME:EnterGroundMap('ruined_path','intro_dungeon_entrance', 'Spawn')
     else
-        GROUND:EnterGroundMap('Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after beating the intro dungeon, warp them to current village map.
+        GAME:EnterGroundMap('Zone??', 'Map???', 'Entrance????') --TODO fail safe. If player somehow gets to the intro_scene after beating the intro dungeon, warp them to current village map.
     end
 end
 

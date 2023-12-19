@@ -1,7 +1,7 @@
 require 'CommonFunctions'
 --[[
     Global.lua
-    Contains all constant global tables and variables, plus functions that interface with them
+    Contains all constant global tables and variables, plus some functions that interface with them in a more intuitive way.
 ]]
 GLOBAL = {
     GenderTable = {RogueEssence.Data.Gender.Male, RogueEssence.Data.Gender.Female, RogueEssence.Data.Gender.Genderless},
@@ -10,7 +10,7 @@ GLOBAL = {
         RankName = {"Camp", "Village", "Town", "City"},
         LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15},
         LevelAssemblyLimit = {10,25,40,60,80,100,150,200,300,500},
-        BBLevel = 3
+        BoardUnlockLevel = 3
     }
 }
 

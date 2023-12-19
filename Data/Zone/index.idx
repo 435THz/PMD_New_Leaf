@@ -1,5 +1,5 @@
 ﻿{
-"Version": "0.7.19.0",
+"Version": "0.7.20.0",
 "Object": {
 "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
 "intro": {
@@ -22,6 +22,40 @@
 "Maps": [],
 "Name": {
 "DefaultText": "???",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 0
+},
+"ruined_path": {
+"$type": "RogueEssence.Data.ZoneEntrySummary, RogueEssence",
+"NoEXP": true,
+"Level": 5,
+"LevelCap": false,
+"KeepSkills": false,
+"TeamRestrict": false,
+"TeamSize": -1,
+"MoneyRestrict": false,
+"BagRestrict": -1,
+"BagSize": -1,
+"Rescues": 0,
+"CountedFloors": 5,
+"Rogue": 0,
+"Grounds": [
+"intro_dungeon_entrance"
+],
+"Maps": [
+[
+0,
+1,
+2,
+3,
+4
+]
+],
+"Name": {
+"DefaultText": "Ruined Path",
 "LocalTexts": {}
 },
 "Released": true,

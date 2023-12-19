@@ -19,20 +19,40 @@
     SV.AnotherVariable = function() PrintInfo('lmao') end
 ]]--
 
-
 -----------------------------------------------
 -- General Defaults
 -----------------------------------------------
+SV.adventure =
+{
+    Thief    = false
+}
+
+SV.missions =
+{
+    Missions = { },
+    FinishedMissions = { },
+}
+
+-----------------------------------------------
+-- Level Specific Defaults
+-----------------------------------------------
+SV.HubData = {
+    Level = 1,
+    Name = "Base",   -- without rank suffix. can be changed from rank 2 onwards
+    UseSuffix = true -- can only be turned off at rank 4
+}
+
 SV.Intro = {
     CharacterCreated = false,
+    PelipperIntro = false,
+    DungeonFailed = false,
     HubReached = false
 }
 
-SV.HubData = {
-    Level = 1,
-    Name = "Base",   -- without rank suffix
-    UseSuffix = true --can only be changed at City rank
-}
+
+-----------------------------------------------
+-- General Defaults - BASEGAME
+-----------------------------------------------
 
 SV.General =
 {
@@ -42,15 +62,10 @@ SV.General =
 
 SV.checkpoint =
 {
-    Zone    = 'guildmaster_island', Segment  = -1,
-    Map  = 1, Entry  = 0
+    Zone    = 'ruined_path', Segment  = -1,
+    Map  = 0, Entry  = 0
 }
 
-
-SV.adventure =
-{
-    Thief    = false
-}
 
 SV.base_shop = {
     { Index = "food_apple", Amount = 0, Price = 50},
@@ -68,11 +83,6 @@ SV.base_trades = {
 SV.unlocked_trades = {
 }
 
-SV.missions =
-{
-    Missions = { },
-    FinishedMissions = { },
-}
 
 SV.magnagate =
 {
@@ -80,7 +90,7 @@ SV.magnagate =
 }
 
 -----------------------------------------------
--- Level Specific Defaults
+-- Level Specific Defaults - BASEGAME
 -----------------------------------------------
 SV.test_grounds =
 {
