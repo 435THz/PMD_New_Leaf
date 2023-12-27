@@ -68,6 +68,7 @@ end
 -------------------------------
 
 function intro_scene.PlotScripting()
+    GAME:FadeOut(false, 1)
     if not SV.Intro.CharacterCreated then
         intro_scene.CharacterSelect()
     else
@@ -86,7 +87,6 @@ function intro_scene.isStarterAllowed(id)
 end
 
 function intro_scene.CharacterSelect()
-    GAME:FadeOut(false, 1)
     GAME:CutsceneMode(true)
     UI:ResetSpeaker()
     SOUND:FadeOutBGM()
@@ -185,7 +185,7 @@ function intro_scene.IntroTeleport()
     else
         UI:WaitShowVoiceOver("Yes, that's right.\nYou should be starting your journey.", -1)
     end
-    UI:WaitShowVoiceOver("Don't worry.\nYou'll be back there shortly", -1)
+    UI:WaitShowVoiceOver("Don't worry.\nYou'll be back there shortly.", -1)
     UI:WaitShowVoiceOver("Just make sure to notify [color=#800080]MistressNebula[color] about this.\nYou can find her on the [color=#00FFFF]PMDO Discord Server[color] or\nleave a bug report on the mod's [color=#FFFF00]GitHub[color] page.", -1)
     UI:WaitShowVoiceOver("Time to get back to your adventure, now...", -1)
 

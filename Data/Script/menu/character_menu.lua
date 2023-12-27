@@ -45,7 +45,7 @@ function CharacterSelectionMenu()
                 {Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE * 2 + 4, function() self:openSpeciesMenu() end },
                 {Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE * 3 + 4, function() self:openFormMenu() end },
                 {Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE * 4 + 4, function() self:openGenderMenu() end},
-                {Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE * 5 + 4, function() self:openAspectMenu() end},
+                {Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE * 5 + 4, function() self:openSheenMenu() end},
             },
             --window right
             {
@@ -174,8 +174,8 @@ function CharacterSelectionMenu()
         self.gender_name = RogueEssence.Menu.MenuText("", RogueElements.Loc((self.left.Bounds.Width*2)//3, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*4 + 4), RogueElements.DirH.None)
         self:addLeft(self.gender_name)
 
-        -- Aspect: shinyness
-        self:addLeft(RogueEssence.Menu.MenuText("Aspect:", RogueElements.Loc(self.menu_spacing, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*5 + 4)))
+        -- Sheen: shinyness
+        self:addLeft(RogueEssence.Menu.MenuText("Sheen:", RogueElements.Loc(self.menu_spacing, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*5 + 4)))
         self.shiny_name = RogueEssence.Menu.MenuText("", RogueElements.Loc((self.left.Bounds.Width*2)//3, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*5 + 4), RogueElements.DirH.None)
         self:addLeft(self.shiny_name)
     end
@@ -631,7 +631,7 @@ function CharacterSelectionMenu()
         _MENU:AddMenu(sub_menu.menu, true)
     end
 
-    function CharacterSelectionMenu:openAspectMenu()
+    function CharacterSelectionMenu:openSheenMenu()
         local options = {"Regular", "[color=#FFFF00]Shiny\u{E10C}[color]"}
         local data_id = {"normal", "shiny"}
         local cb = function(ret)
@@ -639,7 +639,7 @@ function CharacterSelectionMenu()
             self:updateWindows(true, false)
         end
         local offset = self.options[self.selected[1]][self.selected[2]][1]
-        local sub_menu = CharacterChoiceListMenu:new(self, "Aspect:", offset, options,  table.index_of(data_id, self.data.skin, 1), cb)
+        local sub_menu = CharacterChoiceListMenu:new(self, "Sheen:", offset, options,  table.index_of(data_id, self.data.skin, 1), cb)
         _MENU:AddMenu(sub_menu.menu, true)
     end
 
@@ -973,7 +973,7 @@ function CharacterSelectionMenu()
     --region CharacterEggMovePositionSelector
     -------------------------------------------------------
 
-    function CharacterEggMovePositionSelector:initialize(parent, callback) --TODO reorganize init and draw
+    function CharacterEggMovePositionSelector:initialize(parent, callback)
         self.parent = parent
         self.callback = callback
 

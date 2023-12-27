@@ -37,16 +37,17 @@ SV.missions =
 -- Level Specific Defaults
 -----------------------------------------------
 SV.HubData = {
-    Level = 1,
+    Level = 1,       -- 1 to 10
     Name = "Base",   -- without rank suffix. can be changed from rank 2 onwards
     UseSuffix = true -- can only be turned off at rank 4
 }
 
 SV.Intro = {
-    CharacterCreated = false,
-    PelipperIntro = false,
-    DungeonFailed = false,
-    HubReached = false
+    CharacterCreated = false,   -- if the character creation sequence was finished
+    PelipperIntro = false,      -- if the starting Ruined Path cutscene happened
+    SaveReminder = false,       -- if the player was told about saving from the menu
+    DungeonFailed = false,      -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
+    HubReached = false          -- if the hub has been reached
 }
 
 

@@ -110,8 +110,8 @@ function intro_dungeon_entrance.PelipperIntro()
     -- dialogue
     UI:SetSpeaker(pelipper)
     UI:WaitShowDialogue("Okay.[pause=0] We're almost at "..GLOBAL.getHubName()..".")
-    UI:WaitShowDialogue("We should push on as soon as we can.[pause=0] The sooner we finish this,[pause=10] the better,[pause=10] I say.")
-    UI:WaitShowDialogue("Don't be afraid to ask any questions you might still have,[pause=10] though.")
+    UI:WaitShowDialogue("I know we're out of supplies, but we're almost there.[pause=0] I think we should just push forward.")
+    UI:WaitShowDialogue("If you're ready,[pause=10] or if you have any questions for me[pause=10], just tell me,[pause=5] alright?")
     GROUND:CharAnimateTurnTo(pelipper, Direction.DownLeft, 4)
 
     GAME:CutsceneMode(false)
@@ -186,13 +186,13 @@ function intro_dungeon_entrance.NPC_Pelipper_Action(_, _)
             UI:WaitShowDialogue("The only one that was found is "..GLOBAL.getHubName()..".[pause=0] That's where we're going now.")
             UI:WaitShowDialogue("We'll set up camp,[pause=10] then our goal will be to investigate what happened to this place.")
         elseif result == 2 then
-            UI:WaitShowDialogue("My job here is to accompany you to "..GLOBAL.getHubName()..",[pause=10] set up shop and keep you in contact with the Federation.")
+            UI:WaitShowDialogue("My job here is to accompany you to "..GLOBAL.getHubName()..",[pause=5] set up shop and keep you in contact with the Federation.")
             UI:WaitShowDialogue("I'll stop accompanying you in dungeons from that point on.[pause=0] Recruiting new team members will be your job.")
         elseif result == 3 then
-            UI:WaitShowDialogue("This dungeon is called "..GAME:GetCurrentDungeon():GetDisplayName()..".[pause=0] It seems to be an abandoned trading route.")
+            UI:WaitShowDialogue("This dungeon is called "..GAME:GetCurrentDungeon():GetDisplayName()..".[pause=0] It looks like an abandoned trading route.")
             UI:WaitShowDialogue("It has now become a special Mystery Dungeon that gives no experience when explored.")
         else
-            UI:WaitShowDialogue("Let's get to it,[pause=10] then.")
+            UI:WaitShowDialogue("Let's get to it,[pause=5] then.")
             break
         end
         UI:BeginChoiceMenu("Other questions?", choices, 1, 4)
@@ -238,7 +238,10 @@ function intro_dungeon_entrance.Save_Action(_, _)
         UI:WaitShowDialogue("Game Saved!")
         GAME:WaitFrames(20)
     end
-    UI:WaitShowDialogue("Remember that you can also save by selecting the [color=#FFFF00]Save[color] option in the main menu.")
+    if not SV.Intro.SaveReminder then
+        UI:WaitShowDialogue("Remember that you can also save by selecting the [color=#FFFF00]Save[color] option in the main menu.")
+        SV.Intro.SaveReminder = true
+    end
 end
 
 return intro_dungeon_entrance

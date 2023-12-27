@@ -21,7 +21,7 @@ end
 ---forgotten_path.EnterSegment(zone, rescuing, segmentID, mapID)
 --Engine callback function
 function forgotten_path.EnterSegment(_, _, segmentID, _)
-    if segmentID ==0 then
+    if segmentID == 0 then
         -- add pelipper to team
         local guest_id = RogueEssence.Dungeon.MonsterID("pelipper", 0, "normal", RogueEssence.Data.Gender.Male)
         _DATA.Save.ActiveTeam.Guests:Add(_DATA.Save.ActiveTeam:CreatePlayer(_DATA.Save.Rand, guest_id, 5, "keen_eye", 0))
