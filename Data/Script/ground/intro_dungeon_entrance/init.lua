@@ -69,6 +69,9 @@ function intro_dungeon_entrance.ManageCutscenes()
         SV.Intro.DungeonFailed = false
         intro_dungeon_entrance.KnockoutDialogue()
     else
+        local player = CH("PLAYER")
+        local marker = MRKR("Spawn")
+        GROUND:TeleportTo(player, marker.Position.X, marker.Position.Y, Direction.Up)
         GAME:FadeIn(20)
     end
 end
@@ -218,9 +221,51 @@ function intro_dungeon_entrance.Proceed_Touch(_, _)
     UI:WaitForChoice()
     local ch = UI:ChoiceResult()
     if ch then
-        _DATA:PreLoadZone('ruined_path')
-        GAME:FadeOut(false, 20)
-        GAME:EnterDungeon('ruined_path', 0, 0, 0, RogueEssence.Data.GameProgress.DungeonStakes.Risk, true, true)
+        GROUND:CharAnimateTurnTo(player, Direction.Up, 4)
+        if not SV.Intro.HubReached then
+            _DATA:PreLoadZone('ruined_path')
+            GAME:FadeOut(false, 20)
+            GAME:EnterDungeon('ruined_path', 0, 0, 0, RogueEssence.Data.GameProgress.DungeonStakes.Risk, true, true)
+        else
+            TASK:BranchCoroutine(function() SOUND:FadeOutBGM(60) end)
+            GAME:WaitFrames(30)
+            TASK:BranchCoroutine(function() GROUND:CharTurnToCharAnimated(player, pelipper, 4) end)
+
+            UI:WaitShowDialogue("Hold on.[pause=0] I'm getting a weird feeling of déjà vu...")
+
+            local coro_b = TASK:BranchCoroutine(function()
+                GAME:WaitFrames(30)
+                GROUND:CharAnimateTurnTo(pelipper, Direction.Left, 4)
+            end)
+            GROUND:MoveToPosition(player, 172, 42, false, 1)
+            GROUND:CharTurnToCharAnimated(player, pelipper, 4)
+            TASK:JoinCoroutines({coro_b})
+
+            UI:WaitShowDialogue("Hey,[pause=5] "..player:GetDisplayName().."...[pause=10]Didn't we already finish this dungeon?")
+
+            SOUND:PlaySE("Battle/EVT_Emote_Confused")
+            GROUND:CharSetEmote(player, "question", 1)
+            GAME:WaitFrames(60)
+
+            UI:WaitShowDialogue("Ah,[pause=5] forget it.[pause=0] Let's just go...")
+
+            local coro_fade = TASK:BranchCoroutine(function()
+                GROUND:CharAnimateTurnTo(player, Direction.Up, 4)
+                GROUND:MoveToPosition(player, 172, 2, false, 1)
+            end)
+            GAME:WaitFrames(20)
+            GROUND:CharAnimateTurnTo(pelipper, Direction.UpLeft, 4)
+            GAME:FadeOut(false, 20)
+            TASK:JoinCoroutines({coro_fade})
+            GAME:WaitFrames(60)
+
+            UI:ResetSpeaker()
+            UI:WaitShowDialogue("Since you have already completed the intro, this dungeon will be skipped.")
+            UI:WaitShowDialogue("You are not supposed to be back here, so make sure to notify [color=#800080]MistressNebula[color] about this.")
+            UI:WaitShowDialogue("You can either find her on the [color=#00FFFF]PMDO Discord Server[color] or leave a bug report on the mod's [color=#FFFF00]GitHub[color] page.")
+            GAME:WaitFrames(60)
+            GAME:EnterGroundMap('hub_zone', GLOBAL.getHubMap(), 'Spawn')
+        end
     else
         GROUND:CharAnimateTurnTo(pelipper, Direction.DownLeft, 4)
         GROUND:MoveInDirection(player, Direction.Down, 1, false, 1)
@@ -234,13 +279,15 @@ function intro_dungeon_entrance.Save_Action(_, _)
     local ch = UI:ChoiceResult()
 
     if ch then
+        GAME:WaitFrames(20)
         GAME:GroundSave()
         UI:WaitShowDialogue("Game Saved!")
-        GAME:WaitFrames(20)
     end
     if not SV.Intro.SaveReminder then
         UI:WaitShowDialogue("Remember that you can also save by selecting the [color=#FFFF00]Save[color] option in the main menu.")
         SV.Intro.SaveReminder = true
+    else
+        GAME:WaitFrames(20)
     end
 end
 

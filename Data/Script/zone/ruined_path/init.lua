@@ -22,6 +22,8 @@ end
 --Engine callback function
 function forgotten_path.EnterSegment(_, _, segmentID, _)
     if segmentID == 0 then
+        --remove pelipper from team
+        _DATA.Save.ActiveTeam.Guests:Clear()
         -- add pelipper to team
         local guest_id = RogueEssence.Dungeon.MonsterID("pelipper", 0, "normal", RogueEssence.Data.Gender.Male)
         _DATA.Save.ActiveTeam.Guests:Add(_DATA.Save.ActiveTeam:CreatePlayer(_DATA.Save.Rand, guest_id, 5, "keen_eye", 0))
@@ -47,6 +49,7 @@ function forgotten_path.ExitSegment(_, result, _, segmentID, _)
         SV.Intro.DungeonFailed = true
         COMMON.EndSessionWithResults(result, SV.checkpoint.Zone, SV.checkpoint.Segment, SV.checkpoint.Map, SV.checkpoint.Entry)
     else
+        SV.Intro.HubReached = true
         COMMON.EndSessionWithResults(result, 'ruined_path', -1, 0, 0) --TODO swap with base warp
     end
     _DATA.Save.ActiveTeam.Guests:Clear() --remove pelipper from team

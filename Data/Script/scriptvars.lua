@@ -47,7 +47,8 @@ SV.Intro = {
     PelipperIntro = false,      -- if the starting Ruined Path cutscene happened
     SaveReminder = false,       -- if the player was told about saving from the menu
     DungeonFailed = false,      -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
-    HubReached = false          -- if the hub has been reached
+    HubReached = false,         -- if the hub has been reached
+    HubTutorialProgress = 0     -- this is a bit more involved. details will be added as time goes on
 }
 
 

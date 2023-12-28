@@ -192,7 +192,7 @@ function intro_scene.IntroTeleport()
     if not SV.Intro.HubReached then
         GAME:EnterGroundMap('ruined_path','intro_dungeon_entrance', 'Spawn')
     else
-        GAME:EnterGroundMap('hub_zone', GLOBAL.getHubMap(), "DefaultSpawn") --TODO fail safe. If player somehow gets to the intro_scene after beating the intro dungeon, warp them to current village map.
+        GAME:EnterGroundMap('hub_zone', GLOBAL.getHubMap(), 'Spawn')
     end
 end
 
