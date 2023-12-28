@@ -1,10 +1,10 @@
 ﻿{
-"Version": "0.7.20.0",
+"Version": "0.7.22.0",
 "Object": {
 "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
 "intro": {
 "$type": "RogueEssence.Data.ZoneEntrySummary, RogueEssence",
-"NoEXP": true,
+"ExpPercent": 0,
 "Level": -1,
 "LevelCap": false,
 "KeepSkills": false,
@@ -30,7 +30,7 @@
 },
 "ruined_path": {
 "$type": "RogueEssence.Data.ZoneEntrySummary, RogueEssence",
-"NoEXP": true,
+"ExpPercent": 0,
 "Level": 5,
 "LevelCap": false,
 "KeepSkills": false,

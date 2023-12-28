@@ -1,5 +1,5 @@
 ﻿{
-"Version": "0.7.20.0",
+"Version": "0.7.22.0",
 "Object": {
 "$type": "RogueEssence.Data.ZoneData, RogueEssence",
 "Name": {
@@ -8,7 +8,8 @@
 },
 "Released": true,
 "Comment": "",
-"NoEXP": true,
+"NoEXP": false,
+"ExpPercent": 0,
 "Level": 5,
 "LevelCap": false,
 "KeepSkills": false,
@@ -79,22 +80,22 @@
 "$type": "RogueElements.RandBag`1[[RogueElements.RoomGen`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements]], RogueElements",
 "ToSpawn": [
 {
-"$type": "RogueElements.RoomGenAngledHall`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
-"HallTurnBias": 50,
-"Brush": {
-"$type": "RogueElements.SquareHallBrush, RogueElements",
-"Dims": {
-"X": 4,
-"Y": 3
-}
-},
-"Width": {
+"$type": "RogueElements.RoomGenCross`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
+"MajorWidth": {
 "Min": 5,
 "Max": 8
 },
-"Height": {
+"MinorHeight": {
+"Min": 2,
+"Max": 4
+},
+"MajorHeight": {
 "Min": 4,
 "Max": 7
+},
+"MinorWidth": {
+"Min": 3,
+"Max": 5
 }
 },
 {
@@ -120,7 +121,7 @@
 }
 }
 ],
-"RemoveOnRoll": false
+"removeOnRoll": false
 },
 "RoomComponents": [
 {
@@ -602,8 +603,8 @@
 "Spawn": {
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MoneySpawn, RogueEssence]], RogueElements",
 "Amount": {
-"Min": 2,
-"Max": 5
+"Min": 1,
+"Max": 3
 }
 }
 }
@@ -671,7 +672,8 @@
 "$type": "RogueElements.DetectIsolatedStairsStep`3[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MapGenEntrance, RogueEssence],[RogueEssence.LevelGen.MapGenExit, RogueEssence]], RogueElements"
 }
 }
-]
+],
+"Comment": ""
 },
 {
 "$type": "RogueEssence.LevelGen.GridFloorGen, RogueEssence",
@@ -728,25 +730,6 @@
 "$type": "RogueElements.RandBag`1[[RogueElements.RoomGen`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements]], RogueElements",
 "ToSpawn": [
 {
-"$type": "RogueElements.RoomGenAngledHall`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
-"HallTurnBias": 50,
-"Brush": {
-"$type": "RogueElements.SquareHallBrush, RogueElements",
-"Dims": {
-"X": 4,
-"Y": 3
-}
-},
-"Width": {
-"Min": 5,
-"Max": 8
-},
-"Height": {
-"Min": 4,
-"Max": 7
-}
-},
-{
 "$type": "RogueElements.RoomGenSquare`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
 "Width": {
 "Min": 5,
@@ -766,10 +749,29 @@
 "Height": {
 "Min": 4,
 "Max": 7
+}
+},
+{
+"$type": "RogueElements.RoomGenCross`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
+"MajorWidth": {
+"Min": 5,
+"Max": 8
+},
+"MinorHeight": {
+"Min": 2,
+"Max": 4
+},
+"MajorHeight": {
+"Min": 4,
+"Max": 7
+},
+"MinorWidth": {
+"Min": 3,
+"Max": 5
 }
 }
 ],
-"RemoveOnRoll": false
+"removeOnRoll": false
 },
 "RoomComponents": [
 {
@@ -1251,8 +1253,8 @@
 "Spawn": {
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MoneySpawn, RogueEssence]], RogueElements",
 "Amount": {
-"Min": 2,
-"Max": 5
+"Min": 1,
+"Max": 3
 }
 }
 }
@@ -1320,7 +1322,8 @@
 "$type": "RogueElements.DetectIsolatedStairsStep`3[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MapGenEntrance, RogueEssence],[RogueEssence.LevelGen.MapGenExit, RogueEssence]], RogueElements"
 }
 }
-]
+],
+"Comment": ""
 },
 {
 "$type": "RogueEssence.LevelGen.GridFloorGen, RogueEssence",
@@ -1377,22 +1380,22 @@
 "$type": "RogueElements.RandBag`1[[RogueElements.RoomGen`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements]], RogueElements",
 "ToSpawn": [
 {
-"$type": "RogueElements.RoomGenAngledHall`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
-"HallTurnBias": 50,
-"Brush": {
-"$type": "RogueElements.SquareHallBrush, RogueElements",
-"Dims": {
-"X": 4,
-"Y": 3
-}
-},
-"Width": {
+"$type": "RogueElements.RoomGenCross`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
+"MajorWidth": {
 "Min": 5,
 "Max": 8
 },
-"Height": {
+"MinorHeight": {
+"Min": 2,
+"Max": 4
+},
+"MajorHeight": {
 "Min": 4,
 "Max": 7
+},
+"MinorWidth": {
+"Min": 3,
+"Max": 5
 }
 },
 {
@@ -1418,7 +1421,7 @@
 }
 }
 ],
-"RemoveOnRoll": false
+"removeOnRoll": false
 },
 "RoomComponents": [
 {
@@ -1900,8 +1903,8 @@
 "Spawn": {
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MoneySpawn, RogueEssence]], RogueElements",
 "Amount": {
-"Min": 2,
-"Max": 5
+"Min": 1,
+"Max": 3
 }
 }
 }
@@ -1969,7 +1972,8 @@
 "$type": "RogueElements.DetectIsolatedStairsStep`3[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MapGenEntrance, RogueEssence],[RogueEssence.LevelGen.MapGenExit, RogueEssence]], RogueElements"
 }
 }
-]
+],
+"Comment": ""
 },
 {
 "$type": "RogueEssence.LevelGen.GridFloorGen, RogueEssence",
@@ -2026,22 +2030,22 @@
 "$type": "RogueElements.RandBag`1[[RogueElements.RoomGen`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements]], RogueElements",
 "ToSpawn": [
 {
-"$type": "RogueElements.RoomGenAngledHall`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
-"HallTurnBias": 50,
-"Brush": {
-"$type": "RogueElements.SquareHallBrush, RogueElements",
-"Dims": {
-"X": 3,
-"Y": 3
-}
+"$type": "RogueElements.RoomGenCross`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
+"MajorWidth": {
+"Min": 5,
+"Max": 8
 },
-"Width": {
+"MinorHeight": {
+"Min": 2,
+"Max": 4
+},
+"MajorHeight": {
 "Min": 4,
 "Max": 7
 },
-"Height": {
+"MinorWidth": {
 "Min": 3,
-"Max": 6
+"Max": 5
 }
 },
 {
@@ -2067,7 +2071,7 @@
 }
 }
 ],
-"RemoveOnRoll": false
+"removeOnRoll": false
 },
 "RoomComponents": [
 {
@@ -2550,7 +2554,7 @@
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MoneySpawn, RogueEssence]], RogueElements",
 "Amount": {
 "Min": 3,
-"Max": 7
+"Max": 6
 }
 }
 }
@@ -2618,7 +2622,8 @@
 "$type": "RogueElements.DetectIsolatedStairsStep`3[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MapGenEntrance, RogueEssence],[RogueEssence.LevelGen.MapGenExit, RogueEssence]], RogueElements"
 }
 }
-]
+],
+"Comment": ""
 },
 {
 "$type": "RogueEssence.LevelGen.GridFloorGen, RogueEssence",
@@ -2675,22 +2680,22 @@
 "$type": "RogueElements.RandBag`1[[RogueElements.RoomGen`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements]], RogueElements",
 "ToSpawn": [
 {
-"$type": "RogueElements.RoomGenAngledHall`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
-"HallTurnBias": 50,
-"Brush": {
-"$type": "RogueElements.SquareHallBrush, RogueElements",
-"Dims": {
-"X": 3,
-"Y": 3
-}
+"$type": "RogueElements.RoomGenCross`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueElements",
+"MajorWidth": {
+"Min": 5,
+"Max": 8
 },
-"Width": {
+"MinorHeight": {
+"Min": 2,
+"Max": 4
+},
+"MajorHeight": {
 "Min": 4,
 "Max": 7
 },
-"Height": {
+"MinorWidth": {
 "Min": 3,
-"Max": 6
+"Max": 5
 }
 },
 {
@@ -2716,7 +2721,7 @@
 }
 }
 ],
-"RemoveOnRoll": false
+"removeOnRoll": false
 },
 "RoomComponents": [
 {
@@ -3199,7 +3204,7 @@
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MoneySpawn, RogueEssence]], RogueElements",
 "Amount": {
 "Min": 4,
-"Max": 7
+"Max": 6
 }
 }
 }
@@ -3225,7 +3230,7 @@
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.Dungeon.InvItem, RogueEssence]], RogueElements",
 "Amount": {
 "Min": 1,
-"Max": 3
+"Max": 4
 }
 }
 }
@@ -3248,6 +3253,10 @@
 "IncludeHalls": false,
 "Spawn": {
 "$type": "RogueEssence.LevelGen.LoopedTeamSpawner`1[[RogueEssence.LevelGen.MapGenContext, RogueEssence]], RogueEssence",
+"AmountSpawner": {
+"$type": "RogueElements.PresetPicker`1[[System.Int32, System.Private.CoreLib]], RogueElements",
+"ToSpawn": 1
+},
 "Picker": {
 "$type": "RogueEssence.LevelGen.SpecificTeamSpawner, RogueEssence",
 "Explorer": false,
@@ -3302,10 +3311,6 @@
 ]
 }
 ]
-},
-"AmountSpawner": {
-"$type": "RogueElements.PresetPicker`1[[System.Int32, System.Private.CoreLib]], RogueElements",
-"ToSpawn": 1
 }
 },
 "Ally": false,
@@ -3349,7 +3354,8 @@
 "$type": "RogueElements.DetectIsolatedStairsStep`3[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MapGenEntrance, RogueEssence],[RogueEssence.LevelGen.MapGenExit, RogueEssence]], RogueElements"
 }
 }
-]
+],
+"Comment": ""
 }
 ],
 "ZoneSteps": [
@@ -3379,11 +3385,11 @@
 },
 "StartAmount": {
 "Min": 10,
-"Max": 13
+"Max": 14
 },
 "AddAmount": {
 "Min": 1,
-"Max": 3
+"Max": 4
 },
 "ModStates": [
 {
@@ -3842,7 +3848,8 @@
 "Spawns": []
 }
 ],
-"IsRelevant": true
+"IsRelevant": true,
+"Comment": ""
 }
 ],
 "GroundMaps": [
