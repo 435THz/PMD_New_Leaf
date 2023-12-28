@@ -45,7 +45,7 @@ function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, m
     local sign = ""
     if self.number<0 then sign = "-" end
     self.sign_text = RogueEssence.Menu.MenuText(sign, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight + 12 * 2), RogueElements.DirH.None)
-    self.number_box = RogueEssence.Menu.MenuDigits(self.number, self.digits+1, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight + 12 * 2))
+    self.number_box = RogueEssence.Menu.MenuDigits(self.number, self.digits+1, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight + 13 * 2))
 
     self.menu.MenuElements:Add(RogueEssence.Menu.MenuText(self.title, RogueElements.Loc(self.menu.Bounds.Width//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), RogueElements.DirH.None))
     self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.VERT_SPACE + RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), self.menu.Bounds.Width - 12 * 2))
@@ -57,13 +57,22 @@ function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, m
         digit_pos.Y = digit_pos.Y +12
         self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(digit_pos, 8))
     end
-    -- TODO cursor
+    self.cursors = {}
+    self.cursors[1] = RogueEssence.Menu.MenuCursor(self.menu, RogueElements.Dir4.Up)
+    self.cursors[2] = RogueEssence.Menu.MenuCursor(self.menu, RogueElements.Dir4.Down)
+    self.menu.MenuElements:Add(self.cursors[1])
+    self.menu.MenuElements:Add(self.cursors[2])
+    self:DrawMenu()
 end
 
 function ChooseAmountMenu:DrawMenu()
-    if self.number>0 then self.sign_text:SetText("") else self.sign_text:SetText("-") end
+    if self.number>=0 then self.sign_text:SetText("") else self.sign_text:SetText("-") end
     self.number_box.Amount = self.number
-    -- TODO move cursor
+    local delta_y = 14
+    local index = self.digits - self.selected
+    local pos  = self.number_box:GetDigitLoc(index) + RogueElements.Loc(-3, 2);
+    self.cursors[1].Loc = RogueElements.Loc(pos.X, pos.Y - delta_y) -- up
+    self.cursors[2].Loc = RogueElements.Loc(pos.X, pos.Y + delta_y) -- down
 end
 
 function ChooseAmountMenu:Update(input)
