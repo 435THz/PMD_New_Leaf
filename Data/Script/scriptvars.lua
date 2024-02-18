@@ -37,9 +37,10 @@ SV.missions =
 -- Level Specific Defaults
 -----------------------------------------------
 SV.HubData = {
-    Level = 1,       -- 1 to 10
-    Name = "Base",   -- without rank suffix. can be changed from rank 2 onwards
-    UseSuffix = true -- can only be turned off at rank 4
+    Level = 1,        -- 1 to 10
+    Name = "Base",    -- without rank suffix. can be changed from rank 2 onwards
+    UseSuffix = true, -- can only be turned off at rank 4
+    Plots = {}        -- contains plot struct. See HubManager.lua for details
 }
 
 SV.Intro = {
