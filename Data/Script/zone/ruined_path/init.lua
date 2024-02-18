@@ -50,7 +50,7 @@ function forgotten_path.ExitSegment(_, result, _, segmentID, _)
         COMMON.EndSessionWithResults(result, SV.checkpoint.Zone, SV.checkpoint.Segment, SV.checkpoint.Map, SV.checkpoint.Entry)
     else
         SV.Intro.HubReached = true
-        COMMON.EndSessionWithResults(result, 'ruined_path', -1, 0, 0) --TODO swap with base warp
+        COMMON.EndSessionWithResults(result, 'hub_zone', -1, _HUB.getHubRank()-1, 0)
     end
     _DATA.Save.ActiveTeam.Guests:Clear() --remove pelipper from team
 end
