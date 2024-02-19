@@ -68,6 +68,20 @@ end
 -- Entities Callbacks
 -------------------------------
 
+function hub_small.Entrance_home_Touch(obj, activator)
+    PrintInfo("Triggered Entrance_home_Touch")
+    --TODO connect maps
+end
+
+function hub_small.Storage_home_Action(obj, activator)
+    PrintInfo("Triggered Storage_home_Action")
+    --TODO open storage
+end
+
+function hub_small.Entrance_office_Touch(obj, activator)
+    PrintInfo("Triggered Entrance_office_Touch")
+    --TODO connect maps
+end
 
 return hub_small
 

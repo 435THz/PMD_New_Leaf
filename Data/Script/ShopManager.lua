@@ -142,7 +142,7 @@ _HUB.ShopBase = {
                         -- trigger type. defaults to None
                         Trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.TouchOnce,
                         -- box coordinates and sizes
-                        X=46, Y=73, W=34, H=8
+                        X=46, Y=73, W=28, H=9
                     },
                     {
                         Name = "Storage",
@@ -192,7 +192,7 @@ _HUB.ShopBase = {
                         Name = "Entrance",
                         Solid = true,
                         Trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.TouchOnce,
-                        X=16, Y=73, W=34, H=8
+                        X=22, Y=73, W=28, H=9
                     },
                     {
                         Name = "Left",

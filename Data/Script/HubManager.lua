@@ -185,7 +185,9 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
         local x, y = graphics_data.NPC_Loc.X + pos.X, graphics_data.NPC_Loc.Y + pos.Y
         local temp_monster = RogueEssence.Dungeon.MonsterID(building_data.shopkeeper, 0, "normal", Gender.Genderless)
         elements.npc = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Down, name, building_data.shopkeeper)
+        elements.npc:ReloadEvents()
     end
+
     for _, box in pairs(graphics_data.Bounds) do
         local anim = RogueEssence.Content.ObjAnimData()
         local x, y = pos.X+box.X, pos.Y+box.Y
@@ -197,6 +199,7 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
         if box.Solid == nil then passable = false end
         local name = box.Name.."_"..plot_id
         local obj = RogueEssence.Ground.GroundObject(anim, RogueElements.Dir8.Down, rect, RogueElements.Loc(), trigger, passable, name)
+        obj:ReloadEvents()
         table.insert(elements.objects, obj)
     end
     return elements
