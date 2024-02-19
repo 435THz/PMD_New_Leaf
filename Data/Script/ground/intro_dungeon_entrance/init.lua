@@ -5,7 +5,8 @@
 ]]--
 -- Commonly included lua functions and data
 require 'common'
-require 'Global'
+require 'HubManager'
+require 'CommonFunctions'
 
 -- Package name
 local intro_dungeon_entrance = {}
@@ -112,7 +113,7 @@ function intro_dungeon_entrance.PelipperIntro()
 
     -- dialogue
     UI:SetSpeaker(pelipper)
-    UI:WaitShowDialogue("Okay.[pause=0] We're almost at "..GLOBAL.getHubName()..".")
+    UI:WaitShowDialogue("Okay.[pause=0] We're almost at ".._HUB.getHubName()..".")
     UI:WaitShowDialogue("I know we're out of supplies, but we're almost there.[pause=0] I think we should just push forward.")
     UI:WaitShowDialogue("If you're ready,[pause=10] or if you have any questions for me[pause=10], just tell me,[pause=5] alright?")
     GROUND:CharAnimateTurnTo(pelipper, Direction.DownLeft, 4)
@@ -186,10 +187,10 @@ function intro_dungeon_entrance.NPC_Pelipper_Action(_, _)
             UI:WaitShowDialogue("Our mission here is to explore and colonize this region.")
             UI:WaitShowDialogue("Scouting teams have been here,[pause=10] but found no signs of civilization.")
             UI:WaitShowDialogue("On top of that,[pause=10] there are so many dungeons that it's almost impossible to find a safe spot.")
-            UI:WaitShowDialogue("The only one that was found is "..GLOBAL.getHubName()..".[pause=0] That's where we're going now.")
+            UI:WaitShowDialogue("The only one that was found is ".._HUB.getHubName()..".[pause=0] That's where we're going now.")
             UI:WaitShowDialogue("We'll set up camp,[pause=10] then our goal will be to investigate what happened to this place.")
         elseif result == 2 then
-            UI:WaitShowDialogue("My job here is to accompany you to "..GLOBAL.getHubName()..",[pause=5] set up shop and keep you in contact with the Federation.")
+            UI:WaitShowDialogue("My job here is to accompany you to ".._HUB.getHubName()..",[pause=5] set up shop and keep you in contact with the Federation.")
             UI:WaitShowDialogue("I'll stop accompanying you in dungeons from that point on.[pause=0] Recruiting new team members will be your job.")
         elseif result == 3 then
             UI:WaitShowDialogue("This dungeon is called "..GAME:GetCurrentDungeon():GetDisplayName()..".[pause=0] It looks like an abandoned trading route.")
@@ -241,7 +242,7 @@ function intro_dungeon_entrance.Proceed_Touch(_, _)
             GROUND:CharTurnToCharAnimated(player, pelipper, 4)
             TASK:JoinCoroutines({coro_b})
 
-            UI:WaitShowDialogue("Hey,[pause=5] "..player:GetDisplayName().."...[pause=10]Didn't we already finish this dungeon?")
+            UI:WaitShowDialogue("Hey,[pause=5] "..player:GetDisplayName().."...[pause=10] Didn't we already finish this dungeon?")
 
             SOUND:PlaySE("Battle/EVT_Emote_Confused")
             GROUND:CharSetEmote(player, "question", 1)
@@ -264,7 +265,7 @@ function intro_dungeon_entrance.Proceed_Touch(_, _)
             UI:WaitShowDialogue("You are not supposed to be back here, so make sure to notify [color=#800080]MistressNebula[color] about this.")
             UI:WaitShowDialogue("You can either find her on the [color=#00FFFF]PMDO Discord Server[color] or leave a bug report on the mod's [color=#FFFF00]GitHub[color] page.")
             GAME:WaitFrames(60)
-            GAME:EnterGroundMap('hub_zone', GLOBAL.getHubMap(), 'Spawn')
+            GAME:EnterGroundMap('hub_zone', _HUB.getHubMap(), 'Entrance')
         end
     else
         GROUND:CharAnimateTurnTo(pelipper, Direction.DownLeft, 4)

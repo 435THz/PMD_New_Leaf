@@ -5,6 +5,8 @@
 ]]--
 -- Commonly included lua functions and data
 require 'common'
+require 'CommonFunctions'
+require 'HubManager'
 
 -- Package name
 local forgotten_path = {}
@@ -47,10 +49,9 @@ function forgotten_path.ExitSegment(_, result, _, segmentID, _)
 
     if result ~= RogueEssence.Data.GameProgress.ResultType.Cleared then
         SV.Intro.DungeonFailed = true
-        COMMON.EndSessionWithResults(result, SV.checkpoint.Zone, SV.checkpoint.Segment, SV.checkpoint.Map, SV.checkpoint.Entry)
+        COMMON_FUNC.EndSessionWithResults(result, SV.checkpoint.Zone, SV.checkpoint.Segment, SV.checkpoint.Map, SV.checkpoint.Entry)
     else
-        SV.Intro.HubReached = true
-        COMMON.EndSessionWithResults(result, 'hub_zone', -1, _HUB.getHubRank()-1, 0)
+        COMMON_FUNC.EndSessionWithResults(result, 'hub_zone', -1, _HUB.getHubRank()-1, 0)
     end
     _DATA.Save.ActiveTeam.Guests:Clear() --remove pelipper from team
 end

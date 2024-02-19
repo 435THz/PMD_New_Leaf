@@ -37,3 +37,11 @@ function table.index_of(table, object, default)
     return default
 end
 
+-------------------------------------------
+--region COMMON+
+-------------------------------------------
+
+function COMMON_FUNC.EndSessionWithResults(result, zoneId, structureId, mapId, entryId)
+    GAME:EndDungeonRun(result, zoneId, structureId, mapId, entryId, true, true)
+    GAME:EnterZone(zoneId, structureId, mapId, entryId)
+end

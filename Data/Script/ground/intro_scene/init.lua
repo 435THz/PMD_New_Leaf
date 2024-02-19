@@ -181,7 +181,7 @@ function intro_scene.IntroTeleport()
     UI:WaitShowVoiceOver("Shouldn't you be somewhere else?", -1)
     if SV.Intro.HubReached then
         local hub_name = _HUB.getHubName()
-        UI:WaitShowVoiceOver("Yes, that's right.\nYou should be at "..hub_name..", shouldn't you?", -1)
+        UI:WaitShowVoiceOver("Yes, that's right.\nYou should be in "..hub_name..", shouldn't you?", -1)
     else
         UI:WaitShowVoiceOver("Yes, that's right.\nYou should be starting your journey.", -1)
     end
@@ -192,7 +192,7 @@ function intro_scene.IntroTeleport()
     if not SV.Intro.HubReached then
         GAME:EnterGroundMap('ruined_path','intro_dungeon_entrance', 'Spawn')
     else
-        GAME:EnterGroundMap('hub_zone', _HUB.getHubMap(), 'Spawn')
+        GAME:EnterGroundMap('hub_zone', _HUB.getHubMap(), 'Entrance')
     end
 end
 
