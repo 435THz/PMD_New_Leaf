@@ -5,6 +5,7 @@
 ]]--
 -- Commonly included lua functions and data
 require 'common'
+require 'HubManager'
 
 -- Package name
 local hub_small = {}
@@ -20,49 +21,47 @@ local MapStrings = {}
 -------------------------------
 ---hub_small.Init(map)
 --Engine callback function
-function hub_small.Init(map)
+function hub_small.Init(_)
 
-  --This will fill the localized strings table automatically based on the locale the game is 
-  -- currently in. You can use the MapStrings table after this line!
-  MapStrings = COMMON.AutoLoadLocalizedStrings()
+    --This will fill the localized strings table automatically based on the locale the game is
+    -- currently in. You can use the MapStrings table after this line!
+    MapStrings = COMMON.AutoLoadLocalizedStrings()
 
 end
 
 ---hub_small.Enter(map)
 --Engine callback function
-function hub_small.Enter(map)
-
-  GAME:FadeIn(20)
-
+function hub_small.Enter(_)
+    if not SV.Intro.HubReached then
+        SV.Intro.HubReached = true
+        _HUB.initializePlotData()
+    end
+    _HUB.LoadBuildings()
+    _HUB.ShowTitle()
 end
 
 ---hub_small.Exit(map)
 --Engine callback function
 function hub_small.Exit(map)
 
-
 end
 
 ---hub_small.Update(map)
 --Engine callback function
-function hub_small.Update(map)
-
+function hub_small.Update(_)
 
 end
 
 ---hub_small.GameSave(map)
 --Engine callback function
-function hub_small.GameSave(map)
-
+function hub_small.GameSave(_)
 
 end
 
 ---hub_small.GameLoad(map)
 --Engine callback function
-function hub_small.GameLoad(map)
-
-  GAME:FadeIn(20)
-
+function hub_small.GameLoad(_)
+    _HUB.ShowTitle()
 end
 
 -------------------------------

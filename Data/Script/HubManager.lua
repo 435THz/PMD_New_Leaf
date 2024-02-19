@@ -1,10 +1,11 @@
-require 'ShopManager'
 --[[
     HubManager.lua
     Contains all constant global tables and variables necessary for the Hub to function, plus some functions that interface with them in a more intuitive way.
 ]]
 
-_HUB = {}
+_HUB = _HUB or {}
+
+require 'ShopManager'
 
 _HUB.LevelRankTable = {1,1,2,2,2,3,3,3,4,4}
 _HUB.RankSuffix = {"Camp", "Village", "Town", "City"}
@@ -78,7 +79,7 @@ _HUB.PlotPositions = {
 -------------------------------------------
 
 function _HUB.getHubRank()
-    return _HUB.HubData.LevelRankTable[SV.HubData.Level]
+    return _HUB.LevelRankTable[SV.HubData.Level]
 end
 
 function _HUB.getHubSuffix()
@@ -101,8 +102,11 @@ function _HUB.boardUnlocked()
     return _HUB.getHubRank() >= _HUB.BoardUnlockLevel
 end
 
-function _HUB.getHubName()
-    return "[color=#FFFFA5]"..SV.HubData.Name..COMMON_FUNC.tri(SV.HubData.UseSuffix, " ".._HUB.getHubSuffix(), "").."[color]"
+function _HUB.getHubName(colorless)
+    local ret = SV.HubData.Name
+    if SV.HubData.UseSuffix then ret = ret.." ".._HUB.getHubSuffix() end
+    if colorless then return ret end
+    return "[color=#FFFFA5]"..ret.."[color]"
 end
 
 function _HUB.getPlotOriginList()
@@ -119,9 +123,40 @@ end
 --region Graphics
 -------------------------------------------
 
+function _HUB.LoadBuildings()
+    for i, pos in pairs(_HUB.getPlotOriginList()) do
+        if i == 1 then _HUB.DrawBuilding("home", _HUB.getPlotData("home"), pos)
+        elseif i == 2 then _HUB.DrawBuilding("office", _HUB.getPlotData("office"), pos)
+        else
+            local shop_data = _HUB.getPlotData(i-2)
+            if shop_data.unlocked then
+                _HUB.DrawEmpty(i, pos)
+            elseif shop_data.building ~= "" then
+                _HUB.DrawBuilding(i-2, shop_data, pos)
+            end
+        end
+    end
+end
+
+function _HUB.DrawBuilding(plot_id, building_data, pos)
+    local elements = _HUB.GenerateShopElements(plot_id, building_data, pos)
+
+    local ground = GAME:GetCurrentGround()
+    ground.Decorations[0].Anims:Add(elements.deco_bottom)
+    if elements.deco_top then ground.Decorations[1].Anims:Add(elements.deco_top) end
+    if elements.npc then ground:AddMapChar() end
+    for _, obj in pairs(elements.objects) do
+        ground:AddObject(obj)
+    end
+end
+
+function _HUB.DrawEmpty(plot_id, pos)
+
+end
+
 function _HUB.GenerateShopElements(plot_id, building_data, pos)
     local rank = _HUB.getPlotRank(building_data)
-    local graphics_data = _HUB.ShopBase[building_data.type].Graphics[rank]
+    local graphics_data = _HUB.ShopBase[building_data.building].Graphics[rank]
 
     local elements = {
         deco_bottom = nil,
@@ -137,8 +172,11 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
     elements.deco_bottom = RogueEssence.Ground.GroundAnim(bottom, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
 
     if graphics_data.TopLayer then
-        offset_x, offset_y = 0, 0 -- TODO wait for audino's answer or look for the solution
         local top = RogueEssence.Content.ObjAnimData(graphics_data.TopLayer, 1)
+        sheet = RogueEssence.Content.GraphicsManager.GetObject(graphics_data.Base) --TODO this might be the solution
+        size_x, size_y = sheet.Width, sheet.Height
+        offset_x, offset_y = 96-size_x, 96-size_y
+
         elements.deco_top = RogueEssence.Ground.GroundAnim(top, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
     end
 
@@ -151,7 +189,7 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
     for _, box in pairs(graphics_data.Bounds) do
         local anim = RogueEssence.Content.ObjAnimData()
         local x, y = pos.X+box.X, pos.Y+box.Y
-        local w, h = box.W, box.Y
+        local w, h = box.W, box.H
         local trigger = box.Trigger
         if not trigger then trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.None end
         local rect = RogueElements.Rect.FromPoints(RogueElements.Loc(x,y), RogueElements.Loc(x+w, y+h))
@@ -163,6 +201,17 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
     end
     return elements
 end
+-------------------------------------------
+---region Scripting
+-------------------------------------------
+
+function _HUB.ShowTitle()
+    GAME:FadeOut(false, 1)
+    UI:WaitShowTitle(_HUB.getHubName(true), 30)
+    GAME:WaitFrames(60)
+    UI:WaitHideTitle(30)
+    GAME:FadeIn(20)
+end
 
 -------------------------------------------
 --region SV Interface
@@ -170,27 +219,50 @@ end
 
 function _HUB.initializePlotData()
     SV.HubData.Plots = SV.HubData.Plots or {}
-    for i = 1, 15, 1 do
-        if not SV.HubData.Plots[i] then
-            local plot_base = {
-                unlocked = i<_HUB.LevelBuildLimit[1],
-                building = "",
-                upgrades = {},
+    for i = 1, 17, 1 do
+        if i<16 then
+            if not SV.HubData.Plots[i] then
+                local plot_base = {
+                    unlocked = i<_HUB.LevelBuildLimit[1],
+                    building = "",
+                    upgrades = {},
+                    shopkeeper = "",
+                    data = {}
+                }
+                table.insert(SV.HubData.Plots, plot_base)
+            end
+        elseif i<17 then
+            -- generate home structure
+            if not SV.HubData.Home then
+                SV.HubData.Home = {
+                    unlocked = true,
+                    building = "home",
+                    upgrades = {{type = "upgrade_generic", count = 1}},
+                    shopkeeper = "",
+                    data = {}
+                }
+            end
+        elseif not SV.HubData.Office then
+            SV.HubData.Office = {
+                unlocked = true,
+                building = "office",
+                upgrades = {{type = "upgrade_generic", count = 1}},
                 shopkeeper = "",
                 data = {}
             }
-            table.insert(SV.HubData.Plots, plot_base)
         end
     end
 end
 
 function _HUB.getPlotData(index)
+    if index == "home"   then return SV.HubData.Home   end
+    if index == "office" then return SV.HubData.Office end
     return SV.HubData.Plots[index]
 end
 
 function _HUB.getPlotLevel(plot)
     local lvl = 0
-    for _, upgrade in plot.upgrades do
+    for _, upgrade in pairs(plot.upgrades) do
         lvl = lvl + upgrade.count
     end
     return lvl

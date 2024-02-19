@@ -147,7 +147,7 @@ _HUB.ShopBase = {
                     {
                         Name = "Storage",
                         Trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.Action,
-                        X=5,  Y=72, W=22, H=2455
+                        X=5,  Y=72, W=22, H=24
                     },
                     {
                         Name = "Right",
