@@ -1,5 +1,5 @@
 ﻿{
-"Version": "0.7.24.0",
+"Version": "0.7.25.0",
 "Object": {
 "$type": "RogueEssence.Data.ZoneData, RogueEssence",
 "Name": {
@@ -17,13 +17,16 @@
 "TeamSize": -1,
 "MoneyRestrict": false,
 "BagRestrict": -1,
+"KeepTreasure": false,
 "BagSize": -1,
 "Persistent": false,
 "Rescues": 0,
 "Rogue": 0,
 "Segments": [],
 "GroundMaps": [
-"hub_small"
+"hub_small",
+"home_tier1",
+"office_tier1"
 ]
 }
 }

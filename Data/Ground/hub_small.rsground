@@ -13895,7 +13895,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 }
 ],
 [
@@ -14329,7 +14329,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 }
 ],
 [
@@ -14763,7 +14763,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 }
 ],
 [
@@ -15197,7 +15197,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 }
 ],
 [
@@ -20162,7 +20162,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 },
 {
 "Bounds": {
@@ -20171,7 +20171,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 },
 {
 "Bounds": {
@@ -20596,7 +20596,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 },
 {
 "Bounds": {
@@ -20605,7 +20605,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 1
+"Tags": 0
 },
 {
 "Bounds": {
@@ -21030,7 +21030,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 0
+"Tags": 1
 },
 {
 "Bounds": {
@@ -21039,7 +21039,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 0
+"Tags": 1
 },
 {
 "Bounds": {
@@ -21464,7 +21464,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 0
+"Tags": 1
 },
 {
 "Bounds": {
@@ -21473,7 +21473,7 @@
 "Width": 8,
 "Height": 8
 },
-"Tags": 0
+"Tags": 1
 },
 {
 "Bounds": {
@@ -39563,8 +39563,8 @@
 },
 {
 "MapLoc": {
-"X": 384,
-"Y": 168
+"X": 336,
+"Y": 176
 },
 "ObjectAnim": {
 "$type": "RogueEssence.Content.ObjAnimData, RogueEssence",
@@ -39651,48 +39651,6 @@
 }
 },
 {
-"EntName": "Run_Start_1",
-"Direction": 0,
-"EntEnabled": true,
-"EntOrder": 0,
-"triggerType": 0,
-"ObjectAnim": {
-"$type": "RogueEssence.Content.ObjAnimData, RogueEssence",
-"AnimIndex": "",
-"FrameTime": 1,
-"StartFrame": -1,
-"EndFrame": -1,
-"AnimDir": -1,
-"Alpha": 255,
-"AnimFlip": 0
-},
-"Passable": false,
-"CurrentAnim": {
-"$type": "RogueEssence.Content.ObjAnimData, RogueEssence",
-"AnimIndex": "",
-"FrameTime": 1,
-"StartFrame": -1,
-"EndFrame": -1,
-"AnimDir": -1,
-"Alpha": 255,
-"AnimFlip": 0
-},
-"AnimTime": {
-"Ticks": 0
-},
-"Cycles": 0,
-"DrawOffset": {
-"X": 0,
-"Y": 0
-},
-"Collider": {
-"X": 280,
-"Y": 383,
-"Width": 32,
-"Height": 1
-}
-},
-{
 "EntName": "Run_Start_2",
 "Direction": 0,
 "EntEnabled": true,
@@ -39729,8 +39687,8 @@
 },
 "Collider": {
 "X": 216,
-"Y": 383,
-"Width": 32,
+"Y": 382,
+"Width": 96,
 "Height": 1
 }
 }

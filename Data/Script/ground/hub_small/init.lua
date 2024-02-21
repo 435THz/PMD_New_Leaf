@@ -74,13 +74,28 @@ function hub_small.Entrance_home_Touch(obj, activator)
 end
 
 function hub_small.Storage_home_Action(obj, activator)
-    PrintInfo("Triggered Storage_home_Action")
-    --TODO open storage
+    COMMON.ShowTeamStorageMenu()
 end
 
 function hub_small.Entrance_office_Touch(obj, activator)
     PrintInfo("Triggered Entrance_office_Touch")
     --TODO connect maps
+end
+
+function hub_small.Assembly_office_Action(obj, activator)
+    COMMON.ShowTeamAssemblyMenu(obj, function() end)
+end
+
+function hub_small.NPC_1_Action(obj, activator)
+    PrintInfo("Triggered NPC_1_Action")
+end
+
+function hub_small.NPC_2_Action(obj, activator)
+    PrintInfo("Triggered NPC_2_Action")
+end
+
+function hub_small.NPC_3_Action(obj, activator)
+    PrintInfo("Triggered NPC_3_Action")
 end
 
 return hub_small
