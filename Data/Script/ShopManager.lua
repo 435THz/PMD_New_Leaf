@@ -195,6 +195,16 @@ _HUB.ShopBase = {
                         X=22, Y=73, W=28, H=9
                     },
                     {
+                        Name = "Assembly",
+                        Trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.Action,
+                        X=57, Y=64, W=30, H=32,
+                        Display = {
+                            Sprite = "Assembly",
+                            FrameLength = 15,
+                            End = 0
+                        }
+                    },
+                    {
                         Name = "Left",
                         X=8, Y=51, W=14, H=31
                     },

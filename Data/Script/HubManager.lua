@@ -189,12 +189,25 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
     end
 
     for _, box in pairs(graphics_data.Bounds) do
-        local anim = RogueEssence.Content.ObjAnimData()
+        -- Display setup
+        local display = box.Display
+        local anim_index, frame_time, frame_start, frame_end = "", 1, -1, -1
+        if display and display.Sprite then
+            anim_index = display.Sprite
+            if display.FrameLength then frame_time = display.FrameLength end
+            if display.Start then frame_start = display.Start end
+            if display.End then frame_end = display.End end
+        end
+        local anim = RogueEssence.Content.ObjAnimData(anim_index, frame_time, frame_start, frame_end)
+
+        -- Bounds setup
         local x, y = pos.X+box.X, pos.Y+box.Y
         local w, h = box.W, box.H
+        local rect = RogueElements.Rect.FromPoints(RogueElements.Loc(x,y), RogueElements.Loc(x+w, y+h))
+
+        -- Functionality setup
         local trigger = box.Trigger
         if not trigger then trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.None end
-        local rect = RogueElements.Rect.FromPoints(RogueElements.Loc(x,y), RogueElements.Loc(x+w, y+h))
         local passable = not box.Solid
         if box.Solid == nil then passable = false end
         local name = box.Name.."_"..plot_id
