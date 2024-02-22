@@ -123,7 +123,7 @@ end
 --region Graphics
 -------------------------------------------
 
-function _HUB.LoadBuildings()
+function _HUB.LoadMapData()
     for i, pos in pairs(_HUB.getPlotOriginList()) do
         if i == 1 then _HUB.DrawBuilding("home", _HUB.getPlotData("home"), pos)
         elseif i == 2 then _HUB.DrawBuilding("office", _HUB.getPlotData("office"), pos)
@@ -136,6 +136,7 @@ function _HUB.LoadBuildings()
             end
         end
     end
+    GAME:GetCurrentGround().Name = RogueEssence.LocalText(_HUB.getHubName(true))
 end
 
 function _HUB.DrawBuilding(plot_id, building_data, pos)
@@ -229,6 +230,17 @@ function _HUB.ShowTitle()
     GAME:FadeIn(20)
 end
 
+function _HUB.SetMarker(x, y)
+    SV.HubData.Marker = {X = x, Y = y}
+end
+
+function _HUB.TeleportToMarker()
+    local marker = SV.HubData.Marker
+    if marker then
+        GROUND:TeleportTo(CH("PLAYER"), marker.X, marker.Y, Direction.Down)
+        SV.HubData.Marker = nil
+    end
+end
 -------------------------------------------
 --region SV Interface
 -------------------------------------------

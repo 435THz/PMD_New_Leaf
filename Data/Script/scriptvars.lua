@@ -37,6 +37,7 @@ SV.missions =
 -- Level Specific Defaults
 -----------------------------------------------
 SV.HubData = {
+    Marker = nil,     -- if set, the character will be teleported here upon map load, and then this will be cleared.
     Level = 1,        -- 1 to 10
     Name = "Base",    -- without rank suffix. can be changed from rank 2 onwards
     UseSuffix = true, -- can only be turned off at rank 4
