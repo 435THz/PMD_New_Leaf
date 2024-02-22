@@ -68,7 +68,17 @@ end
 -------------------------------
 -- Entities Callbacks
 -------------------------------
+function office_tier1.Pelipper_Talk_Action(obj, activator)
+  PrintInfo("Triggered Pelipper_Talk_Action")
+end
 
+function office_tier1.Exit_Touch(obj, activator)
+  GAME:FadeOut(false, 20)
+  local pos = _HUB.getPlotOriginList()[2]
+  local marker = _HUB.ShopBase["office"].Graphics[1].Marker_Loc
+  GAME:EnterGroundMap(_HUB.getHubMap(), "Entrance")
+  _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
+end
 
 return office_tier1
 

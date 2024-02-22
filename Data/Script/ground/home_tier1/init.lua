@@ -5,6 +5,7 @@
 ]]--
 -- Commonly included lua functions and data
 require 'common'
+require 'HubManager'
 
 -- Package name
 local home_tier1 = {}
@@ -31,7 +32,6 @@ end
 ---home_tier1.Enter(map)
 --Engine callback function
 function home_tier1.Enter(map)
-
   GAME:FadeIn(20)
 
 end
@@ -68,7 +68,13 @@ end
 -------------------------------
 -- Entities Callbacks
 -------------------------------
-
+function home_tier1.Exit_Touch(obj, activator)
+  GAME:FadeOut(false, 20)
+  local pos = _HUB.getPlotOriginList()[1]
+  local marker = _HUB.ShopBase["home"].Graphics[1].Marker_Loc
+  GAME:EnterGroundMap(_HUB.getHubMap(), "Entrance")
+  _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
+end
 
 return home_tier1
 
