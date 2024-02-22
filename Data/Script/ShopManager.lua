@@ -435,12 +435,62 @@ _HUB.ShopBase = {
 
 -- these look exactly like shops graphics data, but never contain NPC_Pos or Marker_Pos
 _HUB.NotUnlockedVisuals = {
-    -- these also never contain Bounds
+    -- these also never contain solid Bounds
     NonBlocking = {
-        {}
+        {
+            Base = "free_empty_1"
+        },
+        {
+            Base = "free_empty_2"
+        },
+        {
+            Base = "free_empty_3",
+            Decorations = {
+                {
+                    X=56, Y=64,
+                    Display = {
+                        Sprite = "Flowers_Town_3",
+                        FrameLength = 30
+                    }
+                },
+                {
+                    X=16, Y=32,
+                    Display = {
+                        Sprite = "Flowers_Town_5",
+                        FrameLength = 30
+                    }
+                }
+            }
+        },
+        {
+            Base = "free_empty_4",
+            Decorations = {
+                {
+                    X=16, Y=24,
+                    Display = {
+                        Sprite = "Flowers_Town_4",
+                        FrameLength = 30
+                    }
+                },
+                {
+                    X=72, Y=56,
+                    Display = {
+                        Sprite = "Flowers_Town_5",
+                        FrameLength = 30
+                    }
+                },
+                {
+                    X=8, Y=72,
+                    Display = {
+                        Sprite = "Flowers_Town_5",
+                        FrameLength = 30
+                    }
+                }
+            }
+        }
     },
     -- these do contain Bounds
     Blocking = {
-        {}
+
     }
 }

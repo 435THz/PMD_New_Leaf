@@ -123,14 +123,23 @@ end
 --region Graphics
 -------------------------------------------
 
+function _HUB.DrawAllEmpty()
+    for i, pos in pairs(_HUB.getPlotOriginList()) do
+        if i == 1 then _HUB.DrawEmpty("home", pos)
+        elseif i == 2 then _HUB.DrawBuilding("office", pos)
+        else
+        end
+    end
+end
+
 function _HUB.LoadMapData()
     for i, pos in pairs(_HUB.getPlotOriginList()) do
         if i == 1 then _HUB.DrawBuilding("home", _HUB.getPlotData("home"), pos)
         elseif i == 2 then _HUB.DrawBuilding("office", _HUB.getPlotData("office"), pos)
         else
             local shop_data = _HUB.getPlotData(i-2)
-            if shop_data.unlocked then
-                _HUB.DrawEmpty(i, pos)
+            if not shop_data.unlocked then
+                _HUB.DrawEmpty(i-2, shop_data.empty ,pos)
             elseif shop_data.building ~= "" then
                 _HUB.DrawBuilding(i-2, shop_data, pos)
             end
@@ -139,67 +148,79 @@ function _HUB.LoadMapData()
     GAME:GetCurrentGround().Name = RogueEssence.LocalText(_HUB.getHubName(true))
 end
 
-function _HUB.DrawBuilding(plot_id, building_data, pos)
-    local elements = _HUB.GenerateShopElements(plot_id, building_data, pos)
+function _HUB.DrawEmpty(plot_id, empty_image_id, pos)
+    local graphics_data
+    if empty_image_id > #_HUB.NotUnlockedVisuals.NonBlocking then
+        graphics_data = _HUB.NotUnlockedVisuals.Blocking[empty_image_id-#_HUB.NotUnlockedVisuals.NonBlocking]
+    else
+        graphics_data = _HUB.NotUnlockedVisuals.NonBlocking[empty_image_id]
+    end
+
+    local deco_bottom = _HUB.GenerateDecoLayer(graphics_data.Base, pos)
+    local objects = _HUB.GenerateObjectList(plot_id, graphics_data, pos)
+    local sub_decos = _HUB.GenerateSubDecorationList(graphics_data, pos)
+    local deco_top
+    if graphics_data.TopLayer then deco_top = _HUB.GenerateDecoLayer(graphics_data.TopLayer, pos) end
 
     local ground = GAME:GetCurrentGround()
-    ground.Decorations[0].Anims:Add(elements.deco_bottom)
-    if elements.deco_top then ground.Decorations[1].Anims:Add(elements.deco_top) end
-    if elements.npc then ground:AddMapChar() end
-    for _, obj in pairs(elements.objects) do
+    ground.Decorations[0].Anims:Add(deco_bottom)
+    if deco_top then ground.Decorations[1].Anims:Add(deco_top) end
+    for _, obj in pairs(objects) do
         ground:AddObject(obj)
+    end
+    for _, deco in pairs(sub_decos) do
+        ground.Decorations[0].Anims:Add(deco)
     end
 end
 
-function _HUB.DrawEmpty(plot_id, pos)
-
-end
-
-function _HUB.GenerateShopElements(plot_id, building_data, pos)
+function _HUB.DrawBuilding(plot_id, building_data, pos)
     local rank = _HUB.getPlotRank(building_data)
     local graphics_data = _HUB.ShopBase[building_data.building].Graphics[rank]
 
-    local elements = {
-        deco_bottom = nil,
-        deco_top = nil,
-        npc = nil,
-        objects = {}
-    }
-    local bottom = RogueEssence.Content.ObjAnimData(graphics_data.Base, 1)
-    local sheet = RogueEssence.Content.GraphicsManager.GetObject(graphics_data.Base) --TODO this might be the solution
+    local deco_bottom = _HUB.GenerateDecoLayer(graphics_data.Base, pos)
+    local objects = _HUB.GenerateObjectList(plot_id, graphics_data, pos)
+    local sub_decos = _HUB.GenerateSubDecorationList(graphics_data, pos)
+    local deco_top
+    local npc
+    if graphics_data.TopLayer then deco_top = _HUB.GenerateDecoLayer(graphics_data.TopLayer, pos) end
+    if graphics_data.NPC_Loc then  npc =      _HUB.GenerateNPC(plot_id, building_data.shopkeeper, graphics_data.NPC_Loc, pos) end
+
+    local ground = GAME:GetCurrentGround()
+    ground.Decorations[0].Anims:Add(deco_bottom)
+    if deco_top then ground.Decorations[1].Anims:Add(deco_top) end
+    if npc then ground:AddMapChar() end
+    for _, obj in pairs(objects) do
+        ground:AddObject(obj)
+    end
+    for _, deco in pairs(sub_decos) do
+        ground.Decorations[0].Anims:Add(deco)
+    end
+end
+
+function _HUB.GenerateDecoLayer(deco, pos)
+    local object = RogueEssence.Content.ObjAnimData(deco, 1)
+    local sheet = RogueEssence.Content.GraphicsManager.GetObject(deco)
     local size_x, size_y = sheet.Width, sheet.Height
     local offset_x, offset_y = 96-size_x, 96-size_y
+    return RogueEssence.Ground.GroundAnim(object, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
+end
 
-    elements.deco_bottom = RogueEssence.Ground.GroundAnim(bottom, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
+function _HUB.GenerateNPC(plot_id, shopkeeper, NPC_Loc, pos)
+    local name = "NPC_"..plot_id
+    local x, y = NPC_Loc.X + pos.X, NPC_Loc.Y + pos.Y
+    local temp_monster = RogueEssence.Dungeon.MonsterID(shopkeeper, 0, "normal", Gender.Genderless)
+    local npc = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Down, name, shopkeeper)
+    npc:ReloadEvents()
+    return npc
+end
 
-    if graphics_data.TopLayer then
-        local top = RogueEssence.Content.ObjAnimData(graphics_data.TopLayer, 1)
-        sheet = RogueEssence.Content.GraphicsManager.GetObject(graphics_data.Base) --TODO this might be the solution
-        size_x, size_y = sheet.Width, sheet.Height
-        offset_x, offset_y = 96-size_x, 96-size_y
+function _HUB.GenerateObjectList(plot_id, graphics_data, pos)
+    local objects = {}
 
-        elements.deco_top = RogueEssence.Ground.GroundAnim(top, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
-    end
-
-    if graphics_data.NPC_Loc then
-        local name = "NPC_"..plot_id
-        local x, y = graphics_data.NPC_Loc.X + pos.X, graphics_data.NPC_Loc.Y + pos.Y
-        local temp_monster = RogueEssence.Dungeon.MonsterID(building_data.shopkeeper, 0, "normal", Gender.Genderless)
-        elements.npc = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Down, name, building_data.shopkeeper)
-        elements.npc:ReloadEvents()
-    end
-
+    if not graphics_data.Bounds then return objects end
     for _, box in pairs(graphics_data.Bounds) do
         -- Display setup
-        local display = box.Display
-        local anim_index, frame_time, frame_start, frame_end = "", 1, -1, -1
-        if display and display.Sprite then
-            anim_index = display.Sprite
-            if display.FrameLength then frame_time = display.FrameLength end
-            if display.Start then frame_start = display.Start end
-            if display.End then frame_end = display.End end
-        end
-        local anim = RogueEssence.Content.ObjAnimData(anim_index, frame_time, frame_start, frame_end)
+        local anim = _HUB.GenerateAnimData(box.Display)
 
         -- Bounds setup
         local x, y = pos.X+box.X, pos.Y+box.Y
@@ -213,10 +234,35 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
         if box.Solid == nil then passable = false end
         local name = box.Name.."_"..plot_id
         local obj = RogueEssence.Ground.GroundObject(anim, RogueElements.Dir8.Down, rect, RogueElements.Loc(), trigger, passable, name)
+        obj.Passable = passable
         obj:ReloadEvents()
-        table.insert(elements.objects, obj)
+        table.insert(objects, obj)
     end
-    return elements
+    return objects
+end
+
+function _HUB.GenerateSubDecorationList(graphics_data, pos)
+    local decos = {}
+
+    if not graphics_data.Decorations then return decos end
+    for _, deco_data in pairs(graphics_data.Decorations) do
+        local anim = _HUB.GenerateAnimData(deco_data.Display)
+        local offset_x, offset_y =  deco_data.X, deco_data.Y
+        local anim_obj = RogueEssence.Ground.GroundAnim(anim, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
+        table.insert(decos, anim_obj)
+    end
+    return decos
+end
+
+function _HUB.GenerateAnimData(display)
+    local anim_index, frame_time, frame_start, frame_end = "", 1, -1, -1
+    if display and display.Sprite then
+        anim_index = display.Sprite
+        if display.FrameLength then frame_time = display.FrameLength end
+        if display.Start then frame_start = display.Start end
+        if display.End then frame_end = display.End end
+    end
+    return RogueEssence.Content.ObjAnimData(anim_index, frame_time, frame_start, frame_end)
 end
 -------------------------------------------
 --region Scripting
@@ -241,6 +287,13 @@ function _HUB.TeleportToMarker()
         SV.HubData.Marker = nil
     end
 end
+
+function _HUB.WakeUpHome()
+    SV.HubData.RunEnded = true
+    local index = _HUB.getPlotRank(_HUB.getPlotData("home"))
+    GAME:EnterGroundMap("hub_zone", "home_tier"..index, "Bed")
+end
+
 -------------------------------------------
 --region SV Interface
 -------------------------------------------
@@ -248,11 +301,11 @@ end
 function _HUB.initializePlotData()
     SV.HubData.Plots = SV.HubData.Plots or {}
     for i = 1, 17, 1 do
-        local rand = #_HUB.NotUnlockedVisuals.NonBlocking
-        if i>5 or (i>2 and i<5) then rand = rand + #_HUB.NotUnlockedVisuals.Blocking end -- for cutscene reasons must be nonblocking
+        local rand = #_HUB.NotUnlockedVisuals.NonBlocking+#_HUB.NotUnlockedVisuals.Blocking
+        if i>5 or (i>2 and i<5) then rand = rand end
 
         local plot_base = {
-            unlocked = i<_HUB.LevelBuildLimit[1],
+            unlocked = false,
             building = "",
             upgrades = {},
             shopkeeper = "",
@@ -261,11 +314,15 @@ function _HUB.initializePlotData()
         }
 
         if i<16 then
-            if i==15 then plot_base.empty = plot_base.empty end -- make it some nice tiny park or something
+            -- for cutscene reasons it must be nonblocking
+            if i==3 then  plot_base.empty = math.random(#_HUB.NotUnlockedVisuals.NonBlocking) end
+            --TODO make it just a tree in the middle like a tiny park or something
+            if i==15 then plot_base.empty = plot_base.empty end
             table.insert(SV.HubData.Plots, plot_base)
         else
             plot_base.unlocked = true
             plot_base.upgrades = {{type = "upgrade_generic", count = 1}}
+            plot_base.empty = math.random(#_HUB.NotUnlockedVisuals.NonBlocking)
             if i==16 then
                 plot_base.building = "home"
                 SV.HubData.Home = plot_base
