@@ -36,8 +36,14 @@ function hub_small.Enter(_)
         SV.Intro.HubReached = true
         _HUB.initializePlotData()
     end
-    _HUB.LoadBuildings()
-    _HUB.ShowTitle()
+    _HUB.LoadMapData()
+    if SV.HubData.Marker then
+        GAME:FadeOut(false, 1)
+        _HUB.TeleportToMarker()
+        GAME:FadeIn(20)
+    else
+        _HUB.ShowTitle()
+    end
 end
 
 ---hub_small.Exit(map)
@@ -69,8 +75,10 @@ end
 -------------------------------
 
 function hub_small.Entrance_home_Touch(obj, activator)
-    PrintInfo("Triggered Entrance_home_Touch")
-    --TODO connect maps
+    GAME:FadeOut(false, 20)
+    local index = _HUB.getPlotRank(_HUB.getPlotData("home"))
+    GAME:EnterGroundMap("home_tier"..index, "Entrance")
+    GROUND:EntTurn(CH('PLAYER'), Dir8.Up)
 end
 
 function hub_small.Storage_home_Action(obj, activator)
@@ -78,12 +86,14 @@ function hub_small.Storage_home_Action(obj, activator)
 end
 
 function hub_small.Entrance_office_Touch(obj, activator)
-    PrintInfo("Triggered Entrance_office_Touch")
-    --TODO connect maps
+    GAME:FadeOut(false, 20)
+    local index = _HUB.getPlotRank(_HUB.getPlotData("office"))
+    GAME:EnterGroundMap("office_tier"..tostring(index), "Entrance")
+    GROUND:EntTurn(CH('PLAYER'), Dir8.Up)
 end
 
 function hub_small.Assembly_office_Action(obj, activator)
-    COMMON.ShowTeamAssemblyMenu(obj, function() end)
+    COMMON.ShowTeamAssemblyMenu(obj, function() end) --TODO check why no jiggle
 end
 
 function hub_small.NPC_1_Action(obj, activator)
