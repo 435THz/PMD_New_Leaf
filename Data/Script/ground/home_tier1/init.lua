@@ -34,6 +34,7 @@ end
 function home_tier1.Enter(map)
   local player = CH("PLAYER")
   if SV.HubData.RunEnded then
+    GAME:CutsceneMode(true)
     local right = (math.random(0,2) > 0)
     local anim = "EventSleep"
     local wake = true
@@ -49,6 +50,7 @@ function home_tier1.Enter(map)
     else GAME:WaitFrames(45) end
     GROUND:EntTurn(player, Dir8.Down)
     SV.HubData.RunEnded = false
+    GAME:CutsceneMode(false)
   else
     GROUND:EntTurn(player, Dir8.Up)
     GAME:FadeIn(20)
