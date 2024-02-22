@@ -432,3 +432,15 @@ _HUB.ShopBase = {
         }
     }
 }
+
+-- these look exactly like shops graphics data, but never contain NPC_Pos or Marker_Pos
+_HUB.NotUnlockedVisuals = {
+    -- these also never contain Bounds
+    NonBlocking = {
+        {}
+    },
+    -- these do contain Bounds
+    Blocking = {
+        {}
+    }
+}
