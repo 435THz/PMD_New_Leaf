@@ -35,6 +35,7 @@ function forgotten_path.EnterSegment(_, _, segmentID, _)
         GAME:SetCharacterSkill(guest, "roost", 2)
         GAME:ForgetSkill(guest, 3)
         guest.IsPartner = true
+        guest.AtkBonus = -6
 
         local talk_evt = RogueEssence.Dungeon.BattleScriptEvent("EscortInteract") --TODO edit event
         guest.ActionEvents:Add(talk_evt)
