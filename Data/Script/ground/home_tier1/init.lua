@@ -32,7 +32,27 @@ end
 ---home_tier1.Enter(map)
 --Engine callback function
 function home_tier1.Enter(map)
-  GAME:FadeIn(20)
+  local player = CH("PLAYER")
+  if SV.HubData.RunEnded then
+    local right = (math.random(0,2) > 0)
+    local anim = "EventSleep"
+    local wake = true
+    if GROUND:CharGetAnimFallback(player, anim) ~= anim     then anim = "Sleep" end
+    if GROUND:CharGetAnimFallback(player, "Wake") ~= "Wake" then wake = false   end
+
+    if right then GROUND:EntTurn(player, Dir8.Right)
+    else GROUND:EntTurn(player, Dir8.Left) end
+    GROUND:CharSetAnim(player, anim, true)
+    _HUB.ShowTitle()
+    GAME:WaitFrames(75)
+    if wake then GROUND:CharWaitAnim(player, "Wake")
+    else GAME:WaitFrames(45) end
+    GROUND:EntTurn(player, Dir8.Down)
+    SV.HubData.RunEnded = false
+  else
+    GROUND:EntTurn(player, Dir8.Up)
+    GAME:FadeIn(20)
+  end
 
 end
 
@@ -40,13 +60,11 @@ end
 --Engine callback function
 function home_tier1.Exit(map)
 
-
 end
 
 ---home_tier1.Update(map)
 --Engine callback function
 function home_tier1.Update(map)
-
 
 end
 
@@ -54,15 +72,12 @@ end
 --Engine callback function
 function home_tier1.GameSave(map)
 
-
 end
 
 ---home_tier1.GameLoad(map)
 --Engine callback function
 function home_tier1.GameLoad(map)
-
-  GAME:FadeIn(20)
-
+  _HUB.ShowTitle()
 end
 
 -------------------------------
