@@ -32,7 +32,6 @@ end
 ---office_tier1.Enter(map)
 --Engine callback function
 function office_tier1.Enter(map)
-  GROUND:EntTurn(CH('PLAYER'), Dir8.Up)
   GAME:FadeIn(20)
 end
 

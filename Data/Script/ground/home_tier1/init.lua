@@ -52,7 +52,6 @@ function home_tier1.Enter(map)
     SV.HubData.RunEnded = false
     GAME:CutsceneMode(false)
   else
-    GROUND:EntTurn(player, Dir8.Up)
     GAME:FadeIn(20)
   end
 
