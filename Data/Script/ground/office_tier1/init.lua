@@ -5,6 +5,7 @@
 ]]--
 -- Commonly included lua functions and data
 require 'common'
+require 'HubManager'
 
 -- Package name
 local office_tier1 = {}
@@ -31,15 +32,13 @@ end
 ---office_tier1.Enter(map)
 --Engine callback function
 function office_tier1.Enter(map)
-
+  GROUND:EntTurn(CH('PLAYER'), Dir8.Up)
   GAME:FadeIn(20)
-
 end
 
 ---office_tier1.Exit(map)
 --Engine callback function
 function office_tier1.Exit(map)
-
 
 end
 
@@ -47,22 +46,18 @@ end
 --Engine callback function
 function office_tier1.Update(map)
 
-
 end
 
 ---office_tier1.GameSave(map)
 --Engine callback function
 function office_tier1.GameSave(map)
 
-
 end
 
 ---office_tier1.GameLoad(map)
 --Engine callback function
 function office_tier1.GameLoad(map)
-
-  GAME:FadeIn(20)
-
+  _HUB.ShowTitle()
 end
 
 -------------------------------

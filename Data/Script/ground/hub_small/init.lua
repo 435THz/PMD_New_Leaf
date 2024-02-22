@@ -78,7 +78,6 @@ function hub_small.Entrance_home_Touch(obj, activator)
     GAME:FadeOut(false, 20)
     local index = _HUB.getPlotRank(_HUB.getPlotData("home"))
     GAME:EnterGroundMap("home_tier"..index, "Entrance")
-    GROUND:EntTurn(CH('PLAYER'), Dir8.Up)
 end
 
 function hub_small.Storage_home_Action(obj, activator)
@@ -89,7 +88,6 @@ function hub_small.Entrance_office_Touch(obj, activator)
     GAME:FadeOut(false, 20)
     local index = _HUB.getPlotRank(_HUB.getPlotData("office"))
     GAME:EnterGroundMap("office_tier"..tostring(index), "Entrance")
-    GROUND:EntTurn(CH('PLAYER'), Dir8.Up)
 end
 
 function hub_small.Assembly_office_Action(obj, activator)
