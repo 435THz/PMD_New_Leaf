@@ -219,7 +219,7 @@ function _HUB.GenerateShopElements(plot_id, building_data, pos)
     return elements
 end
 -------------------------------------------
----region Scripting
+--region Scripting
 -------------------------------------------
 
 function _HUB.ShowTitle()
@@ -248,36 +248,31 @@ end
 function _HUB.initializePlotData()
     SV.HubData.Plots = SV.HubData.Plots or {}
     for i = 1, 17, 1 do
+        local rand = #_HUB.NotUnlockedVisuals.NonBlocking
+        if i>5 or (i>2 and i<5) then rand = rand + #_HUB.NotUnlockedVisuals.Blocking end -- for cutscene reasons must be nonblocking
+
+        local plot_base = {
+            unlocked = i<_HUB.LevelBuildLimit[1],
+            building = "",
+            upgrades = {},
+            shopkeeper = "",
+            data = {},
+            empty = math.random(rand)
+        }
+
         if i<16 then
-            if not SV.HubData.Plots[i] then
-                local plot_base = {
-                    unlocked = i<_HUB.LevelBuildLimit[1],
-                    building = "",
-                    upgrades = {},
-                    shopkeeper = "",
-                    data = {}
-                }
-                table.insert(SV.HubData.Plots, plot_base)
+            if i==15 then plot_base.empty = plot_base.empty end -- make it some nice tiny park or something
+            table.insert(SV.HubData.Plots, plot_base)
+        else
+            plot_base.unlocked = true
+            plot_base.upgrades = {{type = "upgrade_generic", count = 1}}
+            if i==16 then
+                plot_base.building = "home"
+                SV.HubData.Home = plot_base
+            else
+                plot_base.building = "office"
+                SV.HubData.Office = plot_base
             end
-        elseif i<17 then
-            -- generate home structure
-            if not SV.HubData.Home then
-                SV.HubData.Home = {
-                    unlocked = true,
-                    building = "home",
-                    upgrades = {{type = "upgrade_generic", count = 1}},
-                    shopkeeper = "",
-                    data = {}
-                }
-            end
-        elseif not SV.HubData.Office then
-            SV.HubData.Office = {
-                unlocked = true,
-                building = "office",
-                upgrades = {{type = "upgrade_generic", count = 1}},
-                shopkeeper = "",
-                data = {}
-            }
         end
     end
 end
