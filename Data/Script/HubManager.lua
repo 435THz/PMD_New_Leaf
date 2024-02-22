@@ -3,6 +3,28 @@
     Contains all constant global tables and variables necessary for the Hub to function, plus some functions that interface with them in a more intuitive way.
 ]]
 
+function printall(table, level, root)
+    if root == nil then print(" ") end
+
+    if table == nil then print("<nil>") return end
+    if level == nil then level = 0 end
+    for key, value in pairs(table) do
+        local spacing = ""
+        for _=1, level*2, 1 do
+            spacing = " "..spacing
+        end
+        if type(value) == 'table' then
+            print(spacing..tostring(key).." = {")
+            printall(value,level+1, false)
+            print(spacing.."}")
+        else
+            print(spacing..tostring(key).." = "..tostring(value))
+        end
+    end
+
+    if root == nil then print(" ") end
+end
+
 _HUB = _HUB or {}
 
 require 'ShopManager'
