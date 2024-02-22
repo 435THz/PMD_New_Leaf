@@ -69,6 +69,7 @@ end
 
 function intro_scene.PlotScripting()
     GAME:FadeOut(false, 1)
+    SOUND:FadeOutBGM(40)
     if not SV.Intro.CharacterCreated then
         intro_scene.CharacterSelect()
     else
@@ -89,7 +90,6 @@ end
 function intro_scene.CharacterSelect()
     GAME:CutsceneMode(true)
     UI:ResetSpeaker()
-    SOUND:FadeOutBGM()
 
     --move camera to arbitrary position. Partner and hero will spawn in at 0,0 when they're created, so this is done to hide that without extra hassle.
 	GAME:MoveCamera(300, 300, 1, false)
