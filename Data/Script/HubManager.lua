@@ -210,7 +210,7 @@ function _HUB.DrawBuilding(plot_id, building_data, pos)
     local ground = GAME:GetCurrentGround()
     ground.Decorations[0].Anims:Add(deco_bottom)
     if deco_top then ground.Decorations[1].Anims:Add(deco_top) end
-    if npc then ground:AddMapChar() end
+    if npc then ground:AddMapChar(npc) end
     for _, obj in pairs(objects) do
         ground:AddObject(obj)
     end
@@ -223,15 +223,16 @@ function _HUB.GenerateDecoLayer(deco, pos)
     local object = RogueEssence.Content.ObjAnimData(deco, 1)
     local sheet = RogueEssence.Content.GraphicsManager.GetObject(deco)
     local size_x, size_y = sheet.Width, sheet.Height
-    local offset_x, offset_y = 96-size_x, 96-size_y
+    local offset_x, offset_y = (96-size_x)//2, (96-size_y)//2
     return RogueEssence.Ground.GroundAnim(object, RogueElements.Loc(pos.X+offset_x, pos.Y+offset_y))
 end
 
 function _HUB.GenerateNPC(plot_id, shopkeeper, NPC_Loc, pos)
+    local nickname = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:Get(shopkeeper).Name:ToLocal()
     local name = "NPC_"..plot_id
     local x, y = NPC_Loc.X + pos.X, NPC_Loc.Y + pos.Y
     local temp_monster = RogueEssence.Dungeon.MonsterID(shopkeeper, 0, "normal", Gender.Genderless)
-    local npc = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Down, name, shopkeeper)
+    local npc = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Down, nickname, name)
     npc:ReloadEvents()
     return npc
 end

@@ -254,7 +254,7 @@ _HUB.ShopBase = {
                 Bounds = {
                     {
                         Name = "Left_Front",
-                        X = 16, Y = 56, W = 24, H = 24
+                        X = 16, Y = 56, W = 23, H = 24
                     },
                     {
                         Name = "Left_Mid",
@@ -266,7 +266,7 @@ _HUB.ShopBase = {
                     },
                     {
                         Name = "Right_Front",
-                        X = 56, Y = 56, W = 24, H = 24
+                        X = 57, Y = 56, W = 23, H = 24
                     },
                     {
                         Name = "Right_Mid",
@@ -287,7 +287,7 @@ _HUB.ShopBase = {
             {}
         }
     },
-    move_tutor = {
+    tutor = {
         Shopkeepers = {"machoke", "blaziken", "electivire", "mienshao"},
         Upgrades = {
             {"upgrade_generic"},    --shop level 1
@@ -363,23 +363,27 @@ _HUB.ShopBase = {
                 Bounds = {
                     {
                         Name = "Left_Front",
-                        X = 24, Y = 64, W = 24, H = 24
+                        X = 16, Y = 56, W = 23, H = 24
                     },
                     {
                         Name = "Left_Mid",
-                        X = 8, Y = 40, W = 40, H = 24
+                        X = 0, Y = 32, W = 40, H = 24
                     },
                     {
                         Name = "Right_Front",
-                        X = 64, Y = 64, W = 24, H = 24
+                        X = 57, Y = 56, W = 23, H = 24
                     },
                     {
                         Name = "Right_Mid",
-                        X = 72, Y = 32, W = 24, H = 32
+                        X = 64, Y = 24, W = 24, H = 32
                     },
                     {
                         Name = "Back_fw",
-                        X = 24, Y = 24, W = 64, H = 8
+                        X = 8, Y = 24, W = 56, H = 16
+                    },
+                    {
+                        Name = "Back_bk",
+                        X = 16, Y = 16, W = 64, H = 8
                     }
                 }
             },
@@ -491,6 +495,107 @@ _HUB.NotUnlockedVisuals = {
     },
     -- these do contain Bounds
     Blocking = {
-
+        {
+            Base = "empty_5",
+            TopLayer = "empty_5_top",
+            Bounds = {
+                {
+                    Name = "Tree",
+                    X = 40, Y = 48, W = 16, H = 16
+                }
+            }
+        },
+        {
+            Base = "empty_6",
+            Bounds = {
+                {
+                    Name = "Bush",
+                    X = 8, Y = 16, W = 24, H = 24
+                },
+                {
+                    Name = "Rock",
+                    X = 64, Y = 40, W = 16, H = 16
+                }
+            }
+        },
+        {
+            Base = "empty_7",
+            TopLayer = "empty_7_top",
+            Bounds = {
+                {
+                    Name = "Tree_covered",
+                    X = 48, Y = 32, W = 16, H = 16
+                },
+                {
+                    Name = "Tree",
+                    X = 32, Y = 72, W = 16, H = 16
+                }
+            }
+        },
+        {
+            Base = "empty_8",
+            Bounds = {
+                {
+                    Name = "Bush_left",
+                    X = 16, Y = 24, W = 24, H = 24
+                },
+                {
+                    Name = "Bush_right",
+                    X = 64, Y = 40, W = 24, H = 24
+                }
+            },
+            Decorations = {
+                {
+                    X=64, Y=16,
+                    Display = {
+                        Sprite = "Flowers_Town_4",
+                        FrameLength = 30
+                    }
+                }
+            }
+        },
+        {
+            Base = "empty_9",
+            Bounds = {
+                {
+                    Name = "Rock_left",
+                    X = 8, Y = 16, W = 16, H = 16
+                },
+                {
+                    Name = "Rock_right",
+                    X = 72, Y = 48, W = 16, H = 16
+                },
+                {
+                    Name = "Bush",
+                    X = 24, Y = 64, W = 24, H = 24
+                }
+            },
+            Decorations = {
+                {
+                    X=48, Y=8,
+                    Display = {
+                        Sprite = "Flowers_Town_3",
+                        FrameLength = 30
+                    }
+                }
+            }
+        },
+        {
+            Base = "empty_10",
+            Bounds = {
+                {
+                    Name = "Bush_left",
+                    X = 8, Y = 32, W = 24, H = 24
+                },
+                {
+                    Name = "Bush_right",
+                    X = 56, Y = 48, W = 24, H = 24
+                },
+                {
+                    Name = "Rock",
+                    X = 48, Y = 8, W = 16, H = 16
+                }
+            }
+        }
     }
 }
