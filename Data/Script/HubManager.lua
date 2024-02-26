@@ -3,27 +3,48 @@
     Contains all constant global tables and variables necessary for the Hub to function, plus some functions that interface with them in a more intuitive way.
 ]]
 
-function printall(table, level, root)
-    if root == nil then print(" ") end
 
-    if table == nil then print("<nil>") return end
-    if level == nil then level = 0 end
-    for key, value in pairs(table) do
-        local spacing = ""
-        for _=1, level*2, 1 do
-            spacing = " "..spacing
+--- Takes any kind of value and prints it in the easiest to read format it can.
+--- If the supplied element is a table, this function will recursively print its entire contents,
+--- increasing the indentation for every new layer discovered.
+--- If the supplied element is not a table, it will just print its value.
+--- @param element any the object to print
+--- @param max_depth number the deepest layer this function will explore. if 1 or lower, it will only explore the first layer. Defaults to 20.
+function printall(elem, max_depth)
+    if max_depth == nil then max_depth = 20 end
+    if max_depth < 1 then max_depth = 1 end
+
+    local rec_printall = function(element, level, root, this)
+        if root == nil then print(" ") end
+
+        if element == nil then print("<nil>") return end
+        if type(element) ~= 'table' then print(tostring(element)) return end
+
+        if level == nil then level = 0 end
+        for key, value in pairs(element) do
+            local spacing = ""
+            for _=1, level*2, 1 do
+                spacing = " "..spacing
+            end
+            if type(value) == 'table' then
+                if level<=max_depth then
+                    print(spacing..tostring(key).." = {")
+                    this(value, level+1, false, this)
+                    print(spacing.."}")
+                else
+                    print(spacing..tostring(key).." = {...}")
+                end
+            else
+                print(spacing..tostring(key).." = "..tostring(value))
+            end
         end
-        if type(value) == 'table' then
-            print(spacing..tostring(key).." = {")
-            printall(value,level+1, false)
-            print(spacing.."}")
-        else
-            print(spacing..tostring(key).." = "..tostring(value))
-        end
+
+        if root == nil then print(" ") end
     end
 
-    if root == nil then print(" ") end
+    rec_printall(elem, 0, nil, rec_printall)
 end
+
 
 _HUB = _HUB or {}
 
