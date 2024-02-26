@@ -145,13 +145,14 @@ end
 --region Graphics
 -------------------------------------------
 
-function _HUB.DrawAllEmpty()
+function _HUB.LoadMapEmpty()
     for i, pos in pairs(_HUB.getPlotOriginList()) do
-        if i == 1 then _HUB.DrawEmpty("home", pos)
-        elseif i == 2 then _HUB.DrawBuilding("office", pos)
-        else
+        if     i == 1 then _HUB.DrawEmpty("home",   _HUB.getPlotData("home").empty,   pos)
+        elseif i == 2 then _HUB.DrawEmpty("office", _HUB.getPlotData("office").empty, pos)
+        else               _HUB.DrawEmpty(i-2,      _HUB.getPlotData(i-2).empty,      pos)
         end
     end
+    GAME:GetCurrentGround().Name = RogueEssence.LocalText(_HUB.getHubName(true))
 end
 
 function _HUB.LoadMapData()
@@ -339,8 +340,8 @@ function _HUB.initializePlotData()
         if i<16 then
             -- for cutscene reasons it must be nonblocking
             if i==3 then  plot_base.empty = math.random(#_HUB.NotUnlockedVisuals.NonBlocking) end
-            --TODO make it just a tree in the middle like a tiny park or something
-            if i==15 then plot_base.empty = plot_base.empty end
+            --just a tree in the middle of the plot
+            if i==15 then plot_base.empty = 5 end
             table.insert(SV.HubData.Plots, plot_base)
         else
             plot_base.unlocked = true
