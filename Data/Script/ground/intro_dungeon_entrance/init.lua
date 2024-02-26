@@ -136,7 +136,6 @@ function intro_dungeon_entrance.KnockoutDialogue()
 
     --define coroutines
     local random_wake = function(chara, turnto, wait)
-
         GAME:WaitFrames(wait)
         GROUND:CharEndAnim(chara)
         GAME:WaitFrames(45)
@@ -164,9 +163,11 @@ function intro_dungeon_entrance.KnockoutDialogue()
 
     GAME:CutsceneMode(false)
 end
+
 -------------------------------
 -- Entities Callbacks
 -------------------------------
+
 function intro_dungeon_entrance.NPC_Pelipper_Action(_, _)
     local player = CH("PLAYER")
     local pelipper = CH("NPC_Pelipper")
