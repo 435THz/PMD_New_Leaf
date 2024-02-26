@@ -292,12 +292,12 @@ end
 --region Scripting
 -------------------------------------------
 
-function _HUB.ShowTitle()
+function _HUB.ShowTitle(no_fade)
     GAME:FadeOut(false, 1)
     UI:WaitShowTitle(_HUB.getHubName(true), 30)
     GAME:WaitFrames(60)
     UI:WaitHideTitle(30)
-    GAME:FadeIn(20)
+    if not no_fade then GAME:FadeIn(20) end
 end
 
 function _HUB.SetMarker(x, y)
