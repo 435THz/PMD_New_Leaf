@@ -21,75 +21,135 @@ local MapStrings = {}
 -------------------------------
 ---home_tier1.Init(map)
 --Engine callback function
-function home_tier1.Init(map)
+function home_tier1.Init(_)
 
-  --This will fill the localized strings table automatically based on the locale the game is 
-  -- currently in. You can use the MapStrings table after this line!
-  MapStrings = COMMON.AutoLoadLocalizedStrings()
+    --This will fill the localized strings table automatically based on the locale the game is
+    -- currently in. You can use the MapStrings table after this line!
+    MapStrings = COMMON.AutoLoadLocalizedStrings()
 
 end
 
 ---home_tier1.Enter(map)
 --Engine callback function
-function home_tier1.Enter(map)
-  local player = CH("PLAYER")
-  if SV.HubData.RunEnded then
-    GAME:CutsceneMode(true)
-    local right = (math.random(0,1) > 0)
-    local anim = "EventSleep"
-    local wake = true
-    if GROUND:CharGetAnimFallback(player, anim) ~= anim     then anim = "Sleep" end
-    if GROUND:CharGetAnimFallback(player, "Wake") ~= "Wake" then wake = false   end
+function home_tier1.Enter(_)
+    if SV.Intro.HubTutorialProgress<2 then
+        local anim = _HUB.GenerateAnimData()
 
-    if right then GROUND:EntTurn(player, Dir8.Right)
-    else GROUND:EntTurn(player, Dir8.Left) end
-    GROUND:CharSetAnim(player, anim, true)
-    _HUB.ShowTitle()
-    GAME:WaitFrames(75)
-    if wake then GROUND:CharWaitAnim(player, "Wake")
-    else GAME:WaitFrames(45) end
-    GROUND:EntTurn(player, Dir8.Down)
-    SV.HubData.RunEnded = false
-    GAME:CutsceneMode(false)
-  else
-    GAME:FadeIn(20)
-  end
+        local x, y = 196, 136
+        local size = 16
+        local rect = RogueElements.Rect.FromPoints(RogueElements.Loc(x,y), RogueElements.Loc(x+size, y+size))
+
+        local trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.Action
+        local name = "Bed"
+        local obj = RogueEssence.Ground.GroundObject(anim, RogueElements.Dir8.Down, rect, RogueElements.Loc(), trigger, true, name)
+        obj.Passable = true
+        obj:ReloadEvents()
+
+        GAME:GetCurrentGround():AddObject(obj)
+    end
+
+    local player = CH("PLAYER")
+    if SV.HubData.RunEnded then
+        GAME:CutsceneMode(true)
+        local right = (math.random(0,1) > 0)
+        local anim = "EventSleep"
+        local wake = true
+        if GROUND:CharGetAnimFallback(player, anim) ~= anim     then anim = "Sleep" end
+        if GROUND:CharGetAnimFallback(player, "Wake") ~= "Wake" then wake = false   end
+
+        if right then GROUND:EntTurn(player, Dir8.Right)
+        else GROUND:EntTurn(player, Dir8.Left) end
+        GROUND:CharSetAnim(player, anim, true)
+        UI:WaitShowVoiceOver("The next morning...", -1)
+        _HUB.ShowTitle()
+        GAME:WaitFrames(75)
+        if wake then GROUND:CharWaitAnim(player, "Wake")
+        else GAME:WaitFrames(45) end
+        GROUND:EntTurn(player, Dir8.Down)
+        GROUND:CharEndAnim(player)
+        SV.HubData.RunEnded = false
+        GAME:CutsceneMode(false)
+    else
+        GAME:FadeIn(20)
+    end
 
 end
 
 ---home_tier1.Exit(map)
 --Engine callback function
-function home_tier1.Exit(map)
+function home_tier1.Exit(_)
 
 end
 
 ---home_tier1.Update(map)
 --Engine callback function
-function home_tier1.Update(map)
+function home_tier1.Update(_)
 
 end
 
 ---home_tier1.GameSave(map)
 --Engine callback function
-function home_tier1.GameSave(map)
+function home_tier1.GameSave(_)
 
 end
 
 ---home_tier1.GameLoad(map)
 --Engine callback function
-function home_tier1.GameLoad(map)
-  _HUB.ShowTitle()
+function home_tier1.GameLoad(_)
+    _HUB.ShowTitle()
 end
 
 -------------------------------
 -- Entities Callbacks
 -------------------------------
-function home_tier1.Exit_Touch(obj, activator)
-  GAME:FadeOut(false, 20)
-  local pos = _HUB.getPlotOriginList()[1]
-  local marker = _HUB.ShopBase["home"].Graphics[1].Marker_Loc
-  GAME:EnterGroundMap(_HUB.getHubMap(), "Entrance")
-  _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
+function home_tier1.Exit_Touch(_, _)
+    GAME:FadeOut(false, 20)
+    local pos = _HUB.getPlotOriginList()[1]
+    local marker = _HUB.ShopBase["home"].Graphics[1].Marker_Loc
+    GAME:EnterGroundMap(_HUB.getHubMap(), "Entrance")
+    _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
+end
+
+function home_tier1.Bed_Action(_, _)    --TODO test this shit
+    if SV.Intro.HubTutorialProgress<2 then
+        UI:ChoiceMenuYesNo("Do you want to sleep?", false)
+        UI:WaitForChoice()
+        local ch = UI:ChoiceResult()
+        if ch then
+            GAME:CutsceneMode(true)
+            local player = CH("PLAYER")
+            GROUND:MoveToPosition(player, 196, 136, false, 1)
+            GROUND:CharAnimateTurnTo(player, Direction.Down, 4)
+            GAME:WaitFrames(30)
+            GROUND:CharSetAnim(player, "Sleep", true)
+
+            TASK:BranchCoroutine(function() SOUND:FadeOutBGM(60) end)
+            GAME:FadeOut(false, 60)
+
+            local right = (math.random(0,1) > 0)
+            local anim = "EventSleep"
+            local wake = true
+            if GROUND:CharGetAnimFallback(player, anim) ~= anim     then anim = "Sleep" end
+            if GROUND:CharGetAnimFallback(player, "Wake") ~= "Wake" then wake = false   end
+            if right then GROUND:EntTurn(player, Dir8.Right)
+            else GROUND:EntTurn(player, Dir8.Left) end
+            GROUND:CharSetAnim(player, anim, true)
+            SV.Intro.HubTutorialProgress = 2
+            UI:WaitShowVoiceOver("The next morning...", -1)
+
+
+            SOUND:PlayBGM("A04. Canyon Camp.ogg", true)
+            GAME:FadeIn(20)
+
+            GAME:WaitFrames(75)
+            if wake then GROUND:CharWaitAnim(player, "Wake")
+            else GAME:WaitFrames(45) end
+            GROUND:EntTurn(player, Dir8.Down)
+            GROUND:CharEndAnim(player)
+            SV.HubData.RunEnded = false
+            GAME:CutsceneMode(false)
+        end
+    end
 end
 
 return home_tier1
