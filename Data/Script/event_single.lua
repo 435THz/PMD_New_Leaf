@@ -1351,41 +1351,18 @@ end
 
 function SINGLE_CHAR_SCRIPT.GuestDeathCheck()
 	local player_count = GAME:GetPlayerPartyCount()
-	local guest_count = GAME:GetPlayerGuestCount()
-	if guest_count < 1 then return end--If there's no guest members then we dont need to do anything
+	if SV.Intro.HubReached then return end--If we're not at game start then we don't need to do anything
 
 	for i = 0, player_count - 1, 1 do
 		local chara = GAME:GetPlayerPartyMember(i)
-		if not chara.Dead then break end
-
-		-- do not try to beam main party out because they're all ko anyway
-		for j = 0, guest_count - 1, 1 do -- beam everyone else out
-			local guest = GAME:GetPlayerGuestMember(j)
-			if not guest.Dead then -- don't beam out whoever died
-				GAME:WaitFrames(60)
-				TASK:WaitTask(_DUNGEON:ProcessBattleFX(guest, guest, _DATA.SendHomeFX))
-				guest.Dead = true
-			end
-		end
-	end
-
-	for i = 0, guest_count - 1, 1 do
-		local guest = GAME:GetPlayerGuestMember(i)
-		if guest.Dead and guest.IsPartner then -- someone important died
-			for j = 0, player_count - 1, 1 do -- beam player's team out first
-				local player = GAME:GetPlayerPartyMember(j)
-				if not player.Dead then -- don't beam out whoever died
+		if chara.Dead then
+			--only beam up team because guests will never be a thing in game ever
+			for j = 0, player_count - 1, 1 do -- beam everyone else out
+				local chara_2 = GAME:GetPlayerPartyMember(j)
+				if not chara_2.Dead then -- don't beam out whoever died
 					GAME:WaitFrames(60)
-					TASK:WaitTask(_DUNGEON:ProcessBattleFX(player, player, _DATA.SendHomeFX))
-					player.Dead = true
-				end
-			end
-			for j = 0, guest_count - 1, 1 do -- beam everyone else out
-				guest = GAME:GetPlayerGuestMember(j)
-				if not guest.Dead then -- don't beam out whoever died
-					GAME:WaitFrames(60)
-					TASK:WaitTask(_DUNGEON:ProcessBattleFX(guest, guest, _DATA.SendHomeFX))
-					guest.Dead = true
+					TASK:WaitTask(_DUNGEON:ProcessBattleFX(chara_2, chara_2, _DATA.SendHomeFX))
+					chara_2.Dead = true
 				end
 			end
 		end
