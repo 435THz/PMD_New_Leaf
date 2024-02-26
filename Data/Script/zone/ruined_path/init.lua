@@ -28,8 +28,8 @@ function forgotten_path.EnterSegment(_, _, segmentID, _)
         _DATA.Save.ActiveTeam.Guests:Clear()
         -- add pelipper to team
         local guest_id = RogueEssence.Dungeon.MonsterID("pelipper", 0, "normal", RogueEssence.Data.Gender.Male)
-        _DATA.Save.ActiveTeam.Guests:Add(_DATA.Save.ActiveTeam:CreatePlayer(_DATA.Save.Rand, guest_id, 5, "keen_eye", 0))
-        local guest = GAME:GetPlayerGuestMember(0)
+        _DATA.Save.ActiveTeam.Players:Add(_DATA.Save.ActiveTeam:CreatePlayer(_DATA.Save.Rand, guest_id, 5, "keen_eye", 0))
+        local guest = GAME:GetPlayerPartyMember(1)
         GAME:SetCharacterSkill(guest, "wing_attack", 0)
         GAME:SetCharacterSkill(guest, "supersonic", 1)
         GAME:SetCharacterSkill(guest, "roost", 2)
@@ -54,7 +54,7 @@ function forgotten_path.ExitSegment(_, result, _, segmentID, _)
     else
         COMMON_FUNC.EndSessionWithResults(result, 'hub_zone', -1, _HUB.getHubRank()-1, 0)
     end
-    _DATA.Save.ActiveTeam.Guests:Clear() --remove pelipper from team
+    _DATA.Save.ActiveTeam.Players:RemoveAt(1) -- remove pelipper from team
 end
 
 --Engine callback function
