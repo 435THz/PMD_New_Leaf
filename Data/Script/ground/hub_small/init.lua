@@ -33,22 +33,26 @@ end
 --Engine callback function
 function hub_small.Enter(_)
     if not SV.Intro.HubReached then
-        SV.Intro.HubReached = true
-        _HUB.initializePlotData()
-    end
-    _HUB.LoadMapData()
-    if SV.HubData.Marker then
-        GAME:FadeOut(false, 1)
-        _HUB.TeleportToMarker()
-        GAME:FadeIn(20)
+        if SV.Intro.HubTutorialProgress<1 then
+            hub_small.veryFirstVisit()
+        else
+            hub_small.SecondVisit()
+        end
     else
-        _HUB.ShowTitle()
+        _HUB.LoadMapData()
+        if SV.HubData.Marker then
+            GAME:FadeOut(false, 1)
+            _HUB.TeleportToMarker()
+            GAME:FadeIn(20)
+        else
+            _HUB.ShowTitle()
+        end
     end
 end
 
 ---hub_small.Exit(map)
 --Engine callback function
-function hub_small.Exit(map)
+function hub_small.Exit(_)
 
 end
 
@@ -70,6 +74,172 @@ function hub_small.GameLoad(_)
     _HUB.ShowTitle()
 end
 
+function hub_small.veryFirstVisit()
+    GAME:CutsceneMode(true)
+    SOUND:StopBGM()
+    _HUB.initializePlotData()
+    _HUB.LoadMapEmpty()
+    _HUB.ShowTitle(true)
+
+    local nickname = "Pelipper"
+    local name = "NPC_"..nickname
+    local x, y = 256, 360
+    local temp_monster = RogueEssence.Dungeon.MonsterID("pelipper", 0, "normal", RogueEssence.Data.Gender.Male)
+    local pelipper = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Up, nickname, name)
+    GAME:GetCurrentGround():AddTempChar(pelipper)
+    local player = CH("PLAYER")
+
+    UI:SetSpeaker(pelipper)
+    UI:WaitShowDialogue("I see it![pause=0] That's the clearing we're looking for!")
+
+    SOUND:PlayBGM("A04. Canyon Camp.ogg", true)
+
+    --define coroutines
+    local player_intro_walk = function()
+        GROUND:MoveToPosition(player, 256, 196, false, 1)
+        TASK:BranchCoroutine(function() GAME:MoveCamera(20, 0, 20, true) end)
+        GROUND:MoveToPosition(player, 236, 196, false, 1)
+        GROUND:CharAnimateTurnTo(player, Direction.Right, 4)
+    end
+    local pelipper_intro_walk = function()
+        GROUND:MoveToPosition(pelipper, 256, 196, false, 1)
+        GROUND:MoveToPosition(pelipper, 276, 196, false, 1)
+        GROUND:CharAnimateTurnTo(pelipper, Direction.Left, 4)
+    end
+    local pelipper_look_player = function()
+        GROUND:CharTurnToCharAnimated(pelipper, player, 4)
+    end
+
+    -- run coroutines
+    local coro1 = TASK:BranchCoroutine(function() player_intro_walk() end)
+    local coro2 = TASK:BranchCoroutine(function() pelipper_intro_walk() end)
+    GAME:FadeIn(40)
+
+    -- wait for the characters to finish their movement
+    TASK:JoinCoroutines({coro1,coro2})
+
+    UI:WaitShowDialogue("It's good to finally be someplace safe.")
+    UI:WaitShowDialogue("Now that we're here,[pause=5] we can start by planting our tents and getting ready for the night.")
+
+    coro1 = TASK:BranchCoroutine(function() hub_small.LookAround(player, 5, Direction.Up) end)
+    hub_small.LookAround(pelipper, 5, Direction.UpLeft)
+    TASK:JoinCoroutines({coro1})
+    TASK:BranchCoroutine(function() GAME:MoveCamera(20, -20, 36, true) end)
+    GROUND:MoveToPosition(pelipper, 256, 160, false, 1)
+    GROUND:CharAnimateTurnTo(pelipper, Direction.Left, 4)
+    GAME:WaitFrames(20)
+    GROUND:CharAnimateTurnTo(pelipper, Direction.UpRight, 4)
+    GAME:WaitFrames(20)
+    coro1 = TASK:BranchCoroutine(function() pelipper_look_player() end)
+
+    UI:WaitShowDialogue("These two spots should be fine.[pause=0] We don't need more space than that,[pause=5] for now.")
+    UI:WaitShowDialogue("Ah,[pause=5] before we start:[pause=0] I won't be at camp tomorrow.[pause=0] I need to reach out to the Federation and tell them we arrived safely.[pause=0] You're free to start exploring anyway,[pause=5] though.")
+    TASK:BranchCoroutine(function() GROUND:CharAnimateTurnTo(player,   Direction.UpLeft,  4) end)
+    TASK:BranchCoroutine(function() GROUND:CharAnimateTurnTo(pelipper, Direction.Right,   4) end)
+    TASK:JoinCoroutines({coro1,coro2})
+    UI:WaitShowDialogue("Okay.[pause=0] Let's start working.")
+
+    coro1 = TASK:BranchCoroutine(function() GROUND:MoveToPosition(player,   168, 148, false, 1) end)
+    coro2 = TASK:BranchCoroutine(function() GROUND:MoveToPosition(pelipper, 344, 148, false, 1) end)
+
+    GAME:FadeOut(false, 30)
+    TASK:JoinCoroutines({coro1,coro2})
+    GAME:CutsceneMode(false)
+    SV.Intro.HubTutorialProgress=1
+    GAME:EnterGroundMap('hub_zone', "hub_small", 'Entrance')
+end
+
+function hub_small.SecondVisit()
+    _HUB.LoadMapData()
+    local nickname = "Pelipper"
+    local name = "NPC_"..nickname
+    local x, y = 280, 152
+    local temp_monster = RogueEssence.Dungeon.MonsterID("pelipper", 0, "normal", RogueEssence.Data.Gender.Male)
+    local pelipper = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Up, nickname, name)
+    GAME:GetCurrentGround():AddTempChar(pelipper)
+    local player = CH("PLAYER")
+
+    SOUND:PlayBattleSE("_UNK_EVT_094")
+    GAME:WaitFrames(45)
+    SOUND:PlayBattleSE("_UNK_EVT_094")
+    GAME:WaitFrames(45)
+    SOUND:PlayBattleSE("_UNK_EVT_094")
+    GAME:WaitFrames(60)
+    GROUND:TeleportTo(player,   232, 152, Direction.Right)
+    GROUND:TeleportTo(pelipper, 280, 152, Direction.Left)
+    GAME:MoveCamera(264, 160, 1, false)
+    GAME:CutsceneMode(true)
+    GAME:FadeIn(30)
+
+    UI:SetSpeaker(pelipper)
+    UI:WaitShowDialogue("Not half bad,[pause=5] if i do say so myself!")
+    UI:WaitShowDialogue("Now i'm really tired,[pause=5] though.[pause=0] I'm going to sleep.[pause=0] I suggest you do the same for today.[pause=0] It's not like there's much else to do here...")
+    UI:WaitShowDialogue("Good night,[pause=5] "..player:GetDisplayName().."!")
+
+    TASK:BranchCoroutine(function() GAME:MoveCamera(0, 0, 30, true) end)
+    GROUND:MoveToPosition(pelipper, 328, 152, false, 1)
+    GROUND:MoveToPosition(pelipper, 328, 146, false, 1)
+    GROUND:Hide("NPC_Pelipper")
+    UI:ResetSpeaker()
+    SV.Intro.HubReached = true
+    GAME:CutsceneMode(false)
+end
+
+function hub_small.LookAround(chara, rotations, enddir)
+    if enddir == nil then enddir = chara.Direction end
+
+    local dir = 0
+
+    --if all directions, look in any of the 8 directions randomly (except the one we are already facing)
+    --at the end, face towards the enddir if specified
+    for _ = 1, rotations, 1 do
+        local currentDir = chara.Direction
+        local numDir = hub_small.DirToNum(currentDir)
+        local rand = 0
+        rand = math.random(2, 6) --pick a random turn angle of at least 90 degrees
+        rand = (numDir + rand)%8 --calculate chosen direction
+        dir = hub_small.NumToDir(rand)
+        GROUND:CharAnimateTurnTo(chara, dir, 4)
+        GAME:WaitFrames(10)--pause
+    end
+    if enddir ~= Direction.None and enddir ~= dir then--if a direction to end on was specified and we aren't facing that way, turn there
+        GROUND:CharAnimateTurnTo(chara, enddir, 4)
+    else GAME:WaitFrames(8)--wait for some time based off how long it could have taken to turn if we dont turn at the end
+    end
+    GAME:WaitFrames(6)--Wait a short duration before ending
+
+end
+
+--assigns a number value to each direction, useful for figuring out how many turn a direction is from another
+function hub_small.DirToNum(dir)
+    --up is 0, upright is 1, ... up left is 7
+    local num = -1
+    if     dir == Direction.Up then        num = 0
+    elseif dir == Direction.UpRight then   num = 1
+    elseif dir == Direction.Right then     num = 2
+    elseif dir == Direction.DownRight then num = 3
+    elseif dir == Direction.Down then      num = 4
+    elseif dir == Direction.DownLeft then  num = 5
+    elseif dir == Direction.Left then      num = 6
+    elseif dir == Direction.UpLeft then    num = 7
+    end
+    return num
+end
+
+--converts a number to a direction
+function hub_small.NumToDir(num)
+    local dir = Direction.None
+    if     num % 8 == 0 then dir = Direction.Up
+    elseif num % 8 == 1 then dir = Direction.UpRight
+    elseif num % 8 == 2 then dir = Direction.Right
+    elseif num % 8 == 3 then dir = Direction.DownRight
+    elseif num % 8 == 4 then dir = Direction.Down
+    elseif num % 8 == 5 then dir = Direction.DownLeft
+    elseif num % 8 == 6 then dir = Direction.Left
+    elseif num % 8 == 7 then dir = Direction.UpLeft
+    end
+    return dir
+end
 -------------------------------
 -- Entities Callbacks
 -------------------------------
