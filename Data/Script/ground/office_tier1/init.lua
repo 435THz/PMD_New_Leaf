@@ -22,17 +22,22 @@ local MapStrings = {}
 ---office_tier1.Init(map)
 --Engine callback function
 function office_tier1.Init(map)
+    if SV.Intro.HubTutorialProgress<2 then
+        GROUND:CharSetAnim(CH("Pelipper"), "Sleep", true)
+    elseif SV.Intro.HubTutorialProgress==2 then
+        GROUND:Hide("Pelipper")
+    end
 
-  --This will fill the localized strings table automatically based on the locale the game is 
-  -- currently in. You can use the MapStrings table after this line!
-  MapStrings = COMMON.AutoLoadLocalizedStrings()
+    --This will fill the localized strings table automatically based on the locale the game is
+    -- currently in. You can use the MapStrings table after this line!
+    MapStrings = COMMON.AutoLoadLocalizedStrings()
 
 end
 
 ---office_tier1.Enter(map)
 --Engine callback function
 function office_tier1.Enter(map)
-  GAME:FadeIn(20)
+    GAME:FadeIn(20)
 end
 
 ---office_tier1.Exit(map)
@@ -56,22 +61,26 @@ end
 ---office_tier1.GameLoad(map)
 --Engine callback function
 function office_tier1.GameLoad(map)
-  _HUB.ShowTitle()
+    _HUB.ShowTitle()
 end
 
 -------------------------------
 -- Entities Callbacks
 -------------------------------
 function office_tier1.Pelipper_Talk_Action(obj, activator)
-  PrintInfo("Triggered Pelipper_Talk_Action")
+    if SV.Intro.HubTutorialProgress<2 then
+        UI:WaitShowDialogue("He seems to be sleeping.[pause=0] You probably shouldn't disturb him.")
+    elseif SV.Intro.HubTutorialProgress>2 then
+        PrintInfo("Triggered Pelipper_Talk_Action")
+    end
 end
 
 function office_tier1.Exit_Touch(obj, activator)
-  GAME:FadeOut(false, 20)
-  local pos = _HUB.getPlotOriginList()[2]
-  local marker = _HUB.ShopBase["office"].Graphics[1].Marker_Loc
-  GAME:EnterGroundMap(_HUB.getHubMap(), "Entrance")
-  _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
+    GAME:FadeOut(false, 20)
+    local pos = _HUB.getPlotOriginList()[2]
+    local marker = _HUB.ShopBase["office"].Graphics[1].Marker_Loc
+    GAME:EnterGroundMap(_HUB.getHubMap(), "Entrance")
+    _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
 end
 
 return office_tier1
