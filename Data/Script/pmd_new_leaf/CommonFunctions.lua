@@ -3,13 +3,9 @@
 ]]
 COMMON_FUNC = {}
 
--------------------------------------------
+------------------------------------------- TODO remove if empty at the end of the project
 --region Logic
 -------------------------------------------
--- Ternary operator
-function COMMON_FUNC.tri(check, t, f)
-    if check then return t else return f end
-end
 
 -------------------------------------------
 --region Math
