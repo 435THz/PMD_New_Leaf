@@ -558,6 +558,8 @@ end
 --- @param plot1 number any positive integer up to 15
 --- @param plot2 number any positive integer up to 15
 function _HUB.SwapPlots(plot1, plot2)
+    if plot1 == plot2 then return end
+
     local copy = {
         building =   SV.HubData.Plots[plot1].building,
         upgrades =   SV.HubData.Plots[plot1].upgrades,
