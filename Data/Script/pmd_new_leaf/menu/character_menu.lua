@@ -2,11 +2,11 @@
     character_menu.lua
     Implements the character menu used in New Leaf's character selection sequence
 ]]--
-require 'common'
-require 'Global'
-require 'menu.GraphicsEssential'
-require 'menu.ChooseAmountMenu'
-require 'CommonFunctions'
+require 'origin.common'
+require 'pmd_new_leaf.Global'
+require 'pmd_new_leaf.menu.GraphicsEssential'
+require 'pmd_new_leaf.menu.ChooseAmountMenu'
+require 'pmd_new_leaf.CommonFunctions'
 
 function CharacterSelectionMenu()
     local CharacterSelectionMenu = Class('CharacterSelectionMenu')
@@ -127,7 +127,7 @@ function CharacterSelectionMenu()
     function CharacterSelectionMenu:addRight(element) self:addElement(element, self.right, self.right_summary) end
     function CharacterSelectionMenu:addLeft(element) self:addElement(element, self.left, self.left_summary) end
     function CharacterSelectionMenu:addElement(element, menu, menu_summary)
-        menu.MenuElements:Add(element)
+        menu.Elements:Add(element)
         menu_summary.Elements:Add(element)
     end
 
@@ -146,7 +146,7 @@ function CharacterSelectionMenu()
         self.cursor_l = RogueEssence.Menu.MenuCursor(self.left)
 
         --populating menus
-        self.left.MenuElements:Add(self.cursor_l)
+        self.left.Elements:Add(self.cursor_l)
 
         -- Title
         self:addLeft(RogueEssence.Menu.MenuText("Personal Information", RogueElements.Loc(self.menu_spacing, Graphics.Manager.MenuBG.TileHeight)))
@@ -298,7 +298,7 @@ function CharacterSelectionMenu()
     end
 
     function CharacterSelectionMenu:updateRight()
-        self.right.MenuElements:Add(self.cursor_r)
+        self.right.Elements:Add(self.cursor_r)
 
         --Ability
         local ability_text_color, ability_color = "#FFFFFF", "#FFC663"
@@ -476,7 +476,7 @@ function CharacterSelectionMenu()
         self:redirectSelectedOption(window, option)
 
         self:updateWindows(true, true)
-        _MENU:RemoveMenu()
+        _MENU:ReplaceMenu(self:getFocusedWindow())
     end
 
     function CharacterSelectionMenu:updatePermissions()
@@ -720,17 +720,17 @@ function CharacterSelectionMenu()
 
         --Title/Option chosen
         local center_x = (self.menu.Bounds.Width*2)//3
-        if self.window_name then self.menu.MenuElements:Add(RogueEssence.Menu.MenuText(self.window_name, RogueElements.Loc(self.parent.menu_spacing, (self.menu.Bounds.Height - Graphics.VERT_SPACE)//2 + self.y_offset)))
+        if self.window_name then self.menu.Elements:Add(RogueEssence.Menu.MenuText(self.window_name, RogueElements.Loc(self.parent.menu_spacing, (self.menu.Bounds.Height - Graphics.VERT_SPACE)//2 + self.y_offset)))
         else center_x = self.menu.Bounds.Width//2 end
 
         --Options
         self.selectables = {}
         for i=1, self.ELEMENTS, 1 do
             self.selectables[i] = RogueEssence.Menu.MenuText("", RogueElements.Loc(center_x, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(i-1)), RogueElements.DirH.None)
-            self.menu.MenuElements:Add(self.selectables[i])
+            self.menu.Elements:Add(self.selectables[i])
         end
 
-        self.menu.MenuElements:Add(self.cursor)
+        self.menu.Elements:Add(self.cursor)
         self:DrawMenu()
     end
 
@@ -835,18 +835,18 @@ function CharacterSelectionMenu()
         self.cursor = RogueEssence.Menu.MenuCursor(self.menu)
 
         --Egg Move
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("Egg Move", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.None))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText("Egg Move", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.None))
         --egg_move
         self.egg_move_name = RogueEssence.Menu.MenuText("[color=#FFC663]-----[color]", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE), RogueElements.DirH.None)
         --Change Slot
         self.change_slot_text = RogueEssence.Menu.MenuText("[color=#FFCEFF]Change Slot[color]", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*2), RogueElements.DirH.None)
         --Confirm
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("Confirm", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*3), RogueElements.DirH.None))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText("Confirm", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*3), RogueElements.DirH.None))
 
-        self.menu.MenuElements:Add(self.egg_move_name)
-        self.menu.MenuElements:Add(self.change_slot_text)
+        self.menu.Elements:Add(self.egg_move_name)
+        self.menu.Elements:Add(self.change_slot_text)
 
-        self.menu.MenuElements:Add(self.cursor)
+        self.menu.Elements:Add(self.cursor)
         self:DrawMenu()
     end
 
@@ -990,12 +990,12 @@ function CharacterSelectionMenu()
         self.cursor = RogueEssence.Menu.MenuCursor(self.menu)
 
         --Replacing what?
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("Replacing what?", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.None))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText("Replacing what?", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.None))
         -- ------------------------------------
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12 + Graphics.DIVIDER_HEIGHT//2, 8 + Graphics.VERT_SPACE), self.menu.Bounds.Width - 12 * 2))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12 + Graphics.DIVIDER_HEIGHT//2, 8 + Graphics.VERT_SPACE), self.menu.Bounds.Width - 12 * 2))
 
         self.moves_text = RogueEssence.Menu.MenuText("Moves:", RogueElements.Loc(Graphics.Manager.MenuBG.TileWidth*2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE + Graphics.DIVIDER_HEIGHT*2), RogueElements.DirH.Left)
-        self.menu.MenuElements:Add(self.moves_text)
+        self.menu.Elements:Add(self.moves_text)
 
         --moves list
         self.move_slots = {}
@@ -1003,11 +1003,11 @@ function CharacterSelectionMenu()
             self.move_slots[i] = {}
             self.move_slots[i].name = RogueEssence.Menu.MenuText("", RogueElements.Loc(Graphics.Manager.MenuBG.TileWidth*2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(i+1) + Graphics.DIVIDER_HEIGHT*2), RogueElements.DirH.Left)
             self.move_slots[i].pp = RogueEssence.Menu.MenuText("", RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth*2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(i+1) + Graphics.DIVIDER_HEIGHT*2), RogueElements.DirH.Right)
-            self.menu.MenuElements:Add(self.move_slots[i].name)
-            self.menu.MenuElements:Add(self.move_slots[i].pp)
+            self.menu.Elements:Add(self.move_slots[i].name)
+            self.menu.Elements:Add(self.move_slots[i].pp)
         end
 
-        self.menu.MenuElements:Add(self.cursor)
+        self.menu.Elements:Add(self.cursor)
         self:DrawMenu()
     end
 
@@ -1095,6 +1095,7 @@ function CharacterSelectionMenu()
         self.pos = 1
 
         self.filter = "" --only show mons that fit this filter
+        self.last_search_used = 1 -- 1 = search id, 2 = search species
         self.menu_mode = 0 --0 = scroll, 1 = search id, 2 = search species
         self.monster = false
 
@@ -1109,9 +1110,9 @@ function CharacterSelectionMenu()
 
         --Title
         self.title_text = RogueEssence.Menu.MenuText("Choose your species", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.None)
-        self.menu.MenuElements:Add(self.title_text)
+        self.menu.Elements:Add(self.title_text)
         -- ------------------------------------
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*3)//2-Graphics.DIVIDER_HEIGHT), self.menu.Bounds.Width - 12 * 2))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*3)//2-Graphics.DIVIDER_HEIGHT), self.menu.Bounds.Width - 12 * 2))
 
         --Index   Species
         local num_x = 20
@@ -1121,22 +1122,22 @@ function CharacterSelectionMenu()
         for i=1, 3, 1 do
             self.indexes[i] = RogueEssence.Menu.MenuText("", RogueElements.Loc(num_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*((2*i)+1)//2)))
             self.choosables[i] = RogueEssence.Menu.MenuText("", RogueElements.Loc(text_x, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*((2*i)+1)//2)), RogueElements.DirH.None)
-            self.menu.MenuElements:Add(self.indexes[i])
-            self.menu.MenuElements:Add(self.choosables[i])
+            self.menu.Elements:Add(self.indexes[i])
+            self.menu.Elements:Add(self.choosables[i])
         end
 
         -- ------------------------------------
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*9)//2), self.menu.Bounds.Width - 12 * 2))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.Manager.MenuBG.TileHeight + (Graphics.VERT_SPACE*9)//2), self.menu.Bounds.Width - 12 * 2))
 
         -- Description 1
         self.descr1 = RogueEssence.Menu.MenuText("Press left/right to scroll faster", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*5), RogueElements.DirH.None)
-        self.menu.MenuElements:Add(self.descr1)
+        self.menu.Elements:Add(self.descr1)
 
         -- Description 2
         self.descr2 = RogueEssence.Menu.MenuText("Press ".. STRINGS:LocalKeyString(9) .." to search", RogueElements.Loc(self.menu.Bounds.Width//2, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*6), RogueElements.DirH.None)
-        self.menu.MenuElements:Add(self.descr2)
+        self.menu.Elements:Add(self.descr2)
 
-        self.menu.MenuElements:Add(self.cursor)
+        self.menu.Elements:Add(self.cursor)
         self:DrawMenu()
     end
 
@@ -1219,7 +1220,7 @@ function CharacterSelectionMenu()
                     _GAME:SE("Menu/Cancel")
                 else
                     _GAME:SE("Menu/Confirm")
-                    self.menu_mode=1
+                    self.menu_mode = self.last_search_used
                     self:DrawMenu()
                 end
             elseif self:directionHold(input, RogueElements.Dir8.Up) then
@@ -1276,6 +1277,7 @@ function CharacterSelectionMenu()
                    self:directionHold(input, RogueElements.Dir8.Right) then
                 _GAME:SE("Menu/Skip")
                 self.menu_mode = math.shifted_mod(self.menu_mode+1, 2)
+                self.last_search_used = self.menu_mode
                 self:DrawMenu()
             end
         end
@@ -1388,10 +1390,10 @@ function CharacterSelectionMenu()
         self.menu = RogueEssence.Menu.ScriptableMenu(x, y, w, h, function(input) self:Update(input) end)
         self.cursor = RogueEssence.Menu.MenuCursor(self.menu)
 
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("Are you sure?", RogueElements.Loc(parent.menu_spacing, Graphics.Manager.MenuBG.TileHeight)))
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("\u{E10A}", RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth - 3, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.Right))
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText("\u{E10B}", RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth - 20, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.Right))
-        self.menu.MenuElements:Add(self.cursor)
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText("Are you sure?", RogueElements.Loc(parent.menu_spacing, Graphics.Manager.MenuBG.TileHeight)))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText("\u{E10A}", RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth - 3, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.Right))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText("\u{E10B}", RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth - 20, Graphics.Manager.MenuBG.TileHeight), RogueElements.DirH.Right))
+        self.menu.Elements:Add(self.cursor)
         self.cursor.Loc = RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth - 34, Graphics.Manager.MenuBG.TileHeight)
     end
 

@@ -5,6 +5,7 @@
   <Namespace>pmd_new_leaf</Namespace>
   <UUID>099EA225-CB82-4C9A-94F0-C721401468A9</UUID>
   <Version>0.1</Version>
+  <GameVersion>0.0</GameVersion>
   <ModType>Quest</ModType>
   <Relationships />
 </Header>

@@ -51,7 +51,11 @@ SV.Intro = {
     SaveReminder = false,       -- if the player was told about saving from the menu
     DungeonFailed = false,      -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
     HubReached = false,         -- if the hub has been reached
-    HubTutorialProgress = 0     -- this is a bit more involved. details will be added as time goes on
+    -- 0 = nothing is done yet
+    -- 1 = tents built
+    -- 2 = first slept
+    -- 3 = first run ended
+    HubTutorialProgress = 0
 }
 
 

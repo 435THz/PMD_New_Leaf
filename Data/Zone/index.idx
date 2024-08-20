@@ -1,10 +1,39 @@
 ﻿{
-"Version": "0.7.25.0",
+"Version": "0.8.2.0",
 "Object": {
 "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
+"hub_zone": {
+"$type": "RogueEssence.Data.ZoneEntrySummary, RogueEssence",
+"ExpPercent": 100,
+"Level": -1,
+"LevelCap": false,
+"KeepSkills": false,
+"TeamRestrict": false,
+"TeamSize": -1,
+"MoneyRestrict": false,
+"BagRestrict": -1,
+"KeepTreasure": false,
+"BagSize": -1,
+"Rescues": 0,
+"CountedFloors": 0,
+"Rogue": 0,
+"Grounds": [
+"hub_small",
+"home_tier1",
+"office_tier1"
+],
+"Maps": [],
+"Name": {
+"DefaultText": "Base",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 0
+},
 "intro": {
 "$type": "RogueEssence.Data.ZoneEntrySummary, RogueEssence",
-"ExpPercent": 0,
+"ExpPercent": 100,
 "Level": -1,
 "LevelCap": false,
 "KeepSkills": false,
@@ -58,35 +87,6 @@
 ],
 "Name": {
 "DefaultText": "Ruined Path",
-"LocalTexts": {}
-},
-"Released": true,
-"Comment": "",
-"SortOrder": 0
-},
-"hub_zone": {
-"$type": "RogueEssence.Data.ZoneEntrySummary, RogueEssence",
-"ExpPercent": 100,
-"Level": -1,
-"LevelCap": false,
-"KeepSkills": false,
-"TeamRestrict": false,
-"TeamSize": -1,
-"MoneyRestrict": false,
-"BagRestrict": -1,
-"KeepTreasure": false,
-"BagSize": -1,
-"Rescues": 0,
-"CountedFloors": 0,
-"Rogue": 0,
-"Grounds": [
-"hub_small",
-"home_tier1",
-"office_tier1"
-],
-"Maps": [],
-"Name": {
-"DefaultText": "Base",
 "LocalTexts": {}
 },
 "Released": true,

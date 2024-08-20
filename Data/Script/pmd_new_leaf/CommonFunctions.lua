@@ -29,12 +29,16 @@ end
 --region Table
 -------------------------------------------
 
-function table.index_of(table, object, default)
+function table.index_of(tbl, object, default)
     if default==nil then default = -1 end
-    for index, element in pairs(table) do
+    for index, element in pairs(tbl) do
         if element == object then return index end
     end
     return default
+end
+
+function table.contains(tbl, object)
+    return table.index_of(tbl, object, nil) ~= nil
 end
 
 -------------------------------------------
@@ -44,4 +48,9 @@ end
 function COMMON_FUNC.EndSessionWithResults(result, zoneId, structureId, mapId, entryId)
     GAME:EndDungeonRun(result, zoneId, structureId, mapId, entryId, true, true)
     GAME:EnterZone(zoneId, structureId, mapId, entryId)
+end
+
+function COMMON_FUNC.WeightlessRoll(list)
+    local index = math.random(1, #list)
+    return list[index]
 end

@@ -6,7 +6,7 @@
     It contains a run method for quick instantiation.
     This equivalent is NOT SAFE FOR REPLAYS. Do not use in dungeons until further notice.
 ]]
-require 'common'
+require 'origin.common'
 --- Menu for choosing a number.
 ChooseAmountMenu = Class("ChooseAmountMenu")
 

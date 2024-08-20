@@ -2,7 +2,7 @@
     HubManager.lua
     Contains all constant global tables and variables necessary for the Hub to function, plus some functions that interface with them in a more intuitive way.
 ]]
-
+require 'pmd_new_leaf.CommonFunctions'
 
 --- Takes any kind of value and prints it in the easiest to read format it can.
 --- If the supplied element is a table, this function will recursively print its entire contents,
@@ -48,14 +48,19 @@ end
 
 _HUB = _HUB or {}
 
-require 'ShopManager'
+require 'pmd_new_leaf.ShopManager'
 
+-- maps ranks to level
 _HUB.LevelRankTable = {1,1,2,2,2,3,3,3,4,4}
+-- maps town name suffixes to rank
 _HUB.RankSuffix = {"Camp", "Village", "Town", "City"}
+-- maps town map id to rank
 _HUB.RankHubMap = {"hub_small", "hub_medium", "hub_large", "hub_final"}
+-- maps town build limit to level 
 _HUB.LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15}
+-- maps assembly limit to rank. TODO PROBABLY WILL BE SCRAPPED
 _HUB.LevelAssemblyLimit = {10,25,40,60,80,100,150,200,300,500}
-_HUB.BoardUnlockLevel = 3
+-- maps a list of map coordinates to every rank
 _HUB.PlotPositions = {
     -- rank 1
     {
@@ -121,30 +126,33 @@ _HUB.PlotPositions = {
 --region Getters
 -------------------------------------------
 
+---@returns the current rank of the hub itself
 function _HUB.getHubRank()
     return _HUB.LevelRankTable[SV.HubData.Level]
 end
 
+---@returns the current town suffix for the hub
 function _HUB.getHubSuffix()
     return _HUB.RankSuffix[_HUB.getHubRank()]
 end
 
+---@returns the current town map for the hub
 function _HUB.getHubMap()
     return _HUB.RankHubMap[_HUB.getHubRank()]
 end
 
+---@returns the current maximum building number for the hub
 function _HUB.getBuildLimit()
     return _HUB.LevelBuildLimit[_HUB.getHubRank()]
 end
 
+---@returns the current assembly limit. TODO will probably be scrapped
 function _HUB.getAssemblyLimit()
     return _HUB.LevelAssemblyLimit[_HUB.getHubRank()]
 end
 
-function _HUB.boardUnlocked()
-    return _HUB.getHubRank() >= _HUB.BoardUnlockLevel
-end
-
+---@param colorless boolean false by default
+---@returns the current town name. Will be returned white if colorless is true
 function _HUB.getHubName(colorless)
     local ret = SV.HubData.Name
     if SV.HubData.UseSuffix then ret = ret.." ".._HUB.getHubSuffix() end
@@ -396,4 +404,102 @@ end
 function _HUB.getPlotRank(plot)
     local lvl = _HUB.getPlotLevel(plot)
     return _HUB.LevelRankTable[lvl]
+end
+
+function _HUB.DiscardUsed(shopkeepers)
+    --TODO AAAAAAAAAAAAAAAAAAA
+    local current = {}
+    local list = {}
+    for _, plot in pairs(SV.HubData.Plots) do
+        table.insert(current, plot.shopkeeper)
+    end
+    local refill_list = function()
+        for _, char in pairs(shopkeepers) do table.insert(list, char) end
+    end
+    local removed_one = false
+    repeat
+        local curr_list = {}
+        for _, shopkeeper in pairs(list) do
+            table.insert(curr_list, shopkeeper)
+        end
+        for _, shopkeeper in pairs(curr_list) do
+            removed_one = false
+            if #list == 0 then refill_list() end
+            local i = table.index_of(list,    shopkeeper, nil)
+            local j = table.index_of(current, shopkeeper, nil)
+            if i~=nil then table.remove(list,    i) end
+            if j~=nil then table.remove(current, j)
+                           removed_one = true       end
+        end
+    until(#current == 0 or removed_one == false)
+
+    if #list == 0 then return shopkeepers else return list end
+end
+
+--TODO test these
+---@return boolean true if it went well, false if it failed
+function _HUB.CreateShop(plot, shop_type, start_upgrade)
+    local success = false
+    if not start_upgrade then start_upgrade = "upgrade_generic"
+        local data = _HUB.getPlotData(plot)
+        if data.unlocked and data.building=="" then
+            local db = _HUB.ShopBase[shop_type]
+            if db then
+                data.building = shop_type
+                success = _HUB.upgradeShop(plot, start_upgrade)
+                if success then
+                    data.shopkeeper = COMMON_FUNC.WeightlessRoll(_HUB.DiscardUsed(db.Shopkeepers))
+                else
+                    data.building = ""
+                end
+            end
+        end
+    end
+    return success
+end
+
+---@return boolean true if it went well, false if it failed
+function _HUB.UpgradeShop(plot, upgrade)
+    local data = _HUB.getPlotData(plot)
+    if data.unlocked and data.building~="" then
+        local rank = _HUB.getPlotRank(data) or 0
+        if table.contains(_HUB.ShopBase[data.building].Upgrades[rank+1], upgrade) then
+            local found = false
+            for _, upgr in pairs(plot.upgrades) do
+                if upgr.type == upgrade then
+                    upgr.count = upgr.count+1
+                    found = true
+                end
+            end
+            if not found then table.insert(plot.upgrades, {type = upgrade, count = 1}) end
+            return true
+        end
+    end
+    return false
+end
+
+function _HUB.RemoveShop(plot)
+    SV.HubData.Plots[plot].building = ""
+    SV.HubData.Plots[plot].upgrades = {}
+    SV.HubData.Plots[plot].shopkeeper = ""
+    SV.HubData.Plots[plot].data = {}
+end
+
+function _HUB.SwapPlots(plot1, plot2)
+    local copy = {
+        building =   SV.HubData.Plots[plot1].building,
+        upgrades =   SV.HubData.Plots[plot1].upgrades,
+        shopkeeper = SV.HubData.Plots[plot1].shopkeeper,
+        data =       SV.HubData.Plots[plot1].data
+    }
+
+    plot1.building =   plot2.building
+    plot1.upgrades =   plot2.upgrades
+    plot1.shopkeeper = plot2.shopkeeper
+    plot1.data =       plot2.data
+
+    plot2.building =   copy.building
+    plot2.upgrades =   copy.upgrades
+    plot2.shopkeeper = copy.shopkeeper
+    plot2.data =       copy.data
 end
