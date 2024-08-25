@@ -515,21 +515,28 @@ function _HUB.DiscardUsed(shopkeepers)
     if #list == 0 then return shopkeepers, shiny else return list, shiny end
 end
 
---TODO test these
---- Builds a new shop in the specified plot
---- @param plot number a positive integer up to 15
+--- Unlocks the plot, allowing the player to build there.
+--- @param index number a positive integer up to 15
+function _HUB.UnlockPlot(index)
+    if index <= _HUB.getBuildLimit() then
+        _HUB.getPlotData(index).unlocked = true
+    end
+end
+
+--- Builds a new shop in the specified plot, but only if the plot itself is already unlocked.
+--- @param index number a positive integer up to 15
 --- @param shop_type string the id of the shop to build
 --- @param start_upgrade string the id of the first upgrade this shop will have. Defaults to upgrade_generic
 --- @return boolean true if it went well, false if it failed
-function _HUB.CreateShop(plot, shop_type, start_upgrade)
+function _HUB.CreateShop(index, shop_type, start_upgrade)
     local success = false
-    if not start_upgrade then start_upgrade = "upgrade_generic"
-        local data = _HUB.getPlotData(plot)
-        if data.unlocked and data.building=="" then
-            local db = _HUB.ShopBase[shop_type]
-            if db then
-                data.building = shop_type
-                success = _HUB.upgradeShop(plot, start_upgrade)
+    if not start_upgrade then start_upgrade = "upgrade_generic" end
+    local data = _HUB.getPlotData(index)
+    if data.unlocked and data.building=="" then
+        local db = _HUB.ShopBase[shop_type]
+        if db then
+            data.building = shop_type
+            success = _HUB.UpgradeShop(index, start_upgrade)
             if success then
                 local npc, shiny = _HUB.DiscardUsed(db.Shopkeepers)
                 local _, result = COMMON_FUNC.WeightlessRoll(npc)
