@@ -3,6 +3,7 @@
     Contains all constant global tables and variables necessary for the Hub to function, plus some functions that interface with them in a more intuitive way.
 ]]
 require 'pmd_new_leaf.CommonFunctions'
+require 'pmd_new_leaf.shops.ShopInterface'
 
 --- Takes any kind of value and prints it in the easiest to read format it can.
 --- If the supplied element is a table, this function will recursively print its entire contents,
