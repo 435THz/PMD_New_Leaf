@@ -240,10 +240,22 @@ end
 
 ---Draws a building by loading the specified building data in the specified position.
 ---@param plot_id any home, office or any number
----@param building_data number the id of the asset that defines this plot's appearance when it's empty.
+---@param building_data table the plot's data structure
 ---@param pos table a table containing the X and Y coordinates of the plot's origin
 function _HUB.DrawBuilding(plot_id, building_data, pos)
     local rank = _HUB.getPlotRank(building_data)
+    if not rank then
+        local level = _HUB.getPlotLevel(building_data)
+        if level < 1 then
+            PrintError("Plot ID "..plot_id.." has non-positive level so it has been removed.")
+            --_HUB.RemoveShop(plot_id) TODO de-comment before release
+        else
+            PrintError("Plot ID "..plot_id.." has invalid level "..level)
+            PrintError("Attempting to restore valid state...")
+            --TODO _HUB.LevelOutOfRangeFailsafe(plot_id)
+        end
+        return
+    end
     local graphics_data = _HUB.ShopBase[building_data.building].Graphics[rank]
 
     local deco_bottom = _HUB.GenerateDecoLayer(graphics_data.Base, pos)
