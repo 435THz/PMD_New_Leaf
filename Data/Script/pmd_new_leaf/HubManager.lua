@@ -588,34 +588,34 @@ function _HUB.UpgradeShop(plot, upgrade)
 end
 
 --- Completely removes all shop data in the specified plot
---- @param plot number any positive integer up to 15
-function _HUB.RemoveShop(plot)
-    SV.HubData.Plots[plot].building = ""
-    SV.HubData.Plots[plot].upgrades = {}
-    SV.HubData.Plots[plot].shopkeeper = ""
-    SV.HubData.Plots[plot].data = {}
+--- @param index number any positive integer up to 15
+function _HUB.RemoveShop(index)
+    SV.HubData.Plots[index].building = ""
+    SV.HubData.Plots[index].upgrades = {}
+    SV.HubData.Plots[index].shopkeeper = ""
+    SV.HubData.Plots[index].data = {}
 end
 
 --- Switches the shop data of two plots. Does nothing if the plot ids are the same.
---- @param plot1 number any positive integer up to 15
---- @param plot2 number any positive integer up to 15
-function _HUB.SwapPlots(plot1, plot2)
-    if plot1 == plot2 then return end
+--- @param index1 number any positive integer up to 15
+--- @param index2 number any positive integer up to 15
+function _HUB.SwapPlots(index1, index2)
+    if index1 == index2 then return end
 
     local copy = {
-        building =   SV.HubData.Plots[plot1].building,
-        upgrades =   SV.HubData.Plots[plot1].upgrades,
-        shopkeeper = SV.HubData.Plots[plot1].shopkeeper,
-        data =       SV.HubData.Plots[plot1].data
+        building =   SV.HubData.Plots[index1].building,
+        upgrades =   SV.HubData.Plots[index1].upgrades,
+        shopkeeper = SV.HubData.Plots[index1].shopkeeper,
+        data =       SV.HubData.Plots[index1].data
     }
 
-    plot1.building =   plot2.building
-    plot1.upgrades =   plot2.upgrades
-    plot1.shopkeeper = plot2.shopkeeper
-    plot1.data =       plot2.data
+    index1.building =   index2.building
+    index1.upgrades =   index2.upgrades
+    index1.shopkeeper = index2.shopkeeper
+    index1.data =       index2.data
 
-    plot2.building =   copy.building
-    plot2.upgrades =   copy.upgrades
-    plot2.shopkeeper = copy.shopkeeper
-    plot2.data =       copy.data
+    index2.building =   copy.building
+    index2.upgrades =   copy.upgrades
+    index2.shopkeeper = copy.shopkeeper
+    index2.data =       copy.data
 end
