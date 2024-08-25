@@ -230,7 +230,7 @@ _HUB.ShopBase = {
     market = {
         -- list of species ids. No two shops will ever pick the same shopkeeper species unless the pool is fully used up.
         -- If that's the case, MonsterID details will be edited so that two shopkeepers still never look the same
-        Shopkeepers = {"porygon", "shuckle", "kecleon", "maushold"},
+        Shopkeepers = {{species = "porygon"}, {species = "quagsire"}, {species = "kecleon"}, {species = "bibarel"}, {species = "audino"}, {species = "espurr"}, {species = "ribombee"}, {species = "greedent"}, {species = "maushold"}},
         -- list of possible upgrades that can be picked for every level of the shop
         Upgrades = {
             {"pool_unlock"},                                              --shop level 1
@@ -288,7 +288,7 @@ _HUB.ShopBase = {
         }
     },
     tutor = {
-        Shopkeepers = {"machoke", "blaziken", "electivire", "mienshao"},
+        Shopkeepers = {{species = "marowak"}, {species = "ledian"}, {species = "blaziken"}, {species = "electivire"}, {species = "mienshao"}, {species = "pangoro"}, {species = "kommo_o"}, {species = "falinks"}, {species = "ceruledge"}},
         Upgrades = {
             {"upgrade_generic"},    --shop level 1
             {"upgrade_generic"},    --shop level 2
@@ -342,7 +342,7 @@ _HUB.ShopBase = {
         }
     },
     exporter = {
-        Shopkeepers = {"dragonite", "flygon", "mudsdale", "dubwool"},
+        Shopkeepers = {{species = "dragonite"}, {species = "delibird"}, {species = "flygon"}, {species = "drifblim"}, {species = "scolipede"}, {species = "gogoat"}, {species = "mudsdale"}, {species = "corviknight"}, {species = "bombirdier"}},
         Upgrades = {
             {"upgrade_generic"},    --shop level 1
             {"upgrade_generic"},    --shop level 2
@@ -392,10 +392,10 @@ _HUB.ShopBase = {
             {}
         }
     },
-    --TODO the next two
+    --TODO the next three
     trader = {
-        Shopkeepers = {"sableye", "croagunk", "sigyliph"},
-        Upgrades = {
+        Shopkeepers = {{species = "gengar"}, {species = "murkrow"}, {species = "sableye"}, {species = "croagunk"}, {species = "zoroark"}, {species = "trevenant"}, {species = "mimikyu"}, {species = "thievul"}, {species = "meowscarada"}},
+        Upgrades = { --TODO
             {"upgrade_generic"},    --shop level 1
             {"upgrade_generic"},    --shop level 2
             {"upgrade_generic"},    --shop level 3
@@ -407,7 +407,7 @@ _HUB.ShopBase = {
             {"upgrade_generic"},    --shop level 9
             {"upgrade_generic"},    --shop level 10
         },
-        Graphics = {
+        Graphics = { --TODO
             {},
             {},
             {},
@@ -415,8 +415,8 @@ _HUB.ShopBase = {
         }
     },
     appraisal = {
-        Shopkeepers = {"voltorb", "xatu"},
-        Upgrades = {
+        Shopkeepers = {{species = "voltorb"}, {species = "xatu"}, {species = "metang"}, {species = "bronzong"}, {species = "reuniclus"}, {species = "klefki"}, {species = "deciueye"}, {species = "runerigus"}, {species = "farigiraf"}},
+        Upgrades = { --TODO
             {"upgrade_generic"},    --shop level 1
             {"upgrade_generic"},    --shop level 2
             {"upgrade_generic"},    --shop level 3
@@ -428,7 +428,28 @@ _HUB.ShopBase = {
             {"upgrade_generic"},    --shop level 9
             {"upgrade_generic"},    --shop level 10
         },
-        Graphics = {
+        Graphics = { --TODO
+            {},
+            {},
+            {},
+            {}
+        }
+    },
+    cafe = {
+        Shopkeepers = {{species = "kangaskhan"}, {species = "shuckle"}, {species = "spinda"}, {species = "mismagius"}, {species = "lilligant"}, {species = "gourgeist"}, {species = "oricorio", form = 0}, {species = "appletun"}, {species = "sinistcha"}},
+        Upgrades = { --TODO
+            {"upgrade_generic"},    --shop level 1
+            {"upgrade_generic"},    --shop level 2
+            {"upgrade_generic"},    --shop level 3
+            {"upgrade_generic"},    --shop level 4
+            {"upgrade_generic"},    --shop level 5
+            {"upgrade_generic"},    --shop level 6
+            {"upgrade_generic"},    --shop level 7
+            {"upgrade_generic"},    --shop level 8
+            {"upgrade_generic"},    --shop level 9
+            {"upgrade_generic"},    --shop level 10
+        },
+        Graphics = { --TODO
             {},
             {},
             {},

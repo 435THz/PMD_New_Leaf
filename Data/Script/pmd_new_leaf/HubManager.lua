@@ -252,7 +252,7 @@ function _HUB.DrawBuilding(plot_id, building_data, pos)
     local deco_top
     local npc
     if graphics_data.TopLayer then deco_top = _HUB.GenerateDecoLayer(graphics_data.TopLayer, pos) end
-    if graphics_data.NPC_Loc then  npc =      _HUB.GenerateNPC(plot_id, building_data.shopkeeper, graphics_data.NPC_Loc, pos) end
+    if graphics_data.NPC_Loc then  npc =      _HUB.GenerateNPC(plot_id, building_data.shopkeeper, building_data.shopkeeper_shiny, graphics_data.NPC_Loc, pos) end
 
     local ground = GAME:GetCurrentGround()
     ground.Decorations[0].Anims:Add(deco_bottom)
@@ -284,11 +284,14 @@ end
 --- @param NPC_Loc table a table containing the X and Y offsets of the shopkeeper, starting from the plot's origin
 --- @param pos table a table containing the X and Y coordinates of the plot's origin
 --- @return userdata a GroundChar object corresponding to the requested NPC
-function _HUB.GenerateNPC(plot_id, shopkeeper, NPC_Loc, pos)
-    local nickname = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:Get(shopkeeper).Name:ToLocal()
+function _HUB.GenerateNPC(plot_id, shopkeeper, shiny, NPC_Loc, pos)
+    local nickname = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:Get(shopkeeper.species).Name:ToLocal()
     local name = "NPC_"..plot_id
     local x, y = NPC_Loc.X + pos.X, NPC_Loc.Y + pos.Y
-    local temp_monster = RogueEssence.Dungeon.MonsterID(shopkeeper, 0, "normal", Gender.Genderless)
+    local form = shopkeeper.form or 0
+    local skin = "normal"
+    if shiny then skin = "shiny" end
+    local temp_monster = RogueEssence.Dungeon.MonsterID(shopkeeper.species, form, skin, Gender.Genderless)
     local npc = RogueEssence.Ground.GroundChar(temp_monster, RogueElements.Loc(x, y), Direction.Down, nickname, name)
     npc:ReloadEvents()
     return npc
@@ -411,6 +414,7 @@ function _HUB.initializePlotData()
             building = "",
             upgrades = {},
             shopkeeper = "",
+            shopkeeper_shiny = false,
             data = {},
             empty = math.random(rand)
         }
@@ -466,34 +470,49 @@ end
 
 --- Takes a list of shopkeepers and filters out any already used species, refilling the list again
 --- if and only if it ends up being fully empty.
+--- @param shopkeepers table a shopkeepers list as defined in ShopManager.lua
+--- @return table, boolean the filtered list of shopkeepers and a boolean that says whether or not the result should be shiny
 function _HUB.DiscardUsed(shopkeepers)
     --TODO AAAAAAAAAAAAAAAAAAA
     local current = {}
     local list = {}
+    local shiny = false
     for _, plot in pairs(SV.HubData.Plots) do
         table.insert(current, plot.shopkeeper)
     end
     local refill_list = function()
-        for _, char in pairs(shopkeepers) do table.insert(list, char) end
+        for i in pairs(shopkeepers) do
+            if _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:Get(shopkeepers[i].species).Released then
+                table.insert(list, i)
+            end
+        end
+        shiny = not shiny
     end
+    refill_list()
     local removed_one = false
     repeat
         local curr_list = {}
-        for _, shopkeeper in pairs(list) do
-            table.insert(curr_list, shopkeeper)
+        for _, index in pairs(list) do
+            table.insert(curr_list, index)
         end
-        for _, shopkeeper in pairs(curr_list) do
+        for _, index in pairs(curr_list) do
             removed_one = false
             if #list == 0 then refill_list() end
-            local i = table.index_of(list,    shopkeeper, nil)
-            local j = table.index_of(current, shopkeeper, nil)
-            if i~=nil then table.remove(list,    i) end
-            if j~=nil then table.remove(current, j)
-                           removed_one = true       end
+            local i = table.index_of(list,    index, nil)
+            local j = table.index_of(current, shopkeepers[index].species, nil)
+            if j~=nil and i~=nil then
+                table.remove(current, j)
+                table.remove(list,    i)
+                removed_one = true
+            end
         end
     until(#current == 0 or removed_one == false)
 
-    if #list == 0 then return shopkeepers else return list end
+    for i=1, #list, 1 do
+        list[i] = shopkeepers[list[i]]
+    end
+
+    if #list == 0 then return shopkeepers, shiny else return list, shiny end
 end
 
 --TODO test these
@@ -511,12 +530,15 @@ function _HUB.CreateShop(plot, shop_type, start_upgrade)
             if db then
                 data.building = shop_type
                 success = _HUB.upgradeShop(plot, start_upgrade)
-                if success then
-                else
-                    data.building = ""
-                end
+            if success then
+                local npc, shiny = _HUB.DiscardUsed(db.Shopkeepers)
                 local _, result = COMMON_FUNC.WeightlessRoll(npc)
                 data.shopkeeper = result
+                data.shopkeeper_shiny = shiny
+            else
+                data.building = ""
+                data.upgrades = {}
+                data.data = {}
             end
         end
     end
