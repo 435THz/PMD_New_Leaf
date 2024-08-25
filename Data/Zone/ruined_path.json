@@ -1,5 +1,5 @@
 ﻿{
-"Version": "0.8.2.0",
+"Version": "0.8.3.0",
 "Object": {
 "$type": "RogueEssence.Data.ZoneData, RogueEssence",
 "Name": {
@@ -605,7 +605,7 @@
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.LevelGen.MoneySpawn, RogueEssence]], RogueElements",
 "Amount": {
 "Min": 1,
-"Max": 3
+"Max": 2
 }
 }
 }
@@ -631,7 +631,7 @@
 "$type": "RogueElements.ContextSpawner`2[[RogueEssence.LevelGen.MapGenContext, RogueEssence],[RogueEssence.Dungeon.InvItem, RogueEssence]], RogueElements",
 "Amount": {
 "Min": 1,
-"Max": 3
+"Max": 2
 }
 }
 }
