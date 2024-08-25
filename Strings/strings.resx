@@ -58,6 +58,57 @@
   <resheader name="writer">
     <value>System.Resources.NetStandard.ResXResourceWriter, System.Resources.NetStandard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </resheader>
+  <data name="EXPORTER_BYE" xml:space="preserve">
+    <value>Come back soon!</value>
+  </data>
+  <data name="EXPORTER_DAYS_LEFT" xml:space="preserve">
+    <value>Days Left:</value>
+  </data>
+  <data name="EXPORTER_DAYS_NUMBER" xml:space="preserve">
+    <value>{0} days</value>
+  </data>
+  <data name="EXPORTER_DEPOSIT_DESC" xml:space="preserve">
+    <value>Leave another item to this Exporter shop.</value>
+  </data>
+  <data name="EXPORTER_GET_EARNINGS" xml:space="preserve">
+    <value>We managed to sell {1} items since your last visit. Here's your cut of the earnings.</value>
+  </data>
+  <data name="EXPORTER_NO_EARNINGS" xml:space="preserve">
+    <value>Sorry, we still haven't sold any of your items since last time.</value>
+  </data>
+  <data name="EXPORTER_INFO_1" xml:space="preserve">
+    <value>This shop specializes in exporting items!</value>
+  </data>
+  <data name="EXPORTER_INFO_2" xml:space="preserve">
+    <value>You can leave a number of items to me, and i'll make sure to find a buyer for them.</value>
+  </data>
+  <data name="EXPORTER_INFO_3" xml:space="preserve">
+    <value>More expensive items will take more time to sell than cheap ones.</value>
+  </data>
+  <data name="EXPORTER_INFO_4" xml:space="preserve">
+    <value>Make sure to invest in our shop to increase our stock limit and the speed at which we can sell!</value>
+  </data>
+  <data name="EXPORTER_INTRO" xml:space="preserve">
+    <value>Welcome to {0} Exports! How can i assist you today?</value>
+  </data>
+  <data name="EXPORTER_MENU_TITLE" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="EXPORTER_OPTION_DEPOSIT" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
+  <data name="EXPORTER_OPTION_EARNINGS" xml:space="preserve">
+    <value>Earnings</value>
+  </data>
+  <data name="EXPORTER_OPTION_MANAGE" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="EXPORTER_REPEAT" xml:space="preserve">
+    <value>Do you need anything else?</value>
+  </data>
+  <data name="EXPORTER_SLOTS" xml:space="preserve">
+    <value>Slots: {0}/{1}</value>
+  </data>
   <data name="INPUT_NAME_DESC" xml:space="preserve">
     <value>Leave blank for species name.</value>
   </data>
@@ -102,5 +153,8 @@
   </data>
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
+  </data>
+  <data name="MONEY_GAIN" xml:space="preserve">
+    <value>You received {0}!</value>
   </data>
 </root>

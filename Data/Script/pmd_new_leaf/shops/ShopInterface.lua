@@ -13,6 +13,7 @@ _SHOP.callbacks = {
 }
 
 require 'pmd_new_leaf.shops.Market'
+require 'pmd_new_leaf.shops.Exporter'
 
 --- Runs the initialize callback associated to thr given plot id's building.
 --- @param index number the plot id to initialize
