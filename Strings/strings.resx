@@ -64,4 +64,43 @@
   <data name="INPUT_NAME_TITLE" xml:space="preserve">
     <value>What is your name?</value>
   </data>
+  <data name="MARKET_BUY_END" xml:space="preserve">
+    <value>Pleasure doing business!</value>
+  </data>
+  <data name="MARKET_BUY_MULTI" xml:space="preserve">
+    <value>For those items, it'll be {0}</value>
+  </data>
+  <data name="MARKET_BUY_ONE" xml:space="preserve">
+    <value>{1}?[pause=10] That'll be {0}</value>
+  </data>
+  <data name="MARKET_BYE" xml:space="preserve">
+    <value>Have a nice day!</value>
+  </data>
+  <data name="MARKET_INFO_1" xml:space="preserve">
+    <value>This shop specializes in selling items!</value>
+  </data>
+  <data name="MARKET_INFO_2" xml:space="preserve">
+    <value>These items can then be brought along in adventures.</value>
+  </data>
+  <data name="MARKET_INFO_3" xml:space="preserve">
+    <value>If we're ever out of stock, we'll always have new items ready when you return from an adventure.</value>
+  </data>
+  <data name="MARKET_INFO_4" xml:space="preserve">
+    <value>Make sure to invest in our shop to increase the variety and amount of items we can offer!</value>
+  </data>
+  <data name="MARKET_INTRO" xml:space="preserve">
+    <value>Welcome to {0} Market! Are you here to buy?</value>
+  </data>
+  <data name="MARKET_NO_MONEY" xml:space="preserve">
+    <value>I'm afraid you don't have the money for that!</value>
+  </data>
+  <data name="MARKET_OPTION_BUY" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="MARKET_OUT_OF_STOCK" xml:space="preserve">
+    <value>I'm sorry, but i'm out of stock.[pause=10] Please come back tomorrow.'</value>
+  </data>
+  <data name="MARKET_REPEAT" xml:space="preserve">
+    <value>May I help you with anything else?</value>
+  </data>
 </root>
