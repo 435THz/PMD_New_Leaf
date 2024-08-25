@@ -144,7 +144,7 @@ end
 
 ---@return number the current maximum building number for the hub
 function _HUB.getBuildLimit()
-    return _HUB.LevelBuildLimit[_HUB.getHubRank()]
+    return _HUB.LevelBuildLimit[SV.HubData.Level]
 end
 
 ---@return number the current assembly limit. TODO will probably be scrapped
@@ -489,7 +489,7 @@ function _HUB.DiscardUsed(shopkeepers)
     --TODO AAAAAAAAAAAAAAAAAAA
     local current = {}
     local list = {}
-    local shiny = false
+    local shiny = true
     for _, plot in pairs(SV.HubData.Plots) do
         table.insert(current, plot.shopkeeper)
     end
@@ -513,7 +513,7 @@ function _HUB.DiscardUsed(shopkeepers)
             if #list == 0 then refill_list() end
             local i = table.index_of(list,    index, nil)
             local j = table.index_of(current, shopkeepers[index].species, nil)
-            if j~=nil and i~=nil then
+            if j>0 and i>0 then
                 table.remove(current, j)
                 table.remove(list,    i)
                 removed_one = true
