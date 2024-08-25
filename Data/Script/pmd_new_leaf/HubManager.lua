@@ -567,7 +567,7 @@ function _HUB.CreateShop(index, shop_type, start_upgrade)
 end
 
 --- Applies the specified upgrade to the shop in the specified plot
---- @param plot any home, office or any positive integer up to 15
+--- @param index any home, office or any positive integer up to 15
 --- @param upgrade string the id of the upgrade that will be applied to this shop
 --- @return boolean true if it went well, false if it failed
 function _HUB.UpgradeShop(index, upgrade)
