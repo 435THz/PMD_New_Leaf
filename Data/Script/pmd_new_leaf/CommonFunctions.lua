@@ -72,7 +72,7 @@ end
 ---@return number, any the index of a randomly chosen object inside the list and the object in question
 function COMMON_FUNC.WeightlessRoll(list)
     local index = math.random(1, #list)
-    return index, list[index]
+    return list[index], index
 end
 
 ---Rolls for a random list inside a list and returns the result.
@@ -85,9 +85,9 @@ function COMMON_FUNC.LengthWeightedTableListRoll(list)
         table.insert(entries, {Index = i, Weight = #tbl})
     end
 
-    local index = COMMON_FUNC.WeightedRoll(entries).Index
+    local _, index = COMMON_FUNC.WeightedRoll(entries).Index
 
-    return index, list[index]
+    return list[index], index
 end
 
 ---Rolls for a random table entry inside a list and returns the result.
@@ -110,7 +110,7 @@ function COMMON_FUNC.WeightedRoll(list)
         if entry.Weight and entry.Weight > 0 then
             count = count + entry.Weight
             if count>=result then
-                return i, entry
+                return entry, i
             end
         end
     end

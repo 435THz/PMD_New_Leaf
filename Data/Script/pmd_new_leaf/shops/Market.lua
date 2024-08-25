@@ -78,7 +78,7 @@ function _SHOP.MarketRestock(plot)
         end
     end
     if #specialization_items>0 and math.random(1,4) == 1 then
-        local _, item_id COMMON_FUNC.WeightlessRoll(specialization_items)
+        local item_id = COMMON_FUNC.WeightlessRoll(specialization_items)
         for _, item in pairs(stock) do
             if item.Index == item_id then
                 item.Price = math.ceil(item.Price/2)
@@ -90,10 +90,10 @@ end
 function _SHOP.MarketRoll(pool, tier)
     local pool = _SHOP.MarketPools[pool]
 
-    local _, roll_table = pool[1]
-    if tier == 2 then _, roll_table = COMMON_FUNC.LengthWeightedTableListRoll({pool[1], pool[2]})
-    elseif tier == 3 then _, roll_table = COMMON_FUNC.LengthWeightedTableListRoll(pool) end
-    local __, result = COMMON_FUNC.WeightlessRoll(roll_table)
+    local roll_table = pool[1]
+    if tier == 2 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll({pool[1], pool[2]})
+    elseif tier == 3 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll(pool) end
+    local result = COMMON_FUNC.WeightlessRoll(roll_table)
     if result then return { Index = result.Index, Amount = result.Amount, Price = result.Price} end
     return nil
 end
