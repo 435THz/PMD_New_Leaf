@@ -69,8 +69,50 @@ end
 ---Rolls for a random object inside a list and returns the result.
 ---Every object has the same chance of being chosen.
 ---@param list table a table of possible results
----@return any a randomly chosen object inside the list
+---@return number, any the index of a randomly chosen object inside the list and the object in question
 function COMMON_FUNC.WeightlessRoll(list)
     local index = math.random(1, #list)
-    return list[index]
+    return index, list[index]
+end
+
+---Rolls for a random list inside a list and returns the result.
+---Every table uses its length as its weight of probability.
+---@param list table a table of tables
+---@return number, table the index of a randomly chosen table inside the list and the table in question, or nil, nil if the list is empty
+function COMMON_FUNC.LengthWeightedTableListRoll(list)
+    local entries = {}
+    for i, tbl in pairs(list) do
+        table.insert(entries, {Index = i, Weight = #tbl})
+    end
+
+    local index = COMMON_FUNC.WeightedRoll(entries).Index
+
+    return index, list[index]
+end
+
+---Rolls for a random table entry inside a list and returns the result.
+---Every entry must have a positive Weight property that will determine its chance of being chosen.
+---If this property is missing or non-positive, the entry will never be selected.
+---@param list table a table of possible results containing a Weight property.
+---@return number, table the index of a randomly chosen entry inside the list and the entry in question, or nil, nil if the list is empty
+function COMMON_FUNC.WeightedRoll(list)
+    local weight_total = 0
+    for _, entry in pairs(list) do
+        if entry.Weight and entry.Weight > 0 then
+            weight_total = weight_total + entry.Weight
+        end
+    end
+
+    local result = math.random(1, weight_total)
+
+    local count = 0
+    for i, entry in pairs(list) do
+        if entry.Weight and entry.Weight > 0 then
+            count = count + entry.Weight
+            if count>=result then
+                return i, entry
+            end
+        end
+    end
+    return nil, nil
 end

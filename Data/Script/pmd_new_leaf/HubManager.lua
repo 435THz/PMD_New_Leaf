@@ -512,10 +512,11 @@ function _HUB.CreateShop(plot, shop_type, start_upgrade)
                 data.building = shop_type
                 success = _HUB.upgradeShop(plot, start_upgrade)
                 if success then
-                    data.shopkeeper = COMMON_FUNC.WeightlessRoll(_HUB.DiscardUsed(db.Shopkeepers))
                 else
                     data.building = ""
                 end
+                local _, result = COMMON_FUNC.WeightlessRoll(npc)
+                data.shopkeeper = result
             end
         end
     end
