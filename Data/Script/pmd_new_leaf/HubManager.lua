@@ -549,6 +549,7 @@ function _HUB.CreateShop(index, shop_type, start_upgrade)
         local db = _HUB.ShopBase[shop_type]
         if db then
             data.building = shop_type
+            _SHOP.InitializeShop(index)
             success = _HUB.UpgradeShop(index, start_upgrade)
             if success then
                 local npc, shiny = _HUB.DiscardUsed(db.Shopkeepers)
@@ -565,25 +566,16 @@ function _HUB.CreateShop(index, shop_type, start_upgrade)
     return success
 end
 
---- Builds a new shop in the specified plot
+--- Applies the specified upgrade to the shop in the specified plot
 --- @param plot any home, office or any positive integer up to 15
 --- @param upgrade string the id of the upgrade that will be applied to this shop
 --- @return boolean true if it went well, false if it failed
-function _HUB.UpgradeShop(plot, upgrade)
-    local data = _HUB.getPlotData(plot)
+function _HUB.UpgradeShop(index, upgrade)
+    local data = _HUB.getPlotData(index)
     if data.unlocked and data.building~="" then
-        local rank = _HUB.getPlotRank(data) or 0
-        if table.contains(_HUB.ShopBase[data.building].Upgrades[rank+1], upgrade) then
-            local found = false
-            for _, upgr in pairs(plot.upgrades) do
-                if upgr.type == upgrade then
-                    upgr.count = upgr.count+1
-                    found = true
-                end
-            end
-            if not found then table.insert(plot.upgrades, {type = upgrade, count = 1}) end
-            return true
-        end
+        local level = _HUB.getPlotLevel(data)
+        _SHOP.UpgradeShop(index, upgrade)
+        return level+1 == _HUB.getPlotLevel(data)
     end
     return false
 end

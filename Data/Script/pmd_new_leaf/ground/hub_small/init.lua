@@ -265,15 +265,15 @@ function hub_small.Assembly_office_Action(obj, _)
 end
 
 function hub_small.NPC_1_Action(_, _)
-    PrintInfo("Triggered NPC_1_Action")
+    _SHOP.ShopInteract(1)
 end
 
 function hub_small.NPC_2_Action(_, _)
-    PrintInfo("Triggered NPC_2_Action")
+    _SHOP.ShopInteract(2)
 end
 
 function hub_small.NPC_3_Action(_, _)
-    PrintInfo("Triggered NPC_3_Action")
+    _SHOP.ShopInteract(3)
 end
 
 return hub_small
