@@ -27,7 +27,6 @@ _HUB.UpgradeTable = {
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
-        max = 2,
         per_sub_choice = true
     },
     pool_tier = {
