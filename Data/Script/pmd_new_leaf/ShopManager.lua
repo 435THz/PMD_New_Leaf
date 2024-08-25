@@ -12,7 +12,7 @@ _HUB.UpgradeTable = {
         -- the final reference id for a specific sub_choice is choiceId_subchoiceId
         -- subchoices should be defined somewhere else in this table
         sub_choices = {
-            "sub_food", "sub_heal", "sub_special", "sub_seeds", "sub_tm", "sub_exploration", "sub_battle"
+            "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
         -- maximum copies of this upgrade allowed on a single shop
         max = 1,
@@ -25,7 +25,7 @@ _HUB.UpgradeTable = {
         requirements = {"pool_unlock_{0}"},
         sub_question = "UPGRADE_POOL_EXPAND_QUESTION",
         sub_choices = {
-            "sub_food", "sub_heal", "sub_special", "sub_seeds", "sub_tm", "sub_exploration", "sub_battle"
+            "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
         max = 2,
         per_sub_choice = true
@@ -35,7 +35,7 @@ _HUB.UpgradeTable = {
         requirements = {"pool_unlock_{0}"},
         sub_question = "UPGRADE_POOL_TIER_QUESTION",
         sub_choices = {
-            "sub_food", "sub_heal", "sub_special", "sub_seeds", "sub_tm", "sub_exploration", "sub_battle"
+            "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
         max = 2,
         per_sub_choice = true
@@ -45,32 +45,32 @@ _HUB.UpgradeTable = {
         requirements = {"pool_unlock_{0}"},
         sub_question = "UPGRADE_POOL_SPECIALIZE_QUESTION",
         sub_choices = {
-            "sub_food", "sub_heal", "sub_special", "sub_seeds", "sub_tm", "sub_exploration", "sub_battle"
+            "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
         max = 1,
         per_sub_choice = true
     },
-    sub_food = {
+    sub_survival = {
         -- sub-choices can contain just a string parameter if they're never used as main choices
-        string = "UPGRADE_POOL_FOOD"
+        string = "UPGRADE_POOL_SURVIVAL"
     },
-    sub_heal = {
-        string = "UPGRADE_POOL_HEAL"
+    sub_recruitment = {
+        string = "UPGRADE_POOL_RECRUITMENT"
     },
-    sub_special = {
-        string = "UPGRADE_POOL_SPECIAL"
+    sub_utilities = {
+        string = "UPGRADE_POOL_UTILITIES"
     },
-    sub_seeds = {
-        string = "UPGRADE_POOL_SEEDS"
+    sub_ammo = {
+        string = "UPGRADE_POOL_AMMO"
+    },
+    sub_wands = {
+        string = "UPGRADE_POOL_WANDS"
+    },
+    sub_orbs = {
+        string = "UPGRADE_POOL_ORBS"
     },
     sub_tm = {
         string = "UPGRADE_POOL_TM"
-    },
-    sub_exploration = {
-        string = "UPGRADE_POOL_EXPLORATION"
-    },
-    sub_battle = {
-        string = "UPGRADE_POOL_BATTLE"
     },
     upgrade_generic = {
         string = "UPGRADE_GENERIC",
