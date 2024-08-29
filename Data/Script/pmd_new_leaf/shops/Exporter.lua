@@ -127,9 +127,14 @@ function _SHOP.ExporterInteract(plot, index)
                     end
                 else
                     UI:WaitShowDialogue(STRINGS:FormatKey('EXPORTER_DEPOSIT'))
-                    --local loop = true --electric booleanoo
                     while loop do
-                        local items = InventorySelectMenu.run(STRINGS:FormatKey('MENU_ITEM_TITLE'), function() return true end, true, plot.data.slots - #plot.data.stock)
+                        local filter = function(slot)
+                            local item
+                            if slot.IsEquipped then item = _DATA.Save.ActiveTeam.Players[slot.Slot].EquippedItem
+                            else item = _DATA.Save.ActiveTeam:GetInv(slot.Slot) end
+                            return item:GetSellValue() > 0
+                        end
+                        local items = InventorySelectMenu.run(STRINGS:FormatKey('MENU_ITEM_TITLE'), filter, STRINGS:FormatKey('MENU_ITEM_GIVE'), true, plot.data.slots - #plot.data.stock)
                         if #items > 0 then
                             if #items > 1 then
                                 UI:WaitShowDialogue(STRINGS:FormatKey('EXPORTER_CONFIRM_GIVE_MANY'))
