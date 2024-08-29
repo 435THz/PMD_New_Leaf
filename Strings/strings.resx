@@ -61,20 +61,26 @@
   <data name="EXPORTER_BYE" xml:space="preserve">
     <value>Come back soon!</value>
   </data>
-  <data name="EXPORTER_DAYS_LEFT" xml:space="preserve">
-    <value>Days Left:</value>
+  <data name="EXPORTER_CONFIRM_GIVE_MANY" xml:space="preserve">
+    <value>Sure! We'll sell these items for you.</value>
   </data>
-  <data name="EXPORTER_DAYS_NUMBER" xml:space="preserve">
-    <value>{0} days</value>
+  <data name="EXPORTER_CONFIRM_GIVE_ONE" xml:space="preserve">
+    <value>Sure! We'll sell this {0} for you.</value>
+  </data>
+  <data name="EXPORTER_CONFIRM_TAKE" xml:space="preserve">
+    <value>Are you sure you want to take this {0} back?[pause=10] All progress gone towards selling it will be lost.</value>
+  </data>
+  <data name="EXPORTER_CONTINUE" xml:space="preserve">
+    <value>Anything else?</value>
+  </data>
+  <data name="EXPORTER_DEPOSIT" xml:space="preserve">
+    <value>Sure thing.[pause=10] What do you want to sell?</value>
   </data>
   <data name="EXPORTER_DEPOSIT_DESC" xml:space="preserve">
     <value>Leave another item to this Exporter shop.</value>
   </data>
   <data name="EXPORTER_GET_EARNINGS" xml:space="preserve">
-    <value>We managed to sell {1} items since your last visit. Here's your cut of the earnings.</value>
-  </data>
-  <data name="EXPORTER_NO_EARNINGS" xml:space="preserve">
-    <value>Sorry, we still haven't sold any of your items since last time.</value>
+    <value>We managed to sell {0} item{1} since your last visit. Here's your cut of the earnings.</value>
   </data>
   <data name="EXPORTER_INFO_1" xml:space="preserve">
     <value>This shop specializes in exporting items!</value>
@@ -88,8 +94,17 @@
   <data name="EXPORTER_INFO_4" xml:space="preserve">
     <value>Make sure to invest in our shop to increase our stock limit and the speed at which we can sell!</value>
   </data>
+  <data name="EXPORTER_NO_EARNINGS" xml:space="preserve">
+    <value>Sorry, we still haven't sold anything since last time.</value>
+  </data>
   <data name="EXPORTER_INTRO" xml:space="preserve">
     <value>Welcome to {0} Exports! How can i assist you today?</value>
+  </data>
+  <data name="EXPORTER_PROGRESS" xml:space="preserve">
+    <value>Progress:</value>
+  </data>
+  <data name="EXPORTER_PROGRESS_NUMBER" xml:space="preserve">
+    <value>{0}/{1}</value>
   </data>
   <data name="EXPORTER_MENU_TITLE" xml:space="preserve">
     <value>Export</value>
@@ -154,7 +169,7 @@
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
   </data>
-  <data name="MONEY_GAIN" xml:space="preserve">
+  <data name="RECEIVE_ITEM_MESSAGE" xml:space="preserve">
     <value>You received {0}!</value>
   </data>
 </root>

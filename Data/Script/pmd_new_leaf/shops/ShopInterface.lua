@@ -21,8 +21,8 @@ function _SHOP.InitializeShop(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.initialize[plot.building] then
         _SHOP.callbacks.initialize[plot.building](plot)
+        PrintInfo("Initialized shop "..index)
     end
-    PrintInfo("Initialized shop "..index)
 end
 
 --- Runs the upgrade callback associated to thr given plot id's building.
@@ -36,8 +36,10 @@ function _SHOP.UpgradeShop(index, upgrade)
     end
     if _SHOP.callbacks.upgrade[plot.building] then
         _SHOP.callbacks.upgrade[plot.building](plot, upgrade)
+        PrintInfo("Upgraded shop "..index)
     end
-    PrintInfo("Upgraded shop "..index)
+end
+    end
 end
 
 --- Runs the endOfDay callback associated to thr given plot id's building.
@@ -46,8 +48,8 @@ function _SHOP.EndOfDay(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.endOfDay[plot.building] then
         _SHOP.callbacks.endOfDay[plot.building](plot)
+        PrintInfo("Ran EndOfDay for shop "..index)
     end
-    PrintInfo("Ran EndOfDay for shop "..index)
 end
 
 --- Runs the interact callback associated to thr given plot id's building.
@@ -56,9 +58,9 @@ function _SHOP.ShopInteract(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.interact[plot.building] then
         _SHOP.callbacks.interact[plot.building](plot, index)
+        PrintInfo("Interacted with shop "..index)
     end
     UI:ResetSpeaker()
-    PrintInfo("Interacted with shop "..index)
 end
 
 --- Should only be called by a shop's upgrade callback when all validity checks have been ran successfully.
