@@ -39,6 +39,13 @@ function _SHOP.UpgradeShop(index, upgrade)
         PrintInfo("Upgraded shop "..index)
     end
 end
+
+--- Runs the endOfDay callback for every single plot.
+function _SHOP:OnDayEnd()
+    _SHOP.EndOfDay("home")
+    _SHOP.EndOfDay("office")
+    for i = 1, 15, 1 do
+        _SHOP.EndOfDay(i)
     end
 end
 
