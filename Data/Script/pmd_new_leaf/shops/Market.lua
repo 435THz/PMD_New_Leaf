@@ -59,7 +59,7 @@ function _SHOP.MarketUpgrade(plot, upgrade)
 end
 
 function _SHOP.MarketRestock(plot)
-    local stock = plot.data.stock
+    local stock = {}
     local specialization_items = {}
     for pool, data in pairs(plot.data.categories) do
         local specialization_effect = false
@@ -85,6 +85,7 @@ function _SHOP.MarketRestock(plot)
             end
         end
     end
+    plot.data.stock = stock
 end
 
 function _SHOP.MarketRoll(pool, tier)
