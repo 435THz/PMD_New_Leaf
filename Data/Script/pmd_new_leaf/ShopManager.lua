@@ -93,14 +93,14 @@ _HUB.UpgradeTable = {
         string = "UPGRADE_GENERIC",
         requirements = {},
         sub_question = "UPGRADE_TUTOR_QUESTION",
-        sub_choices = {"sub_teach_count", "sub_teach_chance"},
+        sub_choices = {"sub_teach_count", "sub_teach_frequency"},
         max = 2
     },
     sub_teach_count = {
         string = "UPGRADE_TEACH_COUNT"
     },
-    sub_teach_chance = {
-        string = "UPGRADE_TEACH_CHANCE"
+    sub_teach_frequency = {
+        string = "UPGRADE_TEACH_FREQUENCY"
     }
     -- add more here if necessary
 }
