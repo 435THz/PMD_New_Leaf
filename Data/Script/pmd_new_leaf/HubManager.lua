@@ -486,7 +486,6 @@ end
 --- @param shopkeepers table a shopkeepers list as defined in ShopManager.lua
 --- @return table, boolean the filtered list of shopkeepers and a boolean that says whether or not the result should be shiny
 function _HUB.DiscardUsed(shopkeepers)
-    --TODO AAAAAAAAAAAAAAAAAAA
     local current = {}
     local list = {}
     local shiny = true
