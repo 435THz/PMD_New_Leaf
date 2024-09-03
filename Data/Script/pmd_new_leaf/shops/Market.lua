@@ -349,7 +349,7 @@ function _SHOP.MarketLoadTMs()
             local item = _DATA:GetItem(id)
             local move_id = item.ItemStates:GetWithDefault(id_state_type).ID
             local move = _DATA:GetSkill(move_id)
-            local price = charge_to_cost[-1]
+            local price = charge_to_cost[#charge_to_cost]
             local tier = 1
             if move.BaseCharges <= #charge_to_cost then
                 price = charge_to_cost[move.BaseCharges]
