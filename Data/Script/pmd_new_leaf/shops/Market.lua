@@ -37,8 +37,11 @@ function _SHOP.MarketUpgrade(plot, upgrade)
         valid = true
         if string.match(upgrade, "pool_unlock") then
             plot.data.categories[pool] = {slots = 2, tier = 1}
+            table.insert(plot.data.stock, _SHOP.MarketRoll(pool, plot.data.categories[pool].tier))
+            table.insert(plot.data.stock, _SHOP.MarketRoll(pool, plot.data.categories[pool].tier))
         elseif string.match(upgrade, "pool_expand") then
             plot.data.categories[pool].slots = plot.data.categories[pool].slots+1
+            table.insert(plot.data.stock, _SHOP.MarketRoll(pool, plot.data.categories[pool].tier))
         elseif string.match(upgrade, "pool_tier") then
             plot.data.categories[pool].tier = plot.data.categories[pool].tier+1
         elseif string.match(upgrade, "pool_specialize") then
