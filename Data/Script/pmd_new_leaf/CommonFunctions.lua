@@ -69,8 +69,9 @@ end
 ---Rolls for a random object inside a list and returns the result.
 ---Every object has the same chance of being chosen.
 ---@param list table a table of possible results
----@return number, any the index of a randomly chosen object inside the list and the object in question
+---@return any, number a randomly chosen entry inside the list and its index, or nil, nil if the list is empty
 function COMMON_FUNC.WeightlessRoll(list)
+    if #list == 0 then return nil, nil end
     local index = math.random(1, #list)
     return list[index], index
 end
@@ -78,8 +79,9 @@ end
 ---Rolls for a random list inside a list and returns the result.
 ---Every table uses its length as its weight of probability.
 ---@param list table a table of tables
----@return number, table the index of a randomly chosen table inside the list and the table in question, or nil, nil if the list is empty
+---@return table, number a randomly chosen table inside the list and its index, or nil, nil if the list is empty
 function COMMON_FUNC.LengthWeightedTableListRoll(list)
+    if #list == 0 then return nil, nil end
     local entries = {}
     for i, tbl in pairs(list) do
         table.insert(entries, {Index = i, Weight = #tbl})
@@ -94,7 +96,7 @@ end
 ---Every entry must have a positive Weight property that will determine its chance of being chosen.
 ---If this property is missing or non-positive, the entry will never be selected.
 ---@param list table a table of possible results containing a Weight property.
----@return number, table the index of a randomly chosen entry inside the list and the entry in question, or nil, nil if the list is empty
+---@return table, number a randomly chosen entry inside the list and its index, or nil, nil if the list is empty
 function COMMON_FUNC.WeightedRoll(list)
     local weight_total = 0
     for _, entry in pairs(list) do
