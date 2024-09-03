@@ -118,7 +118,7 @@ function _SHOP.ExporterInteract(plot, index)
                     if UI:ChoiceResult() then
                         UI:ResetSpeaker(false)
                         UI:SetCenter(true)
-                        --TODO add SE
+                        SOUND:PlaySE("Fanfare/Item")
                         UI:WaitShowDialogue(STRINGS:FormatKey('RECEIVE_ITEM_MESSAGE', entry.item:GetDisplayName()))
                         GAME:GivePlayerItem(entry.item)
                         table.remove(plot.data.stock, choice)
@@ -170,7 +170,7 @@ function _SHOP.ExporterInteract(plot, index)
                 UI:WaitShowDialogue(STRINGS:FormatKey('EXPORTER_GET_EARNINGS', plot.data.sold, s))
                 UI:ResetSpeaker(false)
                 UI:SetCenter(true)
-                --TODO add SE
+                SOUND:PlaySE("Battle/DUN_Money")
                 UI:WaitShowDialogue(STRINGS:FormatKey('RECEIVE_ITEM_MESSAGE', STRINGS:FormatKey("MONEY_AMOUNT", plot.data.earnings)))
                 GAME:AddToPlayerMoney(plot.data.earnings)
                 plot.data.earnings = 0

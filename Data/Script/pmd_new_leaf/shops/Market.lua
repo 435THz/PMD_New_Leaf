@@ -167,7 +167,7 @@ function _SHOP.MarketInteract(plot, index)
                                 end
 
                                 cart = {}
-                                SOUND:PlayBattleSE("DUN_Money")
+                                SOUND:PlaySE("Battle/DUN_Money")
                                 UI:WaitShowDialogue(STRINGS:FormatKey('MARKET_BUY_END'))
                                 leave_shop = true
                             end
