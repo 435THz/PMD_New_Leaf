@@ -172,4 +172,64 @@
   <data name="RECEIVE_ITEM_MESSAGE" xml:space="preserve">
     <value>You received {0}!</value>
   </data>
+  <data name="TUTOR_BEGIN" xml:space="preserve">
+    <value>Let's start, then!</value>
+  </data>
+  <data name="TUTOR_BYE" xml:space="preserve">
+    <value>Come back soon!</value>
+  </data>
+  <data name="TUTOR_CATEGORY_EGG" xml:space="preserve">
+    <value>egg</value>
+  </data>
+  <data name="TUTOR_CATEGORY_TUTOR" xml:space="preserve">
+    <value>tutor</value>
+  </data>
+  <data name="TUTOR_FORGET_END" xml:space="preserve">
+    <value>There we go![pause=0] {0} forgot {1}!</value>
+  </data>
+  <data name="TUTOR_FORGET_WHO" xml:space="preserve">
+    <value>Who wants to forget a move?</value>
+  </data>
+  <data name="TUTOR_INFO_1" xml:space="preserve">
+    <value>This shop specializes in teaching and removing moves.</value>
+  </data>
+  <data name="TUTOR_INFO_2" xml:space="preserve">
+    <value>We can teach a Pokémon any move it would learn up to a certain level.[pause=0] A move's price scales with the level.</value>
+  </data>
+  <data name="TUTOR_INFO_3" xml:space="preserve">
+    <value>We can also help Pokémon forget moves,[pause=10] free of charge!</value>
+  </data>
+  <data name="TUTOR_INFO_4" xml:space="preserve">
+    <value>Careful,[pause=10] though:[pause=20] if you forget a TM,[pause=10] you won't be able to learn it again here.</value>
+  </data>
+  <data name="TUTOR_INFO_5" xml:space="preserve">
+    <value>We can also teach {0} moves! Our stock changes from time to time, so come back frequently to check it out!</value>
+  </data>
+  <data name="TUTOR_INFO_6" xml:space="preserve">
+    <value>Make sure to invest in our shop to increase our level limit!</value>
+  </data>
+  <data name="TUTOR_INFO_6b" xml:space="preserve">
+    <value>Make sure to invest in our shop to increase our level limit and the amount of {0} moves we can offer!</value>
+  </data>
+  <data name="TUTOR_INTRO" xml:space="preserve">
+    <value>This is {0} Tutor Services![pause=0] Are you ready to learn?</value>
+  </data>
+  <data name="TUTOR_LEARN_END" xml:space="preserve">
+    <value>There we go![pause=0] {0} learned {1}!</value>
+  </data>
+  <data name="TUTOR_LEARN_WHO" xml:space="preserve">
+    <value>Who wants to learn a new move?</value>
+  </data>
+  <data name="TUTOR_OPTION_FORGET" xml:space="preserve">
+    <value>Forget</value>
+  </data>
+  <data name="TUTOR_OPTION_TUTOR" xml:space="preserve">
+    <value>Tutor</value>
+  </data>
+  <data name="TUTOR_REPEAT" xml:space="preserve">
+    <value>Alright,[pause=10] what next?</value>
+  </data>
+  <data name="TUTOR_REPLACE" xml:space="preserve">
+    <value>We'll need to replace a move.[pause=0] What'll it be?</value>
+  </data>
 </root>
