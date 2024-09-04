@@ -64,7 +64,11 @@ function home_tier1.Enter(_)
         if right then GROUND:EntTurn(player, Dir8.Right)
         else GROUND:EntTurn(player, Dir8.Left) end
         GROUND:CharSetAnim(player, anim, true)
-        UI:WaitShowVoiceOver("The next morning...", -1)
+        if not SV.HubData.SkipNextMorning then
+            UI:WaitShowVoiceOver("The next morning...", -1)
+        end
+        SV.HubData.SkipNextMorning = false
+        GAME:WaitFrames(30)
         _HUB.ShowTitle()
         GAME:WaitFrames(105)
         if wake then GROUND:CharWaitAnim(player, "Wake")

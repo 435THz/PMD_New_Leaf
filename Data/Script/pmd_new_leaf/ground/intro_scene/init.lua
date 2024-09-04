@@ -173,6 +173,7 @@ end
 
 function intro_scene.IntroTeleport()
     GAME:WaitFrames(120)
+    GAME:FadeIn(40)
     UI:WaitShowVoiceOver("...", -1)
     UI:WaitShowVoiceOver("You're here...", -1)
     UI:WaitShowVoiceOver("Why are you here?", -1)
@@ -190,7 +191,8 @@ function intro_scene.IntroTeleport()
     if not SV.Intro.HubReached then
         GAME:EnterGroundMap('ruined_path','intro_dungeon_entrance', 'Spawn')
     else
-        GAME:EnterGroundMap('hub_zone', _HUB.getHubMap(), 'Entrance')
+        SV.HubData.SkipNextMorning = true
+        _HUB.WakeUpHome()
     end
 end
 

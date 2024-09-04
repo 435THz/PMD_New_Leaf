@@ -37,7 +37,8 @@ SV.missions =
 -- Level Specific Defaults
 -----------------------------------------------
 SV.HubData = {
-    RunEnded = false, -- if true, teleporting the player to their home will play the wake up cutscene and set it back to false.
+    RunEnded = false, -- if true, teleporting the player to their home will play the wake up cutscene and set this back to false.
+    SkipNextMorning = false, --if true, the next wake up cutscene will skip the next morning message and set this back to false
     Marker = nil,     -- if set, the character will be teleported here upon hub load, and then this will be cleared.
     Level = 1,        -- 1 to 10
     Name = "Base",    -- without rank suffix. can be changed from rank 2 onwards
