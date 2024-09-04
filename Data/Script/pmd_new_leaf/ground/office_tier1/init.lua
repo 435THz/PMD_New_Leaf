@@ -69,9 +69,11 @@ end
 -------------------------------
 function office_tier1.Pelipper_Talk_Action(obj, activator)
     if SV.Intro.HubTutorialProgress<2 then
+        UI:ResetSpeaker(false)
         UI:WaitShowDialogue("He seems to be sleeping.[pause=0] You probably shouldn't disturb him.")
+        UI:ResetSpeaker()
     elseif SV.Intro.HubTutorialProgress>2 then
-        PrintInfo("Triggered Pelipper_Talk_Action")
+        _SHOP.ShopInteract("office")
     end
 end
 
