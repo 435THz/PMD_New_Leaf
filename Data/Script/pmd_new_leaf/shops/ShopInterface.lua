@@ -17,7 +17,7 @@ require 'pmd_new_leaf.shops.Exporter'
 require 'pmd_new_leaf.shops.Tutor'
 
 --- Runs the initialize callback associated to thr given plot id's building.
---- @param index number the plot id to initialize
+--- @param index any home, office or any positive integer up to 15
 function _SHOP.InitializeShop(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.initialize[plot.building] then
@@ -27,7 +27,7 @@ function _SHOP.InitializeShop(index)
 end
 
 --- Runs the upgrade callback associated to thr given plot id's building.
---- @param index number the plot id to upgrade
+--- @param index any home, office or any positive integer up to 15
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.UpgradeShop(index, upgrade)
     local plot = _HUB.getPlotData(index)
@@ -42,7 +42,7 @@ function _SHOP.UpgradeShop(index, upgrade)
 end
 
 --- Runs the endOfDay callback for every single plot.
-function _SHOP:OnDayEnd()
+function _SHOP.OnDayEnd()
     _SHOP.EndOfDay("home")
     _SHOP.EndOfDay("office")
     for i = 1, 15, 1 do
@@ -51,7 +51,7 @@ function _SHOP:OnDayEnd()
 end
 
 --- Runs the endOfDay callback associated to thr given plot id's building.
---- @param index number the plot id to update
+--- @param index any home, office or any positive integer up to 15
 function _SHOP.EndOfDay(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.endOfDay[plot.building] then
@@ -61,7 +61,7 @@ function _SHOP.EndOfDay(index)
 end
 
 --- Runs the interact callback associated to thr given plot id's building.
---- @param index number the plot that is being interacted with
+--- @param index any home, office or any positive integer up to 15
 function _SHOP.ShopInteract(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.interact[plot.building] then
