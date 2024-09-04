@@ -173,19 +173,15 @@ end
 
 function intro_scene.IntroTeleport()
     GAME:WaitFrames(120)
-    GAME:FadeIn(40)
     UI:WaitShowVoiceOver("...", -1)
-    UI:WaitShowVoiceOver("You're here...", -1)
-    UI:WaitShowVoiceOver("Why are you here?", -1)
-    UI:WaitShowVoiceOver("Shouldn't you be somewhere else?", -1)
+    UI:WaitShowVoiceOver("Seems like something wrong happened when loading your last position.", -1)
     if SV.Intro.HubReached then
         local hub_name = _HUB.getHubName()
-        UI:WaitShowVoiceOver("Yes, that's right.\nYou should be in "..hub_name..", shouldn't you?", -1)
+        UI:WaitShowVoiceOver("You will soon be brought to "..hub_name..", but first...", -1)
     else
-        UI:WaitShowVoiceOver("Yes, that's right.\nYou should be starting your journey.", -1)
+        UI:WaitShowVoiceOver("You will soon be brought to your last known location, but first...", -1)
     end
-    UI:WaitShowVoiceOver("Don't worry.\nYou'll be back there shortly.", -1)
-    UI:WaitShowVoiceOver("Just make sure to notify [color=#800080]MistressNebula[color] about this.\nYou can find her on the [color=#00FFFF]PMDO Discord Server[color] or\nleave a bug report on the mod's [color=#FFFF00]GitHub[color] page.", -1)
+    UI:WaitShowVoiceOver("Please make sure to notify [color=#800080]MistressNebula[color] about this.\nYou can find her on the [color=#00FFFF]PMDO Discord Server[color] or\nleave a bug report on the mod's [color=#FFFF00]GitHub[color] page.", -1)
     UI:WaitShowVoiceOver("Time to get back to your adventure, now...", -1)
 
     if not SV.Intro.HubReached then
