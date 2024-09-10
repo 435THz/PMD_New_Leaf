@@ -153,7 +153,21 @@ end
 
 ---@return number the current maximum building number for the hub
 function _HUB.getBuildLimit()
-    return _HUB.LevelBuildLimit[SV.HubData.Level]
+    return _HUB.LevelBuildLimit[_HUB.getHubLevel()]
+end
+
+---@return number the number of plots supported by the current hub map.
+function _HUB.getRankPlotNumber()
+    return _HUB.RankPlotNumber[_HUB.getHubRank()]
+end
+
+---@return number the number of unlocked plots in the hub
+function _HUB.getUnlockedNumber()
+    local num = 0
+    for i=1, _HUB.getRankPlotNumber(), 1 do
+        if _HUB.getPlotData(i).unlocked then num = num + 1 end
+    end
+    return num
 end
 
 ---@return number the current assembly limit. TODO will probably be scrapped
@@ -552,7 +566,7 @@ end
 --- Unlocks the plot, allowing the player to build there.
 --- @param index number a positive integer up to 15
 function _HUB.UnlockPlot(index)
-    if index <= _HUB.getBuildLimit() then
+    if index <= _HUB.getRankPlotNumber() and _HUB.getUnlockedNumber() < _HUB.getBuildLimit() then
         _HUB.getPlotData(index).unlocked = true
     end
 end
