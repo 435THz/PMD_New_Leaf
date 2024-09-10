@@ -67,11 +67,16 @@ function _SHOP.ShopInteract(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.interact[plot.building] then
         local npc = CH("NPC_"..index)
-        local start_rotation = npc.CharDir
-        GROUND:CharTurnToCharAnimated(npc, CH("PLAYER"), 4)
+        local start_rotation = RogueElements.Dir8.Down
+        if npc then
+            start_rotation = npc.CharDir
+            GROUND:CharTurnToCharAnimated(npc, CH("PLAYER"), 4)
+        end
         _SHOP.callbacks.interact[plot.building](plot, index)
         PrintInfo("Interacted with shop "..index)
-        GROUND:CharAnimateTurnTo(npc, start_rotation, 4)
+        if npc then
+            GROUND:CharAnimateTurnTo(npc, start_rotation, 4)
+        end
     end
     UI:ResetSpeaker()
 end
