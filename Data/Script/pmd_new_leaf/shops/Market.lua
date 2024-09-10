@@ -240,7 +240,7 @@ _SHOP.MarketPools = {
             { Index = "apricorn_glittery", Amount = 0, Price = 500},
             { Index = "apricorn_glittery", Amount = 0, Price = 500},
             { Index = "apricorn_glittery", Amount = 0, Price = 500},
-            { Index = "amber_tear", Amount = 0, Price = 1000}
+            { Index = "amber_tear", Amount = 1, Price = 1000}
         }
     },
     utilities = {
