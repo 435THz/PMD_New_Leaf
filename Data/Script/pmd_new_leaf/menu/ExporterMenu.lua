@@ -5,11 +5,12 @@
 ]]
 
 
---- Menu for selecting items from the player's inventory.
+--- Menu used to view an exporter's stock and interact with it.
 ExporterMenu = Class("ExporterMenu")
 
---- Creates a new ``ExporterMenu`` instance using the provided list and callbacks.
+--- Creates a new ``ExporterMenu`` instance using the provided plot data and callbacks.
 --- @param data table the shop's data table
+--- @param confirm_action function the function that is called when the confirm button is pressed
 function ExporterMenu:initialize(data, confirm_action, refuse_action)
 
     -- constants
