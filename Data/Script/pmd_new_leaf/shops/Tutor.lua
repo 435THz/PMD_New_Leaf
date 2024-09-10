@@ -414,6 +414,7 @@ function _SHOP.TutorGetTutorMoves(plot, character)
     local mapping = {}
 
     local check = function(pool, skill)
+        if skill == "" then return false end
         if character:HasBaseSkill(skill) then return false end
         for i=0, pool.Count-1, 1 do
             if pool[i].Skill == skill then
