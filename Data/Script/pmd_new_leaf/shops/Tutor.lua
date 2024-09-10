@@ -96,7 +96,7 @@ _SHOP.TutorTables = {
 }
 
 function _SHOP.TutorUpdate(plot)
-    local assembly = GAME:GetPlayerAssemblyTable() --TODO get ActiveTeam.Players as well
+    local assembly = _SHOP.TutorGetCharacters()
     for _, member in pairs(assembly) do
         local species, form = member.BaseForm.Species, member.BaseForm.Form
         _SHOP.TutorAddSpecies(plot, species, form)
@@ -153,7 +153,7 @@ end
 function _SHOP.TutorRollSlot(plot)
     local roll_table = {}
     local added = {}
-    local assembly = GAME:GetPlayerAssemblyTable() --TODO get ActiveTeam.Players as well
+    local assembly = _SHOP.TutorGetCharacters()
     local move
 
     for _, mon in pairs(assembly) do
@@ -357,6 +357,14 @@ function _SHOP.TutorInteract(plot, index)
             exit = true
         end
     end
+end
+
+function _SHOP.TutorGetCharacters()
+    local characters = {}
+    for char in luanet.each(LUA_ENGINE:MakeList(_DATA.Save.ActiveTeam.Players)) do table.insert(characters, char) end
+    local assembly = GAME:GetPlayerAssemblyTable()
+    table.move(assembly, 1, #assembly, #characters+1)
+    return characters
 end
 
 function _SHOP.TutorGetLearnables(plot, character)
