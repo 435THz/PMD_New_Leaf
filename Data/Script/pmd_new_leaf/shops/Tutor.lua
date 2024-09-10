@@ -330,6 +330,7 @@ function _SHOP.TutorInteract(plot, index)
                                 _SHOP.TutorAnimation(npc)
                                 SOUND:PlayFanfare("Fanfare/LearnSkill")
                                 UI:WaitShowDialogue(STRINGS:Format('TUTOR_LEARN_END', chosen_member:GetDisplayName(true), moveEntry:GetIconName()))
+                                if plot.data.category_permanent then _SHOP.TutorMakePermanent(chosen_move) end
                                 loop = false
                             end
                         else
@@ -505,6 +506,16 @@ function _SHOP.TutorGetPrice(skill)
         price = _SHOP.TutorTables.charge_to_cost[move.BaseCharges]
     end
     return price
+end
+
+function _SHOP.TutorMakePermanent(plot, skill_id)
+    for _, slot in plot.data.category_slots do
+        if slot.ID == skill_id then
+            table.insert(plot.data.permanent_stock, skill_id)
+            slot.ID = ""
+            break
+        end
+    end
 end
 
 function _SHOP.TutorAnimation(chara)
