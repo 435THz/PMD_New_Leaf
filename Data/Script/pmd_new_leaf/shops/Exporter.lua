@@ -212,7 +212,17 @@ function _SHOP.ExporterAddToStock(plot, items)
     end
 end
 
-_SHOP.callbacks.initialize["exporter"] = _SHOP.ExporterInitializer
-_SHOP.callbacks.upgrade["exporter"] =    _SHOP.ExporterUpgrade
-_SHOP.callbacks.endOfDay["exporter"] =   _SHOP.ExporterUpdate
-_SHOP.callbacks.interact["exporter"] =   _SHOP.ExporterInteract
+function _SHOP.ExporterGetDescription(plot)
+    local description = STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_BASE",plot.data.slots, plot.data.checks)
+    if plot.data.reduce_all then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_BOOST") end
+    if plot.data.instant_sell then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_INSTANT") end
+    if plot.data.earnings > 0 then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_SOLD") end
+    if plot.data.store_earnings then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_DEPOSIT") end
+    return description
+end
+
+_SHOP.callbacks.initialize["exporter"] =  _SHOP.ExporterInitializer
+_SHOP.callbacks.upgrade["exporter"] =     _SHOP.ExporterUpgrade
+_SHOP.callbacks.endOfDay["exporter"] =    _SHOP.ExporterUpdate
+_SHOP.callbacks.interact["exporter"] =    _SHOP.ExporterInteract
+_SHOP.callbacks.description["exporter"] = _SHOP.ExporterGetDescription

@@ -6,14 +6,15 @@
 
 _SHOP = {}
 _SHOP.callbacks = {
-    initialize = {}, --arguments: plot
-    upgrade =    {}, --arguments: plot, upgrade
-    endOfDay =   {}, --arguments: plot
-    interact =   {}  --arguments: plot, index
+    initialize =  {}, --arguments: plot
+    upgrade =     {}, --arguments: plot, upgrade
+    endOfDay =    {}, --arguments: plot
+    interact =    {}, --arguments: plot, index
+    description = {}  --arguments: plot
 }
 --TODO note that everything has been tested only at level 1. Leveling shops up beyond that is still a big question.
-require 'pmd_new_leaf.shops.Market'
 require 'pmd_new_leaf.shops.Exporter'
+require 'pmd_new_leaf.shops.Market'
 require 'pmd_new_leaf.shops.Tutor'
 
 --- Runs the initialize callback associated to thr given plot id's building.
@@ -50,7 +51,7 @@ function _SHOP.OnDayEnd()
     end
 end
 
---- Runs the endOfDay callback associated to thr given plot id's building.
+--- Runs the endOfDay callback associated to the given plot id's building.
 --- @param index any home, office or any positive integer up to 15
 function _SHOP.EndOfDay(index)
     local plot = _HUB.getPlotData(index)
@@ -60,7 +61,7 @@ function _SHOP.EndOfDay(index)
     end
 end
 
---- Runs the interact callback associated to thr given plot id's building.
+--- Runs the interact callback associated to the given plot id's building.
 --- @param index any home, office or any positive integer up to 15
 function _SHOP.ShopInteract(index)
     local plot = _HUB.getPlotData(index)
@@ -89,4 +90,18 @@ function _SHOP.ConfirmShopUpgrade(plot, upgrade)
         end
     end
     if not found then table.insert(plot.upgrades, {type = upgrade, count = 1}) end
+end
+
+--- Returns the plot's description used by the plot management menu.
+--- @param plot table the plot's data structure
+function _SHOP.GetPlotDescription(plot)
+    if _SHOP.callbacks.description[plot.building] then
+        return _SHOP.callbacks.description[plot.building](plot)
+    elseif plot.building == "" then
+        if plot.unlocked then
+            return STRINGS:FormatKey("PLOT_DESCRIPTION_UNLOCKED")
+        else
+            return STRINGS:FormatKey("PLOT_DESCRIPTION_LOCKED")
+        end
+    end
 end

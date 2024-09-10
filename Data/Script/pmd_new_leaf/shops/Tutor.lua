@@ -516,7 +516,16 @@ function _SHOP.TutorAnimation(chara)
     GAME:WaitFrames(30)
 end
 
-_SHOP.callbacks.initialize["tutor"] = _SHOP.TutorInitializer
-_SHOP.callbacks.upgrade["tutor"] =    _SHOP.TutorUpgrade
-_SHOP.callbacks.endOfDay["tutor"] =   _SHOP.TutorUpdate
-_SHOP.callbacks.interact["tutor"] =   _SHOP.TutorInteract
+function _SHOP.TutorGetDescription(plot)
+    local description = STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_BASE", plot.data.level_limit)
+    if plot.data.category ~= "" then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_CATEGORY", STRINGS:FormatKey("UPGRADE_TEACH_"..string.upper(plot.data.category)), plot.data.category_slots) end
+    if plot.data.category_permanent then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_PERMANENT", STRINGS:FormatKey("UPGRADE_TEACH_"..string.upper(plot.data.category))) end
+    if #plot.data.permanent_stock > 0 then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_PERMANENT_NUM", STRINGS:FormatKey("UPGRADE_TEACH_"..string.upper(plot.data.category)), #plot.data.permanent_stock) end
+    return description
+end
+
+_SHOP.callbacks.initialize["tutor"] =  _SHOP.TutorInitializer
+_SHOP.callbacks.upgrade["tutor"] =     _SHOP.TutorUpgrade
+_SHOP.callbacks.endOfDay["tutor"] =    _SHOP.TutorUpdate
+_SHOP.callbacks.interact["tutor"] =    _SHOP.TutorInteract
+_SHOP.callbacks.description["tutor"] = _SHOP.TutorGetDescription
