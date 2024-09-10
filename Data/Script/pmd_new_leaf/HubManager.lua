@@ -67,7 +67,7 @@ _HUB.LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15}
 _HUB.RankPlotNumber = {3,6,10,15}
 --- maps assembly limit to rank. TODO PROBABLY WILL BE SCRAPPED
 _HUB.LevelAssemblyLimit = {10,25,40,60,80,100,150,200,300,500}
---- maps a list of map coordinates to every rank
+--- maps a list of map coordinates to every rank. Ground Map version.
 _HUB.PlotPositions = {
     -- rank 1
     {
@@ -126,8 +126,57 @@ _HUB.PlotPositions = {
         {X=128, Y=64},
         {X=304, Y=64}
     }
-
 }
+--- maps a list of map coordinates to every rank. Office Plot Marker version. Entries do not include home and office
+_HUB.PlotMarkerMapPositions = {
+    -- rank 1
+    {
+        {X=6,  Y=27},
+        {X=48, Y=27},
+        {X=27, Y=27}
+    },
+    -- rank 2
+    {
+        {X=21, Y=27},
+        {X=45, Y=27},
+        {X=6,  Y=6},
+        {X=60, Y=6},
+        {X=6,  Y=27},
+        {X=60, Y=27}
+    },
+    -- rank 3
+    {
+        {X=30, Y=30},
+        {X=54, Y=30},
+        {X=15, Y=9},
+        {X=69, Y=9},
+        {X=15, Y=36},
+        {X=69, Y=36},
+        {X=6,  Y=51},
+        {X=27, Y=51},
+        {X=57, Y=51},
+        {X=78, Y=51}
+    },
+    -- rank 4
+    {
+        {X=36, Y=30},
+        {X=60, Y=30},
+        {X=21, Y=9},
+        {X=75, Y=9},
+        {X=21, Y=36},
+        {X=75, Y=36},
+        {X=21, Y=66},
+        {X=36, Y=72},
+        {X=60, Y=72},
+        {X=75, Y=66},
+        {X=6,  Y=39},
+        {X=90, Y=39},
+        {X=6,  Y=63},
+        {X=90, Y=63},
+        {X=48, Y=51}
+    }
+}
+
 
 -------------------------------------------
 --region Getters
@@ -148,9 +197,14 @@ function _HUB.getHubSuffix()
     return STRINGS:FormatKey(_HUB.RankSuffixKey[_HUB.getHubRank()])
 end
 
----@return string the id of the current town map for the hub
+---@return string the id of the current ground map for the hub
 function _HUB.getHubMap()
     return _HUB.RankHubMap[_HUB.getHubRank()]
+end
+
+---@return string the id of the current map object for the hub
+function _HUB.getHubPlotMap()
+    return _HUB.RankPlotMap[_HUB.getHubRank()]
 end
 
 ---@return number the current maximum building number for the hub
@@ -194,12 +248,22 @@ function _HUB.getPlotOriginList()
     return _HUB.PlotPositions[_HUB.getHubRank()]
 end
 
+---@return table the list of office map plot coordinates associated to the current hub rank
+function _HUB.getPlotMarkerOriginList()
+return _HUB.PlotMarkerMapPositions[_HUB.getHubRank()]
+end
+
 ---@param plot_id any home, office or any number up to the current rank's plot limit
 ---@return table a table containing the X and Y coordinates associated to the specified plot id for the current hub rank
 function _HUB.getPlotOrigin(plot_id)
     if plot_id == "home" then return _HUB.getPlotOriginList()[1] end
     if plot_id == "office" then return _HUB.getPlotOriginList()[2] end
     return _HUB.getPlotOriginList()[plot_id]
+end
+---@param plot_id number any number up to the current rank's plot limit
+---@return table a table containing the X and Y coordinates of the map token associated to the specified plot id for the current hub rank
+function _HUB.getPlotMarkerOrigin(plot_id)
+    return _HUB.getPlotMarkerOriginList()[plot_id]
 end
 
 -------------------------------------------
