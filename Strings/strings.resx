@@ -193,6 +193,48 @@
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
   </data>
+  <data name="PLOT_DESCRIPTION_EXPORTER_BASE" xml:space="preserve">
+    <value>Can hold {0} items. Gains {1} progress per day.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_EXPORTER_BOOST" xml:space="preserve">
+    <value>All items require slightly less progress to be sold.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_EXPORTER_DEPOSIT" xml:space="preserve">
+    <value>Deposits all new earnings in the town bank.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_EXPORTER_INSTANT" xml:space="preserve">
+    <value>Has a 25% chance to instantly sell an item.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_EXPORTER_SOLD" xml:space="preserve">
+    <value>Has earnings stored.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_LOCKED" xml:space="preserve">
+    <value>A plot of land overrun with greenery. It needs to be reclaimed before it can house a building.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_MARKET_BASE" xml:space="preserve">
+    <value>Sells {0}</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_MARKET_DISCOUNT" xml:space="preserve">
+    <value>Everything is 20% off.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_MARKET_SPECIALIZATION" xml:space="preserve">
+    <value>Often has discounts on {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_TUTOR_BASE" xml:space="preserve">
+    <value>Teaches level moves up to level {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_TUTOR_CATEGORY" xml:space="preserve">
+    <value>Offers {1} {0} every day.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_TUTOR_PERMANENT_NUM" xml:space="preserve">
+    <value>Has permanently unlocked {1} {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_TUTOR_PERMANENT" xml:space="preserve">
+    <value>Permanently unlocks purchased {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_UNLOCKED" xml:space="preserve">
+    <value>A clear plot of land that is ready to house a new building.</value>
+  </data>
   <data name="RECEIVE_ITEM_MESSAGE" xml:space="preserve">
     <value>You received {0}!</value>
   </data>
@@ -255,5 +297,32 @@
   </data>
   <data name="TUTOR_REPLACE" xml:space="preserve">
     <value>We'll need to replace a move.[pause=0] What'll it be?</value>
+  </data>
+  <data name="UPGRADE_POOL_AMMO" xml:space="preserve">
+    <value>Throwing Items</value>
+  </data>
+  <data name="UPGRADE_POOL_ORBS" xml:space="preserve">
+    <value>Orbs</value>
+  </data>
+  <data name="UPGRADE_POOL_RECRUITMENT" xml:space="preserve">
+    <value>Apricorns</value>
+  </data>
+  <data name="UPGRADE_POOL_SURVIVAL" xml:space="preserve">
+    <value>Essential Items</value>
+  </data>
+  <data name="UPGRADE_POOL_TM" xml:space="preserve">
+    <value>TMs</value>
+  </data>
+  <data name="UPGRADE_POOL_UTILITIES" xml:space="preserve">
+    <value>Battle Items</value>
+  </data>
+  <data name="UPGRADE_POOL_WANDS" xml:space="preserve">
+    <value>Wands</value>
+  </data>
+  <data name="UPGRADE_TEACH_EGG" xml:space="preserve">
+    <value>Egg Moves</value>
+  </data>
+  <data name="UPGRADE_TEACH_TUTOR" xml:space="preserve">
+    <value>Tutor Moves</value>
   </data>
 </root>
