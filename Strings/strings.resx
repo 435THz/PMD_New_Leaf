@@ -239,7 +239,7 @@
     <value>You received {0}!</value>
   </data>
   <data name="TUTOR_BEGIN" xml:space="preserve">
-    <value>Let's start, then!</value>
+    <value>Let's start,[pause=10] then!</value>
   </data>
   <data name="TUTOR_BYE" xml:space="preserve">
     <value>Come back soon!</value>
