@@ -131,9 +131,14 @@ _HUB.PlotPositions = {
 --region Getters
 -------------------------------------------
 
+---@return number the current level of the hub itself
+function _HUB.getHubLevel()
+    return SV.HubData.Level
+end
+
 ---@return number the current rank of the hub itself
 function _HUB.getHubRank()
-    return _HUB.LevelRankTable[SV.HubData.Level]
+    return _HUB.LevelRankTable[_HUB.getHubLevel()]
 end
 
 ---@return string the current town suffix for the hub
@@ -421,6 +426,16 @@ end
 -------------------------------------------
 --region SV Interface
 -------------------------------------------
+
+---@param level number the level to set the hub to
+function _HUB.setHubLevel(level)
+    SV.HubData.Level = level
+end
+
+---Increases the hub's level by 1
+function _HUB.levelUp()
+    _HUB.setHubLevel(SV.HubData.Level+1)
+end
 
 --- Initializes the plot database inside the SV structure.
 function _HUB.initializePlotData()
