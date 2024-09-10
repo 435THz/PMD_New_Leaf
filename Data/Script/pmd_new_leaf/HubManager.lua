@@ -54,9 +54,13 @@ require 'pmd_new_leaf.ShopManager'
 --- Maps ranks to level
 _HUB.LevelRankTable = {1,1,2,2,2,3,3,3,4,4}
 --- maps town name suffixes to rank
-_HUB.RankSuffix = {"Camp", "Village", "Town", "City"}
---- maps town map id to rank
+_HUB.RankSuffixKey = {"HUB_TIER_SMALL", "HUB_TIER_MEDIUM", "HUB_TIER_LARGE", "HUB_TIER_FINAL"}
+--- maps town name patterns to rank
+_HUB.RankNamePatterns = {"HUB_PATTERN_SMALL", "HUB_PATTERN_MEDIUM", "HUB_PATTERN_LARGE", "HUB_PATTERN_FINAL"}
+--- maps town ground map id to rank
 _HUB.RankHubMap = {"hub_small", "hub_medium", "hub_large", "hub_final"}
+--- maps town map object id to rank
+_HUB.RankPlotMap = {"map_small", "map_medium", "map_large", "map_final"}
 --- maps town build limit to level
 _HUB.LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15}
 --- maps assembly limit to rank. TODO PROBABLY WILL BE SCRAPPED
@@ -134,7 +138,7 @@ end
 
 ---@return string the current town suffix for the hub
 function _HUB.getHubSuffix()
-    return _HUB.RankSuffix[_HUB.getHubRank()]
+    return STRINGS:FormatKey(_HUB.RankSuffixKey[_HUB.getHubRank()])
 end
 
 ---@return string the id of the current town map for the hub
@@ -156,7 +160,10 @@ end
 ---@return string the current town name. Will not contain color codes if colorless is true
 function _HUB.getHubName(colorless)
     local ret = SV.HubData.Name
-    if SV.HubData.UseSuffix then ret = ret.." ".._HUB.getHubSuffix() end
+    if SV.HubData.UseSuffix then
+        local rank = _HUB.getHubRank()
+        ret = STRINGS:FormatKey(_HUB.RankNamePatterns[rank], ret, STRINGS:FormatKey(_HUB.RankSuffixKey[rank]))
+    end
     if colorless then return ret end
     return "[color=#FFFFA5]"..ret.."[color]"
 end

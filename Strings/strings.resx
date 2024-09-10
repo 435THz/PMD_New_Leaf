@@ -124,6 +124,30 @@
   <data name="EXPORTER_SLOTS" xml:space="preserve">
     <value>Slots: {0}/{1}</value>
   </data>
+  <data name="HUB_PATTERN_SMALL" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="HUB_PATTERN_MEDIUM" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="HUB_PATTERN_LARGE" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="HUB_PATTERN_FINAL" xml:space="preserve">
+    <value>{0} {1}</value>
+  </data>
+  <data name="HUB_TIER_SMALL" xml:space="preserve">
+    <value>Camp</value>
+  </data>
+  <data name="HUB_TIER_MEDIUM" xml:space="preserve">
+    <value>Square</value>
+  </data>
+  <data name="HUB_TIER_LARGE" xml:space="preserve">
+    <value>Town</value>
+  </data>
+  <data name="HUB_TIER_FINAL" xml:space="preserve">
+    <value>City</value>
+  </data>
   <data name="INPUT_NAME_DESC" xml:space="preserve">
     <value>Leave blank for species name.</value>
   </data>
