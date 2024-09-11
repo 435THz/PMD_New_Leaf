@@ -193,6 +193,45 @@
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
   </data>
+  <data name="OFFICE_BYE" xml:space="preserve">
+    <value>See you later, then!</value>
+  </data>
+  <data name="OFFICE_INFO_1" xml:space="preserve">
+    <value>This is placeholder text.</value>
+  </data>
+  <data name="OFFICE_INFO_2" xml:space="preserve">
+    <value>This is also placeholder text.</value>
+  </data>
+  <data name="OFFICE_INFO_3" xml:space="preserve">
+    <value>This is more placeholder text.</value>
+  </data>
+  <data name="OFFICE_INFO_4" xml:space="preserve">
+    <value>Even this one is placeholder text.</value>
+  </data>
+  <data name="OFFICE_INFO_5" xml:space="preserve">
+    <value>Placeholder text. Who would've thought.</value>
+  </data>
+  <data name="OFFICE_INFO_6" xml:space="preserve">
+    <value>Placeholder text? In this economy?</value>
+  </data>
+  <data name="OFFICE_INTRO" xml:space="preserve">
+    <value>Hello,[pause=10] {0}![pause=0] Do you need something?</value>
+  </data>
+  <data name="OFFICE_OPTION_MANAGE" xml:space="preserve">
+    <value>Manage {0}</value>
+  </data>
+  <data name="OFFICE_OPTION_QUESTS" xml:space="preserve">
+    <value>Check Quests</value>
+  </data>
+  <data name="OFFICE_OPTION_UPGRADE" xml:space="preserve">
+    <value>Upgrade {0}</value>
+  </data>
+  <data name="OFFICE_INTRO" xml:space="preserve">
+    <value>Hello,[pause=10] {0}![pause=0] Do you need something?</value>
+  </data>
+  <data name="OFFICE_REPEAT" xml:space="preserve">
+    <value>Do you need anything else?</value>
+  </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_BASE" xml:space="preserve">
     <value>Can hold {0} items. Gains {1} progress per day.\n</value>
   </data>
