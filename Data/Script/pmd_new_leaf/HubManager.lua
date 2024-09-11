@@ -217,6 +217,17 @@ function _HUB.getHubLevel()
     return SV.HubData.Level
 end
 
+---@return boolean true if there is at least 1 building that has a higher level than the town, false otherwise
+function _HUB.canUpgrade()
+    for i=1, _HUB.getRankPlotNumber(), 1 do
+        local plot = _HUB.getPlotData(i)
+        if plot.unlocked and _HUB.getPlotLevel(plot) > _HUB.getHubLevel() then
+            return true
+        end
+    end
+    return false
+end
+
 ---@return number the current rank of the hub itself
 function _HUB.getHubRank()
     return _HUB.LevelRankTable[_HUB.getHubLevel()]
@@ -540,11 +551,13 @@ end
 ---@param level number the level to set the hub to
 function _HUB.setHubLevel(level)
     SV.HubData.Level = level
+    _HUB.getPlotData("home").upgrades =   {{type = "upgrade_generic", count = level}}
+    _HUB.getPlotData("office").upgrades = {{type = "upgrade_generic", count = level}}
 end
 
 ---Increases the hub's level by 1
-function _HUB.levelUp()
-    _HUB.setHubLevel(SV.HubData.Level+1)
+function _HUB.levelUpHub()
+    _HUB.setHubLevel(_HUB.getHubLevel()+1)
 end
 
 --- Initializes the plot database inside the SV structure.
