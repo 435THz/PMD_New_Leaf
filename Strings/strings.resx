@@ -238,6 +238,84 @@
   <data name="RECEIVE_ITEM_MESSAGE" xml:space="preserve">
     <value>You received {0}!</value>
   </data>
+  <data name="SHOP_NAME_APPRAISAL" xml:space="preserve">
+    <value>{0}'s Appraisal</value>
+  </data>
+  <data name="SHOP_NAME_CAFE" xml:space="preserve">
+    <value>{0} Café</value>
+  </data>
+  <data name="SHOP_NAME_EMPTY" xml:space="preserve">
+    <value>Empty Space</value>
+  </data>
+  <data name="SHOP_NAME_EXPORTER" xml:space="preserve">
+    <value>{0} Exports</value>
+  </data>
+  <data name="SHOP_NAME_MARKET" xml:space="preserve">
+    <value>{0} Market</value>
+  </data>
+  <data name="SHOP_NAME_TRADER" xml:space="preserve">
+    <value>{0} Trades</value>
+  </data>
+  <data name="SHOP_NAME_TUTOR" xml:space="preserve">
+    <value>{0} Tutor</value>
+  </data>
+  <data name="SHOP_OPTION_APPRAISAL" xml:space="preserve">
+    <value>Appraisal</value>
+  </data>
+  <data name="SHOP_OPTION_CAFE" xml:space="preserve">
+    <value>Café</value>
+  </data>
+  <data name="SHOP_OPTION_EMPTY" xml:space="preserve">
+    <value>-Empty-</value>
+  </data>
+  <data name="SHOP_OPTION_EXPORTER" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="SHOP_OPTION_LOCKED" xml:space="preserve">
+    <value>-Locked-</value>
+  </data>
+  <data name="SHOP_OPTION_MARKET" xml:space="preserve">
+    <value>Market</value>
+  </data>
+  <data name="SHOP_OPTION_OUT_OF_LIMIT" xml:space="preserve">
+    <value>------</value>
+  </data>
+  <data name="SHOP_OPTION_TRADER" xml:space="preserve">
+    <value>Trader</value>
+  </data>
+  <data name="SHOP_OPTION_TUTOR" xml:space="preserve">
+    <value>Tutor</value>
+  </data>
+  <data name="TOWN_MANAGER_DESCR_BUILDINGS" xml:space="preserve">
+    <value>Unlock plots of land, build and upgrade shops to grow the {0}.</value>
+  </data>
+  <data name="TOWN_MANAGER_DESCR_EXIT" xml:space="preserve">
+    <value>Close this menu.</value>
+  </data>
+  <data name="TOWN_MANAGER_DESCR_RENAME" xml:space="preserve">
+    <value>Change the name of the town.</value>
+  </data>
+  <data name="TOWN_MANAGER_DESCR_RENAME_FINAL" xml:space="preserve">
+    <value>Change the name of the town. You can also remove the word "{0}" from its full name if you want.</value>
+  </data>
+  <data name="TOWN_MANAGER_DESCR_UPGRADE" xml:space="preserve">
+    <value>Upgrade the town using {0} from your Storage.</value>
+  </data>
+  <data name="TOWN_MANAGER_DESCR_UPGRADE_LOCKED" xml:space="preserve">
+    <value>[color=#FF0000]You must have at least one shop at level {0} to do this![color]</value>
+  </data>
+  <data name="TOWN_MANAGER_OPTION_BUILDINGS" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
+  <data name="TOWN_MANAGER_OPTION_EXIT" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="TOWN_MANAGER_OPTION_RENAME" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="TOWN_MANAGER_OPTION_UPGRADE" xml:space="preserve">
+    <value>Upgrade</value>
+  </data>
   <data name="TUTOR_BEGIN" xml:space="preserve">
     <value>Let's start,[pause=10] then!</value>
   </data>
