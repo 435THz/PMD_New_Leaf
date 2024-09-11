@@ -150,7 +150,6 @@ function _SHOP.MarketInteract(plot, index)
                             if #cart == 1 then
                                 local name = catalog[cart[1]].Item:GetDisplayName()
                                 buy_msg = STRINGS:FormatKey('MARKET_BUY_ONE', STRINGS:FormatKey("MONEY_AMOUNT", total), name)
-                                --TODO consider looping. Maybe this could be governed by a setting
                             else
                                 buy_msg = STRINGS:FormatKey('MARKET_BUY_MULTI', STRINGS:FormatKey("MONEY_AMOUNT", total))
                             end
@@ -240,7 +239,7 @@ _SHOP.MarketPools = {
             { Index = "apricorn_glittery", Amount = 0, Price = 500},
             { Index = "apricorn_glittery", Amount = 0, Price = 500},
             { Index = "apricorn_glittery", Amount = 0, Price = 500},
-            { Index = "amber_tear", Amount = 1, Price = 1000}
+            { Index = "medicine_amber_tear", Amount = 1, Price = 1000}
         }
     },
     utilities = {
