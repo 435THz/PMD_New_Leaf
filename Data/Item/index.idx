@@ -1,0 +1,19 @@
+﻿{
+"Version": "0.8.5.0",
+"Object": {
+"$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
+"loot_wish_fragment": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": -1,
+"UsageType": 0,
+"States": [],
+"Name": {
+"DefaultText": "Wish Fragment",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": -1
+}
+}
+}
