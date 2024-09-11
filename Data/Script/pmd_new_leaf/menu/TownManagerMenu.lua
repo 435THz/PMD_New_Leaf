@@ -8,14 +8,15 @@ require 'pmd_new_leaf.menu.TownManagerSummary'
 require 'pmd_new_leaf.menu.ScrollListMenu'
 require 'origin.menu.DescriptionSummary'
 
-TownManagerMenu = Class("PlotManagerMenu", ScrollListMenu)
+TownManagerMenu = Class("TownManagerMenu", ScrollListMenu)
 
---- Creates a new ``PlotManagerMenu`` instance using the provided callback.
+--- Creates a new ``TownManagerMenu`` instance using the provided callback.
 function TownManagerMenu:initialize(callback)
     local x = 16
     local y = 16
-    local options, return_values = self.LoadOptionsData()
-    local selectFunction = function(i) callback(return_values[i]) end
+    local options, return_values, descriptions = self.LoadOptionsData()
+    self.descriptions = descriptions
+    local selectFunction = function(i) callback(return_values[i]) end --TODO a real callback
     local width = 64
     local no_expand = false
 
@@ -37,17 +38,35 @@ end
 function TownManagerMenu:LoadOptionsData(_)
     local options = {}
     local return_values = {}
-    table.insert(options, "TOWN_MANAGER_OPTION_BUILDINGS")
+    local descriptions = {}
+    table.insert(options, STRINGS:FormatKey("TOWN_MANAGER_OPTION_BUILDINGS"))
     table.insert(return_values, "buildings")
-    if _HUB.getHubRank() >1 then
-        table.insert(options, "TOWN_MANAGER_OPTION_RENAME")
+    table.insert(descriptions, STRINGS:FormatKey("TOWN_MANAGER_DESCR_BUILDINGS", _HUB.getHubSuffix()))
+    if _HUB.getHubRank()>1 then
+        table.insert(options, STRINGS:FormatKey("TOWN_MANAGER_OPTION_RENAME"))
         table.insert(return_values, "rename")
+        if _HUB.getHubRank()>3 then
+            table.insert(descriptions, STRINGS:FormatKey("TOWN_MANAGER_DESCR_RENAME_FINAL", _HUB.getHubSuffix()))
+        else
+            table.insert(descriptions, STRINGS:FormatKey("TOWN_MANAGER_DESCR_RENAME"))
+        end
     end
-    table.insert(options, { "TOWN_MANAGER_OPTION_UPGRADE" })
-    table.insert(return_values, "upgrade")
-    table.insert(options, "TOWN_MANAGER_OPTION_EXIT")
+    if _HUB.getHubLevel()<10 then
+        local enabled = _HUB.canUpgrade()
+        local descr = STRINGS:FormatKey("TOWN_MANAGER_DESCR_UPGRADE", _HUB.getHubUpgradeReqString()) --TODO function
+        local color = Color.White
+        if not enabled then
+            color = Color.Red
+            descr = descr.."\n"..STRINGS:FormatKey("TOWN_MANAGER_DESCR_UPGRADE_LOCKED", _HUB.getHubLevel()+1)
+        end
+        table.insert(options, { STRINGS:FormatKey("TOWN_MANAGER_OPTION_UPGRADE"), enabled, color })
+        table.insert(return_values, "upgrade")
+        table.insert(descriptions, descr)
+    end
+    table.insert(options, STRINGS:FormatKey("TOWN_MANAGER_OPTION_EXIT"))
     table.insert(return_values, "exit")
-    return options, return_values
+    table.insert(descriptions, STRINGS:FormatKey("TOWN_MANAGER_DESCR_EXIT"))
+    return options, return_values, descriptions
 end
 
 function TownManagerMenu:Update(input)
@@ -57,7 +76,7 @@ end
 
 function TownManagerMenu:updateSelection(change)
     if ScrollListMenu.updateSelection(self, change) then
-        self.map_summary:SelectPlot(self.selected)
+        self:SetDescription()
         return true
     end
     return false
@@ -67,15 +86,6 @@ function TownManagerMenu:CalcChoiceLength(start)
     local width = ScrollListMenu.CalcChoiceLength(self, start)
     local max_width = 124
     return math.min(width, max_width)
-end
-
-
-function TownManagerMenu:LoadShopDescriptions()
-    local descriptions = {}
-    for _, plot in self.plots do
-        table.insert(descriptions, _SHOP.GetPlotDescription(plot))
-    end
-    return descriptions
 end
 
 function TownManagerMenu:SetDescription()
