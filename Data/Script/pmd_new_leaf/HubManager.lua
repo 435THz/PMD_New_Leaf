@@ -176,7 +176,37 @@ _HUB.PlotMarkerMapPositions = {
         {X=48, Y=51}
     }
 }
-
+--- lists of items required to upgrade the town to each level. table 1 is empty because town starts at level 1 anyway
+_HUB.LevelUpCosts = {
+    {},
+    {
+        {item = "loot_wish_fragment", Amount = 1 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 2 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 4 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 6 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 8 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 12 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 16 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 21 }
+    },
+    {
+        {item = "loot_wish_fragment", Amount = 30 }
+    }
+}
 
 -------------------------------------------
 --region Getters
