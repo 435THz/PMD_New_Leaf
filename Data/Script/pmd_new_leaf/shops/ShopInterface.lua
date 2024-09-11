@@ -15,6 +15,7 @@ _SHOP.callbacks = {
 --TODO note that everything has been tested only at level 1. Leveling shops up beyond that is still a big question.
 require 'pmd_new_leaf.shops.Exporter'
 require 'pmd_new_leaf.shops.Market'
+require 'pmd_new_leaf.shops.Office'
 require 'pmd_new_leaf.shops.Tutor'
 
 --- Runs the initialize callback associated to thr given plot id's building.
