@@ -7,12 +7,13 @@
 
 require 'pmd_new_leaf.menu.TownManagerMenu'
 require 'pmd_new_leaf.menu.PlotManagerMenu'
+--TODO require 'pmd_new_leaf.menu.PlotBuildMenu'
 
 function _SHOP.OfficeInitializer(plot)
     plot.data = {}
 end
 
-function _SHOP.OfficeUpgrade(plot, upgrade)
+function _SHOP.OfficeUpgrade(plot, upgrade) --TODO probably get rid of
     if upgrade ~= "upgrade_generic" then
         _SHOP.ConfirmShopUpgrade(plot, upgrade)
         _HUB.LevelUp()
