@@ -14,17 +14,21 @@ TownManagerMenu = Class("TownManagerMenu", ScrollListMenu)
 function TownManagerMenu:initialize(callback)
     local x = 16
     local y = 16
-    local options, return_values, descriptions = self.LoadOptionsData()
+    local options, return_values, descriptions = self:LoadOptionsData()
+    self.cb = callback
     self.descriptions = descriptions
-    local selectFunction = function(i) callback(return_values[i]) end --TODO a real callback
+    self.return_values = return_values
     local width = 64
     local no_expand = false
 
-    ScrollListMenu.initialize(self, x, y, options, selectFunction, width, no_expand)
+    self.selectFunction = function(i)
+        return self.cb(self.return_values[i] or "exit")
+    end
+    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, width, no_expand)
 
     self.map_summary = TownManagerSummary:new()
     self.menu.SummaryMenus:Add(self.map_summary.window)
-    self.map_summary:SelectPlot(self.selected, true)
+    self.map_summary:SelectTown()
 
     local summary_x = 16
     local summary_w = Graphics.Manager.ScreenWidth - summary_x*2
@@ -53,7 +57,7 @@ function TownManagerMenu:LoadOptionsData(_)
     end
     if _HUB.getHubLevel()<10 then
         local enabled = _HUB.canUpgrade()
-        local descr = STRINGS:FormatKey("TOWN_MANAGER_DESCR_UPGRADE", _HUB.getHubUpgradeReqString()) --TODO function
+        local descr = STRINGS:FormatKey("TOWN_MANAGER_DESCR_UPGRADE", self:makeHubUpgradeReqString())
         local color = Color.White
         if not enabled then
             color = Color.Red
@@ -94,6 +98,18 @@ function TownManagerMenu:SetDescription()
     self.text_summary:setDescription(descr)
 end
 
+function TownManagerMenu:makeHubUpgradeReqString()
+    local next = _HUB.getHubLevel() +1
+    local list = _HUB.getLevelUpItems(next)
+    local func = function(entry)
+        return RogueEssence.Dungeon.InvItem(entry.item, false, entry.amount):GetDisplayName()
+    end
+
+    return COMMON_FUNC.BuildStringWithSeparators(list,func)
+end
+
+
+
 
 
 
@@ -102,7 +118,7 @@ function TownManagerMenu.run()
     local choose = function(index)
         ret = index
     end
-    local menu = PlotManagerMenu:new(choose)
+    local menu = TownManagerMenu:new(choose)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
     return ret
