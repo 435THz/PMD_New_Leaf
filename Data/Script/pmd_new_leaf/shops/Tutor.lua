@@ -43,8 +43,8 @@ end
 function _SHOP.TutorUpgrade(plot, upgrade)
     local new_level = _HUB.getPlotLevel(plot)+1
     local sub
-    if _SHOP.TutorTables.generic[new_level] then --any level except 5, 7 or 9
         if upgrade ~= "upgrade_generic" then return end
+    if _SHOP.TutorTables.base[new_level] then --any level except 5, 7 or 9
     elseif new_level == 5 then
         if not string.match(upgrade, "upgrade_tutor_5") then
             return
