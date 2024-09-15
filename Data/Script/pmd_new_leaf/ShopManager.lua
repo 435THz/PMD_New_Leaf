@@ -119,8 +119,10 @@ _HUB.UpgradeTable = {
         requirements = {},
         max = 10
     },
-    sub_teach_frequency = {
-        string = "UPGRADE_TEACH_FREQUENCY"
+    upgrade_trader_base = {
+        string = "UPGRADE_GENERIC",
+        requirements = {},
+        max = 10
     }
 }
 
