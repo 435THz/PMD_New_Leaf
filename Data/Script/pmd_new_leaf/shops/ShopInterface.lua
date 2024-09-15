@@ -6,11 +6,12 @@
 
 _SHOP = {}
 _SHOP.callbacks = {
-    initialize =  {}, --arguments: plot
-    upgrade =     {}, --arguments: plot, upgrade
-    endOfDay =    {}, --arguments: plot
-    interact =    {}, --arguments: plot, index
-    description = {}  --arguments: plot
+    initialize =   {}, --arguments: plot
+    upgrade_flow = {}, --arguments: plot, index, npc
+    upgrade =      {}, --arguments: plot, upgrade
+    endOfDay =     {}, --arguments: plot
+    interact =     {}, --arguments: plot, index
+    description =  {}  --arguments: plot
 }
 --TODO note that everything has been tested only at level 1. Leveling shops up beyond that is still a big question.
 require 'pmd_new_leaf.shops.Exporter'
@@ -28,7 +29,20 @@ function _SHOP.InitializeShop(index)
     end
 end
 
---- Runs the upgrade callback associated to thr given plot id's building.
+--- Runs the upgrade_flow callback associated to the given plot id's building.
+--- @param index any home, office or any positive integer up to 15
+--- @param npc userdata the GroundChar that will be used in cutscene if necessary
+--- @return string an upgrade to apply
+function _SHOP.ShopUpgradeFlow(index, npc)
+    local plot = _HUB.getPlotData(index)
+    if _SHOP.callbacks.upgrade_flow[plot.building] then
+        _SHOP.callbacks.upgrade_flow[plot.building](plot, index, npc)
+        PrintInfo("Ran upgrade flow for shop "..index)
+    end
+    UI:ResetSpeaker()
+end
+
+--- Runs the upgrade flow callback associated to thr given plot id's building.
 --- @param index any home, office or any positive integer up to 15
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.UpgradeShop(index, upgrade)
