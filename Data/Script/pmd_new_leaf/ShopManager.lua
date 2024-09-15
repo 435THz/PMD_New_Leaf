@@ -324,16 +324,16 @@ _HUB.ShopBase = {
         Shopkeepers = {{species = "porygon"}, {species = "quagsire"}, {species = "kecleon"}, {species = "bibarel"}, {species = "audino"}, {species = "espurr"}, {species = "ribombee"}, {species = "greedent"}, {species = "maushold"}},
         -- list of possible upgrades that can be picked for every level of the shop
         Upgrades = {
-            {"pool_unlock"},                                              --shop level 1
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 2
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 3
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 4
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 5
-            {"pool_unlock","pool_expand","pool_tier", "pool_specialize"}, --shop level 6
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 7
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 8
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 9
-            {"pool_unlock","pool_expand","pool_tier"},                    --shop level 10
+            {"market_unlock"},                                                    --shop level 1
+            {"market_unlock","market_expand","market_tier"},                      --shop level 2
+            {"market_unlock","market_expand","market_tier"},                      --shop level 3
+            {"market_unlock","market_expand","market_tier"},                      --shop level 4
+            {"market_unlock","market_expand","market_tier"},                      --shop level 5
+            {"market_unlock","market_expand","market_tier", "market_specialize"}, --shop level 6
+            {"market_unlock","market_expand","market_tier"},                      --shop level 7
+            {"market_unlock","market_expand","market_tier"},                      --shop level 8
+            {"market_unlock","market_expand","market_tier"},                      --shop level 9
+            {"market_unlock","market_expand","market_tier"},                      --shop level 10
         },
         -- Data structure containing graphics and hitbox data for spawning and displaying the shop
         Graphics = {
@@ -381,16 +381,16 @@ _HUB.ShopBase = {
     tutor = {
         Shopkeepers = {{species = "marowak"}, {species = "ledian"}, {species = "blaziken"}, {species = "electivire"}, {species = "mienshao"}, {species = "pangoro"}, {species = "kommo_o"}, {species = "falinks"}, {species = "ceruledge"}},
         Upgrades = {
-            {"upgrade_generic"},    --shop level 1
-            {"upgrade_generic"},    --shop level 2
-            {"upgrade_generic"},    --shop level 3
-            {"upgrade_generic"},    --shop level 4
-            {"upgrade_tutor_5"},    --shop level 5
-            {"upgrade_generic"},    --shop level 6
-            {"upgrade_tutor"},      --shop level 7
-            {"upgrade_generic"},    --shop level 8
-            {"upgrade_tutor"},      --shop level 9
-            {"upgrade_generic"},    --shop level 10
+            {"upgrade_tutor_base"},                             --shop level 1
+            {"upgrade_tutor_base"},                             --shop level 2
+            {"upgrade_tutor_base"},                             --shop level 3
+            {"upgrade_tutor_base"},                             --shop level 4
+            {"upgrade_tutor_tutor", "upgrade_tutor_egg"},       --shop level 5
+            {"upgrade_tutor_base"},                             --shop level 6
+            {"upgrade_tutor_frequency", "upgrade_tutor_count"}, --shop level 7
+            {"upgrade_tutor_base"},                             --shop level 8
+            {"upgrade_tutor_frequency", "upgrade_tutor_count"}, --shop level 9
+            {"upgrade_tutor_base"},                             --shop level 10
         },
         Graphics = {
             {
@@ -435,16 +435,16 @@ _HUB.ShopBase = {
     exporter = {
         Shopkeepers = {{species = "dragonite"}, {species = "delibird"}, {species = "flygon"}, {species = "drifblim"}, {species = "scolipede"}, {species = "gogoat"}, {species = "mudsdale"}, {species = "corviknight"}, {species = "bombirdier"}},
         Upgrades = {
-            {"upgrade_generic"},    --shop level 1
-            {"upgrade_generic"},    --shop level 2
-            {"upgrade_generic"},    --shop level 3
-            {"upgrade_generic"},    --shop level 4
-            {"upgrade_generic"},    --shop level 5
-            {"upgrade_generic"},    --shop level 6
-            {"upgrade_generic"},    --shop level 7
-            {"upgrade_generic"},    --shop level 8
-            {"upgrade_generic"},    --shop level 9
-            {"upgrade_generic"},    --shop level 10
+            {"upgrade_exporter_base"}, --shop level 1
+            {"upgrade_exporter_base"}, --shop level 2
+            {"upgrade_exporter_base"}, --shop level 3
+            {"upgrade_exporter_base"}, --shop level 4
+            {"upgrade_exporter_base"}, --shop level 5
+            {"upgrade_exporter_base"}, --shop level 6
+            {"upgrade_exporter_base"}, --shop level 7
+            {"upgrade_exporter_base"}, --shop level 8
+            {"upgrade_exporter_base"}, --shop level 9
+            {"upgrade_exporter_base"}, --shop level 10
         },
         Graphics = {
             {
@@ -487,16 +487,16 @@ _HUB.ShopBase = {
     trader = {
         Shopkeepers = {{species = "gengar"}, {species = "murkrow"}, {species = "sableye"}, {species = "croagunk"}, {species = "zoroark"}, {species = "trevenant"}, {species = "mimikyu"}, {species = "thievul"}, {species = "meowscarada"}},
         Upgrades = { --TODO
-            {"upgrade_generic"},    --shop level 1
-            {"upgrade_generic"},    --shop level 2
-            {"upgrade_generic"},    --shop level 3
-            {"upgrade_generic"},    --shop level 4
-            {"upgrade_generic"},    --shop level 5
-            {"upgrade_generic"},    --shop level 6
-            {"upgrade_generic"},    --shop level 7
-            {"upgrade_generic"},    --shop level 8
-            {"upgrade_generic"},    --shop level 9
-            {"upgrade_generic"},    --shop level 10
+            {"upgrade_trader_base"}, --shop level 1
+            {"upgrade_trader_base"}, --shop level 2
+            {"upgrade_trader_base"}, --shop level 3
+            {"upgrade_trader_base"}, --shop level 4
+            {"upgrade_trader_base"}, --shop level 5
+            {"upgrade_trader_base"}, --shop level 6
+            {"upgrade_trader_base"}, --shop level 7
+            {"upgrade_trader_base"}, --shop level 8
+            {"upgrade_trader_base"}, --shop level 9
+            {"upgrade_trader_base"}, --shop level 10
         },
         Graphics = { --TODO
             {},
@@ -508,16 +508,31 @@ _HUB.ShopBase = {
     appraisal = {
         Shopkeepers = {{species = "voltorb"}, {species = "xatu"}, {species = "metang"}, {species = "bronzong"}, {species = "reuniclus"}, {species = "klefki"}, {species = "deciueye"}, {species = "runerigus"}, {species = "farigiraf"}},
         Upgrades = { --TODO
-            {"upgrade_generic"},    --shop level 1
-            {"upgrade_generic"},    --shop level 2
-            {"upgrade_generic"},    --shop level 3
-            {"upgrade_generic"},    --shop level 4
-            {"upgrade_generic"},    --shop level 5
-            {"upgrade_generic"},    --shop level 6
-            {"upgrade_generic"},    --shop level 7
-            {"upgrade_generic"},    --shop level 8
-            {"upgrade_generic"},    --shop level 9
-            {"upgrade_generic"},    --shop level 10
+            {"upgrade_appraisal_base"},                                    --shop level 1
+            {"upgrade_appraisal_cute",     "upgrade_appraisal_nifty",    "upgrade_appraisal_heavy",
+             "upgrade_appraisal_pretty",   "upgrade_appraisal_hard",     "upgrade_appraisal_dainty",
+             "upgrade_appraisal_glittery", "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe",
+             "upgrade_appraisal_shiny",    "upgrade_appraisal_sinister"},  --shop level 2
+            {"upgrade_appraisal_base"},                                    --shop level 3
+            {"upgrade_appraisal_cute",     "upgrade_appraisal_nifty",    "upgrade_appraisal_heavy",
+             "upgrade_appraisal_pretty",   "upgrade_appraisal_hard",     "upgrade_appraisal_dainty",
+             "upgrade_appraisal_glittery", "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe",
+             "upgrade_appraisal_shiny",    "upgrade_appraisal_sinister"},  --shop level 4
+            {"upgrade_appraisal_base"},                                    --shop level 5
+            {"upgrade_appraisal_cute",     "upgrade_appraisal_nifty",    "upgrade_appraisal_heavy",
+             "upgrade_appraisal_pretty",   "upgrade_appraisal_hard",     "upgrade_appraisal_dainty",
+             "upgrade_appraisal_glittery", "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe",
+             "upgrade_appraisal_shiny",    "upgrade_appraisal_sinister"},  --shop level 6
+            {"upgrade_appraisal_base"},                                    --shop level 7
+            {"upgrade_appraisal_cute",     "upgrade_appraisal_nifty",    "upgrade_appraisal_heavy",
+             "upgrade_appraisal_pretty",   "upgrade_appraisal_hard",     "upgrade_appraisal_dainty",
+             "upgrade_appraisal_glittery", "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe",
+             "upgrade_appraisal_shiny",    "upgrade_appraisal_sinister"},  --shop level 8
+            {"upgrade_appraisal_base"},                                    --shop level 9
+            {"upgrade_appraisal_cute",     "upgrade_appraisal_nifty",    "upgrade_appraisal_heavy",
+             "upgrade_appraisal_pretty",   "upgrade_appraisal_hard",     "upgrade_appraisal_dainty",
+             "upgrade_appraisal_glittery", "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe",
+             "upgrade_appraisal_shiny",    "upgrade_appraisal_sinister"},  --shop level 10
         },
         Graphics = { --TODO
             {},
