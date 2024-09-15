@@ -190,6 +190,27 @@
   <data name="MARKET_OUT_OF_STOCK" xml:space="preserve">
     <value>I'm sorry, but i'm out of stock.[pause=0] Please come back tomorrow.'</value>
   </data>
+  <data name="MARKET_POOL_AMMO" xml:space="preserve">
+    <value>Throwing Items</value>
+  </data>
+  <data name="MARKET_POOL_ORBS" xml:space="preserve">
+    <value>Orbs</value>
+  </data>
+  <data name="MARKET_POOL_RECRUITMENT" xml:space="preserve">
+    <value>Apricorns</value>
+  </data>
+  <data name="MARKET_POOL_SURVIVAL" xml:space="preserve">
+    <value>Essential Items</value>
+  </data>
+  <data name="MARKET_POOL_TM" xml:space="preserve">
+    <value>TMs</value>
+  </data>
+  <data name="MARKET_POOL_UTILITIES" xml:space="preserve">
+    <value>Battle Items</value>
+  </data>
+  <data name="MARKET_POOL_WANDS" xml:space="preserve">
+    <value>Wands</value>
+  </data>
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
   </data>
@@ -433,26 +454,17 @@
   <data name="UPGRADE_GENERIC" xml:space="preserve">
     <value>-Placeholder-</value>
   </data>
-  <data name="UPGRADE_POOL_AMMO" xml:space="preserve">
-    <value>Throwing Items</value>
+  <data name="UPGRADE_MARKET_EXPAND" xml:space="preserve">
+    <value>Add slot</value>
   </data>
-  <data name="UPGRADE_POOL_ORBS" xml:space="preserve">
-    <value>Orbs</value>
+  <data name="UPGRADE_MARKET_SPECIALIZE" xml:space="preserve">
+    <value>Specialize</value>
   </data>
-  <data name="UPGRADE_POOL_RECRUITMENT" xml:space="preserve">
-    <value>Apricorns</value>
+  <data name="UPGRADE_MARKET_TIER" xml:space="preserve">
+    <value>Expand</value>
   </data>
-  <data name="UPGRADE_POOL_SURVIVAL" xml:space="preserve">
-    <value>Essential Items</value>
-  </data>
-  <data name="UPGRADE_POOL_TM" xml:space="preserve">
-    <value>TMs</value>
-  </data>
-  <data name="UPGRADE_POOL_UTILITIES" xml:space="preserve">
-    <value>Battle Items</value>
-  </data>
-  <data name="UPGRADE_POOL_WANDS" xml:space="preserve">
-    <value>Wands</value>
+  <data name="UPGRADE_MARKET_UNLOCK" xml:space="preserve">
+    <value>New section</value>
   </data>
   <data name="UPGRADE_TEACH_EGG" xml:space="preserve">
     <value>Egg Moves</value>

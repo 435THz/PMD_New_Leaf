@@ -1,16 +1,23 @@
 _HUB.UpgradeTable = {
-    pool_unlock = {
+    market_unlock = {
         -- used as string reference when displaying
-        string = "UPGRADE_POOL_UNLOCK",
+        string = "UPGRADE_MARKET_UNLOCK",
+        -- list of prices required to pick this upgrade for every level.
+        -- if the entry for a level exists, it will be used. otherwise the highest below the level is used,
+        -- and the difference +1 will act as a multiplier
+        -- if sub-choices are used, this process is applied to them as well, and only at the end the prices
+        -- are added together.
+        price = {
+            { item = "loot_building_tools", amount = 2 }
+        },
         -- all of these upgrades are required for this option to appear. Subchoice reference is {0} if per_sub_choice is true
         -- start with a ! for negation, end with : and a number to require a specific level or above
         requirements = {},
-        -- when this option is chosen, ask this question to the player and show the chosen sub_choices
-        -- has no meaning if sub_choices is nil
-        sub_question = "UPGRADE_POOL_UNLOCK_QUESTION",
+        -- description displayed when the choice is hovered
+        description = "UPGRADE_MARKET_UNLOCK_DESCR", --TODO
         -- when this option is chosen, show a submenu with these choices
         -- the final reference id for a specific sub_choice is choiceId_subchoiceId
-        -- subchoices should be defined somewhere else in this table
+        -- sub_choices data should be defined somewhere else in this table
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
@@ -20,29 +27,29 @@ _HUB.UpgradeTable = {
         -- has no meaning if sub_choices is nil
         per_sub_choice = true
     },
-    pool_expand = {
-        string = "UPGRADE_POOL_EXPAND",
-        requirements = {"pool_unlock_{0}"},
-        sub_question = "UPGRADE_POOL_EXPAND_QUESTION",
+    market_expand = {
+        string = "UPGRADE_MARKET_EXPAND",
+        requirements = { "market_unlock_{0}" },
+        description = "UPGRADE_MARKET_EXPAND_DESCR", --TODO
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
         per_sub_choice = true
     },
-    pool_tier = {
-        string = "UPGRADE_POOL_TIER",
-        requirements = {"pool_unlock_{0}"},
-        sub_question = "UPGRADE_POOL_TIER_QUESTION",
+    market_tier = {
+        string = "UPGRADE_MARKET_TIER",
+        requirements = { "market_unlock_{0}" },
+        description = "UPGRADE_MARKET_TIER_DESCR", --TODO
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
         max = 2,
         per_sub_choice = true
     },
-    pool_specialize = {
-        string = "UPGRADE_POOL_SPECIALIZE",
-        requirements = {"pool_unlock_{0}"},
-        sub_question = "UPGRADE_POOL_SPECIALIZE_QUESTION",
+    market_specialize = {
+        string = "UPGRADE_MARKET_SPECIALIZE",
+        requirements = { "market_unlock_{0}" },
+        description = "UPGRADE_MARKET_SPECIALIZE_DESCR", --TODO
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
@@ -50,26 +57,33 @@ _HUB.UpgradeTable = {
         per_sub_choice = true
     },
     sub_survival = {
-        -- sub-choices can contain just a string parameter if they're never used as main choices
-        string = "UPGRADE_POOL_SURVIVAL"
+        -- sub-choices can contain just a string and description parameter if they're never used as main choices
+        string = "MARKET_POOL_SURVIVAL",
+        description = "MARKET_POOL_SURVIVAL_DESCR" --TODO
     },
     sub_recruitment = {
-        string = "UPGRADE_POOL_RECRUITMENT"
+        string = "MARKET_POOL_RECRUITMENT",
+        description = "MARKET_POOL_RECRUITMENT_DESCR" --TODO
     },
     sub_utilities = {
-        string = "UPGRADE_POOL_UTILITIES"
+        string = "MARKET_POOL_UTILITIES",
+        description = "MARKET_POOL_UTILITIES_DESCR" --TODO
     },
     sub_ammo = {
-        string = "UPGRADE_POOL_AMMO"
+        string = "MARKET_POOL_AMMO",
+        description = "MARKET_POOL_AMMO_DESCR" --TODO
     },
     sub_wands = {
-        string = "UPGRADE_POOL_WANDS"
+        string = "MARKET_POOL_WANDS",
+        description = "MARKET_POOL_WANDS_DESCR" --TODO
     },
     sub_orbs = {
-        string = "UPGRADE_POOL_ORBS"
+        string = "MARKET_POOL_ORBS",
+        description = "MARKET_POOL_ORBS_DESCR" --TODO
     },
     sub_tm = {
-        string = "UPGRADE_POOL_TM"
+        string = "MARKET_POOL_TM",
+        description = "MARKET_POOL_TM_DESCR" --TODO
     },
     upgrade_generic = {
         string = "UPGRADE_GENERIC",

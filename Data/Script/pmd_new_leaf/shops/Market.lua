@@ -182,16 +182,16 @@ function _SHOP.MarketUpgrade(plot, upgrade)
     local valid = false
     if pool ~= "" then
         valid = true
-        if string.match(upgrade, "pool_unlock") then
+        if string.match(upgrade, "market_unlock") then
             plot.data.categories[pool] = {slots = 2, tier = 1}
             table.insert(plot.data.stock, _SHOP.MarketRoll(pool, plot.data.categories[pool].tier))
             table.insert(plot.data.stock, _SHOP.MarketRoll(pool, plot.data.categories[pool].tier))
-        elseif string.match(upgrade, "pool_expand") then
+        elseif string.match(upgrade, "market_expand") then
             plot.data.categories[pool].slots = plot.data.categories[pool].slots+1
             table.insert(plot.data.stock, _SHOP.MarketRoll(pool, plot.data.categories[pool].tier))
-        elseif string.match(upgrade, "pool_tier") then
+        elseif string.match(upgrade, "market_tier") then
             plot.data.categories[pool].tier = plot.data.categories[pool].tier+1
-        elseif string.match(upgrade, "pool_specialize") then
+        elseif string.match(upgrade, "market_specialize") then
             plot.data.specialization = pool
         else
             valid = false
@@ -372,17 +372,15 @@ function _SHOP.MarketGetDescription(plot)
     for pool in pairs(plot.data.categories) do
         table.insert(l, pool)
     end
-    for i, pool in pairs(l) do
-        if i>1 then
-            if i==#l then pools = pools..STRINGS:FormatKey("ADD_END")
-            else pools = pools..STRINGS:FormatKey("ADD_SEPARATOR") end
-        end
-        pools = pools..STRINGS:FormatKey("UPGRADE_POOL_"..string.upper(pool))
+    local func = function(entry)
+        return STRINGS:FormatKey("MARKET_POOL_"..string.upper(entry))
     end
+
+    local pools = COMMON_FUNC.BuildStringWithSeparators(l, func)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_BASE", pools)
 
     if plot.data.specialization ~= "" then
-        description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_SPECIALIZATION", STRINGS:FormatKey("UPGRADE_POOL_", plot.data.specialization))
+        description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_SPECIALIZATION", STRINGS:FormatKey("MARKET_POOL_", plot.data.specialization))
     end
     if plot.data.discount then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_DISCOUNT") end
     return description
