@@ -193,6 +193,9 @@
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
   </data>
+  <data name="OFFICE_ACTION_CONFIRM" xml:space="preserve">
+    <value>Perfect.[pause=0] Your changes will be visible as soon as you leave the Office.</value>
+  </data>
   <data name="OFFICE_BYE" xml:space="preserve">
     <value>See you later, then!</value>
   </data>
@@ -225,6 +228,15 @@
   </data>
   <data name="OFFICE_OPTION_UPGRADE" xml:space="preserve">
     <value>Upgrade {0}</value>
+  </data>
+  <data name="OFFICE_RECLAIM_ASK" xml:space="preserve">
+    <value>You have {1} {0}.[pause=0] You will need to spend {2} to reclaim this plot.[pause=0] Is that ok?</value>
+  </data>
+  <data name="OFFICE_RECLAIM_CANNOT" xml:space="preserve">
+    <value>Looks like we only have {1} {0}.[pause=0] That's not enough to reclaim this plot.</value>
+  </data>
+  <data name="OFFICE_RECLAIM_ZERO" xml:space="preserve">
+    <value>Looks like we don't have any {0}.[pause=0] We can't reclaim this plot without some.</value>
   </data>
   <data name="OFFICE_INTRO" xml:space="preserve">
     <value>Hello,[pause=10] {0}![pause=0] Do you need something?</value>
