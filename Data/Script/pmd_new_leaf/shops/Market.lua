@@ -5,6 +5,153 @@
     This file contains all market-specific callbacks and functionality data structures
 ]]
 
+_SHOP.MarketTables = {
+    MarketPools = {
+        survival = {
+            {
+                { Index = "food_apple", Amount = 0, Price = 50},
+                { Index = "berry_oran", Amount = 0, Price = 80},
+                { Index = "berry_leppa", Amount = 0, Price = 80},
+                { Index = "berry_lum", Amount = 0, Price = 120}
+            },
+            {
+                { Index = "food_apple_big", Amount = 0, Price = 150},
+                { Index = "food_banana", Amount = 0, Price = 500},
+                { Index = "seed_reviver", Amount = 0, Price = 500}
+            },
+            {
+                { Index = "orb_revival", Amount = 0, Price = 1000}
+            }
+        },
+        recruitment = {
+            {
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400},
+                { Index = "apricorn_plain", Amount = 0, Price = 400}
+            },
+            {
+                { Index = "apricorn_black", Amount = 0, Price = 500},
+                { Index = "apricorn_blue", Amount = 0, Price = 500},
+                { Index = "apricorn_green", Amount = 0, Price = 500},
+                { Index = "apricorn_orange", Amount = 0, Price = 500},
+                { Index = "apricorn_purple", Amount = 0, Price = 500},
+                { Index = "apricorn_red", Amount = 0, Price = 500},
+                { Index = "apricorn_white", Amount = 0, Price = 500},
+                { Index = "apricorn_yellow", Amount = 0, Price = 500}
+            },
+            {
+                { Index = "apricorn_big", Amount = 0, Price = 500},
+                { Index = "apricorn_big", Amount = 0, Price = 500},
+                { Index = "apricorn_big", Amount = 0, Price = 500},
+                { Index = "apricorn_big", Amount = 0, Price = 500},
+                { Index = "apricorn_glittery", Amount = 0, Price = 500},
+                { Index = "apricorn_glittery", Amount = 0, Price = 500},
+                { Index = "apricorn_glittery", Amount = 0, Price = 500},
+                { Index = "medicine_amber_tear", Amount = 1, Price = 1000}
+            }
+        },
+        utilities = {
+            {
+                { Index = "seed_warp", Amount = 0, Price = 80},
+                { Index = "seed_sleep", Amount = 0, Price = 80},
+                { Index = "seed_blinker", Amount = 0, Price = 80},
+                { Index = "seed_vile", Amount = 0, Price = 80},
+                { Index = "seed_ice", Amount = 0, Price = 80},
+                { Index = "seed_decoy", Amount = 0, Price = 80},
+            },
+            {
+                { Index = "berry_jaboca", Amount = 0, Price = 100},
+                { Index = "berry_rowap", Amount = 0, Price = 100},
+                { Index = "seed_blast", Amount = 0, Price = 200},
+                { Index = "seed_last_chance", Amount = 0, Price = 150},
+                { Index = "herb_mental", Amount = 0, Price = 120},
+                { Index = "herb_power", Amount = 0, Price = 250},
+                { Index = "herb_white", Amount = 0, Price = 80}
+            },
+            {
+                { Index = "seed_ban", Amount = 0, Price = 500}
+            }
+        },
+        ammo = {
+            {
+                { Index = "ammo_stick", Amount = 9, Price = 45},
+                { Index = "ammo_geo_pebble", Amount = 9, Price = 45},
+            },
+            {
+                { Index = "ammo_cacnea_spike", Amount = 9, Price = 90},
+                { Index = "ammo_corsola_twig", Amount = 9, Price = 90},
+                { Index = "ammo_gravelerock", Amount = 9, Price = 90},
+                { Index = "ammo_rare_fossil", Amount = 9, Price = 90}
+
+            },
+            {
+                { Index = "ammo_iron_thorn", Amount = 9, Price = 270},
+                { Index = "ammo_silver_spike", Amount = 9, Price = 270}
+            }
+        },
+        wands = {
+            {
+                { Index = "wand_lure", Amount = 9, Price = 180},
+                { Index = "wand_pounce", Amount = 9, Price = 180},
+                { Index = "wand_whirlwind", Amount = 9, Price = 180}
+            },
+            {
+                { Index = "wand_lob", Amount = 9, Price = 180},
+                { Index = "wand_path", Amount = 9, Price = 180},
+                { Index = "wand_switcher", Amount = 9, Price = 180},
+                { Index = "wand_warp", Amount = 9, Price = 180}
+            },
+            {
+                { Index = "wand_fear", Amount = 9, Price = 180},
+                { Index = "wand_purge", Amount = 9, Price = 180},
+                { Index = "wand_slow", Amount = 9, Price = 180},
+                { Index = "wand_topsy_turvy", Amount = 9, Price = 180}
+            }
+        },
+        orbs = {
+            {
+                { Index = "orb_all_aim", Amount = 0, Price = 150},
+                { Index = "orb_all_dodge", Amount = 0, Price = 150},
+                { Index = "orb_cleanse", Amount = 0, Price = 150},
+                { Index = "orb_fill_in", Amount = 0, Price = 250},
+                { Index = "orb_mirror", Amount = 0, Price = 150},
+                { Index = "orb_rollcall", Amount = 0, Price = 150},
+                { Index = "orb_spurn", Amount = 0, Price = 250},
+                { Index = "orb_trap_see", Amount = 0, Price = 200},
+                { Index = "orb_weather", Amount = 0, Price = 150}
+            },
+            {
+                { Index = "orb_endure", Amount = 0, Price = 150},
+                { Index = "orb_foe_hold", Amount = 0, Price = 250},
+                { Index = "orb_foe_seal", Amount = 0, Price = 250},
+                { Index = "orb_halving", Amount = 0, Price = 250},
+                { Index = "orb_mug", Amount = 0, Price = 250},
+                { Index = "orb_nullify", Amount = 0, Price = 250},
+                { Index = "orb_pierce", Amount = 0, Price = 150},
+                { Index = "orb_rebound", Amount = 0, Price = 150},
+                { Index = "orb_totter", Amount = 0, Price = 250},
+                { Index = "orb_trapbust", Amount = 0, Price = 200}
+            },
+            {
+                { Index = "orb_all_protect", Amount = 0, Price = 250},
+                { Index = "orb_freeze", Amount = 0, Price = 250},
+                { Index = "orb_mobile", Amount = 0, Price = 250},
+                { Index = "orb_one_shot", Amount = 0, Price = 300},
+                { Index = "orb_petrify", Amount = 0, Price = 250},
+                { Index = "orb_scanner", Amount = 0, Price = 350},
+                { Index = "orb_slow", Amount = 0, Price = 250},
+                { Index = "orb_slumber", Amount = 0, Price = 250}
+            }
+        },
+        tm = {{},{},{}}
+    }
+}
+
 function _SHOP.MarketInitializer(plot)
     plot.data = {
         stock = {},
@@ -193,153 +340,8 @@ function _SHOP.MarketInteract(plot, index)
     end
 end
 
-_SHOP.MarketPools = {
-    survival = {
-        {
-            { Index = "food_apple", Amount = 0, Price = 50},
-            { Index = "berry_oran", Amount = 0, Price = 80},
-            { Index = "berry_leppa", Amount = 0, Price = 80},
-            { Index = "berry_lum", Amount = 0, Price = 120}
-        },
-        {
-            { Index = "food_apple_big", Amount = 0, Price = 150},
-            { Index = "food_banana", Amount = 0, Price = 500},
-            { Index = "seed_reviver", Amount = 0, Price = 500}
-        },
-        {
-            { Index = "orb_revival", Amount = 0, Price = 1000}
-        }
-    },
-    recruitment = {
-        {
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400},
-            { Index = "apricorn_plain", Amount = 0, Price = 400}
-        },
-        {
-            { Index = "apricorn_black", Amount = 0, Price = 500},
-            { Index = "apricorn_blue", Amount = 0, Price = 500},
-            { Index = "apricorn_green", Amount = 0, Price = 500},
-            { Index = "apricorn_orange", Amount = 0, Price = 500},
-            { Index = "apricorn_purple", Amount = 0, Price = 500},
-            { Index = "apricorn_red", Amount = 0, Price = 500},
-            { Index = "apricorn_white", Amount = 0, Price = 500},
-            { Index = "apricorn_yellow", Amount = 0, Price = 500}
-        },
-        {
-            { Index = "apricorn_big", Amount = 0, Price = 500},
-            { Index = "apricorn_big", Amount = 0, Price = 500},
-            { Index = "apricorn_big", Amount = 0, Price = 500},
-            { Index = "apricorn_big", Amount = 0, Price = 500},
-            { Index = "apricorn_glittery", Amount = 0, Price = 500},
-            { Index = "apricorn_glittery", Amount = 0, Price = 500},
-            { Index = "apricorn_glittery", Amount = 0, Price = 500},
-            { Index = "medicine_amber_tear", Amount = 1, Price = 1000}
-        }
-    },
-    utilities = {
-        {
-            { Index = "seed_warp", Amount = 0, Price = 80},
-            { Index = "seed_sleep", Amount = 0, Price = 80},
-            { Index = "seed_blinker", Amount = 0, Price = 80},
-            { Index = "seed_vile", Amount = 0, Price = 80},
-            { Index = "seed_ice", Amount = 0, Price = 80},
-            { Index = "seed_decoy", Amount = 0, Price = 80},
-        },
-        {
-            { Index = "berry_jaboca", Amount = 0, Price = 100},
-            { Index = "berry_rowap", Amount = 0, Price = 100},
-            { Index = "seed_blast", Amount = 0, Price = 200},
-            { Index = "seed_last_chance", Amount = 0, Price = 150},
-            { Index = "herb_mental", Amount = 0, Price = 120},
-            { Index = "herb_power", Amount = 0, Price = 250},
-            { Index = "herb_white", Amount = 0, Price = 80}
-        },
-        {
-            { Index = "seed_ban", Amount = 0, Price = 500}
-        }
-    },
-    ammo = {
-        {
-            { Index = "ammo_stick", Amount = 9, Price = 45},
-            { Index = "ammo_geo_pebble", Amount = 9, Price = 45},
-        },
-        {
-            { Index = "ammo_cacnea_spike", Amount = 9, Price = 90},
-            { Index = "ammo_corsola_twig", Amount = 9, Price = 90},
-            { Index = "ammo_gravelerock", Amount = 9, Price = 90},
-            { Index = "ammo_rare_fossil", Amount = 9, Price = 90}
-
-        },
-        {
-            { Index = "ammo_iron_thorn", Amount = 9, Price = 270},
-            { Index = "ammo_silver_spike", Amount = 9, Price = 270}
-        }
-    },
-    wands = {
-        {
-            { Index = "wand_lure", Amount = 9, Price = 180},
-            { Index = "wand_pounce", Amount = 9, Price = 180},
-            { Index = "wand_whirlwind", Amount = 9, Price = 180}
-        },
-        {
-            { Index = "wand_lob", Amount = 9, Price = 180},
-            { Index = "wand_path", Amount = 9, Price = 180},
-            { Index = "wand_switcher", Amount = 9, Price = 180},
-            { Index = "wand_warp", Amount = 9, Price = 180}
-        },
-        {
-            { Index = "wand_fear", Amount = 9, Price = 180},
-            { Index = "wand_purge", Amount = 9, Price = 180},
-            { Index = "wand_slow", Amount = 9, Price = 180},
-            { Index = "wand_topsy_turvy", Amount = 9, Price = 180}
-        }
-    },
-    orbs = {
-        {
-            { Index = "orb_all_aim", Amount = 0, Price = 150},
-            { Index = "orb_all_dodge", Amount = 0, Price = 150},
-            { Index = "orb_cleanse", Amount = 0, Price = 150},
-            { Index = "orb_fill_in", Amount = 0, Price = 250},
-            { Index = "orb_mirror", Amount = 0, Price = 150},
-            { Index = "orb_rollcall", Amount = 0, Price = 150},
-            { Index = "orb_spurn", Amount = 0, Price = 250},
-            { Index = "orb_trap_see", Amount = 0, Price = 200},
-            { Index = "orb_weather", Amount = 0, Price = 150}
-        },
-        {
-            { Index = "orb_endure", Amount = 0, Price = 150},
-            { Index = "orb_foe_hold", Amount = 0, Price = 250},
-            { Index = "orb_foe_seal", Amount = 0, Price = 250},
-            { Index = "orb_halving", Amount = 0, Price = 250},
-            { Index = "orb_mug", Amount = 0, Price = 250},
-            { Index = "orb_nullify", Amount = 0, Price = 250},
-            { Index = "orb_pierce", Amount = 0, Price = 150},
-            { Index = "orb_rebound", Amount = 0, Price = 150},
-            { Index = "orb_totter", Amount = 0, Price = 250},
-            { Index = "orb_trapbust", Amount = 0, Price = 200}
-        },
-        {
-            { Index = "orb_all_protect", Amount = 0, Price = 250},
-            { Index = "orb_freeze", Amount = 0, Price = 250},
-            { Index = "orb_mobile", Amount = 0, Price = 250},
-            { Index = "orb_one_shot", Amount = 0, Price = 300},
-            { Index = "orb_petrify", Amount = 0, Price = 250},
-            { Index = "orb_scanner", Amount = 0, Price = 350},
-            { Index = "orb_slow", Amount = 0, Price = 250},
-            { Index = "orb_slumber", Amount = 0, Price = 250}
-        }
-    },
-    tm = {{},{},{}}
-}
-
 function _SHOP.MarketLoadTMs()
-    _SHOP.MarketPools.tm = {{},{},{}}
+    _SHOP.MarketTables.MarketPools.tm = {{},{},{}}
                           --1   2   3   4   5   6   7   8   9   10  11  12  13  14  15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31+
     local charge_to_cost = {24, 20, 17, 15, 14, 14, 13, 13, 12, 12, 11, 11, 10, 10, 10, 9, 9, 9, 8, 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 6, 5}
     local multiplier = 500
@@ -359,7 +361,7 @@ function _SHOP.MarketLoadTMs()
                 elseif move.BaseCharges<17 then tier = 2 end
             end
             local entry = { Index = id, Amount = 0, Price = price*multiplier}
-            table.insert(_SHOP.MarketPools.tm[tier], entry)
+            table.insert(_SHOP.MarketTables.MarketPools.tm[tier], entry)
         end
     end
 end

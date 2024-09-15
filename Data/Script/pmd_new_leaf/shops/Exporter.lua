@@ -7,6 +7,12 @@
 require 'pmd_new_leaf.menu.ExporterMenu'
 require 'pmd_new_leaf.menu.InventorySelectMenu'
 
+_SHOP.ExporterTables = {
+    -- level  1  2  3  4  5   6   7   8   9  10
+    slots  = {4, 6, 6, 8, 8, 10, 12, 12, 14, 16},
+    checks = {3, 3, 4, 4, 5,  5,  6,  7,  7,  8}
+}
+
 function _SHOP.ExporterInitializer(plot)
     plot.data = {
         stock = {
@@ -31,8 +37,8 @@ function _SHOP.ExporterUpgrade(plot, upgrade)
         level = _HUB.getPlotLevel(plot)
     else return end
 
-    plot.data.slots =  _SHOP.ExporterLevelTables.slots[level]
-    plot.data.checks = _SHOP.ExporterLevelTables.checks[level]
+    plot.data.slots =  _SHOP.ExporterTables.slots[level]
+    plot.data.checks = _SHOP.ExporterTables.checks[level]
 
     if level == 5 then
         plot.data.reduce_all = true
@@ -42,13 +48,6 @@ function _SHOP.ExporterUpgrade(plot, upgrade)
         plot.data.instant_sell = true
     end
 end
-
-
-_SHOP.ExporterLevelTables = {
-    -- level  1  2  3  4  5   6   7   8   9  10
-    slots  = {4, 6, 6, 8, 8, 10, 12, 12, 14, 16},
-    checks = {3, 3, 4, 4, 5,  5,  6,  7,  7,  8}
-}
 
 function _SHOP.ExporterUpdate(plot)
     local stock = plot.data.stock
