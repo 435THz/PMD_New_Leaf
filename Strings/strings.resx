@@ -248,7 +248,7 @@
     <value>Has earnings stored.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_LOCKED" xml:space="preserve">
-    <value>A plot of land overrun with greenery. It needs to be reclaimed before it can house a building.</value>
+    <value>A plot of land overrun with greenery. It needs to be reclaimed using some {0} before it can house a building.</value>
   </data>
   <data name="PLOT_DESCRIPTION_MARKET_BASE" xml:space="preserve">
     <value>Sells {0}</value>
@@ -258,6 +258,9 @@
   </data>
   <data name="PLOT_DESCRIPTION_MARKET_SPECIALIZATION" xml:space="preserve">
     <value>Often has discounts on {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_OUT_OF_LIMIT" xml:space="preserve">
+    <value>[color=#FF0000]To reclaim this plot you must first upgrade the {0} to level {1}.[color]</value>
   </data>
   <data name="PLOT_DESCRIPTION_TUTOR_BASE" xml:space="preserve">
     <value>Teaches level moves up to level {0}.</value>

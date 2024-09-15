@@ -100,14 +100,28 @@ end
 
 --- Returns the plot's description used by the plot management menu.
 --- @param plot table the plot's data structure
-function _SHOP.GetPlotDescription(plot)
+function _SHOP.GetPlotDescription(plot, index)
     if _SHOP.callbacks.description[plot.building] then
         return _SHOP.callbacks.description[plot.building](plot)
     elseif plot.building == "" then
         if plot.unlocked then
             return STRINGS:FormatKey("PLOT_DESCRIPTION_UNLOCKED")
         else
-            return STRINGS:FormatKey("PLOT_DESCRIPTION_LOCKED")
+            local list = { { item = "loot_building_tools" } }
+            local func = function(entry)
+                local amount = math.ceil((_HUB.getUnlockedNumber()+1)/2)
+                return RogueEssence.Dungeon.InvItem(entry.item, false, amount):GetDisplayName()
+            end
+            local cost = COMMON_FUNC.BuildStringWithSeparators(list,func)
+            local ret = STRINGS:FormatKey("PLOT_DESCRIPTION_LOCKED", cost)
+            if index > _HUB.getBuildLimit() then
+                local level = _HUB.getHubLevel()
+                while index > _HUB.getBuildLimit(level) do
+                    level = level+1
+                end
+                ret = ret.."\n"..STRINGS:FormatKey("PLOT_DESCRIPTION_OUT_OF_LIMIT", _HUB.getHubSuffix(), level)
+            end
+            return ret
         end
     end
 end

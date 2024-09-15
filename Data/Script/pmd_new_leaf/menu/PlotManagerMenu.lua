@@ -81,8 +81,8 @@ end
 
 function PlotManagerMenu:LoadShopDescriptions()
     local descriptions = {}
-    for _, plot in pairs(self.plots) do
-        table.insert(descriptions, _SHOP.GetPlotDescription(plot))
+    for i, plot in pairs(self.plots) do
+        table.insert(descriptions, _SHOP.GetPlotDescription(plot, i))
     end
     return descriptions
 end
