@@ -248,9 +248,11 @@ function _HUB.getHubPlotMap()
     return _HUB.RankPlotMap[_HUB.getHubRank()]
 end
 
+---@param lvl number the level to get the build limit of. Defaults to the current hub level.
 ---@return number the current maximum building number for the hub
-function _HUB.getBuildLimit()
-    return _HUB.LevelBuildLimit[_HUB.getHubLevel()]
+function _HUB.getBuildLimit(lvl)
+    local level = lvl or _HUB.getHubLevel()
+    return _HUB.LevelBuildLimit[level]
 end
 
 ---@return number the number of plots supported by the current hub map.
