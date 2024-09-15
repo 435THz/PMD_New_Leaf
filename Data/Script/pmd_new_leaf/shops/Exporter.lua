@@ -29,7 +29,7 @@ function _SHOP.ExporterInitializer(plot)
 end
 
 function _SHOP.ExporterUpgrade(plot, upgrade)
-    if upgrade ~= "upgrade_generic" then return end
+    if upgrade ~= "upgrade_exporter_base" then return end
 
     local level = _HUB.getPlotLevel(plot)
     if level<10 then

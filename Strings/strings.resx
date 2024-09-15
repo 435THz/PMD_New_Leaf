@@ -430,6 +430,9 @@
   <data name="TUTOR_REPLACE" xml:space="preserve">
     <value>We'll need to replace a move.[pause=0] What'll it be?</value>
   </data>
+  <data name="UPGRADE_GENERIC" xml:space="preserve">
+    <value>-Placeholder-</value>
+  </data>
   <data name="UPGRADE_POOL_AMMO" xml:space="preserve">
     <value>Throwing Items</value>
   </data>
