@@ -58,6 +58,39 @@
   <resheader name="writer">
     <value>System.Resources.NetStandard.ResXResourceWriter, System.Resources.NetStandard, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</value>
   </resheader>
+  <data name="APPRAISAL_BOX_CUTE" xml:space="preserve">
+    <value>Cute Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_DAINTY" xml:space="preserve">
+    <value>Dainty Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_DELUXE" xml:space="preserve">
+    <value>Deluxe Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_GLITTERY" xml:space="preserve">
+    <value>Glittery Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_GORGEOUS" xml:space="preserve">
+    <value>Gorgeous Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_HARD" xml:space="preserve">
+    <value>Hard Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_HEAVY" xml:space="preserve">
+    <value>Heavy Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_NIFTY" xml:space="preserve">
+    <value>Nifty Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_PRETTY" xml:space="preserve">
+    <value>Pretty Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_SHINY" xml:space="preserve">
+    <value>Shiny Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_SINISTER" xml:space="preserve">
+    <value>Sinister Box</value>
+  </data>
   <data name="EXPORTER_BYE" xml:space="preserve">
     <value>Come back soon!</value>
   </data>

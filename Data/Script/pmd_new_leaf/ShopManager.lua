@@ -123,6 +123,77 @@ _HUB.UpgradeTable = {
         string = "UPGRADE_GENERIC",
         requirements = {},
         max = 10
+    },
+    upgrade_appraisal_base = {
+        string = "UPGRADE_GENERIC",
+        requirements = {},
+        max = 10
+    },
+    upgrade_appraisal_cute = {
+        string = "APPRAISAL_BOX_CUTE",
+        requirements = {},
+        description = "APPRAISAL_BOX_CUTE_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_nifty = {
+        string = "APPRAISAL_BOX_NIFTY",
+        requirements = {},
+        description = "APPRAISAL_BOX_NIFTY_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_heavy = {
+        string = "APPRAISAL_BOX_HEAVY",
+        requirements = {},
+        description = "APPRAISAL_BOX_HEAVY_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_pretty = {
+        string = "APPRAISAL_BOX_PRETTY",
+        requirements = {},
+        description = "APPRAISAL_BOX_PRETTY_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_hard = {
+        string = "APPRAISAL_BOX_HARD",
+        requirements = {},
+        description = "APPRAISAL_BOX_HARD_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_dainty = {
+        string = "APPRAISAL_BOX_DAINTY",
+        requirements = {},
+        description = "APPRAISAL_BOX_DAINTY_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_glittery = {
+        string = "APPRAISAL_BOX_GLITTERY",
+        requirements = {},
+        description = "APPRAISAL_BOX_GLITTERY_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_gorgeous = {
+        string = "APPRAISAL_BOX_GORGEOUS",
+        requirements = {},
+        description = "APPRAISAL_BOX_GORGEOUS_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_deluxe = {
+        string = "APPRAISAL_BOX_DELUXE",
+        requirements = {},
+        description = "APPRAISAL_BOX_DELUXE_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_shiny = {
+        string = "APPRAISAL_BOX_SHINY",
+        requirements = {},
+        description = "APPRAISAL_BOX_SHINY_DESCR", --TODO
+        max = 1
+    },
+    upgrade_appraisal_sinister = {
+        string = "APPRAISAL_BOX_SINISTER",
+        requirements = {},
+        description = "APPRAISAL_BOX_SINISTER_DESCR", --TODO
+        max = 1
     }
 }
 
