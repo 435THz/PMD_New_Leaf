@@ -66,6 +66,21 @@ function COMMON_FUNC.EndSessionWithResults(result, zoneId, structureId, mapId, e
     GAME:EnterZone(zoneId, structureId, mapId, entryId)
 end
 
+--- Builds a string using a list of elements and applying the provided function to every element of the list.
+--- The elements will be concatenated using the localized `ADD_SEPARATOR` and `ADD_END` strings as separators.
+---@param list table the list of items to build the string with
+---@param func function a function that takes an item from the list and returns the string that will represent it
+function COMMON_FUNC.BuildStringWithSeparators(list, func)
+    local str = ""
+    for i, entry in pairs(list) do
+        if i>1 then
+            if i==#list then str = str..STRINGS:FormatKey("ADD_END")
+            else str = str..STRINGS:FormatKey("ADD_SEPARATOR") end
+        end
+        str = str..func(entry)
+    end
+    return str
+end
 ---Rolls for a random object inside a list and returns the result.
 ---Every object has the same chance of being chosen.
 ---@param list table a table of possible results
