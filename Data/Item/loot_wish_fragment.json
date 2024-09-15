@@ -17,7 +17,7 @@
 "SortCategory": -1,
 "Price": 0,
 "Rarity": 0,
-"MaxStack": 0,
+"MaxStack": 9,
 "CannotDrop": true,
 "BagEffect": false,
 "ItemStates": [],
