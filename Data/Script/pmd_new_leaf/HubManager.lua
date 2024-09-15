@@ -228,6 +228,12 @@ function _HUB.canUpgrade()
     return false
 end
 
+---@param level number a number between 1 and 10
+---@return table the list of {item: string, amount: int} entries that describes the items required to reach the given level
+function _HUB.getLevelUpItems(level)
+    return _HUB.LevelUpCosts[level]
+end
+
 ---@return number the current rank of the hub itself
 function _HUB.getHubRank()
     return _HUB.LevelRankTable[_HUB.getHubLevel()]
