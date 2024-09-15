@@ -61,10 +61,10 @@ function TownManagerSummary:LoadPlotData()
 end
 
 function TownManagerSummary:SelectTown()
-    self.title:SetText("[color=#FFFF00]".._HUB.getHubName(true).."[color]")
-    self.level:SetText(STRINGS:FormatKey("MENU_TEAM_LEVEL_SHORT", tostring(_HUB.getHubLevel())))
-    self.title.Loc = RogueElements.Loc(self.window.Bounds.Width//2, self.window.Bounds.Height - Graphics.Manager.MenuBG.TileHeight - Graphics.VERT_SPACE)
-    self.title.AlignH = RogueElements.DirH.None
+    self.title:SetText(_HUB.getHubName())
+    self.level:SetText(STRINGS:FormatKey("MENU_TEAM_LEVEL_SHORT")..tostring(_HUB.getHubLevel()))
+    self.title.Loc = RogueElements.Loc(Graphics.Manager.MenuBG.TileWidth*2, self.window.Bounds.Height - Graphics.Manager.MenuBG.TileHeight - Graphics.VERT_SPACE)
+    self.title.AlignH = RogueElements.DirH.Left
     self.window.Elements:Remove(self.cursor)
     self.selecting = false
 end
