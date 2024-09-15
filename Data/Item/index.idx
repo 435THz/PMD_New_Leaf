@@ -14,6 +14,45 @@
 "Released": true,
 "Comment": "",
 "SortOrder": -1
+},
+"loot_building_tools": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": -1,
+"UsageType": 0,
+"States": [],
+"Name": {
+"DefaultText": "Building Tools",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 15
+},
+"loot_building_tools_uncommon": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": -1,
+"UsageType": 0,
+"States": [],
+"Name": {
+"DefaultText": "Good Building Tools",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 15
+},
+"loot_building_tools_rare": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": -1,
+"UsageType": 0,
+"States": [],
+"Name": {
+"DefaultText": "Fine Building Tools",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 15
 }
 }
 }
