@@ -43,26 +43,20 @@ end
 function _SHOP.TutorUpgrade(plot, upgrade)
     local new_level = _HUB.getPlotLevel(plot)+1
     local sub
-        if upgrade ~= "upgrade_generic" then return end
     if _SHOP.TutorTables.base[new_level] then --any level except 5, 7 or 9
+        if upgrade ~= "upgrade_tutor_base" then return end
     elseif new_level == 5 then
-        if not string.match(upgrade, "upgrade_tutor_5") then
-            return
-        end
-        if string.match(upgrade, "sub_tutor") then
+        if upgrade == "upgrade_tutor_tutor" then
             sub = "tutor"
-        elseif string.match(upgrade, "sub_egg") then
+        elseif upgrade == "upgrade_tutor_egg" then
             sub = "egg"
         else
             return
         end
     else
-        if not string.match(upgrade, "upgrade_tutor") then
-            return
-        end
-        if string.match(upgrade, "sub_teach_frequency") then
+        if upgrade == "upgrade_tutor_frequency" then
             sub = "frequency"
-        elseif string.match(upgrade, "sub_teach_count") then
+        elseif upgrade == "upgrade_tutor_count" then
             sub = "slot"
         else
             return
@@ -538,9 +532,9 @@ end
 
 function _SHOP.TutorGetDescription(plot)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_BASE", plot.data.level_limit)
-    if plot.data.category ~= "" then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_CATEGORY", STRINGS:FormatKey("UPGRADE_TEACH_"..string.upper(plot.data.category)), plot.data.category_slots) end
-    if plot.data.category_permanent then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_PERMANENT", STRINGS:FormatKey("UPGRADE_TEACH_"..string.upper(plot.data.category))) end
-    if #plot.data.permanent_stock > 0 then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_PERMANENT_NUM", STRINGS:FormatKey("UPGRADE_TEACH_"..string.upper(plot.data.category)), #plot.data.permanent_stock) end
+    if plot.data.category ~= "" then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_CATEGORY", STRINGS:FormatKey("TUTOR_POOL_"..string.upper(plot.data.category)), plot.data.category_slots) end
+    if plot.data.category_permanent then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_PERMANENT", STRINGS:FormatKey("TUTOR_POOL_"..string.upper(plot.data.category))) end
+    if #plot.data.permanent_stock > 0 then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_PERMANENT_NUM", STRINGS:FormatKey("TUTOR_POOL_"..string.upper(plot.data.category)), #plot.data.permanent_stock) end
     return description
 end
 

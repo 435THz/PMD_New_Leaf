@@ -85,33 +85,35 @@ _HUB.UpgradeTable = {
         string = "MARKET_POOL_TM",
         description = "MARKET_POOL_TM_DESCR" --TODO
     },
-    upgrade_generic = {
+    upgrade_tutor_base = {
         string = "UPGRADE_GENERIC",
         requirements = {},
         max = 10
     },
-    upgrade_tutor_5 = {
-        string = "UPGRADE_GENERIC",
+    upgrade_tutor_tutor = {
+        string = "TUTOR_POOL_TUTOR",
+        description = "TUTOR_POOL_TUTOR_DESCR", --TODO
         requirements = {},
-        sub_question = "UPGRADE_TUTOR_5_QUESTION",
-        sub_choices = {"sub_tutor", "sub_egg"},
         max = 1
     },
-    sub_tutor = {
-        string = "UPGRADE_TEACH_TUTOR"
-    },
-    sub_egg = {
-        string = "UPGRADE_TEACH_EGG"
-    },
-    upgrade_tutor = {
-        string = "UPGRADE_GENERIC",
+    upgrade_tutor_egg = {
+        string = "TUTOR_POOL_EGG",
+        description = "TUTOR_POOL_EGG_DESCR", --TODO
         requirements = {},
-        sub_question = "UPGRADE_TUTOR_QUESTION",
-        sub_choices = {"sub_teach_count", "sub_teach_frequency"},
+        max = 1
+    },
+    upgrade_tutor_count = {
+        string = "UPGRADE_TUTOR_COUNT",
+        description = "UPGRADE_TUTOR_COUNT_DESCR", --TODO
+        requirements = {},
         max = 2
     },
-    sub_teach_count = {
-        string = "UPGRADE_TEACH_COUNT"
+    upgrade_tutor_frequency = {
+        string = "UPGRADE_TUTOR_FREQUENCY",
+        description = "UPGRADE_TUTOR_FREQUENCY_DESCR", --TODO
+        requirements = {},
+        max = 2
+    },
     upgrade_exporter_base = {
         string = "UPGRADE_GENERIC",
         requirements = {},
@@ -120,7 +122,6 @@ _HUB.UpgradeTable = {
     sub_teach_frequency = {
         string = "UPGRADE_TEACH_FREQUENCY"
     }
-    -- add more here if necessary
 }
 
 _HUB.ShopBase = {

@@ -445,6 +445,12 @@
   <data name="TUTOR_OPTION_TUTOR" xml:space="preserve">
     <value>Tutor</value>
   </data>
+  <data name="TUTOR_POOL_EGG" xml:space="preserve">
+    <value>Egg Moves</value>
+  </data>
+  <data name="TUTOR_POOL_TUTOR" xml:space="preserve">
+    <value>Tutor Moves</value>
+  </data>
   <data name="TUTOR_REPEAT" xml:space="preserve">
     <value>Alright,[pause=10] what next?</value>
   </data>
@@ -466,10 +472,10 @@
   <data name="UPGRADE_MARKET_UNLOCK" xml:space="preserve">
     <value>New section</value>
   </data>
-  <data name="UPGRADE_TEACH_EGG" xml:space="preserve">
-    <value>Egg Moves</value>
+  <data name="UPGRADE_TUTOR_COUNT" xml:space="preserve">
+    <value>Add slot</value>
   </data>
-  <data name="UPGRADE_TEACH_TUTOR" xml:space="preserve">
-    <value>Tutor Moves</value>
+  <data name="UPGRADE_TUTOR_FREQUENCY" xml:space="preserve">
+    <value>Cycle faster</value>
   </data>
 </root>
