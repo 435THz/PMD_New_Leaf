@@ -5,6 +5,7 @@
     This file contains all office-specific callbacks and functionality data structures
 ]]
 
+require 'pmd_new_leaf.menu.TownManagerMenu'
 require 'pmd_new_leaf.menu.PlotManagerMenu'
 
 function _SHOP.OfficeInitializer(plot)
@@ -42,7 +43,56 @@ function _SHOP.OfficeInteract(plot, _)
 
         local result = UI:ChoiceResult()
         if result == 1 then
-            PrintInfo("Result is "..tostring(PlotManagerMenu.run()))
+            local loop = true
+            while loop do
+                local chosen = TownManagerMenu.run()
+                PrintInfo("Result is "..tostring(chosen))
+                if chosen == "buildings" then
+                    local loop2 = true --here we go again
+                    while loop2 do
+                        local plot_id = PlotManagerMenu.run()
+                        if plot_id == -1 then loop2=false
+                        else
+                            local plot = _HUB.getPlotData(plot_id)
+                            if not plot.unlocked then
+                                local item_id = "loot_building_tools"
+                                local item_name = _DATA.GetItem(item_id):GetColoredName()
+                                local cost = math.ceil((_HUB.getUnlockedNumber()+1)/2)
+                                local number = COMMON.GetPlayerItemCount(item_id, true)
+                                if cost<=number then
+                                    UI:ChoiceMenuYesNo(STRINGS:FormatKey('OFFICE_RECLAIM_ASK', item_name, number, cost))
+                                    UI:WaitForChoice()
+                                    local ch = UI:ChoiceResult()
+                                    if ch then
+                                        UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_ACTION_CONFIRM'))
+                                        plot.unlocked = true
+                                        COMMON_FUNC.RemoveItem("loot_building_tools", cost, true)
+                                    end
+                                else
+                                    if number>0 then
+                                        UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_RECLAIM_CANNOT', item_name, number))
+                                    else
+                                        UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_RECLAIM_ZERO', item_name))
+                                    end
+                                end
+                            elseif plot.building == "" then
+                                --TODO Build flow
+                            else
+                                --TODO "Upgrade, Move, Demolish" plot editor menu
+                            end
+                        end
+                    end
+                elseif chosen == "rename" then
+                    --TODO rename flow and toggle suffix flow
+                elseif chosen == "upgrade" then
+                    --TODO upgrade flow
+                else
+                    loop = false
+                end
+                if loop then
+                    --TODO continue message
+                end
+            end
         elseif result == 2 then
             --TODO
         elseif result == 3 then
