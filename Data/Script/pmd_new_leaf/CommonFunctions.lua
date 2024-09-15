@@ -81,6 +81,30 @@ function COMMON_FUNC.BuildStringWithSeparators(list, func)
     end
     return str
 end
+
+--- Removes a number of copies of a specific item from the player's inventory.
+--- If storage is true, it will take from storage after depleting the stock in the inventory.
+--- Returns the amount of items NOT removed if the player didn't have enough.
+---@param item_id string the id of the item to remove
+---@param amount number the amount of copies of the item to remove
+---@param storage boolean if true, the function will start taking items from storage after the inventory has been emptied.
+---@return number the difference between the the amount of items removed and the amount of requested copies, or 0 if all requested copies have been removed.
+function COMMON_FUNC.RemoveItem(item_id, amount, storage)
+    for i = 1, amount, 1 do
+        local item_slot = GAME:FindPlayerItem(item_id, true, true)
+        if not item_slot:IsValid() then
+            if storage and GAME.GetPlayerStorageItemCount > 0 then
+                GAME:TakePlayerStorageItem(item_id)
+            else return amount-i+1 end
+        elseif item_slot.IsEquipped then
+            GAME:TakePlayerEquippedItem(item_slot.Slot)
+        else
+            GAME:TakePlayerBagItem(item_slot.Slot)
+        end
+    end
+    return 0
+end
+
 ---Rolls for a random object inside a list and returns the result.
 ---Every object has the same chance of being chosen.
 ---@param list table a table of possible results
