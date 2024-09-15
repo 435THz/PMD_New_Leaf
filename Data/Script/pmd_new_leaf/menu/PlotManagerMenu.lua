@@ -27,7 +27,7 @@ function PlotManagerMenu:initialize(callback)
 
     local summary_x = 16
     local summary_w = Graphics.Manager.ScreenWidth - summary_x*2
-    local summary_h = Graphics.Manager.MenuBG.TileHeight*3 + Graphics.LINE_HEIGHT*4
+    local summary_h = Graphics.Manager.MenuBG.TileHeight*3 + Graphics.LINE_HEIGHT*4 +2
     local summary_y = Graphics.Manager.ScreenHeight - 8 - summary_h
     self.text_summary = DescriptionSummary:new(summary_x, summary_y, summary_x+summary_w, summary_y+summary_h)
     self.menu.SummaryMenus:Add(self.text_summary.window)
