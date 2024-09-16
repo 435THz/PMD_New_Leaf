@@ -298,6 +298,15 @@
   <data name="OFFICE_REPEAT" xml:space="preserve">
     <value>Do you need anything else?</value>
   </data>
+  <data name="PLOT_DESCRIPTION_BUILD" xml:space="preserve">
+    <value>Build a new {0} in this plot.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_COST" xml:space="preserve">
+    <value>Building this shop requires {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_MULTI_CHOICE" xml:space="preserve">
+    <value>The cost depends on what option you will choose in the next menu.\n</value>
+  </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_BASE" xml:space="preserve">
     <value>Can hold {0} items. Gains {1} progress per day.\n</value>
   </data>
