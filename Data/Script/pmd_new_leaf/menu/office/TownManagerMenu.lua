@@ -4,7 +4,7 @@
     Main town management menu.
 ]]
 
-require 'pmd_new_leaf.menu.TownManagerSummary'
+require 'pmd_new_leaf.menu.office.TownManagerSummary'
 require 'pmd_new_leaf.menu.ScrollListMenu'
 require 'origin.menu.DescriptionSummary'
 

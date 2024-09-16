@@ -5,9 +5,9 @@
     This file contains all office-specific callbacks and functionality data structures
 ]]
 
-require 'pmd_new_leaf.menu.TownManagerMenu'
-require 'pmd_new_leaf.menu.PlotManagerMenu'
---TODO require 'pmd_new_leaf.menu.PlotBuildMenu'
+require 'pmd_new_leaf.menu.office.TownManagerMenu'
+require 'pmd_new_leaf.menu.office.PlotManagerMenu'
+--TODO require 'pmd_new_leaf.menu.office.PlotBuildMenu'
 
 function _SHOP.OfficeInitializer(plot)
     plot.data = {}
