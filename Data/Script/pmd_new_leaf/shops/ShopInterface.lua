@@ -49,11 +49,13 @@ end
 --- @return string an upgrade to apply
 function _SHOP.ShopUpgradeFlow(index, npc)
     local plot = _HUB.getPlotData(index)
+    local ret = false
     if _SHOP.callbacks.upgrade_flow[plot.building] then
-        _SHOP.callbacks.upgrade_flow[plot.building](plot, index, npc)
+        ret = _SHOP.callbacks.upgrade_flow[plot.building](plot, index, npc)
         PrintInfo("Ran upgrade flow for shop "..index)
     end
     UI:ResetSpeaker()
+    return ret
 end
 
 --- Runs the upgrade flow callback associated to thr given plot id's building.
