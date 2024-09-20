@@ -298,14 +298,29 @@
   <data name="OFFICE_REPEAT" xml:space="preserve">
     <value>Do you need anything else?</value>
   </data>
-  <data name="PLOT_DESCRIPTION_BUILD" xml:space="preserve">
-    <value>Build a new {0} in this plot.\n</value>
+  <data name="PLOT_DESCRIPTION_BUILD_APPRAISAL" xml:space="preserve">
+    <value>You can give locked boxes to this shop to open them over time.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_CAFE" xml:space="preserve">
+    <value>Makes permanent stat-boosting drinks.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_EXPORTER" xml:space="preserve">
+    <value>You can give items to this shop to sell them over time. Higher prices take more time.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_MARKET" xml:space="preserve">
+    <value>Allows you to buy various items. Its stock is refreshed every day.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_TRADER" xml:space="preserve">
+    <value>Exchanges Exclusive Items. Its stock is refreshed every day.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_BUILD_TUTOR" xml:space="preserve">
+    <value>Teaches new moves to Pokémon.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_BUILD_COST" xml:space="preserve">
     <value>Building this shop requires {0}.</value>
   </data>
   <data name="PLOT_DESCRIPTION_BUILD_MULTI_CHOICE" xml:space="preserve">
-    <value>The cost depends on what option you will choose in the next menu.\n</value>
+    <value>The cost for building this shop depends on what option you will choose in the next menu.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_BASE" xml:space="preserve">
     <value>Can hold {0} items. Gains {1} progress per day.\n</value>

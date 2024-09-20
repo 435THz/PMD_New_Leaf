@@ -52,20 +52,24 @@ function PlotBuildMenu:LoadOptionsData(_)
             if #upgrades>1 or _HUB.UpgradeTable[upgrades[1]].sub_choices then
                 multi = true
             end
-            local name = STRINGS:FormatKey("SHOP_OPTION_"..shop_id)
+            local name = STRINGS:FormatKey("SHOP_OPTION_"..string.upper(shop_id))
             table.insert(options, name)
             table.insert(return_values, shop_id)
 
-            local descr = STRINGS:FormatKey("PLOT_DESCRIPTION_BUILD", name)
+            local descr = STRINGS:FormatKey("PLOT_DESCRIPTION_BUILD_"..string.upper(shop_id))
             if multi then
                 descr = descr..STRINGS:FormatKey("PLOT_DESCRIPTION_BUILD_MULTI_CHOICE")
             else
-                descr = descr..STRINGS:FormatKey("PLOT_DESCRIPTION_BUILD", _SHOP.GetUpgradeCost(upgrades[1], 1))
+                local cost = _SHOP.GetUpgradeCost(upgrades[1], 1)
+                local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+                descr = descr..STRINGS:FormatKey("PLOT_DESCRIPTION_BUILD_COST", COMMON_FUNC.BuildStringWithSeparators(cost, func))
             end
             table.insert(descriptions, descr)
         end
     end
-    --TODO add exit option
+    table.insert(options, STRINGS:FormatKey("TOWN_MANAGER_OPTION_EXIT"))
+    table.insert(return_values, "exit")
+    table.insert(descriptions, STRINGS:FormatKey("TOWN_MANAGER_DESCR_EXIT"))
     return options, return_values, descriptions
 end
 
@@ -76,7 +80,7 @@ end
 
 function PlotBuildMenu:updateSelection(change)
     if ScrollListMenu.updateSelection(self, change) then
-        self.map_summary:SelectPlot(self.selected)
+        self.map_summary:RefreshCursor()
         self:SetDescription()
         return true
     end
@@ -98,12 +102,12 @@ end
 
 
 
-function PlotBuildMenu.run()
+function PlotBuildMenu.run(index)
     local ret
-    local choose = function(index)
-        ret = index
+    local choose = function(i)
+        ret = i
     end
-    local menu = PlotBuildMenu:new(choose)
+    local menu = PlotBuildMenu:new(index, choose)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
     return ret
