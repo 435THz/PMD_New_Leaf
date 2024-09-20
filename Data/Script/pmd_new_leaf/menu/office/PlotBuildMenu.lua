@@ -44,8 +44,9 @@ function PlotBuildMenu:LoadOptionsData(_)
     local options = {}
     local return_values = {}
     local descriptions = {}
-    for shop_id, base in pairs(_HUB.ShopBase) do
+    for _, shop_id in ipairs(_SHOP.Order) do
         if shop_id ~= "home" and shop_id ~= "office" then
+            local base = _HUB.ShopBase[shop_id]
             local multi = false
             local upgrades = base.Upgrades[1]
             if #upgrades>1 or _HUB.UpgradeTable[upgrades[1]].sub_choices then

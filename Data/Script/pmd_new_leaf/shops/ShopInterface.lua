@@ -5,6 +5,7 @@
 ]]
 
 _SHOP = {}
+_SHOP.Order = {"home", "office", "market", "exporter", "tutor", "appraisal", "trader", "cafe"}
 _SHOP.callbacks = {
     initialize =   {}, --arguments: plot
     upgrade_flow = {}, --arguments: plot, index, npc
