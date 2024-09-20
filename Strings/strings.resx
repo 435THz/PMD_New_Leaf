@@ -253,6 +253,15 @@
   <data name="OFFICE_BYE" xml:space="preserve">
     <value>See you later, then!</value>
   </data>
+  <data name="OFFICE_BUILD_SHOP" xml:space="preserve">
+    <value>Perfect![pause=0] The new {0} should already be ready by the time you leave this building!</value>
+  </data>
+  <data name="OFFICE_CANNOT_BUILD" xml:space="preserve">
+    <value>Looks like we don't have enough material to build this shop.</value>
+  </data>
+  <data name="OFFICE_CANNOT_UPGRADE" xml:space="preserve">
+    <value>Looks like we don't have enough material to upgrade this shop.</value>
+  </data>
   <data name="OFFICE_INFO_1" xml:space="preserve">
     <value>This is placeholder text.</value>
   </data>
