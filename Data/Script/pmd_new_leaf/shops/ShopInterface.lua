@@ -147,3 +147,103 @@ function _SHOP.GetPlotDescription(plot, index)
         end
     end
 end
+
+---Returns the cost of an upgrade at a specific level.
+---@param upgrade string an upgrade id
+---@param level number the level to which to calculate the upgrade cost
+---@return table a list of `{item = string, amount = number}` values
+function _SHOP.GetUpgradeCost(upgrade, level)
+    local lv = level
+    local ret = {}
+    local price = _HUB.UpgradeTable[upgrade].price
+    while not price[lv] do
+        lv = lv-1
+        if lv==0 then return ret end
+    end
+    local mult = level-lv+1
+    for _, item in pairs(price[lv]) do
+        table.insert(ret, {item = item.item, amount = item.amount*mult})
+    end
+    return ret
+end
+
+---Returns the cost of an upgrade at a specific level.
+---@param upgrade string an upgrade id
+---@param sub_choice string a sub_choice id
+---@param level number the level to which to calculate the upgrade cost
+---@return table a list of `{item = string, amount = number}` values
+function _SHOP.GetFullUpgradeCost(upgrade, sub_choice, level)
+    local res = _SHOP.GetUpgradeCost(upgrade, level)
+    table.merge(res, _SHOP.GetUpgradeCost(sub_choice, level))
+    return res
+end
+
+---Builds the upgrade tree for the specifies plot at the specified level.
+---@param plot_id any home, office or any positive integer up to 15
+---@param level number the target level to generate the upgrade tree for
+---@return table an upgrade tree
+function _SHOP.MakeUpgradeTree(plot_id, level)
+    local plot = _HUB.getPlotData(plot_id)
+    local structure = {}
+    local upgrades = _HUB.ShopBase[plot.building].Upgrades[level]
+    for _, upgrade in pairs(upgrades) do
+        local data = _HUB.UpgradeTable[upgrade]
+        local branch = {
+            --TODO remove probably: id = upgrade,
+            has_sub = false,
+            sub = nil -- {string}
+        }
+        local add = (not data.sub_choices) or #data.sub_choices==0
+        if data.per_sub_choice then
+            branch.has_sub = true
+            local sub = {}
+            for _, sub_choice in pairs(data.sub_choices) do
+                if _SHOP.CheckSubUpgradeRequirements(data.requirements, upgrade, sub_choice, plot) then
+                    table.insert(sub, sub_choice)
+                    add = true
+                end
+            end
+            if #sub>0 then
+                branch.sub = sub
+            end
+        else
+            add = _SHOP.CheckUpgradeRequirements(data.requirements, upgrade, _HUB.getPlotData(plot_id))
+        end
+        if add then
+            structure[upgrade] = branch
+        end
+    end
+    return structure
+end
+
+function _SHOP.CheckUpgradeRequirements(requirements, upgrade, plot)
+    local level = math.max(0, plot.upgrades[upgrade] or 0)
+    local max = _HUB.UpgradeTable[upgrade].max or 10
+    if level >= max then return false end
+    for _, requirement in pairs(requirements) do
+        local neg = string.sub(requirement, 1, 1) == "!"
+        local min_lv = 1
+        local match_lv = string.match(requirement, ":%d+$")
+        if match_lv then min_lv = tonumber(string.sub(match_lv, 2)) or min_lv end
+        local s, e = 1, string.len(requirement)
+        if neg then s = 2 end
+        if match_lv then e = e-string.len(match_lv) end
+        local req = string.sub(requirement, s, e)
+
+        local check = neg
+        if plot.upgrades[req] and plot.upgrades[req] >= min_lv then
+            check = not check
+        end
+        if check == false then return false end
+    end
+    return true
+end
+
+
+function _SHOP.CheckSubUpgradeRequirements(requirements, upgrade, sub_choice, plot)
+    local formatted = {}
+    for _, requirement in pairs(requirements) do
+        table.insert(formatted, STRINGS:Format(requirement, sub_choice))
+    end
+    return _SHOP.CheckUpgradeRequirements(formatted, upgrade, plot)
+end
