@@ -285,7 +285,15 @@ _HUB.UpgradeTable = {
         requirements = {},
         description = "APPRAISAL_BOX_SINISTER_DESCR", --TODO
         max = 1
-    }
+    },
+    upgrade_generic = {
+        string = "UPGRADE_GENERIC",
+        price = {
+            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+        },
+        requirements = {},
+        max = 10
+    },
 }
 
 _HUB.ShopBase = {
