@@ -57,6 +57,25 @@ function table.contains(tbl, object)
     return table.index_of(tbl, object, nil) ~= nil
 end
 
+---Appends every element of the second table at the end of the first one.
+---This function edits tbl1 in-place. It does not create a new table.
+---@param tbl1 table a table
+---@param tbl2 table another table
+function table.merge(tbl1, tbl2)
+    table.move(tbl2, 1, #tbl2, #tbl1+1, tbl1)
+end
+
+---Appends every element of the other tables provided at the end of the first one, in the given order.
+---This function edits tbl in-place. It does not create a new table.
+---@param tbl table a table
+---@param ... table a list of tables
+function table.merge_all(tbl, ...)
+    local tables = {...}
+    for _, tbl2 in pairs(tables) do
+        table.merge(tbl, tbl2)
+    end
+end
+
 -------------------------------------------
 --region COMMON+
 -------------------------------------------
