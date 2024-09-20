@@ -65,7 +65,7 @@ _HUB.RankPlotMap = {"map_small", "map_medium", "map_large", "map_final"}
 _HUB.LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15}
 --- maps town plots to rank
 _HUB.RankPlotNumber = {3,6,10,15}
---- maps assembly limit to rank. TODO PROBABLY WILL BE SCRAPPED
+-- maps assembly limit to rank. TODO PROBABLY WILL BE SCRAPPED
 _HUB.LevelAssemblyLimit = {10,25,40,60,80,100,150,200,300,500}
 --- maps a list of map coordinates to every rank. Ground Map version.
 _HUB.PlotPositions = {
@@ -559,8 +559,8 @@ end
 ---@param level number the level to set the hub to
 function _HUB.setHubLevel(level)
     SV.HubData.Level = level
-    _HUB.getPlotData("home").upgrades =   {{type = "upgrade_generic", count = level}}
-    _HUB.getPlotData("office").upgrades = {{type = "upgrade_generic", count = level}}
+    _HUB.getPlotData("home").upgrades["upgrade_generic"] = level
+    _HUB.getPlotData("office").upgrades["upgrade_generic"] = level
 end
 
 ---Increases the hub's level by 1
@@ -578,10 +578,14 @@ function _HUB.initializePlotData()
         local plot_base = {
             unlocked = false,
             building = "",
-            upgrades = {},
+            upgrades = {
+                -- {type = string, count = number}
+            },
             shopkeeper = "",
             shopkeeper_shiny = false,
-            data = {},
+            data = {
+                -- see shops folder
+            },
             empty = math.random(rand)
         }
 
@@ -593,7 +597,7 @@ function _HUB.initializePlotData()
             table.insert(SV.HubData.Plots, plot_base)
         else
             plot_base.unlocked = true
-            plot_base.upgrades = {{type = "upgrade_generic", count = 1}}
+            plot_base.upgrades["upgrade_generic"] = 1
             plot_base.empty = math.random(#_HUB.NotUnlockedVisuals.NonBlocking)
             if i==16 then
                 plot_base.building = "home"
@@ -620,8 +624,8 @@ end
 --- @return table the plot's level
 function _HUB.getPlotLevel(plot)
     local lvl = 0
-    for _, upgrade in pairs(plot.upgrades) do
-        lvl = lvl + upgrade.count
+    for _, count in pairs(plot.upgrades) do
+        lvl = lvl + count
     end
     return lvl
 end
