@@ -104,5 +104,9 @@ function TownManagerSummary:SelectPlot(index, skip_cursor_offset)
     end
     local pos = _HUB.getPlotMarkerOrigin(index)
     self.cursor.Loc = RogueElements.Loc(self.offset_x + pos.X -3, self.offset_y + pos.Y -3)
-    if not skip_cursor_offset then self.cursorTickOffset = Graphics.Manager.TotalFrameTick % RogueEssence.FrameTick.FrameToTick(self.cursorFrameDur) end
+    if not skip_cursor_offset then self:RefreshCursor() end
+end
+
+function TownManagerSummary:RefreshCursor()
+    self.cursorTickOffset = Graphics.Manager.TotalFrameTick % RogueEssence.FrameTick.FrameToTick(self.cursorFrameDur)
 end
