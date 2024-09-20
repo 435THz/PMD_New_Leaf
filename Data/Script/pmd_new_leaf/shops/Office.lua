@@ -9,17 +9,6 @@ require 'pmd_new_leaf.menu.office.TownManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotManagerMenu'
 --TODO require 'pmd_new_leaf.menu.office.PlotBuildMenu'
 
-function _SHOP.OfficeInitializer(plot)
-    plot.data = {}
-end
-
-function _SHOP.OfficeUpgrade(plot, upgrade) --TODO probably get rid of
-    if upgrade ~= "upgrade_generic" then
-        _SHOP.ConfirmShopUpgrade(plot, upgrade)
-        _HUB.LevelUp()
-    end
-end
-
 function _SHOP.OfficeUpdate(plot)
     --TODO refresh quests
 end
@@ -110,7 +99,5 @@ function _SHOP.OfficeInteract(plot, _)
     end
 end
 
-_SHOP.callbacks.initialize["office"] = _SHOP.OfficeInitializer
-_SHOP.callbacks.upgrade["office"] =    _SHOP.OfficeUpgrade
 _SHOP.callbacks.endOfDay["office"] =   _SHOP.OfficeUpdate
 _SHOP.callbacks.interact["office"] =   _SHOP.OfficeInteract
