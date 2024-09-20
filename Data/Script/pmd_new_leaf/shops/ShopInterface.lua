@@ -118,14 +118,11 @@ end
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.ConfirmShopUpgrade(plot, upgrade)
     local found = false
-    for _, upgr in pairs(plot.upgrades) do
-        if upgr.type == upgrade then
-            upgr.count = upgr.count+1
-            found = true
-            break
-        end
+    if plot.upgrades[upgrade] then
+        plot.upgrades[upgrade] = plot.upgrades[upgrade]+1
+    else
+        plot.upgrades[upgrade] = 1
     end
-    if not found then table.insert(plot.upgrades, {type = upgrade, count = 1}) end
 end
 
 --- Returns the plot's description used by the plot management menu.
