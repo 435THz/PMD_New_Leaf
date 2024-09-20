@@ -358,7 +358,7 @@ function _SHOP.TutorGetCharacters()
     local characters = {}
     for char in luanet.each(LUA_ENGINE:MakeList(_DATA.Save.ActiveTeam.Players)) do table.insert(characters, char) end
     local assembly = GAME:GetPlayerAssemblyTable()
-    table.move(assembly, 1, #assembly, #characters+1)
+    table.move(assembly, 1, #assembly, #characters+1, characters)
     return characters
 end
 
