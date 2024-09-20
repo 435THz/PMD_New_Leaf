@@ -137,7 +137,7 @@ function _SHOP.GetPlotDescription(plot, index)
             local list = { { item = "loot_building_tools" } }
             local func = function(entry)
                 local amount = math.ceil((_HUB.getUnlockedNumber()+1)/2)
-                return RogueEssence.Dungeon.InvItem(entry.item, false, amount):GetDisplayName()
+                return COMMON_FUNC.PrintItemAmount(entry.item, amount)
             end
             local cost = COMMON_FUNC.BuildStringWithSeparators(list,func)
             local ret = STRINGS:FormatKey("PLOT_DESCRIPTION_LOCKED", cost)

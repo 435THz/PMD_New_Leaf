@@ -102,7 +102,7 @@ function TownManagerMenu:makeHubUpgradeReqString()
     local next = _HUB.getHubLevel() +1
     local list = _HUB.getLevelUpItems(next)
     local func = function(entry)
-        return RogueEssence.Dungeon.InvItem(entry.item, false, entry.amount):GetDisplayName()
+        return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount)
     end
 
     return COMMON_FUNC.BuildStringWithSeparators(list,func)
