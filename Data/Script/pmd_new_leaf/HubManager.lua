@@ -708,9 +708,7 @@ function _HUB.CreateShop(index, shop_type, start_upgrade)
             _SHOP.InitializeShop(index)
             success = _HUB.UpgradeShop(index, start_upgrade)
             if success then
-                local npc, shiny = _HUB.DiscardUsed(db.Shopkeepers)
-                data.shopkeeper = COMMON_FUNC.WeightlessRoll(npc)
-                data.shopkeeper_shiny = shiny
+                _SHOP.FinalizeShop(index)
             else
                 data.building = ""
                 data.upgrades = {}

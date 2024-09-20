@@ -29,6 +29,14 @@ function _SHOP.InitializeShop(index)
     end
 end
 
+function _SHOP.FinalizeShop(index)
+    local plot = _HUB.getPlotData(index)
+    local db = _HUB.ShopBase[plot.building]
+    local npc, shiny = _HUB.DiscardUsed(db.Shopkeepers)
+    plot.shopkeeper = COMMON_FUNC.WeightlessRoll(npc)
+    plot.shopkeeper_shiny = shiny
+end
+
 --- Runs the upgrade_flow callback associated to the given plot id's building.
 --- @param index any home, office or any positive integer up to 15
 --- @param npc userdata the GroundChar that will be used in cutscene if necessary
