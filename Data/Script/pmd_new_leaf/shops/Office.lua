@@ -7,7 +7,7 @@
 
 require 'pmd_new_leaf.menu.office.TownManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotManagerMenu'
---TODO require 'pmd_new_leaf.menu.office.PlotBuildMenu'
+require 'pmd_new_leaf.menu.office.PlotBuildMenu'
 
 function _SHOP.OfficeUpdate(plot)
     --TODO refresh quests
@@ -46,7 +46,7 @@ function _SHOP.OfficeInteract(plot, _)
                             local plot = _HUB.getPlotData(plot_id)
                             if not plot.unlocked then
                                 local item_id = "loot_building_tools"
-                                local item_name = _DATA.GetItem(item_id):GetColoredName()
+                                local item_name = _DATA:GetItem(item_id):GetColoredName()
                                 local cost = math.ceil((_HUB.getUnlockedNumber()+1)/2)
                                 local number = COMMON.GetPlayerItemCount(item_id, true)
                                 if cost<=number then
@@ -66,7 +66,23 @@ function _SHOP.OfficeInteract(plot, _)
                                     end
                                 end
                             elseif plot.building == "" then
-                                --TODO Build flow
+                                local loop_build = true
+                                while loop_build do
+                                    local build = PlotBuildMenu.run(plot_id)
+                                    if build == "exit" then
+                                        loop_build = false
+                                    else
+                                        _SHOP.InitializeShop(plot_id, build)
+                                        local upgrade = _SHOP.ShopUpgradeFlow(plot_id, npc)
+                                        if upgrade then
+                                            _SHOP.UpgradeShop(plot_id, upgrade)
+                                            _SHOP.FinalizeShop(plot_id)
+                                            UI:WaitShowDialogue("OFFICE_BUILD_SHOP", STRINGS:FormatKey("SHOP_OPTION_"..build))
+                                        else
+                                            _HUB.RemoveShop(plot_id)
+                                        end
+                                    end
+                                end
                             else
                                 --TODO "Upgrade, Move, Demolish" plot editor menu
                             end
