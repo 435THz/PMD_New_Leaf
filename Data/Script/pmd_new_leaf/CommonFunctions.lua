@@ -101,6 +101,22 @@ function COMMON_FUNC.BuildStringWithSeparators(list, func)
     return str
 end
 
+--- Builds a string that represents an item and its amount
+---@param item_id string an item id, or `"(P)"` to print a money value instead
+---@param amount number the amount of items to display. If nil, no amount indicator will be printed
+function COMMON_FUNC.PrintItemAmount(item_id, amount)
+    amount = math.max(0, amount or 0)
+    if item_id == "(P)" then
+        return STRINGS:FormatKey("MONEY_AMOUNT", amount)
+    end
+    local str = _DATA:GetItem(item_id):GetIconName()
+    if amount>0 then
+        str = STRINGS:Format("{0} ({1})", str, tostring(amount))
+    end
+
+    return "[color=#FFCEFF]"..str.."[color]"
+end
+
 --- Removes a number of copies of a specific item from the player's inventory.
 --- If storage is true, it will take from storage after depleting the stock in the inventory.
 --- Returns the amount of items NOT removed if the player didn't have enough.
