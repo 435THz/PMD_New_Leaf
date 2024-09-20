@@ -22,11 +22,16 @@ require 'pmd_new_leaf.shops.Tutor'
 
 --- Runs the initialize callback associated to thr given plot id's building.
 --- @param index any home, office or any positive integer up to 15
-function _SHOP.InitializeShop(index)
+--- @param building string a building id. It is only considered if no building exists in the given plot yet
+function _SHOP.InitializeShop(index, building)
     local plot = _HUB.getPlotData(index)
-    if _SHOP.callbacks.initialize[plot.building] then
-        _SHOP.callbacks.initialize[plot.building](plot)
+    if plot.building ~= "" then building = plot.building end
+    if _SHOP.callbacks.initialize[building] then
+        _SHOP.callbacks.initialize[building](plot)
+        plot.building = building
         PrintInfo("Initialized shop "..index)
+    else
+        plot.building = "" -- reset if invalid
     end
 end
 
