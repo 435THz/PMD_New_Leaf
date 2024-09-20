@@ -140,6 +140,34 @@ function COMMON_FUNC.RemoveItem(item_id, amount, storage)
     return 0
 end
 
+--- Removes a number of copies of specific items from the player's inventory.
+--- If storage is true, it will take from storage after depleting the stock in the inventory.
+---@param cost_table table a list of `{item = string, amount = number}` entries
+---@param storage boolean if true, the function will start taking items from storage after the inventory has been emptied.
+---@return table a list of `{item = string, amount = number}` entries where `amount` is the amount of copies of `item` NOT removed if the player didn't have enough, or `{}` if all requested copies have been removed..
+function COMMON_FUNC.RemoveItems(cost_table, storage)
+    local fails = {}
+    for _, entry in pairs(cost_table) do
+        local missing = COMMON_FUNC.RemoveItem(entry.item, entry.amount, storage)
+        if missing > 0 then
+            table.insert(fails, {entry.item, missing})
+        end
+    end
+    return fails
+end
+
+--- Checks if the player has the given amount of items.
+---@param cost_table table a list of `{item = string, amount = number}` entries
+---@param check_storage boolean if true, the function will also count the item in storage
+function COMMON_FUNC.CheckCost(cost_table, check_storage)
+    for _, entry in pairs(cost_table) do
+        if COMMON.GetPlayerItemCount(entry.item, check_storage) < entry.amount then
+            return false
+        end
+    end
+    return true
+end
+
 ---Rolls for a random object inside a list and returns the result.
 ---Every object has the same chance of being chosen.
 ---@param list table a table of possible results
