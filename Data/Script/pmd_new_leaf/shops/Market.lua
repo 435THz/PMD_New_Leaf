@@ -161,6 +161,48 @@ function _SHOP.MarketInitializer(plot)
     }
 end
 
+function _SHOP.MarketUpgradeFlow(plot, index, npc)
+    local id = "market"
+    local level = _HUB.getHubLevel(plot)
+    local upgrade = ""
+    local sub_upgrade = ""
+
+    local tree = _SHOP.MakeUpgradeTree(index, level+1)
+    local loop = true
+    while loop do
+        if plot.building == "" then
+            if upgrade == "" then
+                upgrade = "market_unlock"
+            else
+                return
+            end
+        else
+            upgrade = ShopUpgradeMenu.run(tree, index, level) --TODO
+        end
+        if not upgrade then return end
+        local loop2 = true
+        while loop2 do
+            sub_upgrade = ShopSubUpgradeMenu.run(tree[upgrade], index, level) --TODO
+            if not sub_upgrade then
+                loop2 = false
+            else
+                local final_upgrade = upgrade.."_"..sub_upgrade
+                local cost = _SHOP.GetFullUpgradeCost(upgrade, sub_upgrade, plot.upgrades[final_upgrade]+1)
+                if COMMON_FUNC.CheckCost(cost, true) then
+                    COMMON_FUNC.RemoveItems(cost, true)
+                    return final_upgrade
+                else
+                    if level == 0 then
+                        UI:WaitShowDialogue("OFFICE_CANNOT_BUILD")
+                    else
+                        UI:WaitShowDialogue("OFFICE_CANNOT_UPGRADE")
+                    end
+                end
+            end
+        end
+    end
+end
+
 function _SHOP.MarketUpgrade(plot, upgrade)
     local pool = ""
     if string.match(upgrade, "sub_survival") then
@@ -386,9 +428,10 @@ function _SHOP.MarketGetDescription(plot)
     return description
 end
 
-_SHOP.callbacks.initialize["market"] =  _SHOP.MarketInitializer
-_SHOP.callbacks.upgrade["market"] =     _SHOP.MarketUpgrade
-_SHOP.callbacks.endOfDay["market"] =    _SHOP.MarketRestock
-_SHOP.callbacks.interact["market"] =    _SHOP.MarketInteract
-_SHOP.callbacks.description["market"] = _SHOP.MarketGetDescription
+_SHOP.callbacks.initialize["market"] =   _SHOP.MarketInitializer
+_SHOP.callbacks.upgrade_flow["market"] = _SHOP.MarketUpgradeFlow
+_SHOP.callbacks.upgrade["market"] =      _SHOP.MarketUpgrade
+_SHOP.callbacks.endOfDay["market"] =     _SHOP.MarketRestock
+_SHOP.callbacks.interact["market"] =     _SHOP.MarketInteract
+_SHOP.callbacks.description["market"] =  _SHOP.MarketGetDescription
 _SHOP.MarketLoadTMs()
