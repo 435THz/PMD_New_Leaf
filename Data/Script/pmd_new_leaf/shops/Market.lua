@@ -409,7 +409,6 @@ function _SHOP.MarketLoadTMs()
 end
 
 function _SHOP.MarketGetDescription(plot)
-    local pools = ""
     local l = {}
     for pool in pairs(plot.data.categories) do
         table.insert(l, pool)
