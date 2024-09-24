@@ -177,9 +177,9 @@ function intro_scene.IntroTeleport()
     UI:WaitShowVoiceOver("Seems like something wrong happened when loading your last position.", -1)
     if SV.Intro.HubReached then
         local hub_name = _HUB.getHubName()
-        UI:WaitShowVoiceOver("You will soon be brought to "..hub_name..", but first...", -1)
+        UI:WaitShowVoiceOver("You will soon be brought to "..hub_name..".", -1)
     else
-        UI:WaitShowVoiceOver("You will soon be brought to your last known location, but first...", -1)
+        UI:WaitShowVoiceOver("You will soon be brought to your last known location.", -1)
     end
     UI:WaitShowVoiceOver("Please make sure to notify [color=#800080]MistressNebula[color] about this.\nYou can find her on the [color=#00FFFF]PMDO Discord Server[color] or\nleave a bug report on the mod's [color=#FFFF00]GitHub[color] page.", -1)
     UI:WaitShowVoiceOver("Time to get back to your adventure, now...", -1)
