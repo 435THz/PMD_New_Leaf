@@ -58,7 +58,9 @@ function _SHOP.OfficeInteract(_, _)
                                     if ch then
                                         UI:ResetSpeaker(false)
                                         SOUND:PlaySE("Fanfare/Item")
+                                        UI:SetCenter(true)
                                         UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", item_name.." ("..cost..")"))
+                                        UI:SetCenter(false)
                                         UI:SetSpeaker(npc)
                                         UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_ACTION_CONFIRM'))
                                         plot.unlocked = true
