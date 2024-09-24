@@ -355,6 +355,9 @@
   <data name="OFFICE_UPGRADE_ASK" xml:space="preserve">
     <value>So you want to upgrade this {0} using {1}?</value>
   </data>
+  <data name="OFFICE_UPGRADE_SHOP" xml:space="preserve">
+    <value>Perfect![pause=0] the {0} has been upgraded!</value>
+  </data>
   <data name="PLOT_DESCRIPTION_BUILD_APPRAISAL" xml:space="preserve">
     <value>You can give locked boxes to this shop to open them over time.\n</value>
   </data>
