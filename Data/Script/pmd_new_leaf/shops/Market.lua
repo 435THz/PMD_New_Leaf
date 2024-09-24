@@ -215,7 +215,9 @@ function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
                         COMMON_FUNC.RemoveItems(cost, true)
                         UI:ResetSpeaker(false)
                         SOUND:PlaySE("Fanfare/Item")
+                        UI:SetCenter(true)
                         UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", cost_string))
+                        UI:SetCenter(false)
                         return final_upgrade
                     end
                 else
