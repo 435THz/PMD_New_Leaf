@@ -5,6 +5,9 @@
     This file contains all market-specific callbacks and functionality data structures
 ]]
 
+require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
+require 'pmd_new_leaf.menu.office.ShopSubUpgradeMenu'
+
 _SHOP.MarketTables = {
     MarketPools = {
         survival = {
@@ -149,7 +152,9 @@ _SHOP.MarketTables = {
             }
         },
         tm = {{},{},{}}
-    }
+    },
+    upgrade_order = {"market_unlock", "market_expand", "market_tier", "market_specialize"},
+    sub_order = {"sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"}
 }
 
 function _SHOP.MarketInitializer(plot)
@@ -161,42 +166,61 @@ function _SHOP.MarketInitializer(plot)
     }
 end
 
-function _SHOP.MarketUpgradeFlow(plot, index, npc)
-    local id = "market"
-    local level = _HUB.getHubLevel(plot)
+function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
+    local level = _HUB.getPlotLevel(plot)
     local upgrade = ""
     local sub_upgrade = ""
 
     local tree, keys = _SHOP.MakeUpgradeTree(index, level+1, shop_id)
+    local comp = function(a,b, order)
+        for _, elem in ipairs(order) do
+            if elem == a then return true
+            elseif elem == b then return false end
+        end
+        return false
+    end
+    table.sort(keys, function(a, b) return comp(a, b, _SHOP.MarketTables.upgrade_order) end)
+
     local loop = true
     while loop do
-        if plot.building == "" then
+        if #keys == 1 then
             if upgrade == "" then
-                upgrade = "market_unlock"
+                upgrade = keys[1]
             else
                 return
             end
         else
-            upgrade = ShopUpgradeMenu.run(tree, index, level) --TODO
+            upgrade = ShopUpgradeMenu.run(tree, keys, index)
         end
-        if not upgrade then return end
+        if upgrade == "exit" then return end
         local loop2 = true
         while loop2 do
-            sub_upgrade = ShopSubUpgradeMenu.run(tree[upgrade], index, level) --TODO
-            if not sub_upgrade then
+            table.sort(tree[upgrade].sub, function(a, b) return comp(a, b, _SHOP.MarketTables.sub_order) end)
+            sub_upgrade = ShopSubUpgradeMenu.run(tree, upgrade, index)
+            if sub_upgrade == "exit" then
                 loop2 = false
             else
-                local final_upgrade = upgrade.."_"..sub_upgrade
-                local cost = _SHOP.GetFullUpgradeCost(upgrade, sub_upgrade, plot.upgrades[final_upgrade]+1)
+                local final_upgrade = STRINGS:Format("{0}_{1}", upgrade, sub_upgrade)
+                local curr = plot.upgrades[final_upgrade] or 0
+                local cost = _SHOP.GetFullUpgradeCost(upgrade, sub_upgrade, curr+1)
                 if COMMON_FUNC.CheckCost(cost, true) then
-                    COMMON_FUNC.RemoveItems(cost, true)
-                    return final_upgrade
-                else
-                    if level == 0 then
-                        UI:WaitShowDialogue("OFFICE_CANNOT_BUILD")
-                    else
-                        UI:WaitShowDialogue("OFFICE_CANNOT_UPGRADE")
+                    local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+                    local cost_string = COMMON_FUNC.BuildStringWithSeparators(cost, func)
+                    if level == 0 then UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_BUILD_ASK", STRINGS:FormatKey("SHOP_OPTION_MARKET"), cost_string))
+                    else UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_UPGRADE_ASK", STRINGS:FormatKey("SHOP_OPTION_MARKET"), cost_string)) end
+                    UI:WaitForChoice()
+                    local ch = UI:ChoiceResult()
+
+                    if ch then
+                        COMMON_FUNC.RemoveItems(cost, true)
+                        UI:ResetSpeaker(false)
+                        SOUND:PlaySE("Fanfare/Item")
+                        UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", cost_string))
+                        return final_upgrade
                     end
+                else
+                    if level == 0 then UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
+                    else UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE")) end
                 end
             end
         end
@@ -281,7 +305,7 @@ function _SHOP.MarketRestock(plot)
 end
 
 function _SHOP.MarketRoll(pool_id, tier)
-    local pool = _SHOP.MarketPools[pool_id]
+    local pool = _SHOP.MarketTables.MarketPools[pool_id]
 
     local roll_table = pool[1]
     if tier == 2 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll({pool[1], pool[2]})
