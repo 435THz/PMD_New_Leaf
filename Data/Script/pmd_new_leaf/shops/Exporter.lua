@@ -28,6 +28,31 @@ function _SHOP.ExporterInitializer(plot)
     }
 end
 
+function _SHOP.ExporterUpgradeFlow(plot, _, _)
+    local level = _HUB.getPlotLevel(plot)
+    local upgrade = "upgrade_exporter_base"
+    local curr = plot.upgrades[upgrade] or 0
+    local cost = _SHOP.GetUpgradeCost(upgrade, curr+1)
+    if COMMON_FUNC.CheckCost(cost, true) then
+        local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+        local cost_string = COMMON_FUNC.BuildStringWithSeparators(cost, func)
+        if level == 0 then UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_BUILD_ASK", STRINGS:FormatKey("SHOP_OPTION_EXPORTER"), cost_string))
+        else UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_UPGRADE_ASK", STRINGS:FormatKey("SHOP_OPTION_EXPORTER"), cost_string)) end
+        UI:WaitForChoice()
+        local ch = UI:ChoiceResult()
+        if ch then
+            COMMON_FUNC.RemoveItems(cost, true)
+            UI:ResetSpeaker(false)
+            SOUND:PlaySE("Fanfare/Item")
+            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", cost_string))
+            return upgrade
+        end
+    else
+        if level == 0 then UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
+        else UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE")) end
+    end
+end
+
 function _SHOP.ExporterUpgrade(plot, upgrade)
     if upgrade ~= "upgrade_exporter_base" then return end
 
@@ -220,8 +245,9 @@ function _SHOP.ExporterGetDescription(plot)
     return description
 end
 
-_SHOP.callbacks.initialize["exporter"] =  _SHOP.ExporterInitializer
-_SHOP.callbacks.upgrade["exporter"] =     _SHOP.ExporterUpgrade
-_SHOP.callbacks.endOfDay["exporter"] =    _SHOP.ExporterUpdate
-_SHOP.callbacks.interact["exporter"] =    _SHOP.ExporterInteract
-_SHOP.callbacks.description["exporter"] = _SHOP.ExporterGetDescription
+_SHOP.callbacks.initialize["exporter"] =   _SHOP.ExporterInitializer
+_SHOP.callbacks.upgrade_flow["exporter"] = _SHOP.ExporterUpgradeFlow
+_SHOP.callbacks.upgrade["exporter"] =      _SHOP.ExporterUpgrade
+_SHOP.callbacks.endOfDay["exporter"] =     _SHOP.ExporterUpdate
+_SHOP.callbacks.interact["exporter"] =     _SHOP.ExporterInteract
+_SHOP.callbacks.description["exporter"] =  _SHOP.ExporterGetDescription
