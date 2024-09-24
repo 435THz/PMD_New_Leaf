@@ -32,6 +32,12 @@ end
 ---home_tier1.Enter(map)
 --Engine callback function
 function home_tier1.Enter(_)
+    local pattern, suffix = "HOME_MAP_PATTERN_TENT", "HOME_MAP_SUFFIX_TENT"
+    if _HUB.getHubRank()>1 then
+        pattern, suffix = "HOME_MAP_PATTERN_HOUSE", "HOME_MAP_SUFFIX_HOUSE"
+    end
+    local founder_name = _HUB.getFounder().Name
+    GAME:GetCurrentGround().Name = RogueEssence.LocalText(STRINGS:FormatKey(pattern, founder_name, STRINGS:FormatKey(suffix)))
     if SV.Intro.HubTutorialProgress<2 then
         local anim = _HUB.GenerateAnimData()
 
