@@ -25,10 +25,12 @@ function TownManagerSummary:initialize()
     self.map = RogueEssence.Menu.MenuDirTex(RogueElements.Loc(self.offset_x,self.offset_y), RogueEssence.Menu.MenuDirTex.TexType.Object, object)
     self.window.Elements:Add(self.map)
 
-    local cursor_object = RogueEssence.Content.AnimData("map_cursor", 1, 1, 1)
+    local cursor_object =   RogueEssence.Content.AnimData("map_cursor",   1, 1, 1)
+    local cursor_object_b = RogueEssence.Content.AnimData("map_cursor_b", 1, 1, 1)
     self.cursorFrameDur = 24
     self.cursorTickOffset = 0
-    self.cursor = RogueEssence.Menu.MenuDirTex(RogueElements.Loc(self.offset_x,self.offset_y), RogueEssence.Menu.MenuDirTex.TexType.Object, cursor_object)
+    self.cursor =   RogueEssence.Menu.MenuDirTex(RogueElements.Loc(self.offset_x,self.offset_y), RogueEssence.Menu.MenuDirTex.TexType.Object, cursor_object)
+    self.cursor_b = RogueEssence.Menu.MenuDirTex(RogueElements.Loc(self.offset_x,self.offset_y), RogueEssence.Menu.MenuDirTex.TexType.Object, cursor_object_b)
 
     self.plot_tokens = self:LoadPlotData()
     for _, token in pairs(self.plot_tokens) do
@@ -69,15 +71,33 @@ function TownManagerSummary:SelectTown()
     self.selecting = false
 end
 
+function TownManagerSummary:HideSilverCursor()
+    self.window.Elements:Remove(self.cursor_b)
+    self.selecting_b = true
+end
+
 function TownManagerSummary:UpdateCursor()
     if not self.selecting then return end
     if ((Graphics.Manager.TotalFrameTick - self.cursorTickOffset) // RogueEssence.FrameTick.FrameToTick(self.cursorFrameDur // 2)) % 2 == 0 then
         self.cursor.Anim.StartFrame = 0
         self.cursor.Anim.EndFrame = 0
+        self.cursor_b.Anim.StartFrame = 1
+        self.cursor_b.Anim.EndFrame = 1
     else
         self.cursor.Anim.StartFrame = 1
         self.cursor.Anim.EndFrame = 1
+        self.cursor_b.Anim.StartFrame = 0
+        self.cursor_b.Anim.EndFrame = 0
     end
+end
+
+function TownManagerSummary:SetSilverCursorToPlot(index)
+    local pos = _HUB.getPlotMarkerOrigin(index)
+    if not self.selecting_b then
+        self.window.Elements:Add(self.cursor_b)
+        self.selecting_b = true
+    end
+    self.cursor_b.Loc = RogueElements.Loc(self.offset_x + pos.X -3, self.offset_y + pos.Y -3)
 end
 
 function TownManagerSummary:SelectPlot(index, skip_cursor_offset)
