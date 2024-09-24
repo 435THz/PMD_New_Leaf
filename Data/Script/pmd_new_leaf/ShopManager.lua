@@ -14,7 +14,10 @@ _HUB.UpgradeTable = {
         -- start with a ! for negation, end with : and a number to require a specific level or above
         requirements = {},
         -- description displayed when the choice is hovered
-        description = "UPGRADE_MARKET_UNLOCK_DESCR", --TODO
+        description = "UPGRADE_MARKET_UNLOCK_DESCR",
+        -- description part displayed when a sub-choice is hovered
+        -- has no meaning if sub_choices is nil
+        sub_description = "MARKET_POOL_UNLOCK_DESCR",
         -- when this option is chosen, show a submenu with these choices
         -- the final reference id for a specific sub_choice is choiceId_subchoiceId
         -- sub_choices data should be defined somewhere else in this table
@@ -33,7 +36,8 @@ _HUB.UpgradeTable = {
             { { item = "loot_building_tools", amount = 1 } },
         },
         requirements = { "market_unlock_{0}" },
-        description = "UPGRADE_MARKET_EXPAND_DESCR", --TODO
+        description = "UPGRADE_MARKET_EXPAND_DESCR",
+        sub_description = "MARKET_POOL_EXPAND_DESCR",
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
@@ -46,7 +50,8 @@ _HUB.UpgradeTable = {
             { { item = "loot_building_tools_rare", amount = 1 } }
         },
         requirements = { "market_unlock_{0}" },
-        description = "UPGRADE_MARKET_TIER_DESCR", --TODO
+        description = "UPGRADE_MARKET_TIER_DESCR",
+        sub_description = "MARKET_POOL_TIER_DESCR",
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
@@ -62,7 +67,8 @@ _HUB.UpgradeTable = {
             },
         },
         requirements = { "market_unlock_{0}" },
-        description = "UPGRADE_MARKET_SPECIALIZE_DESCR", --TODO
+        description = "UPGRADE_MARKET_SPECIALIZE_DESCR",
+        sub_description = "MARKET_POOL_SPECIALIZE_DESCR",
         sub_choices = {
             "sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"
         },
@@ -75,49 +81,49 @@ _HUB.UpgradeTable = {
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_SURVIVAL_DESCR" --TODO
+        description = "MARKET_POOL_SURVIVAL_DESCR"
     },
     sub_recruitment = {
         string = "MARKET_POOL_RECRUITMENT",
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_RECRUITMENT_DESCR" --TODO
+        description = "MARKET_POOL_RECRUITMENT_DESCR"
     },
     sub_utilities = {
         string = "MARKET_POOL_UTILITIES",
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_UTILITIES_DESCR" --TODO
+        description = "MARKET_POOL_UTILITIES_DESCR"
     },
     sub_ammo = {
         string = "MARKET_POOL_AMMO",
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_AMMO_DESCR" --TODO
+        description = "MARKET_POOL_AMMO_DESCR"
     },
     sub_wands = {
         string = "MARKET_POOL_WANDS",
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_WANDS_DESCR" --TODO
+        description = "MARKET_POOL_WANDS_DESCR"
     },
     sub_orbs = {
         string = "MARKET_POOL_ORBS",
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_ORBS_DESCR" --TODO
+        description = "MARKET_POOL_ORBS_DESCR"
     },
     sub_tm = {
         string = "MARKET_POOL_TM",
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "MARKET_POOL_TM_DESCR" --TODO
+        description = "MARKET_POOL_TM_DESCR"
     },
     upgrade_tutor_base = {
         string = "UPGRADE_GENERIC",

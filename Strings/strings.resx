@@ -226,23 +226,56 @@
   <data name="MARKET_POOL_AMMO" xml:space="preserve">
     <value>Throwing Items</value>
   </data>
+  <data name="MARKET_POOL_AMMO_DESCR" xml:space="preserve">
+    <value>{0} throwing items.\n</value>
+  </data>
   <data name="MARKET_POOL_ORBS" xml:space="preserve">
     <value>Orbs</value>
+  </data>
+  <data name="MARKET_POOL_ORBS_DESCR" xml:space="preserve">
+    <value>{0} orbs.\n</value>
   </data>
   <data name="MARKET_POOL_RECRUITMENT" xml:space="preserve">
     <value>Apricorns</value>
   </data>
+  <data name="MARKET_POOL_RECRUITMENT_DESCR" xml:space="preserve">
+    <value>{0} apricorns.\n</value>
+  </data>
   <data name="MARKET_POOL_SURVIVAL" xml:space="preserve">
     <value>Essential Items</value>
+  </data>
+  <data name="MARKET_POOL_SURVIVAL_DESCR" xml:space="preserve">
+    <value>{0} food and healing items.\n</value>
   </data>
   <data name="MARKET_POOL_TM" xml:space="preserve">
     <value>TMs</value>
   </data>
+  <data name="MARKET_POOL_TM_DESCR" xml:space="preserve">
+    <value>{0} TMs.\n</value>
+  </data>
   <data name="MARKET_POOL_UTILITIES" xml:space="preserve">
     <value>Battle Items</value>
   </data>
+  <data name="MARKET_POOL_UTILITIES_DESCR" xml:space="preserve">
+    <value>{0} battle related seeds and herbs.\n</value>
+  </data>
   <data name="MARKET_POOL_WANDS" xml:space="preserve">
     <value>Wands</value>
+  </data>
+  <data name="MARKET_POOL_WANDS_DESCR" xml:space="preserve">
+    <value>{0} wands.\n</value>
+  </data>
+  <data name="MARKET_POOL_EXPAND_DESCR" xml:space="preserve">
+    <value>Increase the amount of slots reserved for</value>
+  </data>
+  <data name="MARKET_POOL_TIER_DESCR" xml:space="preserve">
+    <value>Allow the shop to sell better</value>
+  </data>
+  <data name="MARKET_POOL_SPECIALIZE_DESCR" xml:space="preserve">
+    <value>Specialize the shop on</value>
+  </data>
+  <data name="MARKET_POOL_UNLOCK_DESCR" xml:space="preserve">
+    <value>Add a new section dedicated to</value>
   </data>
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
@@ -529,14 +562,26 @@
   <data name="UPGRADE_MARKET_EXPAND" xml:space="preserve">
     <value>Add slot</value>
   </data>
+  <data name="UPGRADE_MARKET_EXPAND_DESCR" xml:space="preserve">
+    <value>Increase the number of slots reserved for items of a specific kind by 1.\n</value>
+  </data>
   <data name="UPGRADE_MARKET_SPECIALIZE" xml:space="preserve">
     <value>Specialize</value>
+  </data>
+  <data name="UPGRADE_MARKET_SPECIALIZE_DESCR" xml:space="preserve">
+    <value>Give a section of the shop a daily chance of having one of its items on sale.\n</value>
   </data>
   <data name="UPGRADE_MARKET_TIER" xml:space="preserve">
     <value>Expand</value>
   </data>
+  <data name="UPGRADE_MARKET_TIER_DESCR" xml:space="preserve">
+    <value>Allow the shop to sell more powerful items of a specific kind.\n</value>
+  </data>
   <data name="UPGRADE_MARKET_UNLOCK" xml:space="preserve">
     <value>New section</value>
+  </data>
+  <data name="UPGRADE_MARKET_UNLOCK_DESCR" xml:space="preserve">
+    <value>Add another section to the shop, allowing it to sell new kinds of items.\n</value>
   </data>
   <data name="UPGRADE_TUTOR_COUNT" xml:space="preserve">
     <value>Add slot</value>
