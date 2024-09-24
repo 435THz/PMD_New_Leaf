@@ -122,8 +122,10 @@ function _SHOP.OfficeInteract(_, _)
                 end
             end
         elseif result == 2 then
-            --TODO
+            --TODO TEAM RENAME FLOW
         elseif result == 3 then
+            --TODO quest system
+        elseif result == 4 then
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1'))
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2'))
             if SV.Intro.ObtainedWishFragments or SV.Intro.HubTutorialProgress>=5 then
