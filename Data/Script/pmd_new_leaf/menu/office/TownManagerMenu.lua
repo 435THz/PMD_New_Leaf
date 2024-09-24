@@ -55,7 +55,7 @@ function TownManagerMenu:LoadOptionsData(_)
             table.insert(descriptions, STRINGS:FormatKey("TOWN_MANAGER_DESCR_RENAME"))
         end
     end
-    if _HUB.getHubLevel()<10 then
+    if _HUB.getHubLevel()<10 and SV.Intro.ObtainedWishFragments then
         local enabled = _HUB.canUpgrade()
         local descr = STRINGS:FormatKey("TOWN_MANAGER_DESCR_UPGRADE", self:makeHubUpgradeReqString())
         local color = Color.White

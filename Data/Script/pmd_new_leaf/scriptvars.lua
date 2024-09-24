@@ -55,6 +55,7 @@ SV.Intro = {
     PelipperIntro = false,         -- if the starting Ruined Path cutscene happened
     SaveReminder = false,          -- if the player was told about saving from the menu
     DungeonFailed = false,         -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
+    ObtainedWishFragments = false, -- if true, then Jirachi will appear
     HubReached = false,            -- if the hub has been reached
     --- 0 = nothing is done yet;
     --- 1 = tents built;
