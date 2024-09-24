@@ -123,12 +123,19 @@ function _SHOP.OfficeInteract(_, _)
         elseif result == 2 then
             --TODO
         elseif result == 3 then
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1')) --TODO
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2')) --TODO
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3')) --TODO
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_4')) --TODO
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_5')) --TODO
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_6')) --TODO
+            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1'))
+            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2'))
+            if SV.Intro.ObtainedWishFragments or SV.Intro.HubTutorialProgress>=5 then
+                if _HUB.getHubRank() == 1 then
+                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3'))
+                elseif _HUB.getHubLevel() < 10 then
+                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3b'))
+                else
+                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3c'))
+                end
+            end
+            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_4'))
+            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_5'))
         else
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_BYE'))
             exit = true

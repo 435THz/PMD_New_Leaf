@@ -302,22 +302,25 @@
     <value>You gave {0}.</value>
   </data>
   <data name="OFFICE_INFO_1" xml:space="preserve">
-    <value>This is placeholder text.</value>
+    <value>This is my Office,[pause=10] the base of operations for {0}.</value>
   </data>
   <data name="OFFICE_INFO_2" xml:space="preserve">
-    <value>This is also placeholder text.</value>
+    <value>Here you can add new buildings to the {0} and upgrade them in exchange for various materials.</value>
   </data>
   <data name="OFFICE_INFO_3" xml:space="preserve">
-    <value>This is more placeholder text.</value>
+    <value>You can also upgrade the {0} itself, allowing you to build more shops.</value>
+  </data>
+  <data name="OFFICE_INFO_3b" xml:space="preserve">
+    <value>You can also rename the {0} itself and upgrade it, allowing you to build more shops.</value>
+  </data>
+  <data name="OFFICE_INFO_3c" xml:space="preserve">
+    <value>You can also rename the {0} itself if you so desire.</value>
   </data>
   <data name="OFFICE_INFO_4" xml:space="preserve">
-    <value>Even this one is placeholder text.</value>
+    <value>The Federation also periodically sends us requests,[pause=10] so i keep track of them for you,[pause=10) too.</value>
   </data>
   <data name="OFFICE_INFO_5" xml:space="preserve">
-    <value>Placeholder text. Who would've thought.</value>
-  </data>
-  <data name="OFFICE_INFO_6" xml:space="preserve">
-    <value>Placeholder text? In this economy?</value>
+    <value>Some hove these requests may have some pretty valuable rewards,[pause=10] but,[pause=10] in the end,[pause=10] tackling them or not is up to you.</value>
   </data>
   <data name="OFFICE_INTRO" xml:space="preserve">
     <value>Hello,[pause=10] {0}![pause=0] Do you need something?</value>
