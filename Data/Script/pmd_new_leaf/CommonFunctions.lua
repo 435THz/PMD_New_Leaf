@@ -141,11 +141,24 @@ end
 --- Removes a number of copies of a specific item from the player's inventory.
 --- If storage is true, it will take from storage after depleting the stock in the inventory.
 --- Returns the amount of items NOT removed if the player didn't have enough.
----@param item_id string the id of the item to remove
+---@param item_id string the id of the item to remove. Use `"(P)"` to remove money
 ---@param amount number the amount of copies of the item to remove
----@param storage boolean if true, the function will start taking items from storage after the inventory has been emptied.
+---@param storage boolean if true, the function will start taking items from storage (or bank) after the inventory has been emptied.
 ---@return number the difference between the the amount of items removed and the amount of requested copies, or 0 if all requested copies have been removed.
 function COMMON_FUNC.RemoveItem(item_id, amount, storage)
+    if item_id == "(P)" then
+        local count = math.max(0, amount - GAME:GetPlayerMoney())
+        local remove = amount-count
+        GAME:RemoveFromPlayerMoney(remove)
+        if count>0 then
+            local count2 = math.max(0, count - GAME:GetPlayerMoneyBank())
+            local remove2 = count-count2
+            GAME:RemoveFromPlayerMoneyBank(remove2)
+            count = count2
+        end
+        return count
+    end
+
     for i = 1, amount, 1 do
         local item_slot = GAME:FindPlayerItem(item_id, true, true)
         if not item_slot:IsValid() then
@@ -178,12 +191,21 @@ function COMMON_FUNC.RemoveItems(cost_table, storage)
 end
 
 --- Checks if the player has the given amount of items.
+--- If an item id is set to `"(P)"`, it will check the player's money instead.
 ---@param cost_table table a list of `{item = string, amount = number}` entries
 ---@param check_storage boolean if true, the function will also count the item in storage
 function COMMON_FUNC.CheckCost(cost_table, check_storage)
     for _, entry in pairs(cost_table) do
-        if COMMON.GetPlayerItemCount(entry.item, check_storage) < entry.amount then
-            return false
+        if entry.item == "(P)" then
+            local count = GAME:GetPlayerMoney()
+            if check_storage then count = count + GAME:GetPlayerMoneyBank() end
+            if count < entry.amount then
+                return false
+            end
+        else
+            if COMMON.GetPlayerItemCount(entry.item, check_storage) < entry.amount then
+                return false
+            end
         end
     end
     return true
