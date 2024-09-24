@@ -23,6 +23,7 @@ function _SHOP.OfficeInteract(_, _)
     while not exit do
         local choices = {
             STRINGS:FormatKey('OFFICE_OPTION_MANAGE', _HUB.getHubSuffix()),
+            STRINGS:FormatKey('OFFICE_TEAM_RENAME'),
             STRINGS:FormatKey('OFFICE_OPTION_QUESTS'),
             STRINGS:FormatKey("MENU_INFO"),
             STRINGS:FormatKey("MENU_EXIT")

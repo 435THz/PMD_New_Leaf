@@ -349,6 +349,9 @@
   <data name="OFFICE_REPEAT" xml:space="preserve">
     <value>Do you need anything else?</value>
   </data>
+  <data name="OFFICE_TEAM_RENAME" xml:space="preserve">
+    <value>Rename Team</value>
+  </data>
   <data name="OFFICE_UPGRADE_ASK" xml:space="preserve">
     <value>So you want to upgrade this {0} using {1}?</value>
   </data>
