@@ -85,6 +85,27 @@ function COMMON_FUNC.EndSessionWithResults(result, zoneId, structureId, mapId, e
     GAME:EnterZone(zoneId, structureId, mapId, entryId)
 end
 
+function COMMON_FUNC.MergeItemLists(list, ...)
+    local lists = {...}
+    for _, list2 in pairs(lists) do
+        table.merge(list, list2)
+    end
+    COMMON_FUNC.CompactItems(list)
+end
+
+
+function COMMON_FUNC.CompactItems(list)
+    for i=1, #list-1, 1 do
+        for j=#list, i+1, -1 do
+            local entry1, entry2 = list[i], list[j]
+            if entry1.item == entry2.item then
+                entry1.amount = entry1.amount + entry2.amount
+                table.remove(list, j)
+            end
+        end
+    end
+end
+
 --- Builds a string using a list of elements and applying the provided function to every element of the list.
 --- The elements will be concatenated using the localized `ADD_SEPARATOR` and `ADD_END` strings as separators.
 ---@param list table the list of items to build the string with

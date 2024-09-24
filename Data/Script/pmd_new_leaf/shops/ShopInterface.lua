@@ -178,7 +178,7 @@ end
 ---@return table a list of `{item = string, amount = number}` values
 function _SHOP.GetFullUpgradeCost(upgrade, sub_choice, level)
     local res = _SHOP.GetUpgradeCost(upgrade, level)
-    table.merge(res, _SHOP.GetUpgradeCost(sub_choice, level))
+    COMMON_FUNC.MergeItemLists(res, _SHOP.GetUpgradeCost(sub_choice, level))
     return res
 end
 
