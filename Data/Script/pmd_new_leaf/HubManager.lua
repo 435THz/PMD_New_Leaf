@@ -212,6 +212,18 @@ _HUB.LevelUpCosts = {
 --region Getters
 -------------------------------------------
 
+---@return userdata the very first Character created in the game.
+function _HUB.getFounder()
+    for char in luanet.each(LUA_ENGINE:MakeList(_DATA.Save.ActiveTeam.Players)) do
+        if char.IsFounder then return char end
+    end
+    local assembly = GAME:GetPlayerAssemblyTable()
+    for _, char in ipairs(assembly) do
+        if char.IsFounder then return char end
+    end
+    return
+end
+
 ---@return number the current level of the hub itself
 function _HUB.getHubLevel()
     return SV.HubData.Level
