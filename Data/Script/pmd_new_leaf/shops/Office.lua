@@ -7,6 +7,7 @@
 
 require 'pmd_new_leaf.menu.office.TownManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotManagerMenu'
+require 'pmd_new_leaf.menu.office.ShopManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotBuildMenu'
 
 function _SHOP.OfficeUpdate(plot)
@@ -97,6 +98,13 @@ function _SHOP.OfficeInteract(_, _)
                                     if action == "exit" then
                                         loop_plot = false
                                     elseif action == "upgrade" then
+                                        local upgrade = _SHOP.ShopUpgradeFlow(plot_id)
+                                        UI:SetSpeaker(npc)
+                                        if upgrade then
+                                            _SHOP.UpgradeShop(plot_id, upgrade)
+                                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_UPGRADE_SHOP", STRINGS:FormatKey("SHOP_OPTION_"..string.upper(building)))) --TODO
+                                            loop_plot = false
+                                        end
                                     elseif action == "move" then
                                     elseif action == "demolish" then
                                     end
