@@ -51,15 +51,18 @@ SV.HubData = {
 }
 
 SV.Intro = {
-    CharacterCreated = false,   -- if the character creation sequence was finished
-    PelipperIntro = false,      -- if the starting Ruined Path cutscene happened
-    SaveReminder = false,       -- if the player was told about saving from the menu
-    DungeonFailed = false,      -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
-    HubReached = false,         -- if the hub has been reached
-    -- 0 = nothing is done yet
-    -- 1 = tents built
-    -- 2 = first slept
-    -- 3 = first run ended
+    CharacterCreated = false,      -- if the character creation sequence was finished
+    PelipperIntro = false,         -- if the starting Ruined Path cutscene happened
+    SaveReminder = false,          -- if the player was told about saving from the menu
+    DungeonFailed = false,         -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
+    HubReached = false,            -- if the hub has been reached
+    --- 0 = nothing is done yet;
+    --- 1 = tents built;
+    --- 2 = first slept;
+    --- 3 = first run ended;
+    --- 4 = first shop built;
+    --- 5 = first upgrade done;
+    --- 6 = first town upgrade
     HubTutorialProgress = 0
 }
 
