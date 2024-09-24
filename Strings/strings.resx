@@ -286,6 +286,9 @@
   <data name="OFFICE_BYE" xml:space="preserve">
     <value>See you later, then!</value>
   </data>
+  <data name="OFFICE_BUILD_ASK" xml:space="preserve">
+    <value>So you want to add a new {0} using {1}?</value>
+  </data>
   <data name="OFFICE_BUILD_SHOP" xml:space="preserve">
     <value>Perfect![pause=0] The new {0} should be ready by the time you leave the Office.</value>
   </data>
@@ -294,6 +297,9 @@
   </data>
   <data name="OFFICE_CANNOT_UPGRADE" xml:space="preserve">
     <value>Looks like we don't have enough material to upgrade this shop.</value>
+  </data>
+  <data name="OFFICE_GIVE_ITEM" xml:space="preserve">
+    <value>You gave {0}.</value>
   </data>
   <data name="OFFICE_INFO_1" xml:space="preserve">
     <value>This is placeholder text.</value>
@@ -340,6 +346,9 @@
   <data name="OFFICE_REPEAT" xml:space="preserve">
     <value>Do you need anything else?</value>
   </data>
+  <data name="OFFICE_UPGRADE_ASK" xml:space="preserve">
+    <value>So you want to upgrade this {0} using {1}?</value>
+  </data>
   <data name="PLOT_DESCRIPTION_BUILD_APPRAISAL" xml:space="preserve">
     <value>You can give locked boxes to this shop to open them over time.\n</value>
   </data>
@@ -347,7 +356,7 @@
     <value>Makes permanent stat-boosting drinks.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_BUILD_EXPORTER" xml:space="preserve">
-    <value>You can give items to this shop to sell them over time. Higher prices take more time.</value>
+    <value>You can give items to this shop to sell them over time. Higher prices take more time.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_BUILD_MARKET" xml:space="preserve">
     <value>Allows you to buy various items. Its stock is refreshed every day.\n</value>
@@ -383,7 +392,7 @@
     <value>A plot of land overrun with greenery. It needs to be reclaimed using some {0} before it can house a building.</value>
   </data>
   <data name="PLOT_DESCRIPTION_MARKET_BASE" xml:space="preserve">
-    <value>Sells {0}</value>
+    <value>Sells {0}.</value>
   </data>
   <data name="PLOT_DESCRIPTION_MARKET_DISCOUNT" xml:space="preserve">
     <value>Everything is 20% off.</value>
@@ -408,6 +417,12 @@
   </data>
   <data name="PLOT_DESCRIPTION_UNLOCKED" xml:space="preserve">
     <value>A clear plot of land that is ready to house a new building.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_UPGRADE_COST" xml:space="preserve">
+    <value>This upgrade requires {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_UPGRADE_MULTI_CHOICE" xml:space="preserve">
+    <value>The cost of this upgrade depends on what option you will choose in the next menu.\n</value>
   </data>
   <data name="RECEIVE_ITEM_MESSAGE" xml:space="preserve">
     <value>You received {0}!</value>
