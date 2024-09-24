@@ -132,10 +132,10 @@ function COMMON_FUNC.PrintItemAmount(item_id, amount)
     end
     local str = _DATA:GetItem(item_id):GetIconName()
     if amount>0 then
-        str = STRINGS:Format("{0} ({1})", str, tostring(amount))
+        str = STRINGS:Format("{0} [color=#FFCEFF]({1})[color]", str, tostring(amount))
     end
 
-    return "[color=#FFCEFF]"..str.."[color]"
+    return str
 end
 
 --- Removes a number of copies of a specific item from the player's inventory.
