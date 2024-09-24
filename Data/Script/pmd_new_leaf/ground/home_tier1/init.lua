@@ -133,8 +133,9 @@ function home_tier1.Bed_Action(_, _)
             GAME:WaitFrames(30)
 
             TASK:BranchCoroutine(function() SOUND:FadeOutBGM(60) end)
-            GAME:FadeOut(false, 60)
+            GAME:FadeOut(false, 90)
 
+            GAME:WaitFrames(90)
             local right = (math.random(0,1) > 0)
             local anim = "EventSleep"
             local wake = true
