@@ -167,7 +167,7 @@ function _SHOP.MarketUpgradeFlow(plot, index, npc)
     local upgrade = ""
     local sub_upgrade = ""
 
-    local tree = _SHOP.MakeUpgradeTree(index, level+1)
+    local tree, keys = _SHOP.MakeUpgradeTree(index, level+1, shop_id)
     local loop = true
     while loop do
         if plot.building == "" then

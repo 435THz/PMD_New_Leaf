@@ -13,7 +13,7 @@ function _SHOP.OfficeUpdate(plot)
     --TODO refresh quests
 end
 
-function _SHOP.OfficeInteract(plot, _)
+function _SHOP.OfficeInteract(_, _)
     local npc = CH("Pelipper")
     local player = CH("PLAYER")
     UI:SetSpeaker(npc)
@@ -29,7 +29,7 @@ function _SHOP.OfficeInteract(plot, _)
 
         UI:BeginChoiceMenu(msg, choices, 1, #choices)
         UI:WaitForChoice()
-        msg = STRINGS:FormatKey('TUTOR_REPEAT')
+        msg = STRINGS:FormatKey('OFFICE_REPEAT')
 
         local result = UI:ChoiceResult()
         if result == 1 then
@@ -54,6 +54,10 @@ function _SHOP.OfficeInteract(plot, _)
                                     UI:WaitForChoice()
                                     local ch = UI:ChoiceResult()
                                     if ch then
+                                        UI:ResetSpeaker(false)
+                                        SOUND:PlaySE("Fanfare/Item")
+                                        UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", item_name.." ("..cost..")"))
+                                        UI:SetSpeaker(npc)
                                         UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_ACTION_CONFIRM'))
                                         plot.unlocked = true
                                         COMMON_FUNC.RemoveItem("loot_building_tools", cost, true)
@@ -72,19 +76,31 @@ function _SHOP.OfficeInteract(plot, _)
                                     if build == "exit" then
                                         loop_build = false
                                     else
-                                        _SHOP.InitializeShop(plot_id, build)
-                                        local upgrade = _SHOP.ShopUpgradeFlow(plot_id, npc)
+                                        local upgrade = _SHOP.ShopUpgradeFlow(plot_id, build)
+                                        UI:SetSpeaker(npc)
                                         if upgrade then
+                                            _SHOP.InitializeShop(plot_id, build)
                                             _SHOP.UpgradeShop(plot_id, upgrade)
                                             _SHOP.FinalizeShop(plot_id)
-                                            UI:WaitShowDialogue("OFFICE_BUILD_SHOP", STRINGS:FormatKey("SHOP_OPTION_"..build))
+                                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_BUILD_SHOP", STRINGS:FormatKey("SHOP_OPTION_"..string.upper(build))))
+                                            loop_build = false
                                         else
                                             _HUB.RemoveShop(plot_id)
                                         end
                                     end
                                 end
                             else
-                                --TODO "Upgrade, Move, Demolish" plot editor menu
+                                local building = plot.building
+                                local loop_plot = true
+                                while loop_plot do
+                                    local action = ShopManagerMenu.run(plot_id)
+                                    if action == "exit" then
+                                        loop_plot = false
+                                    elseif action == "upgrade" then
+                                    elseif action == "move" then
+                                    elseif action == "demolish" then
+                                    end
+                                end
                             end
                         end
                     end
@@ -94,9 +110,6 @@ function _SHOP.OfficeInteract(plot, _)
                     --TODO upgrade flow
                 else
                     loop = false
-                end
-                if loop then
-                    --TODO continue message
                 end
             end
         elseif result == 2 then

@@ -25,7 +25,7 @@ require 'pmd_new_leaf.shops.Tutor'
 --- @param building string a building id. It is only considered if no building exists in the given plot yet
 function _SHOP.InitializeShop(index, building)
     local plot = _HUB.getPlotData(index)
-    if plot.building ~= "" then building = plot.building end
+    if plot.building and plot.building ~= "" then building = plot.building end
     if _SHOP.callbacks.initialize[building] then
         _SHOP.callbacks.initialize[building](plot)
         plot.building = building
@@ -45,16 +45,16 @@ end
 
 --- Runs the upgrade_flow callback associated to the given plot id's building.
 --- @param index any home, office or any positive integer up to 15
---- @param npc userdata the GroundChar that will be used in cutscene if necessary
+--- @param building string a building id. It is only considered if no building exists in the given plot yet
 --- @return string an upgrade to apply
-function _SHOP.ShopUpgradeFlow(index, npc)
+function _SHOP.ShopUpgradeFlow(index, building)
     local plot = _HUB.getPlotData(index)
+    if plot.building and plot.building ~= "" then building = plot.building end
     local ret = false
-    if _SHOP.callbacks.upgrade_flow[plot.building] then
-        ret = _SHOP.callbacks.upgrade_flow[plot.building](plot, index, npc)
+    if _SHOP.callbacks.upgrade_flow[building] then
+        ret = _SHOP.callbacks.upgrade_flow[building](plot, index, building)
         PrintInfo("Ran upgrade flow for shop "..index)
     end
-    UI:ResetSpeaker()
     return ret
 end
 
@@ -117,7 +117,6 @@ end
 --- @param plot table the plot's data structure
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.ConfirmShopUpgrade(plot, upgrade)
-    local found = false
     if plot.upgrades[upgrade] then
         plot.upgrades[upgrade] = plot.upgrades[upgrade]+1
     else
@@ -155,7 +154,7 @@ end
 
 ---Returns the cost of an upgrade at a specific level.
 ---@param upgrade string an upgrade id
----@param level number the level to which to calculate the upgrade cost
+---@param level number the level to calculate the upgrade cost of
 ---@return table a list of `{item = string, amount = number}` values
 function _SHOP.GetUpgradeCost(upgrade, level)
     local lv = level
@@ -183,20 +182,22 @@ function _SHOP.GetFullUpgradeCost(upgrade, sub_choice, level)
     return res
 end
 
----Builds the upgrade tree for the specifies plot at the specified level.
+---Builds the upgrade tree for the specified plot at the specified level.
 ---@param plot_id any home, office or any positive integer up to 15
 ---@param level number the target level to generate the upgrade tree for
+---@param building string a building id. It is only considered if no building exists in the given plot yet
 ---@return table an upgrade tree
-function _SHOP.MakeUpgradeTree(plot_id, level)
+function _SHOP.MakeUpgradeTree(plot_id, level, building)
     local plot = _HUB.getPlotData(plot_id)
+    if plot.building and plot.building ~= "" then building = plot.building end
+    local keys = {}
     local structure = {}
-    local upgrades = _HUB.ShopBase[plot.building].Upgrades[level]
+    local upgrades = _HUB.ShopBase[building].Upgrades[level]
     for _, upgrade in pairs(upgrades) do
         local data = _HUB.UpgradeTable[upgrade]
         local branch = {
-            --TODO remove probably: id = upgrade,
             has_sub = false,
-            sub = nil -- {string}
+            sub = nil, -- {string}
         }
         local add = (not data.sub_choices) or #data.sub_choices==0
         if data.per_sub_choice then
@@ -205,6 +206,7 @@ function _SHOP.MakeUpgradeTree(plot_id, level)
             for _, sub_choice in pairs(data.sub_choices) do
                 if _SHOP.CheckSubUpgradeRequirements(data.requirements, upgrade, sub_choice, plot) then
                     table.insert(sub, sub_choice)
+                    sub[sub_choice] = plot.upgrades[STRINGS:Format("{0}_{1}", upgrade, sub_choice)]
                     add = true
                 end
             end
@@ -215,14 +217,17 @@ function _SHOP.MakeUpgradeTree(plot_id, level)
             add = _SHOP.CheckUpgradeRequirements(data.requirements, upgrade, _HUB.getPlotData(plot_id))
         end
         if add then
+            table.insert(keys, upgrade)
             structure[upgrade] = branch
         end
     end
-    return structure
+    return structure, keys
 end
 
-function _SHOP.CheckUpgradeRequirements(requirements, upgrade, plot)
-    local level = math.max(0, plot.upgrades[upgrade] or 0)
+function _SHOP.CheckUpgradeRequirements(requirements, upgrade, plot, sub)
+    local formatted = upgrade
+    if sub then formatted = STRINGS:Format("{0}_{1}", upgrade, sub) end
+    local level = math.max(0, plot.upgrades[formatted] or 0)
     local max = _HUB.UpgradeTable[upgrade].max or 10
     if level >= max then return false end
     for _, requirement in pairs(requirements) do
@@ -250,5 +255,5 @@ function _SHOP.CheckSubUpgradeRequirements(requirements, upgrade, sub_choice, pl
     for _, requirement in pairs(requirements) do
         table.insert(formatted, STRINGS:Format(requirement, sub_choice))
     end
-    return _SHOP.CheckUpgradeRequirements(formatted, upgrade, plot)
+    return _SHOP.CheckUpgradeRequirements(formatted, upgrade, plot, sub_choice)
 end

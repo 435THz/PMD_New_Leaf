@@ -287,7 +287,7 @@
     <value>See you later, then!</value>
   </data>
   <data name="OFFICE_BUILD_SHOP" xml:space="preserve">
-    <value>Perfect![pause=0] The new {0} should already be ready by the time you leave this building!</value>
+    <value>Perfect![pause=0] The new {0} should be ready by the time you leave the Office.</value>
   </data>
   <data name="OFFICE_CANNOT_BUILD" xml:space="preserve">
     <value>Looks like we don't have enough material to build this shop.</value>
