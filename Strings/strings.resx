@@ -430,6 +430,33 @@
   <data name="RECEIVE_ITEM_MESSAGE" xml:space="preserve">
     <value>You received {0}!</value>
   </data>
+  <data name="SHOP_MANAGER_OPTION_DEMOLISH" xml:space="preserve">
+    <value>Demolish</value>
+  </data>
+  <data name="SHOP_MANAGER_DESCR_DEMOLISH" xml:space="preserve">
+    <value>Remove this shop in its entirety.</value>
+  </data>
+  <data name="SHOP_MANAGER_OPTION_MOVE" xml:space="preserve">
+    <value>Move</value>
+  </data>
+  <data name="SHOP_MANAGER_DESCR_MOVE" xml:space="preserve">
+    <value>Move this shop to another, already reclaimed plot.\nIf the destination plot houses another shop, the two will swap places.</value>
+  </data>
+  <data name="SHOP_MANAGER_OPTION_UPGRADE" xml:space="preserve">
+    <value>Upgrade</value>
+  </data>
+  <data name="SHOP_MANAGER_DESCR_UPGRADE" xml:space="preserve">
+    <value>Upgrade this shop to level {0}.\n</value>
+  </data>
+  <data name="SHOP_MANAGER_DESCR_UPGRADE_COST" xml:space="preserve">
+    <value>Upgrading this shop will use {0} from your Storage.\n</value>
+  </data>
+  <data name="SHOP_MANAGER_DESCR_UPGRADE_LOCKED" xml:space="preserve">
+    <value>[color=#FF0000]You cannot upgrade this shop further until the {0} reaches the {1} rank.[color]\n</value>
+  </data>
+  <data name="SHOP_MANAGER_DESCR_UPGRADE_MULTI" xml:space="preserve">
+    <value>The cost to upgrade this shop depends on what upgrade you will choose in the next menu.\n</value>
+  </data>
   <data name="SHOP_NAME_APPRAISAL" xml:space="preserve">
     <value>{0}'s Appraisal</value>
   </data>
