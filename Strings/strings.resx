@@ -157,6 +157,18 @@
   <data name="EXPORTER_SLOTS" xml:space="preserve">
     <value>Slots: {0}/{1}</value>
   </data>
+  <data name="HOME_MAP_PATTERN_HOUSE" xml:space="preserve">
+    <value>{0}'s {1}</value>
+  </data>
+  <data name="HOME_MAP_PATTERN_TENT" xml:space="preserve">
+    <value>{0}'s {1}</value>
+  </data>
+  <data name="HOME_MAP_SUFFIX_HOUSE" xml:space="preserve">
+    <value>House</value>
+  </data>
+  <data name="HOME_MAP_SUFFIX_TENT" xml:space="preserve">
+    <value>Tent</value>
+  </data>
   <data name="HUB_PATTERN_SMALL" xml:space="preserve">
     <value>{0} {1}</value>
   </data>
