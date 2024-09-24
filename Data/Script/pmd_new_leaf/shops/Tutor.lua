@@ -13,7 +13,8 @@ _SHOP.TutorTables = {
     -- level  1     2     3     4      5     6      7     8      9     10
     base = {true, true, true, true, false, true, false, true, false, true},
     --          pp     1   2   3   4   5   6   7   8   9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
-    charge_to_cost = {20, 18, 16, 14, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2}
+    charge_to_cost = {20, 18, 16, 14, 12, 12, 11, 11, 10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3, 2},
+    upgrade_order = {"upgrade_tutor_tutor", "upgrade_tutor_egg","upgrade_tutor_frequency", "upgrade_tutor_count"}
 }
 
 function _SHOP.TutorInitializer(plot)
@@ -38,6 +39,56 @@ function _SHOP.TutorInitializer(plot)
          -- string
         }
     }
+end
+
+function _SHOP.TutorUpgradeFlow(plot, index, shop_id)
+    local level = _HUB.getPlotLevel(plot)
+    local new_level = level+1
+    local upgrade = ""
+
+    local loop = true
+    while loop do
+        if _SHOP.TutorTables.base[new_level] then --any level except 5, 7 or 9
+            upgrade = "upgrade_tutor_base"
+        else
+            local tree, keys = _SHOP.MakeUpgradeTree(index, level+1, shop_id)
+            local comp = function(a,b)
+                for _, elem in ipairs(_SHOP.TutorTables.upgrade_order) do
+                    if elem == a then return true
+                    elseif elem == b then return false end
+                end
+                return false
+            end
+            table.sort(keys, function(a, b) return comp(a, b) end)
+
+            upgrade = ShopUpgradeMenu.run(tree, keys, index)
+            if upgrade == "exit" then return end
+        end
+        local curr = plot.upgrades[upgrade] or 0
+        local cost = _SHOP.GetUpgradeCost(upgrade, curr+1)
+        if COMMON_FUNC.CheckCost(cost, true) then
+            local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+            local cost_string = COMMON_FUNC.BuildStringWithSeparators(cost, func)
+            if level == 0 then UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_BUILD_ASK", STRINGS:FormatKey("SHOP_OPTION_TUTOR"), cost_string))
+            else UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_UPGRADE_ASK", STRINGS:FormatKey("SHOP_OPTION_TUTOR"), cost_string)) end
+            UI:WaitForChoice()
+            local ch = UI:ChoiceResult()
+            if ch then
+                COMMON_FUNC.RemoveItems(cost, true)
+                UI:ResetSpeaker(false)
+                SOUND:PlaySE("Fanfare/Item")
+                UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", cost_string))
+                return upgrade
+            end
+        else
+            if level == 0 then
+                UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
+            else
+                UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE"))
+            end
+            if _SHOP.TutorTables.base[new_level] then return end
+        end
+    end
 end
 
 function _SHOP.TutorUpgrade(plot, upgrade)
@@ -90,6 +141,7 @@ function _SHOP.TutorUpgrade(plot, upgrade)
 end
 
 function _SHOP.TutorUpdate(plot)
+    if not plot.data.category or plot.data.category == "" then return end
     local assembly = _SHOP.TutorGetCharacters()
     for _, member in pairs(assembly) do
         local species, form = member.BaseForm.Species, member.BaseForm.Form
@@ -268,9 +320,9 @@ function _SHOP.TutorInteract(plot, index)
             end
         elseif result == 2 then
             UI:WaitShowDialogue(STRINGS:FormatKey('TUTOR_FORGET_WHO'))
-            local chosen_member = AssemblySelectMenu.run(function(c) return GAME:CanForget(c) end, false)
             local loop = true
             while loop do
+            local chosen_member = AssemblySelectMenu.run(function(c) return GAME:CanForget(c) end, false)
                 if chosen_member == nil then
                     loop = false
                 else
@@ -538,8 +590,9 @@ function _SHOP.TutorGetDescription(plot)
     return description
 end
 
-_SHOP.callbacks.initialize["tutor"] =  _SHOP.TutorInitializer
-_SHOP.callbacks.upgrade["tutor"] =     _SHOP.TutorUpgrade
-_SHOP.callbacks.endOfDay["tutor"] =    _SHOP.TutorUpdate
-_SHOP.callbacks.interact["tutor"] =    _SHOP.TutorInteract
-_SHOP.callbacks.description["tutor"] = _SHOP.TutorGetDescription
+_SHOP.callbacks.initialize["tutor"] =   _SHOP.TutorInitializer
+_SHOP.callbacks.upgrade_flow["tutor"] = _SHOP.TutorUpgradeFlow
+_SHOP.callbacks.upgrade["tutor"] =      _SHOP.TutorUpgrade
+_SHOP.callbacks.endOfDay["tutor"] =     _SHOP.TutorUpdate
+_SHOP.callbacks.interact["tutor"] =     _SHOP.TutorInteract
+_SHOP.callbacks.description["tutor"] =  _SHOP.TutorGetDescription
