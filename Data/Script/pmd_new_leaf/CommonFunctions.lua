@@ -169,7 +169,7 @@ function COMMON_FUNC.RemoveItem(item_id, amount, storage)
     for i = 1, amount, 1 do
         local item_slot = GAME:FindPlayerItem(item_id, true, true)
         if not item_slot:IsValid() then
-            if storage and GAME.GetPlayerStorageItemCount > 0 then
+            if storage and GAME:GetPlayerStorageItemCount(item_id) > 0 then
                 GAME:TakePlayerStorageItem(item_id)
             else return amount-i+1 end
         elseif item_slot.IsEquipped then
