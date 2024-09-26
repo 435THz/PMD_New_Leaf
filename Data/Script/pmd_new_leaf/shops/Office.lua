@@ -105,7 +105,7 @@ function _SHOP.OfficeInteract(_, _)
                                         UI:SetSpeaker(npc)
                                         if upgrade then
                                             _SHOP.UpgradeShop(plot_id, upgrade)
-                                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_UPGRADE_SHOP", STRINGS:FormatKey("SHOP_OPTION_"..string.upper(building)))) --TODO
+                                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_UPGRADE_SHOP", STRINGS:FormatKey("SHOP_OPTION_"..string.upper(building))))
                                             loop_plot = false
                                         end
                                     elseif action == "move" then
