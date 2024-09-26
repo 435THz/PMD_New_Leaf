@@ -7,7 +7,8 @@
 TownManagerSummary = Class("TownManagerSummary")
 
 function TownManagerSummary:initialize()
-    self.selecting = false
+    self.selecting = nil
+    self.selecting_b = nil
 
     local asset_id = _HUB.getHubPlotMap()
     local object = RogueEssence.Content.AnimData(asset_id, 1)
@@ -68,35 +69,37 @@ function TownManagerSummary:SelectTown()
     self.title.Loc = RogueElements.Loc(Graphics.Manager.MenuBG.TileWidth*2, self.window.Bounds.Height - Graphics.Manager.MenuBG.TileHeight - Graphics.VERT_SPACE)
     self.title.AlignH = RogueElements.DirH.Left
     self.window.Elements:Remove(self.cursor)
-    self.selecting = false
+    self.selecting = nil
 end
 
 function TownManagerSummary:HideSilverCursor()
     self.window.Elements:Remove(self.cursor_b)
-    self.selecting_b = true
+    self.selecting_b = nil
 end
 
 function TownManagerSummary:UpdateCursor()
-    if not self.selecting then return end
+    if not self.selecting and not self.selecting_b then return end
     if ((Graphics.Manager.TotalFrameTick - self.cursorTickOffset) // RogueEssence.FrameTick.FrameToTick(self.cursorFrameDur // 2)) % 2 == 0 then
         self.cursor.Anim.StartFrame = 0
         self.cursor.Anim.EndFrame = 0
-        self.cursor_b.Anim.StartFrame = 1
-        self.cursor_b.Anim.EndFrame = 1
+        if self.selecting ~= self.selecting_b then
+            self.cursor_b.Anim.StartFrame = 0
+            self.cursor_b.Anim.EndFrame = 0
+        end
     else
         self.cursor.Anim.StartFrame = 1
         self.cursor.Anim.EndFrame = 1
-        self.cursor_b.Anim.StartFrame = 0
-        self.cursor_b.Anim.EndFrame = 0
+        self.cursor_b.Anim.StartFrame = 1
+        self.cursor_b.Anim.EndFrame = 1
     end
 end
 
 function TownManagerSummary:SetSilverCursorToPlot(index)
-    local pos = _HUB.getPlotMarkerOrigin(index)
     if not self.selecting_b then
         self.window.Elements:Add(self.cursor_b)
-        self.selecting_b = true
     end
+    self.selecting_b = index
+    local pos = _HUB.getPlotMarkerOrigin(index)
     self.cursor_b.Loc = RogueElements.Loc(self.offset_x + pos.X -3, self.offset_y + pos.Y -3)
 end
 
@@ -120,8 +123,8 @@ function TownManagerSummary:SelectPlot(index, skip_cursor_offset)
     end
     if not self.selecting then
         self.window.Elements:Add(self.cursor)
-        self.selecting = true
     end
+    self.selecting = index
     local pos = _HUB.getPlotMarkerOrigin(index)
     self.cursor.Loc = RogueElements.Loc(self.offset_x + pos.X -3, self.offset_y + pos.Y -3)
     if not skip_cursor_offset then self:RefreshCursor() end
@@ -129,4 +132,8 @@ end
 
 function TownManagerSummary:RefreshCursor()
     self.cursorTickOffset = Graphics.Manager.TotalFrameTick % RogueEssence.FrameTick.FrameToTick(self.cursorFrameDur)
+    if self.selecting == self.selecting_b then
+        self.cursor_b.Anim.StartFrame = 1
+        self.cursor_b.Anim.EndFrame = 1
+    end
 end
