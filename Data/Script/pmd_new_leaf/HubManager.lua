@@ -759,21 +759,24 @@ end
 --- @param index2 number any positive integer up to 15
 function _HUB.SwapPlots(index1, index2)
     if index1 == index2 then return end
+    local plot1 = SV.HubData.Plots[index1]
+    local plot2 = SV.HubData.Plots[index2]
 
     local copy = {
-        building =   SV.HubData.Plots[index1].building,
-        upgrades =   SV.HubData.Plots[index1].upgrades,
-        shopkeeper = SV.HubData.Plots[index1].shopkeeper,
-        data =       SV.HubData.Plots[index1].data
+        building =   plot1.building,
+        upgrades =   plot1.upgrades,
+        shopkeeper = plot1.shopkeeper,
+        data =       plot1.data
     }
 
-    index1.building =   index2.building
-    index1.upgrades =   index2.upgrades
-    index1.shopkeeper = index2.shopkeeper
-    index1.data =       index2.data
+    plot1.building =   plot2.building
+    plot1.upgrades =   plot2.upgrades
+    plot1.shopkeeper = plot2.shopkeeper
+    plot1.data =       plot2.data
 
-    index2.building =   copy.building
-    index2.upgrades =   copy.upgrades
-    index2.shopkeeper = copy.shopkeeper
-    index2.data =       copy.data
+    plot2.building =   copy.building
+    plot2.upgrades =   copy.upgrades
+    plot2.shopkeeper = copy.shopkeeper
+    plot2.data =       copy.data
+
 end
