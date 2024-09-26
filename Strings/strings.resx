@@ -470,7 +470,7 @@
     <value>Upgrading this shop will use {0} from your Storage.\n</value>
   </data>
   <data name="SHOP_MANAGER_DESCR_UPGRADE_LOCKED" xml:space="preserve">
-    <value>[color=#FF0000]You cannot upgrade this shop further until the {0} reaches the {1} rank.[color]\n</value>
+    <value>[color=#FF0000]You cannot upgrade this shop further until the {0} reaches the next rank.[color]\n</value>
   </data>
   <data name="SHOP_MANAGER_DESCR_UPGRADE_MULTI" xml:space="preserve">
     <value>The cost to upgrade this shop depends on what upgrade you will choose in the next menu.\n</value>
@@ -530,13 +530,13 @@
     <value>Close this menu.</value>
   </data>
   <data name="TOWN_MANAGER_DESCR_RENAME" xml:space="preserve">
-    <value>Change the name of the town.</value>
+    <value>Change the name of the {0}.</value>
   </data>
   <data name="TOWN_MANAGER_DESCR_RENAME_FINAL" xml:space="preserve">
-    <value>Change the name of the town. You can also remove the word "{0}" from its full name if you want.</value>
+    <value>Change the name of the {0}. You can also remove the word "{0}" from its full name if you want.</value>
   </data>
   <data name="TOWN_MANAGER_DESCR_UPGRADE" xml:space="preserve">
-    <value>Upgrade the town using {0} from your Storage.</value>
+    <value>Upgrade the {0} using {1} from your Storage.</value>
   </data>
   <data name="TOWN_MANAGER_DESCR_UPGRADE_LOCKED" xml:space="preserve">
     <value>[color=#FF0000]You must have at least one shop at level {0} to do this![color]</value>
