@@ -482,7 +482,7 @@
     <value>All items require slightly less progress to be sold.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_DEPOSIT" xml:space="preserve">
-    <value>Deposits all new earnings in the town bank.\n</value>
+    <value>Deposits all new earnings in the bank.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_INSTANT" xml:space="preserve">
     <value>Has a 25% chance to instantly sell an item.\n</value>
@@ -545,7 +545,7 @@
     <value>Demolish</value>
   </data>
   <data name="SHOP_MANAGER_DESCR_DEMOLISH" xml:space="preserve">
-    <value>Remove this shop in its entirety.</value>
+    <value>Remove this shop in its entirety.\nEvery material spent on this shop has a chance to be salvaged.</value>
   </data>
   <data name="SHOP_MANAGER_OPTION_MOVE" xml:space="preserve">
     <value>Move</value>
