@@ -9,6 +9,7 @@ require 'pmd_new_leaf.menu.office.TownManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotManagerMenu'
 require 'pmd_new_leaf.menu.office.ShopManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotBuildMenu'
+require 'pmd_new_leaf.menu.office.ShopMoveMenu'
 
 function _SHOP.OfficeUpdate(plot)
     --TODO refresh quests
