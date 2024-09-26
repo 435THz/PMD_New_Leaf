@@ -196,7 +196,38 @@ function _SHOP.OfficeInteract(_, _)
                         end
                     end
                 elseif chosen == "upgrade" then
-                    --TODO upgrade flow
+                    local cost = _HUB.getLevelUpItems(_HUB.getHubLevel()+1)
+                    local rank_up = _HUB.getHubRank() < _HUB.LevelRankTable[_HUB.getHubLevel()+1]
+                    if COMMON_FUNC.CheckCost(cost, true) then
+                        local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+                        local cost_string = COMMON_FUNC.BuildStringWithSeparators(cost, func)
+                        UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_UPGRADE_TOWN_ASK", _HUB.getHubSuffix(), cost_string))
+                        UI:WaitForChoice()
+                        local ch = UI:ChoiceResult()
+
+                        if ch then
+                            COMMON_FUNC.RemoveItems(cost, true)
+                            UI:ResetSpeaker(false)
+                            SOUND:PlaySE("Fanfare/Item")
+                            UI:SetCenter(true)
+                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_GIVE_ITEM", cost_string))
+                            UI:SetCenter(false)
+                            UI:SetSpeaker(npc)
+                            local prev_name = _HUB.getHubName()
+                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_UPGRADE_TOWN", prev_name, _HUB.getHubLevel()+1))
+                            _HUB.levelUpHub()
+                            if rank_up then
+                                UI:ResetSpeaker(false)
+                                SOUND:PlaySE("Fanfare/LevelUp")
+                                UI:SetCenter(true)
+                                UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_RANK_UP_TOWN", prev_name, _HUB.getHubName()))
+                                UI:SetCenter(false)
+                                UI:SetSpeaker(npc)
+                            end
+                        end
+                    else
+                        UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE_TOWN", _HUB.getHubSuffix()))
+                    end
                 else
                     loop = false
                 end

@@ -313,6 +313,9 @@
   <data name="OFFICE_CANNOT_UPGRADE" xml:space="preserve">
     <value>Looks like we don't have enough material to upgrade this shop.</value>
   </data>
+  <data name="OFFICE_CANNOT_UPGRADE_TOWN" xml:space="preserve">
+    <value>Looks like we don't have enough material to upgrade the {0} right now.</value>
+  </data>
   <data name="OFFICE_DEMOLISH_ASK" xml:space="preserve">
     <value>Are you really sure you want to demolish this {0}?</value>
   </data>
@@ -400,6 +403,9 @@
   <data name="OFFICE_RANK_NAME_PROMPT_REMOVE_WORD" xml:space="preserve">
     <value>Remove</value>
   </data>
+  <data name="OFFICE_RANK_UP_TOWN" xml:space="preserve">
+    <value>[color=#FFFFA5]{0}[color] has now become [color=#FFFFA5]{1}[color]!</value>
+  </data>
   <data name="OFFICE_REPEAT" xml:space="preserve">
     <value>Do you need anything else?</value>
   </data>
@@ -426,6 +432,12 @@
   </data>
   <data name="OFFICE_UPGRADE_SHOP" xml:space="preserve">
     <value>Perfect![pause=0] the {0} has been upgraded!</value>
+  </data>
+  <data name="OFFICE_UPGRADE_TOWN" xml:space="preserve">
+    <value>Perfect! {0} is now level {1}!</value>
+  </data>
+  <data name="OFFICE_UPGRADE_TOWN_ASK" xml:space="preserve">
+    <value>So you want to upgrade the {0} using {1}?</value>
   </data>
   <data name="PLOT_DESCRIPTION_BUILD_APPRAISAL" xml:space="preserve">
     <value>You can give locked boxes to this shop to open them over time.\n</value>
