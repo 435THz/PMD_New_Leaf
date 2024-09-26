@@ -93,7 +93,6 @@ function COMMON_FUNC.MergeItemLists(list, ...)
     COMMON_FUNC.CompactItems(list)
 end
 
-
 function COMMON_FUNC.CompactItems(list)
     for i=1, #list-1, 1 do
         for j=#list, i+1, -1 do
@@ -104,6 +103,14 @@ function COMMON_FUNC.CompactItems(list)
             end
         end
     end
+end
+
+function COMMON_FUNC.runTextInputMenu(title, notes, start)
+    UI:NameMenu(title, notes, 116, start)
+    UI:WaitForChoice()
+    local res = UI:ChoiceResult()
+    if res == "" then return false
+    else return res end
 end
 
 --- Builds a string using a list of elements and applying the provided function to every element of the list.
