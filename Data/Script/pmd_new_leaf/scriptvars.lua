@@ -51,12 +51,18 @@ SV.HubData = {
 }
 
 SV.Intro = {
-    CharacterCreated = false,      -- if the character creation sequence was finished
-    PelipperIntro = false,         -- if the starting Ruined Path cutscene happened
-    SaveReminder = false,          -- if the player was told about saving from the menu
-    DungeonFailed = false,         -- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
-    ObtainedWishFragments = false, -- if true, then Jirachi will appear
-    HubReached = false,            -- if the hub has been reached
+    --- true if the character creation sequence has been finished
+    CharacterCreated = false,
+    --- true if the starting Ruined Path cutscene happened
+    PelipperIntro = false,
+    --- true if the player was told about saving from the menu
+    SaveReminder = false,
+    --- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
+    DungeonFailed = false,
+    --- if true, then Jirachi will appear
+    ObtainedWishFragments = false,
+    --- true if the hub has been reached
+    HubReached = false,
     --- 0 = nothing is done yet;
     --- 1 = tents built;
     --- 2 = first slept;
