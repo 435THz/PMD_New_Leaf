@@ -421,6 +421,18 @@
   <data name="PLOT_DESCRIPTION_MARKET_SPECIALIZATION" xml:space="preserve">
     <value>Often has discounts on {0}.</value>
   </data>
+  <data name="PLOT_DESCRIPTION_MOVE" xml:space="preserve">
+    <value>Move {0} to this new location.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_MOVE_CANNOT" xml:space="preserve">
+    <value>You cannot build here right now.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_MOVE_SOURCE" xml:space="preserve">
+    <value>This is the original position of {0}.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_MOVE_SWAP" xml:space="preserve">
+    <value>Swap {0} with {1}.</value>
+  </data>
   <data name="PLOT_DESCRIPTION_OUT_OF_LIMIT" xml:space="preserve">
     <value>[color=#FF0000]To reclaim this plot you must first upgrade the {0} to level {1}.[color]</value>
   </data>
