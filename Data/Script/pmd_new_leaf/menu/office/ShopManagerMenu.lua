@@ -67,8 +67,7 @@ function ShopManagerMenu:LoadOptionsData(index)
         local color = Color.White
         if not enabled then
             color = Color.Red
-            local hub_rank = _HUB.getHubRank()
-            descr = descr.."\n"..STRINGS:FormatKey("SHOP_MANAGER_DESCR_UPGRADE_LOCKED", STRINGS:FormatKey(_HUB.RankSuffixKey[hub_rank]), STRINGS:FormatKey(_HUB.RankSuffixKey[hub_rank+1]))
+            descr = descr..STRINGS:FormatKey("SHOP_MANAGER_DESCR_UPGRADE_LOCKED", _HUB.getHubSuffix())
         end
 
         table.insert(options, { STRINGS:FormatKey("SHOP_MANAGER_OPTION_UPGRADE"), enabled, color })
