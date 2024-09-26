@@ -745,13 +745,18 @@ function _HUB.UpgradeShop(index, upgrade)
     return false
 end
 
---- Completely removes all shop data in the specified plot
+--- Completely removes all shop data in the specified plot.
+--- For every upgrade, a part of its cost is salvaged and added to storage.
 --- @param index number any positive integer up to 15
+--- @return table a list of {item=string, amount=number} objects representing the salvaged items
 function _HUB.RemoveShop(index)
-    SV.HubData.Plots[index].building = ""
-    SV.HubData.Plots[index].upgrades = {}
-    SV.HubData.Plots[index].shopkeeper = ""
-    SV.HubData.Plots[index].data = {}
+    local plot = _HUB.getPlotData(index)
+    local salvaged = _HUB.SalvageUpgrades(plot)
+    plot.building = ""
+    plot.upgrades = {}
+    plot.shopkeeper = ""
+    plot.data = {}
+    return salvaged
 end
 
 --- Switches the shop data of two plots. Does nothing if the plot ids are the same.
@@ -778,5 +783,44 @@ function _HUB.SwapPlots(index1, index2)
     plot2.upgrades =   copy.upgrades
     plot2.shopkeeper = copy.shopkeeper
     plot2.data =       copy.data
+end
 
+function _HUB.SalvageUpgrades(plot)
+    local rate = 30 + _HUB.getHubLevel()
+    local tools_rate = 40 + _HUB.getHubLevel()*2
+    local salvage = {}
+    for upgrade, level in pairs(plot.upgrades) do
+        local sub
+        upgrade, sub = _HUB.BreakSubUpgrade(upgrade)
+        for l = level, 1, -1 do
+            local cost
+            if sub then cost = _SHOP.GetFullUpgradeCost(upgrade, sub, l)
+            else cost = _SHOP.GetUpgradeCost(upgrade, l) end
+            for _, entry in ipairs(cost) do
+                local proceed = false
+                if entry.item == "loot_wish_fragment" then
+                    proceed = true
+                elseif string.match(entry.item, "loot_building_tools") then
+                    if math.random(1, 100) <= tools_rate then proceed = true end
+                else
+                    if math.random(1, 100) <= rate then proceed = true end
+                end
+                if proceed then
+                    entry.amount = math.random(1, entry.amount)
+                    table.insert(salvage, entry)
+                end
+            end
+        end
+    end
+    COMMON_FUNC.CompactItems(salvage)
+    return salvage
+end
+
+function _HUB.BreakSubUpgrade(upgrade)
+    if _HUB.UpgradeTable[upgrade] then return upgrade end
+    for id in pairs(_HUB.UpgradeTable) do
+        local s, e = string.find(upgrade, "^"..id)
+        if s then return string.sub(upgrade, s, e), string.sub(upgrade, e+2) end
+    end
+    return upgrade
 end
