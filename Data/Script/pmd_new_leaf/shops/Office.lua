@@ -146,7 +146,55 @@ function _SHOP.OfficeInteract(_, _)
                         end
                     end
                 elseif chosen == "rename" then
-                    --TODO rename flow and toggle suffix flow
+                    local loop_rename = true
+                    while loop_rename do
+                        local res = 1
+                        if _HUB.getHubRank()<4 then
+                            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_TOWN_RENAME_ASK', _HUB.getHubSuffix()))
+                            loop_rename = false
+                        else
+                            local part_key = "OFFICE_RANK_NAME_PROMPT_ADD_WORD"
+                            if SV.HubData.UseSuffix then part_key = "OFFICE_RANK_NAME_PROMPT_REMOVE_WORD" end
+                            local particle = STRINGS:FormatKey(part_key)
+                            local rename_choices = {
+                                STRINGS:FormatKey("OFFICE_OPTION_RENAME"),
+                                STRINGS:FormatKey("OFFICE_OPTION_SUFFIX", particle),
+                                STRINGS:FormatKey("MENU_EXIT")
+                            }
+                            UI:BeginChoiceMenu(STRINGS:FormatKey('OFFICE_TOWN_RENAME_ASK', _HUB.getHubSuffix()), rename_choices, 1, 3)--TODO use TownManagerMenu style?
+                            UI:WaitForChoice()
+                            res = UI:ChoiceResult()
+                        end
+                        if res == 1 then
+                            local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("OFFICE_TOWN_RENAME_TITLE", _HUB.getHubSuffix()), STRINGS:FormatKey("OFFICE_TOWN_RENAME_NOTES"), SV.HubData.Name)
+                            if name then
+                                local name_prev = name
+                                if SV.HubData.UseSuffix then name_prev = STRINGS:FormatKey(_HUB.RankNamePatterns[_HUB.getHubRank()], name, _HUB.getHubSuffix()) end
+                                UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_TOWN_RENAME_CONFIRM", name_prev), true)
+                                UI:WaitForChoice()
+                                local ch = UI:ChoiceResult()
+                                if ch then
+                                    SV.HubData.Name = name
+                                    UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TOWN_RENAME_END", _HUB.getHubSuffix(), _HUB.getHubName()))
+                                end
+                            end
+                        elseif res == 2 then
+                            local prompt = "OFFICE_RANK_NAME_PROMPT_ADD"
+                            local particle = "OFFICE_RANK_NAME_PROMPT_ADD_PARTICLE"
+                            if SV.HubData.UseSuffix then
+                                prompt = "OFFICE_RANK_NAME_PROMPT_REMOVE"
+                                particle = "OFFICE_RANK_NAME_PROMPT_REMOVE_PARTICLE"
+                            end
+                            UI:ChoiceMenuYesNo(STRINGS:FormatKey('OFFICE_RANK_NAME_PROMPT', STRINGS:FormatKey(prompt), _HUB.getHubSuffix(), STRINGS:FormatKey(particle)))
+                            UI:WaitForChoice()
+                            local ch = UI:ChoiceResult()
+                            if ch then
+                                SV.HubData.UseSuffix = not SV.HubData.UseSuffix
+                            end
+                        else
+                            loop_rename = false
+                        end
+                    end
                 elseif chosen == "upgrade" then
                     --TODO upgrade flow
                 else

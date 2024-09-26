@@ -358,6 +358,12 @@
   <data name="OFFICE_OPTION_QUESTS" xml:space="preserve">
     <value>Check Quests</value>
   </data>
+  <data name="OFFICE_OPTION_RENAME" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="OFFICE_OPTION_SUFFIX" xml:space="preserve">
+    <value>{0} title</value>
+  </data>
   <data name="OFFICE_OPTION_UPGRADE" xml:space="preserve">
     <value>Upgrade {0}</value>
   </data>
@@ -373,11 +379,47 @@
   <data name="OFFICE_INTRO" xml:space="preserve">
     <value>Hello,[pause=10] {0}![pause=0] Do you need something?</value>
   </data>
+  <data name="OFFICE_RANK_NAME_PROMPT" xml:space="preserve">
+    <value>Do you want to {0} the word "{1}" {2} the {1} name?</value>
+  </data>
+  <data name="OFFICE_RANK_NAME_PROMPT_ADD" xml:space="preserve">
+    <value>add</value>
+  </data>
+  <data name="OFFICE_RANK_NAME_PROMPT_ADD_PARTICLE" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="OFFICE_RANK_NAME_PROMPT_ADD_WORD" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OFFICE_RANK_NAME_PROMPT_REMOVE" xml:space="preserve">
+    <value>remove</value>
+  </data>
+  <data name="OFFICE_RANK_NAME_PROMPT_REMOVE_PARTICLE" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="OFFICE_RANK_NAME_PROMPT_REMOVE_WORD" xml:space="preserve">
+    <value>Remove</value>
+  </data>
   <data name="OFFICE_REPEAT" xml:space="preserve">
     <value>Do you need anything else?</value>
   </data>
   <data name="OFFICE_TEAM_RENAME" xml:space="preserve">
     <value>Rename Team</value>
+  </data>
+  <data name="OFFICE_TOWN_RENAME_ASK" xml:space="preserve">
+    <value>How would you like to rename the {0}?</value>
+  </data>
+  <data name="OFFICE_TOWN_RENAME_CONFIRM" xml:space="preserve">
+    <value>Is [color=#FFFFA5]{0}[color] ok?</value>
+  </data>
+  <data name="OFFICE_TOWN_RENAME_END" xml:space="preserve">
+    <value>Okay![pause=0] From now on,[pause=10] this {0} will be called {1}!</value>
+  </data>
+  <data name="OFFICE_TOWN_RENAME_NOTES" xml:space="preserve">
+    <value>[Esc] to keep the previous name</value>
+  </data>
+  <data name="OFFICE_TOWN_RENAME_TITLE" xml:space="preserve">
+    <value>Please enter the {0}'s new name</value>
   </data>
   <data name="OFFICE_UPGRADE_ASK" xml:space="preserve">
     <value>So you want to upgrade this {0} using {1}?</value>
