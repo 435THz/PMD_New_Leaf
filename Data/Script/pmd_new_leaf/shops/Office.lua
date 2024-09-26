@@ -109,6 +109,12 @@ function _SHOP.OfficeInteract(_, _)
                                             loop_plot = false
                                         end
                                     elseif action == "move" then
+                                        local dest_id = ShopMoveMenu.run(plot_id)
+                                        if dest_id ~= plot_id then
+                                            _HUB.SwapPlots(plot_id, dest_id)
+                                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_ACTION_CONFIRM"))
+                                            plot_id = dest_id
+                                        end
                                     elseif action == "demolish" then
                                     end
                                 end
