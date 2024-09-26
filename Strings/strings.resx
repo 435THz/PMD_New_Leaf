@@ -412,6 +412,18 @@
   <data name="OFFICE_TEAM_RENAME" xml:space="preserve">
     <value>Rename Team</value>
   </data>
+  <data name="OFFICE_TEAM_RENAME_ASK" xml:space="preserve">
+    <value>How would you like to rename your team?</value>
+  </data>
+  <data name="OFFICE_TEAM_RENAME_CONFIRM" xml:space="preserve">
+    <value>Is [color=#FFA5FF]{0}[color] correct?</value>
+  </data>
+  <data name="OFFICE_TEAM_RENAME_END" xml:space="preserve">
+    <value>Okay![pause=0] From now on,[pause=10] your team will be called [color=#FFA5FF]{1}[color]!</value>
+  </data>
+  <data name="OFFICE_TEAM_RENAME_NOTES" xml:space="preserve">
+    <value>[Esc] to keep the previous name</value>
+  </data>
   <data name="OFFICE_TOWN_RENAME_ASK" xml:space="preserve">
     <value>How would you like to rename the {0}?</value>
   </data>

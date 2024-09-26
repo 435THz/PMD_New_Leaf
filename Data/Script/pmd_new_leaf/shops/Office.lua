@@ -233,7 +233,17 @@ function _SHOP.OfficeInteract(_, _)
                 end
             end
         elseif result == 2 then
-            --TODO TEAM RENAME FLOW
+            STRINGS:FormatKey("OFFICE_TEAM_RENAME_ASK")
+            local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("INPUT_TEAM_TITLE"), STRINGS:FormatKey("OFFICE_TEAM_RENAME_NOTES"), _DATA.Save.ActiveTeam.Name)
+            if name then
+                UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_TEAM_RENAME_CONFIRM", name), true)
+                UI:WaitForChoice()
+                local ch = UI:ChoiceResult()
+                if ch then
+                    GAME:SetTeamName(name)
+                    UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TEAM_RENAME_END", name))
+                end
+            end
         elseif result == 3 then
             --TODO quest system
         elseif result == 4 then
