@@ -91,6 +91,9 @@
   <data name="APPRAISAL_BOX_SINISTER" xml:space="preserve">
     <value>Sinister Box</value>
   </data>
+  <data name="DLG_ITEMS_TO_STORAGE" xml:space="preserve">
+    <value>The items were sent to storage.</value>
+  </data>
   <data name="EXPORTER_BYE" xml:space="preserve">
     <value>Come back soon!</value>
   </data>
@@ -309,6 +312,18 @@
   </data>
   <data name="OFFICE_CANNOT_UPGRADE" xml:space="preserve">
     <value>Looks like we don't have enough material to upgrade this shop.</value>
+  </data>
+  <data name="OFFICE_DEMOLISH_ASK" xml:space="preserve">
+    <value>Are you really sure you want to demolish this {0}?</value>
+  </data>
+  <data name="OFFICE_DEMOLISH_SHOP" xml:space="preserve">
+    <value>Very well.[pause=0] It will be gone before you know it.</value>
+  </data>
+  <data name="OFFICE_DEMOLISH_SHOP_NO_SALVAGE" xml:space="preserve">
+    <value>Nothing was able to be salvaged during demolition.</value>
+  </data>
+  <data name="OFFICE_DEMOLISH_SHOP_SALVAGE" xml:space="preserve">
+    <value>{0} were salvaged during demolition.</value>
   </data>
   <data name="OFFICE_GIVE_ITEM" xml:space="preserve">
     <value>You gave {0}.</value>

@@ -116,6 +116,30 @@ function _SHOP.OfficeInteract(_, _)
                                             plot_id = dest_id
                                         end
                                     elseif action == "demolish" then
+                                        UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_DEMOLISH_ASK", STRINGS:FormatKey("SHOP_OPTION_"..string.upper(building))))
+                                        UI:WaitForChoice()
+                                        local ch = UI:ChoiceResult()
+                                        if ch then
+                                            local salvaged = _HUB.RemoveShop(plot_id)
+                                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_DEMOLISH_SHOP"))
+                                            UI:ResetSpeaker(false)
+                                            UI:SetCenter(true)
+                                            if #salvaged>0 then
+                                                local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+                                                local salvage_str = COMMON_FUNC.BuildStringWithSeparators(salvaged, func)
+                                                for _, item in ipairs(salvaged) do
+                                                    GAME:GivePlayerStorageItem(item.item, item.amount)
+                                                end
+                                                SOUND:PlaySE("Fanfare/Item")
+                                                UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_DEMOLISH_SHOP_SALVAGE", salvage_str))
+                                                UI:WaitShowDialogue(STRINGS:FormatKey("DLG_ITEMS_TO_STORAGE"))
+                                            else
+                                                UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_DEMOLISH_SHOP_NO_SALVAGE"))
+                                            end
+                                            UI:SetCenter(false)
+                                            UI:SetSpeaker(npc)
+                                            loop_plot = false
+                                        end
                                     end
                                 end
                             end
