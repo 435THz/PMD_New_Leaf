@@ -69,7 +69,7 @@ function _SHOP.ExporterUpgrade(plot, upgrade)
 
     if level == 5 then
         plot.data.reduce_all = true
-    elseif level == o then
+    elseif level == 8 then
         plot.data.store_earnings = true
     elseif level == 10 then
         plot.data.instant_sell = true
