@@ -167,16 +167,22 @@ function _SHOP.OfficeInteract(_, _)
                             res = UI:ChoiceResult()
                         end
                         if res == 1 then
-                            local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("OFFICE_TOWN_RENAME_TITLE", _HUB.getHubSuffix()), STRINGS:FormatKey("OFFICE_TOWN_RENAME_NOTES"), SV.HubData.Name)
-                            if name then
-                                local name_prev = name
-                                if SV.HubData.UseSuffix then name_prev = STRINGS:FormatKey(_HUB.RankNamePatterns[_HUB.getHubRank()], name, _HUB.getHubSuffix()) end
-                                UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_TOWN_RENAME_CONFIRM", name_prev), true)
-                                UI:WaitForChoice()
-                                local ch = UI:ChoiceResult()
-                                if ch then
-                                    SV.HubData.Name = name
-                                    UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TOWN_RENAME_END", _HUB.getHubSuffix(), _HUB.getHubName()))
+                            local loop_input = true
+                            while loop_input do
+                                local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("OFFICE_TOWN_RENAME_TITLE", _HUB.getHubSuffix()), STRINGS:FormatKey("OFFICE_TOWN_RENAME_NOTES"), SV.HubData.Name)
+                                if name then
+                                    local name_prev = name
+                                    if SV.HubData.UseSuffix then name_prev = STRINGS:FormatKey(_HUB.RankNamePatterns[_HUB.getHubRank()], name, _HUB.getHubSuffix()) end
+                                    UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_TOWN_RENAME_CONFIRM", name_prev), true)
+                                    UI:WaitForChoice()
+                                    local ch = UI:ChoiceResult()
+                                    if ch then
+                                        SV.HubData.Name = name
+                                        UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TOWN_RENAME_END", _HUB.getHubSuffix(), _HUB.getHubName()))
+                                        loop_input = false
+                                    end
+                                else
+                                    loop_input = false
                                 end
                             end
                         elseif res == 2 then
@@ -192,6 +198,7 @@ function _SHOP.OfficeInteract(_, _)
                             if ch then
                                 SV.HubData.UseSuffix = not SV.HubData.UseSuffix
                             end
+                            UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TOWN_RENAME_END", _HUB.getHubSuffix(), _HUB.getHubName()))
                         else
                             loop_rename = false
                         end
@@ -234,15 +241,21 @@ function _SHOP.OfficeInteract(_, _)
                 end
             end
         elseif result == 2 then
-            STRINGS:FormatKey("OFFICE_TEAM_RENAME_ASK")
-            local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("INPUT_TEAM_TITLE"), STRINGS:FormatKey("OFFICE_TEAM_RENAME_NOTES"), _DATA.Save.ActiveTeam.Name)
-            if name then
-                UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_TEAM_RENAME_CONFIRM", name), true)
-                UI:WaitForChoice()
-                local ch = UI:ChoiceResult()
-                if ch then
-                    GAME:SetTeamName(name)
-                    UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TEAM_RENAME_END", name))
+            local loop_input = true
+            while loop_input do
+                STRINGS:FormatKey("OFFICE_TEAM_RENAME_ASK")
+                local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("INPUT_TEAM_TITLE"), STRINGS:FormatKey("OFFICE_TEAM_RENAME_NOTES"), _DATA.Save.ActiveTeam.Name)
+                if name then
+                    UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_TEAM_RENAME_CONFIRM", name), true)
+                    UI:WaitForChoice()
+                    local ch = UI:ChoiceResult()
+                    if ch then
+                        GAME:SetTeamName(name)
+                        UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_TEAM_RENAME_END", name))
+                        loop_input = false
+                    end
+                else
+                    loop_input = false
                 end
             end
         elseif result == 3 then
