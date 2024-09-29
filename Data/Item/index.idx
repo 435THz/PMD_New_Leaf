@@ -2,6 +2,108 @@
 "Version": "0.8.5.0",
 "Object": {
 "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
+"box_dainty": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Dainty Box",
+"LocalTexts": {
+"de": "Schicke Box",
+"it": "Tecachic",
+"zh-hans": "漂亮宝箱"
+}
+},
+"Released": true,
+"Comment": "2* exclusive items",
+"SortOrder": 16
+},
+"box_deluxe": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Deluxe Box",
+"LocalTexts": {
+"de": "Luxusbox",
+"it": "Tecalusso",
+"zh-hans": "豪华宝箱"
+}
+},
+"Released": true,
+"Comment": "targeted 1* exclusive items",
+"SortOrder": 16
+},
+"box_glittery": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Glittery Box",
+"LocalTexts": {
+"de": "Glitzerbox",
+"it": "Tecasfavillio",
+"zh-hans": "闪耀宝箱"
+}
+},
+"Released": true,
+"Comment": "loot items",
+"SortOrder": 16
+},
+"box_heavy": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Heavy Box",
+"LocalTexts": {
+"de": "Schwere Box",
+"it": "Tecapesante",
+"zh-hans": "沉重宝箱"
+}
+},
+"Released": true,
+"Comment": "common or uncommon building tools (up to 4, up to 3)",
+"SortOrder": 16
+},
+"box_light": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Light Box",
+"LocalTexts": {
+"de": "Leichte Box",
+"it": "Tecaleggera",
+"zh-hans": "轻便宝箱"
+}
+},
+"Released": true,
+"Comment": "tier 1 and 2 survival items",
+"SortOrder": 16
+},
+"box_nifty": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Nifty Box",
+"LocalTexts": {
+"de": "Coole Box",
+"it": "Tecafine",
+"zh-hans": "精致宝箱"
+}
+},
+"Released": true,
+"Comment": "1* exclusive items",
+"SortOrder": 16
+},
 "loot_wish_fragment": {
 "$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
 "Icon": -1,
@@ -53,6 +155,84 @@
 "Released": true,
 "Comment": "",
 "SortOrder": 15
+},
+"box_cute": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Cute Box",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "tier 1 and 2 orbs and wands",
+"SortOrder": 16
+},
+"box_shiny": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Shiny Box",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "evo items pool 1",
+"SortOrder": 16
+},
+"box_gorgeous": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Gorgeous Box",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "wish fragments (random up to 5)",
+"SortOrder": 16
+},
+"box_hard": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Hard Box",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "uncommon or rare building tools (up to 3, up to 2)",
+"SortOrder": 16
+},
+"box_pretty": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Pretty Box",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "any tm",
+"SortOrder": 16
+},
+"box_sinister": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 17,
+"UsageType": 7,
+"States": [],
+"Name": {
+"DefaultText": "Sinister Box",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "evo items pool 1",
+"SortOrder": 16
 }
 }
 }
