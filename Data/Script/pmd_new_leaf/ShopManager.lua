@@ -588,10 +588,9 @@ _HUB.ShopBase = {
             {}
         }
     },
-    --TODO the next three
     trader = {
         Shopkeepers = {{species = "gengar"}, {species = "murkrow"}, {species = "sableye"}, {species = "croagunk"}, {species = "zoroark"}, {species = "trevenant"}, {species = "mimikyu"}, {species = "thievul"}, {species = "meowscarada"}},
-        Upgrades = { --TODO
+        Upgrades = {
             {"upgrade_trader_base"}, --shop level 1
             {"upgrade_trader_base"}, --shop level 2
             {"upgrade_trader_base"}, --shop level 3
@@ -603,8 +602,29 @@ _HUB.ShopBase = {
             {"upgrade_trader_base"}, --shop level 9
             {"upgrade_trader_base"}, --shop level 10
         },
-        Graphics = { --TODO
-            {},
+        Graphics = {
+            {
+                Base = "trader_tier1",
+                NPC_Loc = { X = 40, Y = 64 },
+                Bounds = {
+                    {
+                        Name = "Left_Front",
+                        X = 8, Y = 32, W = 24, H = 48
+                    },
+                    {
+                        Name = "Right_Front",
+                        X = 64, Y = 32, W = 24, H = 48
+                    },
+                    {
+                        Name = "Mid",
+                        X = 16, Y = 24, W = 64, H = 32
+                    },
+                    {
+                        Name = "Back",
+                        X = 20, Y = 8, W = 56, H = 16
+                    }
+                }
+            },
             {},
             {},
             {}
@@ -612,7 +632,7 @@ _HUB.ShopBase = {
     },
     appraisal = {
         Shopkeepers = {{species = "voltorb"}, {species = "xatu"}, {species = "metang"}, {species = "bronzong"}, {species = "reuniclus"}, {species = "klefki"}, {species = "deciueye"}, {species = "runerigus"}, {species = "farigiraf"}},
-        Upgrades = { --TODO
+        Upgrades = {
             {"upgrade_appraisal_base"},                                    --shop level 1
             {"upgrade_appraisal_cute",     "upgrade_appraisal_nifty",    "upgrade_appraisal_heavy",
              "upgrade_appraisal_pretty",   "upgrade_appraisal_hard",     "upgrade_appraisal_dainty",
@@ -639,8 +659,33 @@ _HUB.ShopBase = {
              "upgrade_appraisal_glittery", "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe",
              "upgrade_appraisal_shiny",    "upgrade_appraisal_sinister"},  --shop level 10
         },
-        Graphics = { --TODO
-            {},
+        Graphics = {
+            {
+                Base = "appraisal_tier1",
+                NPC_Loc = { X = 40, Y = 56 },
+                Bounds = {
+                    {
+                        Name = "Left_Front",
+                        X = 16, Y = 56, W = 23, H = 24
+                    },
+                    {
+                        Name = "Left_Mid",
+                        X = 8, Y = 32, W = 24, H = 32
+                    },
+                    {
+                        Name = "Right_Front",
+                        X = 57, Y = 56, W = 23, H = 24
+                    },
+                    {
+                        Name = "Right_Mid",
+                        X = 64, Y = 32, W = 24, H = 32
+                    },
+                    {
+                        Name = "Back",
+                        X = 24, Y = 16, W = 48, H = 24
+                    }
+                }
+            },
             {},
             {},
             {}
@@ -660,8 +705,45 @@ _HUB.ShopBase = {
             {"upgrade_generic"},    --shop level 9
             {"upgrade_generic"},    --shop level 10
         },
-        Graphics = { --TODO
-            {},
+        Graphics = {
+            {
+                Base = "cafe_tier1",
+                NPC_Loc = { X = 40, Y = 0 },
+                Bounds = {
+                    {
+                        Name = "Front",
+                        X = 24, Y = 40, W = 48, H = 40
+                    },
+                    {
+                        Name = "Mid",
+                        X = 32, Y = 32, W = 32, H = 8
+                    },
+                    {
+                        Name = "Left_Back",
+                        X = 24, Y = 0, W = 15, H = 16
+                    },
+                    {
+                        Name = "Right_Back",
+                        X = 57, Y = 0, W = 15, H = 16
+                    }
+                },
+                Decorations = {
+                    {
+                        X=72, Y=24,
+                        Display = {
+                            Sprite = "Flowers_Town_4",
+                            FrameLength = 30
+                        }
+                    },
+                    {
+                        X=0, Y=72,
+                        Display = {
+                            Sprite = "Flowers_Town_3",
+                            FrameLength = 30
+                        }
+                    }
+                }
+            },
             {},
             {},
             {}
