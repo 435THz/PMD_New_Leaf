@@ -36,6 +36,17 @@ end
 --region Table
 -------------------------------------------
 
+---Checks if the table has at least length `min`
+---@param tbl table a table
+---@return boolean `true` if the table contains at least `min` entries, `false` otherwise.
+function table.get_keys(tbl)
+    local keys = {}
+    for k in pairs(tbl) do
+        table.insert(keys, k)
+    end
+    return keys
+end
+
 ---Returns the key associated to a value inside a table
 ---@param tbl table a table
 ---@param object any the object to look for
@@ -115,7 +126,7 @@ end
 
 --- Builds a string using a list of elements and applying the provided function to every element of the list.
 --- The elements will be concatenated using the localized `ADD_SEPARATOR` and `ADD_END` strings as separators.
----@param list table the list of items to build the string with
+---@param list table the list of objects to build the string with
 ---@param func function a function that takes an item from the list and returns the string that will represent it
 function COMMON_FUNC.BuildStringWithSeparators(list, func)
     local str = ""
