@@ -744,7 +744,7 @@ function CharacterSelectionMenu()
         end
         --position cursor
         self.cursor.Loc = RogueElements.Loc(10, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(self.pos-1))
-        -- TODO add arrows
+        --no. no arrows here, you asshole.
     end
 
     function CharacterChoiceListMenu:Update(input)
