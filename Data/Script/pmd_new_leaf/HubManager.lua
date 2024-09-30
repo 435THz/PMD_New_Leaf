@@ -797,16 +797,19 @@ function _HUB.SalvageUpgrades(plot)
             if sub then cost = _SHOP.GetFullUpgradeCost(upgrade, sub, l)
             else cost = _SHOP.GetUpgradeCost(upgrade, l) end
             for _, entry in ipairs(cost) do
-                local proceed = false
-                if entry.item == "loot_wish_fragment" then
-                    proceed = true
-                elseif string.match(entry.item, "loot_building_tools") then
-                    if math.random(1, 100) <= tools_rate then proceed = true end
-                else
-                    if math.random(1, 100) <= rate then proceed = true end
+                local amount = 0
+                for _=1, entry.amount, 1 do
+                    if entry.item == "loot_wish_fragment" then
+                        amount = entry.amount
+                        break
+                    elseif string.match(entry.item, "loot_building_tools") then
+                        if math.random(1, 100) <= tools_rate then amount = amount+1 end
+                    else
+                        if math.random(1, 100) <= rate then amount = amount+1 end
+                    end
                 end
-                if proceed then
-                    entry.amount = math.random(1, entry.amount)
+                if amount>0 then
+                    entry.amount = amount
                     table.insert(salvage, entry)
                 end
             end
