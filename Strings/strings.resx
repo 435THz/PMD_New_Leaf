@@ -124,6 +124,63 @@
   <data name="APPRAISAL_BOX_SINISTER_DESCR" xml:space="preserve">
     <value>Allow the shop to open Sinister Boxes faster.</value>
   </data>
+  <data name="APPRAISAL_BYE" xml:space="preserve">
+    <value>Come back soon!</value>
+  </data>
+  <data name="APPRAISAL_CONTINUE" xml:space="preserve">
+    <value>Do you have anything else to give me?</value>
+  </data>
+  <data name="APPRAISAL_CONFIRM" xml:space="preserve">
+    <value>Alright![pause=0] I'll take care of this.</value>
+  </data>
+  <data name="APPRAISAL_CONFIRM_GIVE_MANY" xml:space="preserve">
+    <value>That'll be {0}.</value>
+  </data>
+  <data name="APPRAISAL_CONFIRM_GIVE_ONE" xml:space="preserve">
+    <value>{1}?[pause=0] That'll be {0}.</value>
+  </data>
+  <data name="APPRAISAL_DEPOSIT" xml:space="preserve">
+    <value>What do you want to open?[pause=0] It'll cost you {0} for every box.</value>
+  </data>
+  <data name="APPRAISAL_DEPOSIT_DESC" xml:space="preserve">
+    <value>Leave another Box to this Appraisal shop.</value>
+  </data>
+  <data name="APPRAISAL_INFO_1" xml:space="preserve">
+    <value>This shop specializes in opening boxes!</value>
+  </data>
+  <data name="APPRAISAL_INFO_2" xml:space="preserve">
+    <value>You can leave a number of boxes to me,[pause=10] and i'll work on opening them for you.</value>
+  </data>
+  <data name="APPRAISAL_INFO_3" xml:space="preserve">
+    <value>Every type of box has its own durability. You will be able to retrieve the contents only when it reaches 0.</value>
+  </data>
+  <data name="APPRAISAL_INFO_4" xml:space="preserve">
+    <value>Make sure to invest in our shop to increase our stock limit and the speed at which we can work!</value>
+  </data>
+  <data name="APPRAISAL_INTRO" xml:space="preserve">
+    <value>Welcome to {0} Appraisals![pause=0] Do you have any boxes to open?</value>
+  </data>
+  <data name="APPRAISAL_MENU_TITLE" xml:space="preserve">
+    <value>Appraisal</value>
+  </data>
+  <data name="APPRAISAL_OPTION_DEPOSIT" xml:space="preserve">
+    <value>Deposit</value>
+  </data>
+  <data name="APPRAISAL_OPTION_MANAGE" xml:space="preserve">
+    <value>Manage</value>
+  </data>
+  <data name="APPRAISAL_PROGRESS" xml:space="preserve">
+    <value>Durability:</value>
+  </data>
+  <data name="APPRAISAL_PROGRESS_NUMBER" xml:space="preserve">
+    <value>{0}/{1}</value>
+  </data>
+  <data name="APPRAISAL_REPEAT" xml:space="preserve">
+    <value>Anything else?</value>
+  </data>
+  <data name="APPRAISAL_SLOTS" xml:space="preserve">
+    <value>Slots: {0}/{1}</value>
+  </data>
   <data name="DLG_ITEMS_TO_STORAGE" xml:space="preserve">
     <value>The items were sent to storage.</value>
   </data>
@@ -484,6 +541,18 @@
   <data name="OFFICE_UPGRADE_TOWN_ASK" xml:space="preserve">
     <value>So you want to upgrade the {0} using {1}?</value>
   </data>
+  <data name="PLOT_DESCRIPTION_APPRAISAL_BASE" xml:space="preserve">
+    <value>Can hold {0} items. Consumes {1} durability each day.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_APPRAISAL_BOOST" xml:space="preserve">
+    <value>All boxes require slightly less work to be opened.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_APPRAISAL_INSTANT" xml:space="preserve">
+    <value>Has a 25% chance to open a random extra box each day.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_APPRAISAL_SPECS" xml:space="preserve">
+    <value>Works faster on {0}\n</value>
+  </data>
   <data name="PLOT_DESCRIPTION_BUILD_APPRAISAL" xml:space="preserve">
     <value>You can give locked boxes to this shop to open them over time.\n</value>
   </data>
@@ -518,7 +587,7 @@
     <value>Deposits all new earnings in the bank.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_INSTANT" xml:space="preserve">
-    <value>Has a 25% chance to instantly sell an item.\n</value>
+    <value>Has a 25% chance to sell an extra item each day.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_SOLD" xml:space="preserve">
     <value>Has earnings stored.\n</value>

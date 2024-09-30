@@ -15,6 +15,7 @@ _SHOP.callbacks = {
     description =  {}  --arguments: plot
 }
 --TODO note that everything has been tested only at level 1. Leveling shops up beyond that is still a big question.
+require 'pmd_new_leaf.shops.Appraisal'
 require 'pmd_new_leaf.shops.Exporter'
 require 'pmd_new_leaf.shops.Market'
 require 'pmd_new_leaf.shops.Office'
