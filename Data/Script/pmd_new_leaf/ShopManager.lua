@@ -138,7 +138,7 @@ _HUB.UpgradeTable = {
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "TUTOR_POOL_TUTOR_DESCR", --TODO
+        description = "TUTOR_POOL_TUTOR_DESCR",
         requirements = {},
         max = 1
     },
@@ -147,7 +147,7 @@ _HUB.UpgradeTable = {
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "TUTOR_POOL_EGG_DESCR", --TODO
+        description = "TUTOR_POOL_EGG_DESCR",
         requirements = {},
         max = 1
     },
@@ -156,7 +156,7 @@ _HUB.UpgradeTable = {
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "UPGRADE_TUTOR_COUNT_DESCR", --TODO
+        description = "UPGRADE_TUTOR_COUNT_DESCR",
         requirements = {},
         max = 2
     },
@@ -165,7 +165,7 @@ _HUB.UpgradeTable = {
         price = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
-        description = "UPGRADE_TUTOR_FREQUENCY_DESCR", --TODO
+        description = "UPGRADE_TUTOR_FREQUENCY_DESCR",
         requirements = {},
         max = 2
     },
@@ -199,7 +199,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_CUTE_DESCR", --TODO
+        description = "APPRAISAL_BOX_CUTE_DESCR",
         max = 1
     },
     upgrade_appraisal_nifty = {
@@ -208,7 +208,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_NIFTY_DESCR", --TODO
+        description = "APPRAISAL_BOX_NIFTY_DESCR",
         max = 1
     },
     upgrade_appraisal_heavy = {
@@ -217,7 +217,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_HEAVY_DESCR", --TODO
+        description = "APPRAISAL_BOX_HEAVY_DESCR",
         max = 1
     },
     upgrade_appraisal_pretty = {
@@ -226,7 +226,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_PRETTY_DESCR", --TODO
+        description = "APPRAISAL_BOX_PRETTY_DESCR",
         max = 1
     },
     upgrade_appraisal_hard = {
@@ -235,7 +235,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_HARD_DESCR", --TODO
+        description = "APPRAISAL_BOX_HARD_DESCR",
         max = 1
     },
     upgrade_appraisal_dainty = {
@@ -244,7 +244,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_DAINTY_DESCR", --TODO
+        description = "APPRAISAL_BOX_DAINTY_DESCR",
         max = 1
     },
     upgrade_appraisal_glittery = {
@@ -253,7 +253,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_GLITTERY_DESCR", --TODO
+        description = "APPRAISAL_BOX_GLITTERY_DESCR",
         max = 1
     },
     upgrade_appraisal_gorgeous = {
@@ -262,7 +262,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_GORGEOUS_DESCR", --TODO
+        description = "APPRAISAL_BOX_GORGEOUS_DESCR",
         max = 1
     },
     upgrade_appraisal_deluxe = {
@@ -271,7 +271,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_DELUXE_DESCR", --TODO
+        description = "APPRAISAL_BOX_DELUXE_DESCR",
         max = 1
     },
     upgrade_appraisal_shiny = {
@@ -280,7 +280,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_SHINY_DESCR", --TODO
+        description = "APPRAISAL_BOX_SHINY_DESCR",
         max = 1
     },
     upgrade_appraisal_sinister = {
@@ -289,7 +289,7 @@ _HUB.UpgradeTable = {
             { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
-        description = "APPRAISAL_BOX_SINISTER_DESCR", --TODO
+        description = "APPRAISAL_BOX_SINISTER_DESCR",
         max = 1
     },
     upgrade_generic = {

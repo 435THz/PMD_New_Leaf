@@ -61,35 +61,68 @@
   <data name="APPRAISAL_BOX_CUTE" xml:space="preserve">
     <value>Cute Box</value>
   </data>
+  <data name="APPRAISAL_BOX_CUTE_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Cute Boxes faster.</value>
+  </data>
   <data name="APPRAISAL_BOX_DAINTY" xml:space="preserve">
     <value>Dainty Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_DAINTY_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Dainty Boxes faster.</value>
   </data>
   <data name="APPRAISAL_BOX_DELUXE" xml:space="preserve">
     <value>Deluxe Box</value>
   </data>
+  <data name="APPRAISAL_BOX_DELUXE_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Deluxe Boxes faster.</value>
+  </data>
   <data name="APPRAISAL_BOX_GLITTERY" xml:space="preserve">
     <value>Glittery Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_GLITTERY_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Glittery Boxes faster.</value>
   </data>
   <data name="APPRAISAL_BOX_GORGEOUS" xml:space="preserve">
     <value>Gorgeous Box</value>
   </data>
+  <data name="APPRAISAL_BOX_GORGEOUS_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Gorgeous Boxes faster.</value>
+  </data>
   <data name="APPRAISAL_BOX_HARD" xml:space="preserve">
     <value>Hard Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_HARD_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Hard Boxes faster.</value>
   </data>
   <data name="APPRAISAL_BOX_HEAVY" xml:space="preserve">
     <value>Heavy Box</value>
   </data>
+  <data name="APPRAISAL_BOX_HEAVY_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Heavy Boxes faster.</value>
+  </data>
   <data name="APPRAISAL_BOX_NIFTY" xml:space="preserve">
     <value>Nifty Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_NIFTY_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Nifty Boxes faster.</value>
   </data>
   <data name="APPRAISAL_BOX_PRETTY" xml:space="preserve">
     <value>Pretty Box</value>
   </data>
+  <data name="APPRAISAL_BOX_PRETTY_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Pretty Boxes faster.</value>
+  </data>
   <data name="APPRAISAL_BOX_SHINY" xml:space="preserve">
     <value>Shiny Box</value>
   </data>
+  <data name="APPRAISAL_BOX_SHINY_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Shiny Boxes faster.</value>
+  </data>
   <data name="APPRAISAL_BOX_SINISTER" xml:space="preserve">
     <value>Sinister Box</value>
+  </data>
+  <data name="APPRAISAL_BOX_SINISTER_DESCR" xml:space="preserve">
+    <value>Allow the shop to open Sinister Boxes faster.</value>
   </data>
   <data name="DLG_ITEMS_TO_STORAGE" xml:space="preserve">
     <value>The items were sent to storage.</value>
@@ -703,8 +736,14 @@
   <data name="TUTOR_POOL_EGG" xml:space="preserve">
     <value>Egg Moves</value>
   </data>
+  <data name="TUTOR_POOL_EGG_DESCR" xml:space="preserve">
+    <value>This shop will start to offer randomly chosen Egg moves that are guaranteed to be accessible to at least 1 Pokémon in your assembly, in exchange for [color=#FFCEFF]Heart Scales[color].\n The moves offered change every few days.</value>
+  </data>
   <data name="TUTOR_POOL_TUTOR" xml:space="preserve">
     <value>Tutor Moves</value>
+  </data>
+  <data name="TUTOR_POOL_TUTOR_DESCR" xml:space="preserve">
+    <value>This shop will start to offer randomly chosen Tutor moves that are guaranteed to be accessible to at least 1 Pokémon in your assembly, in exchange for [color=#FFCEFF]Heart Scales[color].\n The moves offered change every few days.</value>
   </data>
   <data name="TUTOR_REPEAT" xml:space="preserve">
     <value>Alright,[pause=10] what next?</value>
@@ -742,7 +781,13 @@
   <data name="UPGRADE_TUTOR_COUNT" xml:space="preserve">
     <value>Add slot</value>
   </data>
+  <data name="UPGRADE_TUTOR_COUNT_DESCR" xml:space="preserve">
+    <value>Add another daily moves slot.</value>
+  </data>
   <data name="UPGRADE_TUTOR_FREQUENCY" xml:space="preserve">
     <value>Cycle faster</value>
+  </data>
+  <data name="UPGRADE_TUTOR_FREQUENCY_DESCR" xml:space="preserve">
+    <value>Daily moves are rolled more frequently.</value>
   </data>
 </root>
