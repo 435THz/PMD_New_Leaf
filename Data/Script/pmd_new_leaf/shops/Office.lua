@@ -286,6 +286,7 @@ function _SHOP.OfficeInteract(_, _)
             end
         elseif result == 3 then
             -- QUEST FLOW
+            UI:WaitShowDialogue("Sorry, i'm still getting the archive ready.[pause=0] Come back later.")
             --TODO quest system
         elseif result == 4 then
             -- INFO
