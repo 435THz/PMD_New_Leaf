@@ -1,5 +1,5 @@
 --[[
-    Appraisal.lua
+    Appraisal.lua TODO barely even tested
 
     Allows the player to sell items, albeit over time.
     This file contains all appraisal-specific callbacks and functionality data structures

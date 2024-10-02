@@ -129,7 +129,7 @@ end
 ---@param list table the list of objects to build the string with
 ---@param func function a function that takes an item from the list and returns the string that will represent it
 function COMMON_FUNC.BuildStringWithSeparators(list, func)
-    local str = ""
+    local str = "" --TODO switch to STRINGS:CreateList(LuaTable)?
     for i, entry in pairs(list) do
         if i>1 then
             if i==#list then str = str..STRINGS:FormatKey("ADD_END")

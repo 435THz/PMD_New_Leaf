@@ -184,7 +184,7 @@ function _SHOP.OfficeInteract(_, _)
                                 STRINGS:FormatKey("OFFICE_OPTION_SUFFIX", particle),
                                 STRINGS:FormatKey("MENU_EXIT")
                             }
-                            UI:BeginChoiceMenu(STRINGS:FormatKey('OFFICE_TOWN_RENAME_ASK', _HUB.getHubSuffix()), rename_choices, 1, 3)--TODO use TownManagerMenu style?
+                            UI:BeginChoiceMenu(STRINGS:FormatKey('OFFICE_TOWN_RENAME_ASK', _HUB.getHubSuffix()), rename_choices, 1, 3)
                             UI:WaitForChoice()
                             res = UI:ChoiceResult()
                         end

@@ -149,7 +149,7 @@ function intro_scene.CharacterSelect()
     GAME:SetTeamLeaderIndex(0)
     _DATA.Save:UpdateTeamProfile(true)
     _DATA.Save.ActiveTeam.Players[0].IsFounder = true -- cannot be removed from assembly
-    _DATA.Save.ActiveTeam.Players[0].IsPartner = true -- cannot be removed from active team. This will be an unlock later on.
+    _DATA.Save.ActiveTeam.Players[0].IsPartner = true -- cannot be removed from active team. TODO This will be an unlock later on.
     _DATA.Save.ActiveTeam.Players[0]:FullRestore()
     GAME:SetCharacterNickname(_DATA.Save.ActiveTeam.Players[0], menu.data.nickname)
     GAME:SetTeamName("Envoy") --Team Envoy. This will be editable in the future
