@@ -20,12 +20,10 @@ function ShopMoveMenu:initialize(start, callback)
     local width = 64
     local no_expand = false
 
-    ScrollListMenu.initialize(self, x, y, nil, callback, width, no_expand)
+    ScrollListMenu.initialize(self, x, y, nil, callback, self.start_plot, width, no_expand)
 
     self.map_summary = TownManagerSummary:new()
     self.menu.SummaryMenus:Add(self.map_summary.window)
-    self.selected = self.start_plot
-    self.start_from = math.max(1, self.selected-6)
     self.map_summary:SelectPlot(self.selected, true)
     self.map_summary:SetSilverCursorToPlot(self.start_plot)
 

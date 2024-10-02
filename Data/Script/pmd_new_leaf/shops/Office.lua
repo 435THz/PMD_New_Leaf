@@ -22,6 +22,7 @@ function _SHOP.OfficeInteract(_, _)
     local msg = STRINGS:FormatKey('OFFICE_INTRO', player:GetDisplayName())
     local exit = false
     while not exit do
+        -- MAIN FLOW
         local choices = {
             STRINGS:FormatKey('OFFICE_OPTION_MANAGE', _HUB.getHubSuffix()),
             STRINGS:FormatKey('OFFICE_TEAM_RENAME'),
@@ -36,18 +37,27 @@ function _SHOP.OfficeInteract(_, _)
 
         local result = UI:ChoiceResult()
         if result == 1 then
+            -- HUB MANAGEMENT FLOW
+            local town_start = 1
             local loop = true
             while loop do
-                local chosen = TownManagerMenu.run()
+                local chosen
+                -- BASE TOWN MENU
+                chosen, town_start = TownManagerMenu.run(town_start)
                 PrintInfo("Result is "..tostring(chosen))
                 if chosen == "buildings" then
+                    -- PLOT MANAGEMENT FLOW
+                    local plot_start = 1
                     local loop2 = true --here we go again
                     while loop2 do
-                        local plot_id = PlotManagerMenu.run()
+                        -- PLOT SELECTION MENU
+                        local plot_id = PlotManagerMenu.run(plot_start)
                         if plot_id == -1 then loop2=false
                         else
+                            plot_start = plot_id
                             local plot = _HUB.getPlotData(plot_id)
                             if not plot.unlocked then
+                                -- RECLAIM FLOW
                                 local item_id = "loot_building_tools"
                                 local item_name = _DATA:GetItem(item_id):GetColoredName()
                                 local cost = math.ceil((_HUB.getUnlockedNumber()+1)/2)
@@ -75,9 +85,13 @@ function _SHOP.OfficeInteract(_, _)
                                     end
                                 end
                             elseif plot.building == "" then
+                                -- BUILD FLOW
+                                local build_start = 1
                                 local loop_build = true
                                 while loop_build do
-                                    local build = PlotBuildMenu.run(plot_id)
+                                    local build
+                                    -- SHOP SELECTION MENU
+                                    build, build_start = PlotBuildMenu.run(plot_id, build_start)
                                     if build == "exit" then
                                         loop_build = false
                                     else
@@ -95,13 +109,18 @@ function _SHOP.OfficeInteract(_, _)
                                     end
                                 end
                             else
+                                -- SHOP MANAGEMENT FLOW
+                                local shop_start = 1
                                 local building = plot.building
                                 local loop_plot = true
                                 while loop_plot do
-                                    local action = ShopManagerMenu.run(plot_id)
+                                    local action
+                                    -- SHOP ACTIONS MENU
+                                    action, shop_start = ShopManagerMenu.run(plot_id, shop_start)
                                     if action == "exit" then
                                         loop_plot = false
                                     elseif action == "upgrade" then
+                                        -- SHOP UPGRADE FLOW
                                         local upgrade = _SHOP.ShopUpgradeFlow(plot_id)
                                         UI:SetSpeaker(npc)
                                         if upgrade then
@@ -110,6 +129,7 @@ function _SHOP.OfficeInteract(_, _)
                                             loop_plot = false
                                         end
                                     elseif action == "move" then
+                                        -- SHOP MOVE FLOW
                                         local dest_id = ShopMoveMenu.run(plot_id)
                                         if dest_id ~= plot_id then
                                             _HUB.SwapPlots(plot_id, dest_id)
@@ -117,6 +137,7 @@ function _SHOP.OfficeInteract(_, _)
                                             plot_id = dest_id
                                         end
                                     elseif action == "demolish" then
+                                        -- SHOP DEMOLISH FLOW
                                         UI:ChoiceMenuYesNo(STRINGS:FormatKey("OFFICE_DEMOLISH_ASK", STRINGS:FormatKey("SHOP_OPTION_"..string.upper(building))))
                                         UI:WaitForChoice()
                                         local ch = UI:ChoiceResult()
@@ -147,6 +168,7 @@ function _SHOP.OfficeInteract(_, _)
                         end
                     end
                 elseif chosen == "rename" then
+                    -- TOWN RENAME FLOW
                     local loop_rename = true
                     while loop_rename do
                         local res = 1
@@ -167,6 +189,7 @@ function _SHOP.OfficeInteract(_, _)
                             res = UI:ChoiceResult()
                         end
                         if res == 1 then
+                            -- TOWN RENAME FLOW
                             local loop_input = true
                             while loop_input do
                                 local name = COMMON_FUNC.runTextInputMenu(STRINGS:FormatKey("OFFICE_TOWN_RENAME_TITLE", _HUB.getHubSuffix()), STRINGS:FormatKey("OFFICE_TOWN_RENAME_NOTES"), SV.HubData.Name)
@@ -186,6 +209,7 @@ function _SHOP.OfficeInteract(_, _)
                                 end
                             end
                         elseif res == 2 then
+                            -- TOWN TOGGLE TITLE FLOW
                             local prompt = "OFFICE_RANK_NAME_PROMPT_ADD"
                             local particle = "OFFICE_RANK_NAME_PROMPT_ADD_PARTICLE"
                             if SV.HubData.UseSuffix then
@@ -204,6 +228,7 @@ function _SHOP.OfficeInteract(_, _)
                         end
                     end
                 elseif chosen == "upgrade" then
+                    -- TOWN UPGRADE FLOW
                     local cost = _HUB.getLevelUpItems(_HUB.getHubLevel()+1)
                     local rank_up = _HUB.getHubRank() < _HUB.LevelRankTable[_HUB.getHubLevel()+1]
                     if COMMON_FUNC.CheckCost(cost, true) then
@@ -241,6 +266,7 @@ function _SHOP.OfficeInteract(_, _)
                 end
             end
         elseif result == 2 then
+            -- TEAM RENAME FLOW
             local loop_input = true
             while loop_input do
                 STRINGS:FormatKey("OFFICE_TEAM_RENAME_ASK")
@@ -259,8 +285,10 @@ function _SHOP.OfficeInteract(_, _)
                 end
             end
         elseif result == 3 then
+            -- QUEST FLOW
             --TODO quest system
         elseif result == 4 then
+            -- INFO
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1'))
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2'))
             if SV.Intro.ObtainedWishFragments or SV.Intro.HubTutorialProgress>=5 then

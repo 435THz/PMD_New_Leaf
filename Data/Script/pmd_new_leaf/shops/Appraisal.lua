@@ -7,7 +7,6 @@
 require 'pmd_new_leaf.menu.AppraisalMenu'
 require 'pmd_new_leaf.menu.InventorySelectMenu'
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
-require 'pmd_new_leaf.menu.office.ShopSubUpgradeMenu'
 
 _SHOP.AppraisalTables = {
     -- level  1  2  3  4  5   6   7   8   9  10
@@ -59,6 +58,7 @@ function _SHOP.AppraisalUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local upgrade = ""
 
+    local up_start
     local loop = true
     while loop do
         if level%2 == 0 then
@@ -74,7 +74,7 @@ function _SHOP.AppraisalUpgradeFlow(plot, index, shop_id)
             end
             table.sort(keys, function(a, b) return comp(a, b) end)
 
-            upgrade = ShopUpgradeMenu.run(tree, keys, index)
+            upgrade, up_start = ShopUpgradeMenu.run(tree, keys, index, up_start)
             if upgrade == "exit" then return end
         end
         local curr = plot.upgrades[upgrade] or 0

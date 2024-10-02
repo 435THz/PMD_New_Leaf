@@ -181,6 +181,7 @@ function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
     end
     table.sort(keys, function(a, b) return comp(a, b, _SHOP.MarketTables.upgrade_order) end)
 
+    local up_start
     local loop = true
     while loop do
         if #keys == 1 then
@@ -190,13 +191,14 @@ function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
                 return
             end
         else
-            upgrade = ShopUpgradeMenu.run(tree, keys, index)
+            upgrade, up_start = ShopUpgradeMenu.run(tree, keys, index, up_start)
         end
         if upgrade == "exit" then return end
+        local sub_start
         local loop2 = true
         while loop2 do
             table.sort(tree[upgrade].sub, function(a, b) return comp(a, b, _SHOP.MarketTables.sub_order) end)
-            sub_upgrade = ShopSubUpgradeMenu.run(tree, upgrade, index)
+            sub_upgrade, sub_start = ShopSubUpgradeMenu.run(tree, upgrade, index, sub_start)
             if sub_upgrade == "exit" then
                 loop2 = false
             else

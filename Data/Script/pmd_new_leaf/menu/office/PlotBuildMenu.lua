@@ -11,7 +11,7 @@ require 'origin.menu.DescriptionSummary'
 PlotBuildMenu = Class("PlotBuildMenu", ScrollListMenu)
 
 --- Creates a new ``PlotBuildMenu`` instance using the provided data and callback.
-function PlotBuildMenu:initialize(index, callback)
+function PlotBuildMenu:initialize(index, callback, start)
     local x = 16
     local y = 16
     local options, return_values, descriptions = self:LoadOptionsData()
@@ -25,7 +25,7 @@ function PlotBuildMenu:initialize(index, callback)
         return self.cb(self.return_values[i] or "exit")
     end
 
-    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, width, no_expand)
+    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, start, width, no_expand)
 
     self.map_summary = TownManagerSummary:new()
     self.menu.SummaryMenus:Add(self.map_summary.window)
@@ -102,13 +102,13 @@ end
 
 
 
-function PlotBuildMenu.run(index)
+function PlotBuildMenu.run(index, start)
     local ret
     local choose = function(i)
         ret = i
     end
-    local menu = PlotBuildMenu:new(index, choose)
+    local menu = PlotBuildMenu:new(index, choose, start)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
-    return ret
+    return ret, menu.selected
 end

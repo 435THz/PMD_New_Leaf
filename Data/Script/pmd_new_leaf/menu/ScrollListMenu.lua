@@ -13,25 +13,28 @@ ScrollListMenu = Class("ScrollListMenu")
 --- @param y number the y coordinate of this menu's origin
 --- @param options table the list of options. Every entry can be either a string or a {string, boolean, Color} table. string is the displayed text, boolean is the enabled state and Color is the text color.
 --- @param callback function the function called when the menu is closed. It will have the chosen option's number passed to it as a parameter, or -1 if none was selected.
+--- @param start number the 1-based index of the option that will be selected at the start. Defaults to 1
 --- @param min_width number the minimum width tis menu can have. The actual width will be calculated depending on the options' text.
 --- @param no_expand boolean if true, the menu will not be expanded horizontally even if the text of some options can't fit
 --- @param max_elem number the maximum number of elements allowed on screen at the same time. It must be at least 3. Defaults to 8.
-function ScrollListMenu:initialize(x, y, options, callback, min_width, no_expand, max_elem)
+function ScrollListMenu:initialize(x, y, options, callback, start, min_width, no_expand, max_elem)
     assert(self, "RecruitMainChoice:initialize(): self is nil!")
     self.selected = 1 --cursor position inside full list
     self.pos = 1 --cursor position inside visible span
+    self.start_from = 1                                    -- displayed options starting point
 
     self.choices = self:LoadOptions(options) --list of all choices
     self.visible = {}                        --list of visible choices
 
     self.MAX_ELEM = math.max(max_elem or 8)                 -- max menu size
     self.ELEMENTS = math.min(#self.choices, self.MAX_ELEM)  -- actual menu size
-    self.start_from = 1                                    -- displayed option starting point
     self.callback = callback
 
     self.arrow_visible_up = false
     self.arrow_visible_dn = false
     self.arrows = #self.choices > self.MAX_ELEM
+
+    if start then self:Select(start) end
 
     -- calculate window position using options text
     local w = min_width
@@ -186,16 +189,23 @@ function ScrollListMenu:updateSelection(change)
     return start ~= self.selected
 end
 
+function ScrollListMenu:Select(pos)
+    pos = math.clamp(1, pos or self.selected, #self.choices)
+    self.selected = pos
+    self.start_from = math.clamp(1, pos - self.MAX_ELEM//2,#self.choices - self.ELEMENTS+1)
+    self.pos = pos-self.start_from+1
+end
 
 
 
 
-function ScrollListMenu.run(options)
+
+function ScrollListMenu.run(options, start)
     local ret
     local callback = function(index)
         ret = index
     end
-    local menu = ScrollListMenu:new(16, 16, options, callback, 64, false, 8)
+    local menu = ScrollListMenu:new(16, 16, options, callback, start, 64, false, 8)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
     return ret

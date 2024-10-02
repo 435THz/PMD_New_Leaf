@@ -4,6 +4,7 @@
     Sells items.
     This file contains all market-specific callbacks and functionality data structures
 ]]
+require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'origin.menu.skill.SkillTutorMenu'
 require 'origin.menu.team.AssemblySelectMenu'
 
@@ -46,6 +47,7 @@ function _SHOP.TutorUpgradeFlow(plot, index, shop_id)
     local new_level = level+1
     local upgrade = ""
 
+    local up_start
     local loop = true
     while loop do
         if _SHOP.TutorTables.base[new_level] then --any level except 5, 7 or 9
@@ -61,7 +63,7 @@ function _SHOP.TutorUpgradeFlow(plot, index, shop_id)
             end
             table.sort(keys, function(a, b) return comp(a, b) end)
 
-            upgrade = ShopUpgradeMenu.run(tree, keys, index)
+            upgrade, up_start = ShopUpgradeMenu.run(tree, keys, index, up_start)
             if upgrade == "exit" then return end
         end
         local curr = plot.upgrades[upgrade] or 0

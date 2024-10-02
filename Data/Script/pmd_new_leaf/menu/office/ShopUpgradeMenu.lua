@@ -11,7 +11,7 @@ require 'origin.menu.DescriptionSummary'
 ShopUpgradeMenu = Class("ShopUpgradeMenu", ScrollListMenu)
 
 --- Creates a new ``ShopUpgradeMenu`` instance using the provided data and callback.
-function ShopUpgradeMenu:initialize(tree, keys, index, callback)
+function ShopUpgradeMenu:initialize(tree, keys, index, callback, start)
     local x = 16
     local y = 16
     local options, return_values, descriptions = self:LoadOptionsData(tree, keys, index)
@@ -25,7 +25,7 @@ function ShopUpgradeMenu:initialize(tree, keys, index, callback)
         return self.cb(self.return_values[i] or "exit")
     end
 
-    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, width, no_expand)
+    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, start, width, no_expand)
 
     self.map_summary = TownManagerSummary:new()
     self.menu.SummaryMenus:Add(self.map_summary.window)
@@ -98,13 +98,13 @@ end
 
 
 
-function ShopUpgradeMenu.run(tree, keys, index)
+function ShopUpgradeMenu.run(tree, keys, index, start)
     local ret
     local choose = function(i)
         ret = i
     end
-    local menu = ShopUpgradeMenu:new(tree, keys, index, choose)
+    local menu = ShopUpgradeMenu:new(tree, keys, index, choose, start)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
-    return ret
+    return ret, menu.selected
 end

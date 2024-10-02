@@ -11,7 +11,7 @@ require 'origin.menu.DescriptionSummary'
 PlotManagerMenu = Class("PlotManagerMenu", ScrollListMenu)
 
 --- Creates a new ``PlotManagerMenu`` instance using the provided callback.
-function PlotManagerMenu:initialize(callback)
+function PlotManagerMenu:initialize(callback, start)
     local x = 16
     local y = 16
     self.plots = SV.HubData.Plots
@@ -19,7 +19,7 @@ function PlotManagerMenu:initialize(callback)
     local width = 64
     local no_expand = false
 
-    ScrollListMenu.initialize(self, x, y, nil, callback, width, no_expand)
+    ScrollListMenu.initialize(self, x, y, nil, callback, start, width, no_expand)
 
     self.map_summary = TownManagerSummary:new()
     self.menu.SummaryMenus:Add(self.map_summary.window)
@@ -96,13 +96,13 @@ end
 
 
 
-function PlotManagerMenu.run()
+function PlotManagerMenu.run(start)
     local ret
     local choose = function(index)
         ret = index
     end
-    local menu = PlotManagerMenu:new(choose)
+    local menu = PlotManagerMenu:new(choose, start)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
-    return ret
+    return ret, menu.selected
 end

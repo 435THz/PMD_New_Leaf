@@ -11,7 +11,7 @@ require 'origin.menu.DescriptionSummary'
 ShopManagerMenu = Class("ShopManagerMenu", ScrollListMenu)
 
 --- Creates a new ``ShopManagerMenu`` instance using the provided callback.
-function ShopManagerMenu:initialize(index, callback)
+function ShopManagerMenu:initialize(index, callback, start)
     local x = 16
     local y = 16
     local options, return_values, descriptions = self:LoadOptionsData(index)
@@ -24,7 +24,7 @@ function ShopManagerMenu:initialize(index, callback)
     self.selectFunction = function(i)
         return self.cb(self.return_values[i] or "exit")
     end
-    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, width, no_expand)
+    ScrollListMenu.initialize(self, x, y, options, self.selectFunction, start, width, no_expand)
 
     self.map_summary = TownManagerSummary:new()
     self.menu.SummaryMenus:Add(self.map_summary.window)
@@ -130,13 +130,13 @@ end
 
 
 
-function ShopManagerMenu.run(plot_id)
+function ShopManagerMenu.run(plot_id, start)
     local ret
     local choose = function(index)
         ret = index
     end
-    local menu = ShopManagerMenu:new(plot_id, choose)
+    local menu = ShopManagerMenu:new(plot_id, choose, start)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
-    return ret
+    return ret, menu.selected
 end
