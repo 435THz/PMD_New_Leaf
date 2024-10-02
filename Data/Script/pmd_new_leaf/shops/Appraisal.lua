@@ -200,7 +200,7 @@ function _SHOP.AppraisalInteract(plot, index)
         local choices = {STRINGS:FormatKey('APPRAISAL_OPTION_MANAGE'),
                          STRINGS:FormatKey("MENU_INFO"),
                          STRINGS:FormatKey("MENU_EXIT")}
-        UI:BeginChoiceMenu(msg, choices, 1, 4)
+        UI:BeginChoiceMenu(msg, choices, 1, 3)
         UI:WaitForChoice()
 
         msg = STRINGS:FormatKey('APPRAISAL_REPEAT')
@@ -238,14 +238,6 @@ function _SHOP.AppraisalInteract(plot, index)
                             UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_PAYMENT'), full_cost)
                             if #items > 1 then
                                 UI:ChoiceMenuYesNo(STRINGS:FormatKey('APPRAISAL_CONFIRM_GIVE_MANY'), price)
-                                UI:WaitForChoice()
-                                local ch = UI:ChoiceResult()
-                                if ch then
-                                    UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_CONFIRM'))
-                                    GAME:RemoveFromPlayerMoney(full_cost)
-                                    _SHOP.AppraisalAddToStock(plot, items)
-                                    loop = false
-                                end
                             else
                                 local item_slot = items[1]
                                 local item
@@ -255,17 +247,18 @@ function _SHOP.AppraisalInteract(plot, index)
                                     item = _DATA.Save.ActiveTeam:GetInv(item_slot.Slot)
                                 end
                                 UI:ChoiceMenuYesNo(STRINGS:FormatKey('APPRAISAL_CONFIRM_GIVE_ONE', price, item:GetDisplayName()))
-                                UI:WaitForChoice()
-                                local ch = UI:ChoiceResult()
-                                if ch then
-                                    GAME:RemoveFromPlayerMoney(full_cost)
-                                    _SHOP.AppraisalAddToStock(plot, items)
-                                    UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_CONFIRM'))
-                                    if GAME:GetPlayerBagCount() + GAME:GetPlayerEquippedCount() > 0 then
-                                        UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_CONTINUE'))
-                                    else
-                                        loop = false
-                                    end
+                            end
+
+                            UI:WaitForChoice()
+                            local ch = UI:ChoiceResult()
+                            if ch then
+                                GAME:RemoveFromPlayerMoney(full_cost)
+                                _SHOP.AppraisalAddToStock(plot, items)
+                                UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_CONFIRM'))
+                                if #items == 1 and GAME:GetPlayerBagCount() + GAME:GetPlayerEquippedCount() > 0 and plot.data.slots - #plot.data.stock > 0 then --TODO add checks to Exporter too
+                                    UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_CONTINUE'))
+                                else
+                                    loop = false
                                 end
                             end
                         else
