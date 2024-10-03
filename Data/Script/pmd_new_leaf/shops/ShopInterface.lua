@@ -19,6 +19,7 @@ require 'pmd_new_leaf.shops.Appraisal'
 require 'pmd_new_leaf.shops.Exporter'
 require 'pmd_new_leaf.shops.Market'
 require 'pmd_new_leaf.shops.Office'
+require 'pmd_new_leaf.shops.Trader'
 require 'pmd_new_leaf.shops.Tutor'
 
 --- Runs the initialize callback associated to thr given plot id's building.

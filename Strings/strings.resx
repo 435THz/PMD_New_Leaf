@@ -181,6 +181,9 @@
   <data name="APPRAISAL_SLOTS" xml:space="preserve">
     <value>Slots: {0}/{1}</value>
   </data>
+  <data name="DLG_ITEM_TO_STORAGE" xml:space="preserve">
+    <value>The item was sent to storage.</value>
+  </data>
   <data name="DLG_ITEMS_TO_STORAGE" xml:space="preserve">
     <value>The items were sent to storage.</value>
   </data>
@@ -619,6 +622,15 @@
   <data name="PLOT_DESCRIPTION_OUT_OF_LIMIT" xml:space="preserve">
     <value>[color=#FF0000]To reclaim this plot you must first upgrade the {0} to level {1}.[color]</value>
   </data>
+  <data name="PLOT_DESCRIPTION_TRADER_ADVANTAGE" xml:space="preserve">
+    <value>Every item has a chance to be rerolled if it isn't for a pokémon in the last used team.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_TRADER_BASE" xml:space="preserve">
+    <value>Offers {0} new trades every day.</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_TRADER_GUARANTEE" xml:space="preserve">
+    <value>Has a very high chance of offering an item for a pokémon in the last used team.</value>
+  </data>
   <data name="PLOT_DESCRIPTION_TUTOR_BASE" xml:space="preserve">
     <value>Teaches level moves up to level {0}.</value>
   </data>
@@ -747,6 +759,48 @@
   </data>
   <data name="TOWN_MANAGER_OPTION_UPGRADE" xml:space="preserve">
     <value>Upgrade</value>
+  </data>
+  <data name="TRADER_ASK_TRIBUTE" xml:space="preserve">
+    <value>Please choose {0} items to give in exchange for this {1}.</value>
+  </data>
+  <data name="TRADER_BYE" xml:space="preserve">
+    <value>Come back soon!</value>
+  </data>
+  <data name="TRADER_CANNOT_TRADE" xml:space="preserve">
+    <value>You don't seem have anything to trade, though...</value>
+  </data>
+  <data name="TRADER_CONFIRM_SWAP_1" xml:space="preserve">
+    <value>I'll exchange your {0} for my {1}.</value>
+  </data>
+  <data name="TRADER_CONFIRM_SWAP_2" xml:space="preserve">
+    <value>It'll cost you {0}, is that ok?</value>
+  </data>
+  <data name="TRADER_END" xml:space="preserve">
+    <value>Pleasure doing business!</value>
+  </data>
+  <data name="TRADER_INFO_1" xml:space="preserve">
+    <value>My job is exchanging exclusive items.</value>
+  </data>
+  <data name="TRADER_INFO_2" xml:space="preserve">
+    <value>I offer a different selection of items each day.</value>
+  </data>
+  <data name="TRADER_INFO_3" xml:space="preserve">
+    <value>I can also fuse exclusive items for you, turning them into a rarer one.</value>
+  </data>
+  <data name="TRADER_INFO_4" xml:space="preserve">
+    <value>Make sure to invest in our shop to increase the amount of items offered and the chance of finding something interesting for you!</value>
+  </data>
+  <data name="TRADER_INTRO" xml:space="preserve">
+    <value>Welcome to {0}'s Trading shop![pause=0] How can i help you?</value>
+  </data>
+  <data name="TRADER_OPTION_TRADE" xml:space="preserve">
+    <value>Trade</value>
+  </data>
+  <data name="TRADER_REPEAT" xml:space="preserve">
+    <value>Anything else?</value>
+  </data>
+  <data name="TRADER_TRIBUTE_TITLE" xml:space="preserve">
+    <value>Exclusive Items</value>
   </data>
   <data name="TUTOR_BEGIN" xml:space="preserve">
     <value>Let's start,[pause=10] then!</value>
