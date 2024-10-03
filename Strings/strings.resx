@@ -683,7 +683,7 @@
     <value>The cost to upgrade this shop depends on what upgrade you will choose in the next menu.\n</value>
   </data>
   <data name="SHOP_NAME_APPRAISAL" xml:space="preserve">
-    <value>{0}'s Appraisal</value>
+    <value>{0} Appraisals</value>
   </data>
   <data name="SHOP_NAME_CAFE" xml:space="preserve">
     <value>{0} Café</value>
