@@ -170,14 +170,16 @@ end
 --- Builds a string that represents an item and its amount
 ---@param item_id string an item id, or `"(P)"` to print a money value instead
 ---@param amount number the amount of items to display. If nil, no amount indicator will be printed
-function COMMON_FUNC.PrintItemAmount(item_id, amount)
+---@param omit_single boolean if true, the amount will not be printed if the item is non-stackable AND the stack is 1. Defaults to false
+function COMMON_FUNC.PrintItemAmount(item_id, amount, omit_single)
     amount = math.max(0, amount or 0)
     if item_id == "(P)" then
         return STRINGS:FormatKey("MONEY_AMOUNT", amount)
     end
-    local str = _DATA:GetItem(item_id):GetIconName()
-    if amount>0 then
-        str = STRINGS:Format("{0} [color=#FFCEFF]({1})[color]", str, tostring(amount))
+    local data = _DATA:GetItem(item_id)
+    local str = data:GetIconName()
+    if amount>0 and not(omit_single and data.MaxStack <= 1 and amount <= 1) then
+        str = STRINGS:Format("{0} [color=#FFCEFF]({1})[color]", str, string.format("%d", amount))
     end
 
     return str
