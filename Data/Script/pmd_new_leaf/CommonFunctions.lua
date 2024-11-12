@@ -122,6 +122,12 @@ function COMMON_FUNC.EndSessionWithResults(result, zoneId, structureId, mapId, e
     GAME:EnterZone(zoneId, structureId, mapId, entryId)
 end
 
+function COMMON_FUNC.InvItemFromInvSlot(invSlot)
+    if not invSlot:IsValid() then return end
+    if invSlot.IsEquipped then return _DATA.Save.ActiveTeam.Players[invSlot.Slot].EquippedItem end
+    return _DATA.Save.ActiveTeam:GetInv(invSlot.Slot)
+end
+
 function COMMON_FUNC.MergeItemLists(list, ...)
     local lists = {...}
     for _, list2 in pairs(lists) do
