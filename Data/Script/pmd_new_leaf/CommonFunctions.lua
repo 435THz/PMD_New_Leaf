@@ -65,7 +65,7 @@ end
 ---@param object any the object to look for
 ---@return boolean true if tbl contains object, false otherwise
 function table.contains(tbl, object)
-    return table.index_of(tbl, object, nil) ~= nil
+    return table.index_of(tbl, object, false) ~= false
 end
 
 ---Appends every element of the second table at the end of the first one.
