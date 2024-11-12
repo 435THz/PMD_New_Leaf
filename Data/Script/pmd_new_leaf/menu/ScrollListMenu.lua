@@ -140,26 +140,12 @@ function ScrollListMenu:Update(input)
         self:Refuse()
         _MENU:RemoveMenu()
     elseif self:directionHold(input, RogueElements.Dir8.Up) then
-        if self.selected > 1 then
-            _GAME:SE("Menu/Skip")
-            self:updateSelection(-1)
-        else
-            _GAME:SE("Menu/Cancel")
-            self.selected = 1
-            self.pos = 1
-            self.start_from = 1
-        end
+        _GAME:SE("Menu/Skip")
+        self:updateSelection(-1)
         self:DrawMenu()
     elseif self:directionHold(input, RogueElements.Dir8.Down) then
-        if self.selected<#self.choices then
-            _GAME:SE("Menu/Skip")
-            self:updateSelection(1)
-        else
-            _GAME:SE("Menu/Cancel")
-            self.selected = #self.choices
-            self.pos = self.ELEMENTS
-            self.start_from = #self.choices+1 - self.ELEMENTS
-        end
+        _GAME:SE("Menu/Skip")
+        self:updateSelection(1)
         self:DrawMenu()
     end
 end
@@ -178,7 +164,7 @@ end
 
 function ScrollListMenu:updateSelection(change)
     local start = self.selected
-    self.selected = math.clamp(1,self.selected + change, #self.choices)
+    self.selected = math.shifted_mod(self.selected+change, #self.choices)
     if self.selected == 1 then self.pos = 1
     elseif self.selected == #self.choices then self.pos = self.ELEMENTS
     else self.pos = math.clamp(2,self.pos + change, self.ELEMENTS-1) end
