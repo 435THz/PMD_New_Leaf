@@ -185,12 +185,22 @@ function COMMON_FUNC.PrintItemAmount(item_id, amount, omit_single)
     return str
 end
 
+--- Removes money from the player.
+--- If bank is true, it will take from the money bank after depleting the money bank.
+--- Returns the amount of money NOT removed if the player didn't have enough.
+---@param amount number the amount of copies of the item to remove
+---@param bank boolean if true, the function will start taking items from the money bank after the money on hand is depleted.
+---@return number the difference between the the amount of items removed and the amount of requested copies, or 0 if all requested copies have been removed.
+function COMMON_FUNC.RemoveMoney(amount, bank)
+    return COMMON_FUNC.RemoveItem("(P)", amount, bank)
+end
+
 --- Removes a number of copies of a specific item from the player's inventory.
 --- If storage is true, it will take from storage after depleting the stock in the inventory.
 --- Returns the amount of items NOT removed if the player didn't have enough.
 ---@param item_id string the id of the item to remove. Use `"(P)"` to remove money
 ---@param amount number the amount of copies of the item to remove
----@param storage boolean if true, the function will start taking items from storage (or bank) after the inventory has been emptied.
+---@param storage boolean if true, the function will start taking items from storage (or bank) after the inventory is emptied.
 ---@return number the difference between the the amount of items removed and the amount of requested copies, or 0 if all requested copies have been removed.
 function COMMON_FUNC.RemoveItem(item_id, amount, storage)
     if item_id == "(P)" then
@@ -237,6 +247,13 @@ function COMMON_FUNC.RemoveItems(cost_table, storage)
     return fails
 end
 
+--- Checks if the player has the given amount of money.
+---@param amount number the amount of money to check for
+---@param check_bank boolean if true, the function will also account for the money bank
+function COMMON_FUNC.CheckMoney(amount, check_bank)
+    return COMMON_FUNC.CheckCost({ { item = "(P)", amount = amount } }, check_bank)
+end
+
 --- Checks if the player has the given amount of items.
 --- If an item id is set to `"(P)"`, it will check the player's money instead.
 ---@param cost_table table a list of `{item = string, amount = number}` entries
@@ -256,6 +273,12 @@ function COMMON_FUNC.CheckCost(cost_table, check_storage)
         end
     end
     return true
+end
+
+function COMMON_FUNC.GetMoney(check_bank)
+    local ret = GAME:GetPlayerMoney()
+    if check_bank then ret = ret + GAME:GetPlayerMoneyBank() end
+    return ret
 end
 
 ---Rolls for a random object inside a list and returns the result.
