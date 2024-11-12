@@ -29,6 +29,9 @@ function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, m
     self.number = self.start_number
     self.callback = callback
     self.selected = 0
+    local draw_title = self.title ~= ""
+    local title_offset = 0
+    if draw_title then title_offset = Graphics.VERT_SPACE+Graphics.DIVIDER_HEIGHT end
 
     -- calculating digits
     self.digits = 0 -- = number of digits minus one
@@ -37,18 +40,20 @@ function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, m
 
     -- apply minimum
     width  = math.max((9*self.digits+2)+16, width)
-    height = math.max(64, height)
+    height = math.max(46+title_offset, height)
 
     -- create and draw menu
     self.menu = RogueEssence.Menu.ScriptableMenu(x, y, width, height, function(input) self:Update(input) end)
 
     local sign = ""
     if self.number<0 then sign = "-" end
-    self.sign_text = RogueEssence.Menu.MenuText(sign, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight + 12 * 2), RogueElements.DirH.None)
-    self.number_box = RogueEssence.Menu.MenuDigits(self.number, self.digits+1, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight + 13 * 2))
+    self.sign_text = RogueEssence.Menu.MenuText(sign, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, (self.menu.Bounds.Height + title_offset)//2-10), RogueElements.DirH.None)
+    self.number_box = RogueEssence.Menu.MenuDigits(self.number, self.digits+1, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, (self.menu.Bounds.Height + title_offset)//2 - 8))
 
-    self.menu.MenuElements:Add(RogueEssence.Menu.MenuText(self.title, RogueElements.Loc(self.menu.Bounds.Width//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), RogueElements.DirH.None))
-    self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.VERT_SPACE + RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), self.menu.Bounds.Width - 12 * 2))
+    if draw_title then
+        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText(self.title, RogueElements.Loc(self.menu.Bounds.Width//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), RogueElements.DirH.None))
+        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.VERT_SPACE + RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), self.menu.Bounds.Width - 12 * 2))
+    end
     self.menu.MenuElements:Add(self.sign_text)
     self.menu.MenuElements:Add(self.number_box)
     for i=0, self.digits, 1 do
