@@ -69,11 +69,37 @@ function table.contains(tbl, object)
 end
 
 ---Appends every element of the second table at the end of the first one.
----This function edits tbl1 in-place. It does not create a new table.
+---Any non-integer key will be copied without changing the key. Any integer
+---key will be placed at the end of the first list as defined by the #
+---operator, and all empty spaces in between them will be preserved.
+---For example, if the tables have keys {1,2,3} and {-1,2,3}, the
+---result will have the keys {1,2,3,4,7,8}. If any conflict occurs,
+---`over` will describe how to solve it.
+---
+---This function edits tbl1 in-place. It does not create nor return a new table.
 ---@param tbl1 table a table
 ---@param tbl2 table another table
-function table.merge(tbl1, tbl2)
-    table.move(tbl2, 1, #tbl2, #tbl1+1, tbl1)
+---@param over boolean if true, any conflicting keys will not check if preexisting values exist for that key inside tbl1 and will override said values. Defaults to false.
+function table.merge(tbl1, tbl2, over)
+    local startlen = #tbl1+1
+    local numkeys = {}
+    for key in pairs(tbl2) do
+        if type(key) == 'number' then
+            table.insert(numkeys, key)
+        else
+            if over or tbl1[key] == nil then
+                tbl1[key] = tbl2[key]
+            end
+        end
+    end
+    table.sort(numkeys)
+    local startkey = numkeys[1]
+    for _, i2 in ipairs(numkeys) do
+        local i1 = startlen+i2-startkey
+        if over or tbl1[i1] == nil then
+            tbl1[i1] = tbl2[i2]
+        end
+    end
 end
 
 ---Appends every element of the other tables provided at the end of the first one, in the given order.
