@@ -358,24 +358,22 @@ function _SHOP.MarketInteract(plot, index)
                         for i = 1, #cart, 1 do
                             total = total + catalog[cart[i]].Price
                         end
-                        if total > GAME:GetPlayerMoney() then
+                        if COMMON_FUNC.CheckMoney(total) then
                             UI:SetSpeakerEmotion("Angry")
                             UI:WaitShowDialogue(STRINGS:FormatKey('MARKET_NO_MONEY'))
                             UI:SetSpeakerEmotion("Normal")
                         else
-                            local buy_msg
                             if #cart == 1 then
                                 local name = catalog[cart[1]].Item:GetDisplayName()
-                                buy_msg = STRINGS:FormatKey('MARKET_BUY_ONE', STRINGS:FormatKey("MONEY_AMOUNT", total), name)
+                                UI:ChoiceMenuYesNo(STRINGS:FormatKey('MARKET_BUY_ONE', STRINGS:FormatKey("MONEY_AMOUNT", total), name), false)
                             else
-                                buy_msg = STRINGS:FormatKey('MARKET_BUY_MULTI', STRINGS:FormatKey("MONEY_AMOUNT", total))
+                                UI:ChoiceMenuYesNo(STRINGS:FormatKey('MARKET_BUY_MULTI', STRINGS:FormatKey("MONEY_AMOUNT", total)), false)
                             end
-                            UI:ChoiceMenuYesNo(buy_msg, false)
                             UI:WaitForChoice()
                             result = UI:ChoiceResult()
 
                             if result then
-                                GAME:RemoveFromPlayerMoney(total)
+                                COMMON_FUNC.RemoveMoney(total, true)
                                 for i = 1, #cart, 1 do
                                     local item = catalog[cart[i]].Item
                                     GAME:GivePlayerItem(item.ID, item.Amount, false)

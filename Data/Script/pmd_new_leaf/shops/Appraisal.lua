@@ -231,7 +231,7 @@ function _SHOP.AppraisalInteract(plot, index)
                             else item = _DATA.Save.ActiveTeam:GetInv(slot.Slot) end
                             return item.UsageType == RogueEssence.Data.ItemData.UseType.Box
                         end
-                        local choosable = math.min(plot.data.slots - #plot.data.stock, GAME:GetPlayerMoney()//price)
+                        local choosable = math.min(plot.data.slots - #plot.data.stock, COMMON_FUNC.GetMoney(true)//price)
                         local items = InventorySelectMenu.run(STRINGS:FormatKey('MENU_ITEM_TITLE'), filter, STRINGS:FormatKey('MENU_ITEM_GIVE'), true, choosable)
                         if #items > 0 then
                             local full_cost = price*#items
@@ -252,7 +252,7 @@ function _SHOP.AppraisalInteract(plot, index)
                             UI:WaitForChoice()
                             local ch = UI:ChoiceResult()
                             if ch then
-                                GAME:RemoveFromPlayerMoney(full_cost)
+                                COMMON_FUNC.RemoveMoney(full_cost, true)
                                 _SHOP.AppraisalAddToStock(plot, items)
                                 UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_CONFIRM'))
                                 if #items == 1 and GAME:GetPlayerBagCount() + GAME:GetPlayerEquippedCount() > 0 and plot.data.slots - #plot.data.stock > 0 then --TODO add checks to Exporter too

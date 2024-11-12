@@ -275,7 +275,7 @@ function _SHOP.TraderInteract(plot, index)
                                     end
                                 end
                                 SOUND:PlayBattleSE("DUN_Money")
-                                GAME:RemoveFromPlayerMoney(total)
+                                COMMON_FUNC.RemoveMoney(total, true)
                                 UI:WaitShowDialogue(STRINGS:FormatKey("TRADER_END"))
 
 

@@ -311,7 +311,7 @@ function _SHOP.TutorInteract(plot, index)
 
                             if learnedMove then
                                 SOUND:PlayBattleSE("DUN_Money")
-                                GAME:RemoveFromPlayerMoney(skills[chosen_move])
+                                COMMON_FUNC.RemoveMoney(skills[chosen_move], true)
                                 UI:WaitShowDialogue(STRINGS:FormatKey('TUTOR_BEGIN'))
                                 _SHOP.TutorAnimation(npc)
                                 SOUND:PlayFanfare("Fanfare/LearnSkill")
