@@ -153,8 +153,9 @@ end
 --- Builds a string using a list of elements and applying the provided function to every element of the list.
 --- The elements will be concatenated using the localized `ADD_SEPARATOR` and `ADD_END` strings as separators.
 ---@param list table the list of objects to build the string with
----@param func function a function that takes an item from the list and returns the string that will represent it
+---@param func function a function that takes an item from the list and returns the string that will represent it. If omitted, the elements will be used directly
 function COMMON_FUNC.BuildStringWithSeparators(list, func)
+    func = func or function(a) return tostring(a) end
     local str = "" --TODO switch to STRINGS:CreateList(LuaTable)?
     for i, entry in pairs(list) do
         if i>1 then
