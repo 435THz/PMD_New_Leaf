@@ -84,7 +84,7 @@ function intro_scene.isStarterAllowed(id)
     --return true if mon is playable and unevolved and, if it is part of the undiscovered egg group, it has an evolution. Finally, it must not be part of the blacklist.
     --this filters out all unreleased mons, all evolved mons and all non-baby, undiscovered egg group mons, plus some cherry-picked outliars
     return mon.Released and mon.PromoteFrom == "" and (mon.SkillGroup1 ~= "undiscovered" or mon.Promotions.Count>0)
-            and not table.index_of(forced_blacklist, id, false)
+            and not table.contains(forced_blacklist, id)
 end
 
 function intro_scene.CharacterSelect()
