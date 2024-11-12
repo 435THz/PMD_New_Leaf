@@ -292,6 +292,14 @@ _HUB.UpgradeTable = {
         description = "APPRAISAL_BOX_SINISTER_DESCR",
         max = 1
     },
+    upgrade_cafe_base = {
+        string = "UPGRADE_GENERIC",
+        price = {
+            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+        },
+        requirements = {},
+        max = 10
+    },
     upgrade_generic = {
         string = "UPGRADE_GENERIC",
         price = {
@@ -693,17 +701,17 @@ _HUB.ShopBase = {
     },
     cafe = {
         Shopkeepers = {{species = "kangaskhan"}, {species = "shuckle"}, {species = "spinda"}, {species = "mismagius"}, {species = "lilligant"}, {species = "gourgeist"}, {species = "oricorio", form = 0}, {species = "appletun"}, {species = "sinistcha"}},
-        Upgrades = { --TODO
-            {"upgrade_generic"},    --shop level 1
-            {"upgrade_generic"},    --shop level 2
-            {"upgrade_generic"},    --shop level 3
-            {"upgrade_generic"},    --shop level 4
-            {"upgrade_generic"},    --shop level 5
-            {"upgrade_generic"},    --shop level 6
-            {"upgrade_generic"},    --shop level 7
-            {"upgrade_generic"},    --shop level 8
-            {"upgrade_generic"},    --shop level 9
-            {"upgrade_generic"},    --shop level 10
+        Upgrades = {
+            {"upgrade_cafe_base"},    --shop level 1
+            {"upgrade_cafe_base"},    --shop level 2
+            {"upgrade_cafe_base"},    --shop level 3
+            {"upgrade_cafe_base"},    --shop level 4
+            {"upgrade_cafe_base"},    --shop level 5
+            {"upgrade_cafe_base"},    --shop level 6
+            {"upgrade_cafe_base"},    --shop level 7
+            {"upgrade_cafe_base"},    --shop level 8
+            {"upgrade_cafe_base"},    --shop level 9
+            {"upgrade_cafe_base"},    --shop level 10
         },
         Graphics = {
             {

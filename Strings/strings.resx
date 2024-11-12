@@ -181,6 +181,132 @@
   <data name="APPRAISAL_SLOTS" xml:space="preserve">
     <value>Slots: {0}/{1}</value>
   </data>
+  <data name="CAFE_BYE" xml:space="preserve">
+    <value>Come back soon!</value>
+  </data>
+  <data name="CAFE_CRAFT_ASK" xml:space="preserve">
+    <value>{0}?[pause=0] Is that your choice?</value>
+  </data>
+  <data name="CAFE_CRAFT_BEGIN" xml:space="preserve">
+    <value>Of course![pause=0] What do you want to make?</value>
+  </data>
+  <data name="CAFE_CRAFT_CONTINUE" xml:space="preserve">
+    <value>Do you want to make something else?</value>
+  </data>
+  <data name="CAFE_CRAFT_END" xml:space="preserve">
+    <value>Here you go![pause=10] Freshly made!</value>
+  </data>
+  <data name="CAFE_CRAFT_RECIPE" xml:space="preserve">
+    <value>Recipe</value>
+  </data>
+  <data name="CAFE_CRAFT_TITLE" xml:space="preserve">
+    <value>Recipes</value>
+  </data>
+  <data name="CAFE_DAILY_BUY" xml:space="preserve">
+    <value>{0},[pause=10] you say?[pause=0] That'll be {1}. </value>
+  </data>
+  <data name="CAFE_DAILY_BUY_END" xml:space="preserve">
+    <value>Here you go.[pause=0] Please enjoy it!</value>
+  </data>
+  <data name="CAFE_DAILY_BUY_CONTINUE" xml:space="preserve">
+    <value>May i interest you in our other daily offer?</value>
+  </data>
+  <data name="CAFE_DRINK_BEGIN" xml:space="preserve">
+    <value>Here you go!</value>
+  </data>
+  <data name="CAFE_DRINK_BOOSTS" xml:space="preserve">
+    <value>Bonus:</value>
+  </data>
+  <data name="CAFE_DRINK_DRINK" xml:space="preserve">
+    <value>{0} drank the juice.</value>
+  </data>
+  <data name="CAFE_DRINK_MULTI" xml:space="preserve">
+    <value>A drink with these ingredients will cost you {0}.[pause=0] Is that ok?</value>
+  </data>
+  <data name="CAFE_DRINK_NO_BOOST" xml:space="preserve">
+    <value>{0} felt happy.</value>
+  </data>
+  <data name="CAFE_DRINK_NO_MONEY" xml:space="preserve">
+    <value>Drinks have a fee of {0} per ingredient.[pause=0] You don't seem to have enough money right now.</value>
+  </data>
+  <data name="CAFE_DRINK_ONE" xml:space="preserve">
+    <value>A drink with {1} will cost you {0}.[pause=0] Is that ok?</value>
+  </data>
+  <data name="CAFE_DRINK_RANDOM" xml:space="preserve">
+    <value>Random</value>
+  </data>
+  <data name="CAFE_DRINK_WHO" xml:space="preserve">
+    <value>Who is this drink for?</value>
+  </data>
+  <data name="CAFE_DRINK_WHAT" xml:space="preserve">
+    <value>What should i use for the drink?[pause=0] It's {0} per ingredient. (Choose multiple items with {1})</value>
+  </data>
+  <data name="CAFE_DRINK_WHAT_FREE" xml:space="preserve">
+    <value>What should i use for the drink? (Choose multiple items with {0})</value>
+  </data>
+  <data name="CAFE_INFO_1" xml:space="preserve">
+    <value>This shop specializes in turning food into drinks!</value>
+  </data>
+  <data name="CAFE_INFO_2" xml:space="preserve">
+    <value>You can give me ingredients to use,[pause=10] and,[pause=10] for a small fee,[pause=10] i will turn them into stat-enhancing juice!</value>
+  </data>
+  <data name="CAFE_INFO_2b" xml:space="preserve">
+    <value>You can give me ingredients to use,[pause=10] and i will turn them into stat-enhancing juice!</value>
+  </data>
+  <data name="CAFE_INFO_3" xml:space="preserve">
+    <value>I can also blend some of your items, turning them into different things!</value>
+  </data>
+  <data name="CAFE_INFO_4" xml:space="preserve">
+    <value>I even have a special offer i rotate daily,[pause=10] so don't forget to come by often!</value>
+  </data>
+  <data name="CAFE_INFO_4b" xml:space="preserve">
+    <value>I even have a little stash of special offers i rotate daily,[pause=10] so don't forget to come by often!</value>
+  </data>
+  <data name="CAFE_INFO_5" xml:space="preserve">
+    <value>Make sure to invest in my shop to allow me to turn into drinks new types of items and to unlock new services!</value>
+  </data>
+  <data name="CAFE_INFO_5b" xml:space="preserve">
+    <value>Make sure to invest in my shop to allow me to turn into drinks new types of items,[pause=10] increase the variety of my stock,[pause=10] and to unlock new services!</value>
+  </data>
+  <data name="CAFE_INFO_5c" xml:space="preserve">
+    <value>Make sure to invest in my shop to allow me to turn into drinks new types of items,[pause=10] increase the variety of my stock,[pause=10] and to craft new things!</value>
+  </data>
+  <data name="CAFE_INTRO" xml:space="preserve">
+    <value>Welcome to {0} Café![pause=0] How may i serve you?</value>
+  </data>
+  <data name="CAFE_OPTION_BUY" xml:space="preserve">
+    <value>Buy</value>
+  </data>
+  <data name="CAFE_OPTION_CRAFT" xml:space="preserve">
+    <value>Combine</value>
+  </data>
+  <data name="CAFE_OPTION_DRINK" xml:space="preserve">
+    <value>Drink</value>
+  </data>
+  <data name="CAFE_OUT_OF_STOCK" xml:space="preserve">
+    <value>Sorry,[pause=10] but i'm out of stock for today.</value>
+  </data>
+  <data name="CAFE_POOL_NAME_ANY_FOOD" xml:space="preserve">
+    <value>any food</value>
+  </data>
+  <data name="CAFE_POOL_NAME_BERRIES" xml:space="preserve">
+    <value>berries</value>
+  </data>
+  <data name="CAFE_POOL_NAME_GUMMIES" xml:space="preserve">
+    <value>gummies</value>
+  </data>
+  <data name="CAFE_POOL_NAME_MEDICINES" xml:space="preserve">
+    <value>medicines</value>
+  </data>
+  <data name="CAFE_POOL_NAME_OTHERS" xml:space="preserve">
+    <value>other special items</value>
+  </data>
+  <data name="CAFE_POOL_NAME_SEEDS" xml:space="preserve">
+    <value>seeds</value>
+  </data>
+  <data name="CAFE_REPEAT" xml:space="preserve">
+    <value>Do you need anything else?</value>
+  </data>
   <data name="DLG_ITEM_TO_STORAGE" xml:space="preserve">
     <value>The item was sent to storage.</value>
   </data>
@@ -579,6 +705,18 @@
   </data>
   <data name="PLOT_DESCRIPTION_BUILD_MULTI_CHOICE" xml:space="preserve">
     <value>The cost for building this shop depends on what option you will choose in the next menu.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_CAFE_BASE" xml:space="preserve">
+    <value>Turns {0} into drinks.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_CAFE_CRAFT" xml:space="preserve">
+    <value>Is able to craft {0}.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_CAFE_DAILY_ONE" xml:space="preserve">
+    <value>Sells a random food item each day.\n</value>
+  </data>
+  <data name="PLOT_DESCRIPTION_CAFE_DAILY_MORE" xml:space="preserve">
+    <value>Sells {0} random food items each day.\n</value>
   </data>
   <data name="PLOT_DESCRIPTION_EXPORTER_BASE" xml:space="preserve">
     <value>Can hold {0} items. Gains {1} progress per day.\n</value>

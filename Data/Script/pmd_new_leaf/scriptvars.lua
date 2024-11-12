@@ -70,7 +70,9 @@ SV.Intro = {
     --- 4 = first shop built;
     --- 5 = first upgrade done;
     --- 6 = first town upgrade
-    HubTutorialProgress = 0
+    HubTutorialProgress = 0,
+    --- false until players hover over something that has Random effects, true forever from then on
+    CafeRandomDiscovered = false
 }
 
 

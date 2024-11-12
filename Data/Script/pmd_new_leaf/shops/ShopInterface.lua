@@ -16,13 +16,14 @@ _SHOP.callbacks = {
 }
 
 require 'pmd_new_leaf.shops.Appraisal'
+require 'pmd_new_leaf.shops.Cafe'
 require 'pmd_new_leaf.shops.Exporter'
 require 'pmd_new_leaf.shops.Market'
 require 'pmd_new_leaf.shops.Office'
 require 'pmd_new_leaf.shops.Trader'
 require 'pmd_new_leaf.shops.Tutor'
 
---- Runs the initialize callback associated to thr given plot id's building.
+--- Runs the initialize callback associated to the given plot id's building.
 --- @param index any home, office or any positive integer up to 15
 --- @param building string a building id. It is only considered if no building exists in the given plot yet
 function _SHOP.InitializeShop(index, building)
