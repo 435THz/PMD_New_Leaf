@@ -50,10 +50,9 @@ end
 ---Returns the key associated to a value inside a table
 ---@param tbl table a table
 ---@param object any the object to look for
----@param default any a return value to return in case of failure. Defaults to -1
+---@param default any a return value to return in case of failure. Defaults to nil
 ---@return any the key of the object if it is found, default otherwise
 function table.index_of(tbl, object, default)
-    if default==nil then default = -1 end
     for index, element in pairs(tbl) do
         if element == object then return index end
     end
@@ -65,7 +64,7 @@ end
 ---@param object any the object to look for
 ---@return boolean true if tbl contains object, false otherwise
 function table.contains(tbl, object)
-    return table.index_of(tbl, object, false) ~= false
+    return table.index_of(tbl, object) ~= nil
 end
 
 ---Appends every element of the second table at the end of the first one.

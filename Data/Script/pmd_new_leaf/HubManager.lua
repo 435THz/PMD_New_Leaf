@@ -659,7 +659,7 @@ function _HUB.DiscardUsed(shopkeepers)
     local list = {}
     local shiny = true
     for _, plot in pairs(SV.HubData.Plots) do
-        table.insert(current, plot.shopkeeper)
+        table.insert(current, plot.shopkeeper.species)
     end
     local refill_list = function()
         for i in pairs(shopkeepers) do
@@ -679,8 +679,8 @@ function _HUB.DiscardUsed(shopkeepers)
         for _, index in pairs(curr_list) do
             removed_one = false
             if #list == 0 then refill_list() end
-            local i = table.index_of(list,    index, nil)
-            local j = table.index_of(current, shopkeepers[index].species, nil)
+            local i = table.index_of(list,    index,                      -1)
+            local j = table.index_of(current, shopkeepers[index].species, -1)
             if j>0 and i>0 then
                 table.remove(current, j)
                 table.remove(list,    i)
