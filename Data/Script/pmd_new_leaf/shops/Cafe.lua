@@ -645,15 +645,25 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
 
     local random_mult = 1
     if boost_data.reverse_random then random_mult = -1 end
-    local all_stats = {"HP","Atk","Def","SpAtk","SpDef","Speed"}
+    local all_stats = {"HP",         "Atk",      "Def",      "SpAtk",     "SpDef",     "Speed"}
+    local mem_stats = {"MaxHPBonus", "AtkBonus", "DefBonus", "MAtkBonus", "MDefBonus", "SpeedBonus"}
+    local max_boost = PMDC.Data.MonsterFormData.MAX_STAT_BOOST
+    if member.SpeedBonus + boost.Speed > max_boost then table.remove(all_stats, 6) end --discard maxed stats
+    if member.MDefBonus  + boost.SpDef > max_boost then table.remove(all_stats, 5) end
+    if member.MAtkBonus  + boost.SpAtk > max_boost then table.remove(all_stats, 4) end
+    if member.DefBonus   + boost.Def   > max_boost then table.remove(all_stats, 3) end
+    if member.AtkBonus   + boost.Atk   > max_boost then table.remove(all_stats, 2) end
+    if member.MaxHPBonus + boost.HP    > max_boost then table.remove(all_stats, 1) end
     for _, rand in ipairs(boost_data.random) do
         local stats = {}
         local amount = 0
         local rolls = 0
-        for data, value in pairs(rand) do
-            if table.contains(all_stats, data) then table.insert(stats, data)
-            elseif data == "Amount" then amount = value
-            elseif data == "Rolls" then rolls = value end
+        for key, value in pairs(rand) do
+            local index = table.index_of(all_stats, key)
+            if index and member[mem_stats[index]] + boost[all_stats[index]] < max_boost then
+                table.insert(stats, key)
+            elseif key == "Amount" then amount = value
+            elseif key == "Rolls" then rolls = value end
         end
         for _=1, rolls, 1 do
             local stat = COMMON_FUNC.WeightlessRoll(stats)
@@ -676,7 +686,7 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
     local old_speed = member.BaseSpeed
 
     if boost.HP ~= 0 then
-        member.MaxHPBonus = math.max(0, math.min(member.MaxHPBonus + boost.HP, PMDC.Data.MonsterFormData.MAX_STAT_BOOST))
+        member.MaxHPBonus = math.max(0, math.min(member.MaxHPBonus + boost.HP, max_boost))
         local diff = member.MaxHP - old_hp
         if diff > 0 then
             table.insert(changed_stats, RogueEssence.Data.Stat.HP)
@@ -689,7 +699,7 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
         end
     end
     if boost.Atk ~= 0 then
-        member.AtkBonus = math.max(0, math.min(member.AtkBonus + boost.Atk, PMDC.Data.MonsterFormData.MAX_STAT_BOOST))
+        member.AtkBonus = math.max(0, math.min(member.AtkBonus + boost.Atk, max_boost))
         local diff = member.BaseAtk - old_atk
         if diff > 0 then
             table.insert(changed_stats, RogueEssence.Data.Stat.Attack)
@@ -702,7 +712,7 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
         end
     end
     if boost.Def ~= 0 then
-        member.DefBonus = math.max(0, math.min(member.DefBonus + boost.Def, PMDC.Data.MonsterFormData.MAX_STAT_BOOST))
+        member.DefBonus = math.max(0, math.min(member.DefBonus + boost.Def, max_boost))
         local diff = member.BaseDef - old_def
         if diff > 0 then
             table.insert(changed_stats, RogueEssence.Data.Stat.Defense)
@@ -715,7 +725,7 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
         end
     end
     if boost.SpAtk ~= 0 then
-        member.MAtkBonus = math.max(0, math.min(member.MAtkBonus + boost.SpAtk, PMDC.Data.MonsterFormData.MAX_STAT_BOOST))
+        member.MAtkBonus = math.max(0, math.min(member.MAtkBonus + boost.SpAtk, max_boost))
         local diff = member.BaseMAtk - old_sp_atk
         if diff > 0 then
             table.insert(changed_stats, RogueEssence.Data.Stat.MAtk)
@@ -728,7 +738,7 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
         end
     end
     if boost.SpDef ~= 0 then
-        member.MDefBonus = math.max(0, math.min(member.MDefBonus + boost.SpDef, PMDC.Data.MonsterFormData.MAX_STAT_BOOST))
+        member.MDefBonus = math.max(0, math.min(member.MDefBonus + boost.SpDef, max_boost))
         local diff = member.BaseMDef - old_sp_def
         if diff > 0 then
             table.insert(changed_stats, RogueEssence.Data.Stat.MDef)
@@ -741,7 +751,7 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
         end
     end
     if boost.Speed ~= 0 then
-        member.SpeedBonus = math.max(0, math.min(member.SpeedBonus + boost.Speed, PMDC.Data.MonsterFormData.MAX_STAT_BOOST))
+        member.SpeedBonus = math.max(0, math.min(member.SpeedBonus + boost.Speed, max_boost))
         local diff = member.BaseSpeed - old_speed
         if diff > 0 then
             table.insert(changed_stats, RogueEssence.Data.Stat.Speed)
