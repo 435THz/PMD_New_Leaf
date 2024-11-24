@@ -140,7 +140,7 @@
     <value>{1}?[pause=0] That'll be {0}.</value>
   </data>
   <data name="APPRAISAL_DEPOSIT" xml:space="preserve">
-    <value>What do you want to open?[pause=0] It'll cost you {0} for every box.</value>
+    <value>What do you want to open?[pause=0] It'll cost you {0} for every box. (Choose multiple items with {1})</value>
   </data>
   <data name="APPRAISAL_DEPOSIT_DESC" xml:space="preserve">
     <value>Leave another Box to this Appraisal shop.</value>
@@ -274,6 +274,12 @@
   <data name="CAFE_INTRO" xml:space="preserve">
     <value>Welcome to {0} Café![pause=0] How may i serve you?</value>
   </data>
+  <data name="CAFE_NO_MONEY" xml:space="preserve">
+    <value>You don't seem to have the money for that.</value>
+  </data>
+  <data name="CAFE_NO_MONEY_MIN" xml:space="preserve">
+    <value>You need at least {0} to order a drink.</value>
+  </data>
   <data name="CAFE_OPTION_BUY" xml:space="preserve">
     <value>Buy</value>
   </data>
@@ -329,7 +335,7 @@
     <value>Anything else?</value>
   </data>
   <data name="EXPORTER_DEPOSIT" xml:space="preserve">
-    <value>Sure thing![pause=0] What do you want to sell?</value>
+    <value>Sure thing![pause=0] What do you want to sell? (Choose multiple items with {0})</value>
   </data>
   <data name="EXPORTER_DEPOSIT_DESC" xml:space="preserve">
     <value>Leave another item to this Exporter shop.</value>

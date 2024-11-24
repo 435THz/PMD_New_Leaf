@@ -406,7 +406,7 @@ function _SHOP.CafeInteract(plot, index)
                     end
                 end
             else
-                UI:WaitShowDialogue(STRINGS:FormatKey('CAFE_NO_MONEY', STRINGS:FormatKey("MONEY_AMOUNT", plot.data.price)))
+                UI:WaitShowDialogue(STRINGS:FormatKey('CAFE_NO_MONEY_MIN', STRINGS:FormatKey("MONEY_AMOUNT", plot.data.price)))
             end
         elseif result == 2 then
             if #plot.data.iotd > 0 then
