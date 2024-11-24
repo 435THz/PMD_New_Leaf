@@ -5,7 +5,7 @@
     This file contains all exporter-specific callbacks and functionality data structures
 ]]
 require 'pmd_new_leaf.menu.ExporterMenu'
-require 'pmd_new_leaf.menu.InventorySelectMenu'
+require 'origin.menu.InventorySelectMenu'
 
 _SHOP.ExporterTables = {
     -- level  1  2  3  4  5   6   7   8   9  10
@@ -152,7 +152,7 @@ function _SHOP.ExporterInteract(plot, index)
                         UI:SetSpeaker(npc)
                     end
                 else
-                    UI:WaitShowDialogue(STRINGS:FormatKey('EXPORTER_DEPOSIT'))
+                    UI:WaitShowDialogue(STRINGS:FormatKey('EXPORTER_DEPOSIT'), STRINGS:LocalKeyString(26))
                     while loop do
                         local filter = function(slot)
                             local item

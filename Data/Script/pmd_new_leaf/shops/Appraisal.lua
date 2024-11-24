@@ -5,8 +5,8 @@
     This file contains all appraisal-specific callbacks and functionality data structures
 ]]
 require 'pmd_new_leaf.menu.AppraisalMenu'
-require 'pmd_new_leaf.menu.InventorySelectMenu'
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
+require 'origin.menu.InventorySelectMenu'
 
 _SHOP.AppraisalTables = {
     -- level  1  2  3  4  5   6   7   8   9  10
@@ -223,7 +223,7 @@ function _SHOP.AppraisalInteract(plot, index)
                     UI:SetCenter(false)
                     UI:SetSpeaker(npc)
                 else
-                    UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_DEPOSIT', STRINGS:FormatKey("MONEY_AMOUNT", price)))
+                    UI:WaitShowDialogue(STRINGS:FormatKey('APPRAISAL_DEPOSIT', STRINGS:FormatKey("MONEY_AMOUNT", price), STRINGS:LocalKeyString(26)))
                     while loop do
                         local filter = function(slot)
                             local item

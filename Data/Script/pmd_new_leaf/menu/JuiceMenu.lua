@@ -8,7 +8,7 @@
     This menu is NOT SAFE FOR REPLAYS. Do NOT use in dungeons until further notice.
 ]]
 require 'origin.common'
-require 'pmd_new_leaf.menu.InventorySelectMenu'
+require 'origin.menu.InventorySelectMenu'
 
 --- Menu for selecting items from the player's inventory.
 JuiceMenu = Class("JuiceMenu", InventorySelectMenu)
