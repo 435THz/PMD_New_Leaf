@@ -76,8 +76,7 @@ SV.Intro = {
 }
 
 SV.RunData = {
-    Recruited = {},
-    Inventory = {}
+    CharCounter = 0
 }
 
 -----------------------------------------------

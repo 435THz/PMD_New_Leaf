@@ -338,3 +338,64 @@ function COMMON_FUNC.WeightedRoll(list)
     end
     return nil, nil
 end
+
+--- Saves the current form data, ability and moveset of a Character inside its internal lua table and increments the restoration counter by 1
+--- @param target userdata The Character to save the data of
+function COMMON_FUNC.SaveStartData(target)
+    local luaData = {
+        form_data = {
+            species = target.BaseForm.Species,
+            form = target.BaseForm.Form,
+            skin = target.BaseForm.Skin,
+            gender = RogueEssence.Script.LuaEngine.Instance:EnumToNumeric(target.BaseForm.Gender)
+        },
+        ability = target.BaseIntrinsics[0],
+        form_ability_slot = target.FormIntrinsicSlot,
+        moves = {},
+        boosts = {MHP = 0, ATK = 0, DEF = 0, SAT = 0, SDF = 0, SPE = 0}
+    }
+    local skillnum = math.min(4, target.BaseSkills.Count-1)
+    for i=0, skillnum, 1 do
+        if target.BaseSkills.Count>i then
+            luaData.moves[i] = target.BaseSkills[i].SkillNum
+        else
+            luaData.moves[i] = ""
+        end
+    end
+    luaData.boosts.MHP = target.MaxHPBonus
+    luaData.boosts.ATK = target.AtkBonus
+    luaData.boosts.DEF = target.DefBonus
+    luaData.boosts.SAT = target.MAtkBonus
+    luaData.boosts.SDF = target.MDefBonus
+    luaData.boosts.SPE = target.SpeedBonus
+    target.LuaData.StartData = luaData
+    SV.RunData.CharCounter = SV.RunData.CharCounter+1
+    printall(luaData)
+end
+
+--- Restores the stored form data, ability and moveset of a Character from inside its internal lua table and decrements the restoration counter by 1.
+--- The Character will also be brought to level 5.
+--- @param target userdata The Character to save the data of
+function COMMON_FUNC.RestoreStartData(target)
+    local luaData = target.LuaData.StartData
+    local gender = luaData.form_data.gender
+    if gender < 0
+        then gender = _DATA:GetMonster(luaData.form_data.species).Forms[luaData.form_data.form]:RollGender(_DATA.Save.Rand)
+        else gender = GLOBAL.GenderTable[gender]
+    end
+    target.BaseForm = RogueEssence.Dungeon.MonsterID(luaData.form_data.species, luaData.form_data.form, luaData.form_data.skin, gender)
+    target:SetBaseIntrinsic(luaData.ability)
+    target.FormIntrinsicSlot = luaData.form_ability_slot
+    local skillnum = math.min(4, target.BaseSkills.Count-1)
+    for i=0, skillnum, 1 do
+        target.BaseSkills[i].SkillNum = luaData.moves[i]
+    end
+    target.MaxHPBonus = luaData.boosts.MHP
+    target.AtkBonus   = luaData.boosts.ATK
+    target.DefBonus   = luaData.boosts.DEF
+    target.MAtkBonus  = luaData.boosts.SAT
+    target.MDefBonus  = luaData.boosts.SDF
+    target.SpeedBonus = luaData.boosts.SPE
+    target.LuaData.StartData = nil
+    SV.RunData.CharCounter = SV.RunData.CharCounter-1
+end
