@@ -91,7 +91,7 @@ function intro_scene.CharacterSelect()
     GAME:CutsceneMode(true)
     UI:ResetSpeaker()
 
-    --move camera to arbitrary position. Partner and hero will spawn in at 0,0 when they're created, so this is done to hide that without extra hassle.
+    --move camera to arbitrary position. The character will spawn in at 0,0 when they're created, so this is done to hide that without extra hassle.
 	GAME:MoveCamera(300, 300, 1, false)
 
 	--initialize some save data
