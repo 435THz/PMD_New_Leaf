@@ -75,6 +75,10 @@ SV.Intro = {
     CafeRandomDiscovered = false
 }
 
+SV.RunData = {
+    Recruited = {},
+    Inventory = {}
+}
 
 -----------------------------------------------
 -- General Defaults - BASEGAME
