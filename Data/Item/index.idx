@@ -1,7 +1,314 @@
 ﻿{
-"Version": "0.8.5.0",
+"Version": "0.8.7.0",
 "Object": {
 "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
+"apricorn_big": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Big Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Grosse",
+"de": "Große Aprikoko",
+"it": "Ghicocca Grande",
+"ja": "でかぼんぐり",
+"ja-jp": "でかぼんぐり",
+"zh-hans": "大球果",
+"zh-hant": "大球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_black": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Black Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Noir",
+"de": "Schwarze Aprikoko",
+"it": "Ghicocca Nera",
+"ja": "くろぼんぐり",
+"ja-jp": "くろぼんぐり",
+"zh-hans": "黑球果",
+"zh-hant": "黑球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_blue": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Blue Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Bleu",
+"de": "Blaue Aprikoko",
+"it": "Ghicocca Blu",
+"ko": "파란규토리",
+"zh-hans": "蓝球果",
+"zh-hant": "藍球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_brown": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Brown Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Marron",
+"de": "Braune Aprikoko",
+"it": "Ghicocca Marrone",
+"ko": "갈색규토리",
+"ja": "ちゃぼんぐり",
+"ja-jp": "ちゃぼんぐり",
+"zh-hans": "棕球果",
+"zh-hant": "棕球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_glittery": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Glittery Apricorn",
+"LocalTexts": {
+"de": "Glitzernde Aprikoko",
+"it": "Ghicocca Scintillante",
+"zh-hans": "闪耀球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_green": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Green Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Vert",
+"de": "Grüne Aprikoko",
+"it": "Ghicocca Verde",
+"ko": "초록규토리",
+"zh-hans": "绿球果",
+"zh-hant": "綠球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_perfect": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Perfect Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Parfaite",
+"de": "Perfekte Aprikoko",
+"it": "Ghicocca Perfetta",
+"ko": "완벽규토리",
+"ja": "マスターぼんぐり",
+"ja-jp": "マスターぼんぐり",
+"zh-hans": "完美球果",
+"zh-hant": "完美球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_plain": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Plain Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Simple",
+"de": "Aprikoko",
+"it": "Ghicocca Base",
+"ko": "보통규토리",
+"ja": "ただのぼんぐり",
+"ja-jp": "ただのぼんぐり",
+"zh-hans": "平淡球果",
+"zh-hant": "平淡球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_purple": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Purple Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Mauve",
+"de": "Lilane Aprikoko",
+"it": "Ghicocca Viola",
+"ko": "보라규토리",
+"ja": "むらさきぼんぐり",
+"ja-jp": "むらさきぼんぐり",
+"zh-hans": "紫球果",
+"zh-hant": "紫球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_red": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Red Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Rouge",
+"de": "Rote Aprikoko",
+"it": "Ghicocca Rossa",
+"ko": "빨간규토리",
+"zh-hans": "红球果",
+"zh-hant": "紅球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_white": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "White Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Blanc",
+"de": "Weiße Aprikoko",
+"it": "Ghicocca Bianca",
+"ko": "하얀규토리",
+"zh-hans": "白球果",
+"zh-hant": "白球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
+"apricorn_yellow": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 11,
+"UsageType": 3,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.7.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.RecruitState"
+}
+],
+"Name": {
+"DefaultText": "Yellow Apricorn",
+"LocalTexts": {
+"fr": "Noigrume Jaune",
+"de": "Gelbe Aprikoko",
+"it": "Ghicocca Gialla",
+"ko": "노랑규토리",
+"zh-hans": "黄球果",
+"zh-hant": "黃球果"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 8
+},
 "box_dainty": {
 "$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
 "Icon": 17,
