@@ -32,6 +32,7 @@ end
 ---hub_small.Enter(map)
 --Engine callback function
 function hub_small.Enter(_)
+    GROUND:SetPlayer(_HUB.getFounder())
     if not SV.Intro.HubReached then
         if SV.Intro.HubTutorialProgress<1 then
             hub_small.veryFirstVisit()
@@ -261,7 +262,8 @@ function hub_small.Entrance_office_Touch(_, _)
 end
 
 function hub_small.Assembly_office_Action(obj, _)
-    COMMON.ShowTeamAssemblyMenu(obj, function() end)
+    local changed_func = function() GROUND:SetPlayer(_HUB.getFounder()) end
+    COMMON.ShowTeamAssemblyMenu(obj, changed_func)
 end
 
 function hub_small.NPC_1_Action(_, _)

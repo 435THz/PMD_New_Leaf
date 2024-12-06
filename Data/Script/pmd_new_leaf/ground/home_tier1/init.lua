@@ -32,6 +32,7 @@ end
 ---home_tier1.Enter(map)
 --Engine callback function
 function home_tier1.Enter(_)
+    GROUND:SetPlayer(_HUB.getFounder())
     local pattern, suffix = "HOME_MAP_PATTERN_TENT", "HOME_MAP_SUFFIX_TENT"
     if _HUB.getHubRank()>1 then
         pattern, suffix = "HOME_MAP_PATTERN_HOUSE", "HOME_MAP_SUFFIX_HOUSE"
