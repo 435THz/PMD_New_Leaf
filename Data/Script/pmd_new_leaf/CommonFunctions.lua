@@ -2,7 +2,7 @@
     A set of various scripting routines that can be useful pretty much anywhere
 ]]
 COMMON_FUNC = {}
-
+require 'pmd_new_leaf.CommonBattle'
 ------------------------------------------- TODO remove if empty at the end of the project
 --region Logic
 -------------------------------------------
@@ -36,13 +36,59 @@ end
 --region Table
 -------------------------------------------
 
----Checks if the table has at least length `min`
+---Creates a deep copy of a table and returns it.
+---this function checks for redundant paths to avoid infinite recursion.
+function table.deepcopy(orig, copies)
+    copies = copies or {}
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        if copies[orig] then
+            copy = copies[orig]
+        else
+            copy = {}
+            copies[orig] = copy
+            for orig_key, orig_value in next, orig, nil do
+                copy[table.deepcopy(orig_key, copies)] = table.deepcopy(orig_value, copies)
+            end
+            setmetatable(copy, table.deepcopy(getmetatable(orig), copies))
+        end
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+end
+
+---Thakes a list and returns a new, shuffled version of the integer pairs of the list.
+---The list is new, meaning that the original is unmodified, but the items inside are not copies.
+---Use table.deepcopy afterwards if you need to.
+---@param tbl table a table to shuffle
+---@return table a shuffled version of the table
+function table.shuffle(tbl)
+    local indices = table.get_keys(tbl, true)
+    local shuffled = {}
+    for _=1, #tbl, 1 do
+        local index, pos = COMMON_FUNC.WeightlessRoll(indices)
+        table.remove(indices, pos)
+        table.insert(shuffled, tbl[index])
+    end
+    return shuffled
+end
+
+---Returns all the keys inside a table
 ---@param tbl table a table
----@return boolean `true` if the table contains at least `min` entries, `false` otherwise.
-function table.get_keys(tbl)
+---@param int boolean if true, only integer keys that would be encountered starting from 1 will be returned. Defaults to false
+---@return table a list of all the keys of the table
+function table.get_keys(tbl, int)
     local keys = {}
-    for k in pairs(tbl) do
-        table.insert(keys, k)
+    if int then
+        for k in ipairs(tbl) do
+            table.insert(keys, k)
+        end
+    else
+        for k in pairs(tbl) do
+            table.insert(keys, k)
+        end
     end
     return keys
 end
