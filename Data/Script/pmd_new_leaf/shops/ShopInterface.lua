@@ -61,7 +61,7 @@ function _SHOP.ShopUpgradeFlow(index, building)
     return ret
 end
 
---- Runs the upgrade flow callback associated to thr given plot id's building.
+--- Runs the upgrade flow callback associated to the given plot id's building.
 --- @param index any home, office or any positive integer up to 15
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.UpgradeShop(index, upgrade)

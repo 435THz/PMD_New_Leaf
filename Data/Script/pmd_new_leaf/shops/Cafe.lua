@@ -237,7 +237,7 @@ _SHOP.CafeTables = {
             {Item = "boost_hp_up",   ReqItems = { { "berry_starf",  4 }}},
         },
         {
-            --TODO special stuff. I should make at least 5 or 6 recipes
+            --TODO special stuff. We should make at least 5 or 6 recipes
         }
     }
 }

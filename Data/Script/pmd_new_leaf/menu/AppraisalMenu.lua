@@ -5,12 +5,13 @@
 ]]
 
 
---- Menu used to view an exporter's stock and interact with it.
+--- Menu used to view an appraisal's stock and interact with it.
 AppraisalMenu = Class("AppraisalMenu")
 
 --- Creates a new ``AppraisalMenu`` instance using the provided plot data and callbacks.
 --- @param data table the shop's data table
 --- @param confirm_action function the function that is called when the confirm button is pressed
+--- @param refuse_action function the function that is called when the refuse button is pressed
 function AppraisalMenu:initialize(data, confirm_action, refuse_action)
 
     -- constants
