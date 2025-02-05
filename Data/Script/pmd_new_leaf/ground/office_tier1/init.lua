@@ -24,8 +24,8 @@ local office_tier1 = {}
 function office_tier1.Init(map)
     if SV.Intro.HubTutorialProgress<2 then
         GROUND:CharSetAnim(CH("Pelipper"), "Sleep", true)
-        GROUND:Hide("Pelipper")
     elseif SV.Intro.HubTutorialProgress<4 then
+        --TODO de-comment GROUND:Hide("Pelipper")
     end
 end
 
