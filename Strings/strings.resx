@@ -520,6 +520,18 @@
   <data name="MARKET_REPEAT" xml:space="preserve">
     <value>May I help you with anything else?</value>
   </data>
+  <data name="NEW_RUN_BOOSTS" xml:space="preserve">
+    <value>Boost limit: {0}</value>
+  </data>
+  <data name="NEW_RUN_MONEY" xml:space="preserve">
+    <value>\uE024 limit: {0}</value>
+  </data>
+  <data name="NEW_RUN_PROMPT" xml:space="preserve">
+    <value>Would you like to embark in a new adventure?</value>
+  </data>
+  <data name="NEW_RUN_TITLE" xml:space="preserve">
+    <value>Rules</value>
+  </data>
   <data name="OFFICE_ACTION_CONFIRM" xml:space="preserve">
     <value>Perfect.[pause=0] Your changes will be visible as soon as you leave the Office.</value>
   </data>
