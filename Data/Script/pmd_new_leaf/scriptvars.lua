@@ -50,6 +50,55 @@ SV.HubData = {
     }
 }
 
+SV.WishUpgrades = {
+    --- Upgrades related to the passage areas
+    Passages = {
+        --- If 1, Wishing Wells will spawn in the passage areas. They work like in hades
+        WishingWell = 0,
+        --- If 1, Assembly Boxes will spawn in the passage areas. You can only switch, not take.
+        --- The citizen will take the switched out mon's exact exp
+        AssemblyBox = 0,
+        --- Add this value to the base Item Box size. Meta currency items are always saved.
+        ItemBoxSize = 0,
+    },
+    --- Upgrades related to the dungeons themselves
+    Dungeons = {
+      --- Evolution Altars will spawn in dungeons in areas up to this value
+      EvoAltars = 0,
+      --- Merchants will spawn in dungeons in areas up to this value
+      Merchants = 0,
+      --- Wishing Wells will spawn in dungeons in areas up to this value
+      WishingWell = 0,
+      --- Secret Stairs will spawn in dungeons in areas up to this value
+      SecretStairs = 0,
+      --- Minibosses will spawn in dungeons in areas up to this value
+      Minibosses = 0,
+      --- Vault Floors will spawn in dungeons in areas up to this value
+      VaultFloors = 0,
+      --- Wishing Wells will spawn in dungeons in areas up to this value
+      WishingWell = 0,
+      --- Purify a Corrupted Wish to get lots of fragments. But, the removed corruption will spread back into the dungeons...
+      --- (acts like boss cells in Dead Cells after purifying)
+      WishesPurified = 0,
+      --- Currently selected difficulty level
+      CorruptionLevel = 0,
+    },
+    --- Upgrades related to the player
+    Player = {
+        --- Increase the money you can start a run with: 0 = 500, 1 = 750, 2 = 1000, 3 = 1500, 4 = 2000, 5 = 3000
+        StartingMoneyUp = 0,
+        --- You can enter dungeons with 2 members + this value. The in-dungeon limit is still 4, even when you can't start with that.
+        TeamLimitUp = 0,
+        --- Add 8 inventory slots
+        ExtraBags = 0,
+        --- Number of items you can start a run with. First upgrade is free as part of the tutorial.
+        StartItems = 0,
+        --- Increase the amount of Boost points kept at the start of a run. The limit is applied to each stat separately.
+        --- limit = this value * 32
+        StartBoosts = 0
+    }
+}
+
 SV.Intro = {
     --- true if the character creation sequence has been finished
     CharacterCreated = false,
