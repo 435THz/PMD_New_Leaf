@@ -1,0 +1,24 @@
+﻿{
+"Version": "0.8.8.0",
+"Object": {
+"$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
+"stairs_script_up": {
+"Name": {
+"DefaultText": "Stairs",
+"LocalTexts": {}
+},
+"Released": true,
+"Comment": "Up\r\nCalls ScriptState",
+"SortOrder": 0
+},
+"stairs_script_down": {
+"Name": {
+"DefaultText": "Stairs",
+"LocalTexts": {}
+},
+"Released": false,
+"Comment": "Down\r\nCalls ScriptState",
+"SortOrder": 0
+}
+}
+}
