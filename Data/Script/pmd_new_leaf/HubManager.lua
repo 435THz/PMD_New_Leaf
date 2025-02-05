@@ -65,8 +65,8 @@ _HUB.RankPlotMap = {"map_small", "map_medium", "map_large", "map_final"}
 _HUB.LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15}
 --- maps town plots to rank
 _HUB.RankPlotNumber = {3,6,10,15}
--- maps assembly limit to rank. TODO PROBABLY WILL BE SCRAPPED
-_HUB.LevelAssemblyLimit = {10,25,40,60,80,100,150,200,300,500}
+--- maps starting money limit to upgrade level
+_HUB.StartingMoneyTable = {[0] = 500,750,1000,1500,2000,3000}
 --- maps a list of map coordinates to every rank. Ground Map version.
 _HUB.PlotPositions = {
     -- rank 1
