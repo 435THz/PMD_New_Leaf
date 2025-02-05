@@ -119,10 +119,11 @@ SV.Intro = {
     --- 0 = nothing is done yet;
     --- 1 = tents built;
     --- 2 = first slept;
-    --- 3 = first run ended;
-    --- 4 = first shop built;
-    --- 5 = first upgrade done;
-    --- 6 = first town upgrade
+    --- 3 = pelipper left;
+    --- 4 = first run ended;
+    --- 5 = first shop built;
+    --- 6 = first upgrade done;
+    --- 7 = first town upgrade
     HubTutorialProgress = 0,
     --- false until players hover over something that has Random effects, true forever from then on
     CafeRandomDiscovered = false

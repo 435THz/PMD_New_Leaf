@@ -292,7 +292,7 @@ function _SHOP.OfficeInteract(_, _)
             -- INFO
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1'))
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2'))
-            if SV.Intro.ObtainedWishFragments or SV.Intro.HubTutorialProgress>=5 then
+            if SV.Intro.ObtainedWishFragments or SV.Intro.HubTutorialProgress>=6 then
                 if _HUB.getHubRank() == 1 then
                     UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3'))
                 elseif _HUB.getHubLevel() < 10 then

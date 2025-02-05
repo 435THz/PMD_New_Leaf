@@ -57,8 +57,8 @@ function home_tier1.Enter(_)
 
     local player = CH("PLAYER")
     if SV.HubData.RunEnded then
-        if SV.Intro.HubTutorialProgress==2 then
-            SV.Intro.HubTutorialProgress=3
+        if SV.Intro.HubTutorialProgress<4 then
+            SV.Intro.HubTutorialProgress=4
         end
 
         GAME:CutsceneMode(true)

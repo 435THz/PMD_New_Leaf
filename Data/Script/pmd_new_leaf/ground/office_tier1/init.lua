@@ -24,14 +24,9 @@ local office_tier1 = {}
 function office_tier1.Init(map)
     if SV.Intro.HubTutorialProgress<2 then
         GROUND:CharSetAnim(CH("Pelipper"), "Sleep", true)
-    elseif SV.Intro.HubTutorialProgress==2 then
         GROUND:Hide("Pelipper")
+    elseif SV.Intro.HubTutorialProgress<4 then
     end
-
-    --This will fill the localized strings table automatically based on the locale the game is
-    -- currently in. You can use the MapStrings table after this line!
-    
-
 end
 
 ---office_tier1.Enter(map)
@@ -72,7 +67,7 @@ function office_tier1.Pelipper_Talk_Action(obj, activator)
         UI:ResetSpeaker(false)
         UI:WaitShowDialogue("He seems to be sleeping.[pause=0] You probably shouldn't disturb him.")
         UI:ResetSpeaker()
-    elseif SV.Intro.HubTutorialProgress>2 then
+    elseif SV.Intro.HubTutorialProgress>1 then --TODO set back to >3
         _SHOP.ShopInteract("office")
     end
 end
