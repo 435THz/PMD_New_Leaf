@@ -1,5 +1,5 @@
 --[[
-    Appraisal.lua TODO barely even tested
+    Appraisal.lua TODO barely even tested ALSO add 1*  item swap
 
     Allows the player to sell items, albeit over time.
     This file contains all appraisal-specific callbacks and functionality data structures
