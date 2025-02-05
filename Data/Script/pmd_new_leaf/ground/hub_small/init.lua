@@ -48,6 +48,10 @@ function hub_small.Enter(_)
         else
             _HUB.ShowTitle()
         end
+        if SV.Intro.HubTutorialProgress<3 then
+            --hub_small.PelipperLeaves() --TODO
+            SV.Intro.HubTutorialProgress = 3
+        end
     end
 end
 
@@ -276,6 +280,10 @@ end
 
 function hub_small.NPC_3_Action(_, _)
     _SHOP.ShopInteract(3)
+end
+
+function hub_small.Run_Start_Touch(_, _)
+    COMMON_FUNC.StartNewRun()
 end
 
 return hub_small
