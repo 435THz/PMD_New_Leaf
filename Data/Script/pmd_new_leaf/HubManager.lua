@@ -571,8 +571,10 @@ end
 ---@param level number the level to set the hub to
 function _HUB.setHubLevel(level)
     SV.HubData.Level = level
-    _HUB.getPlotData("home").upgrades["upgrade_generic"] = level
-    _HUB.getPlotData("office").upgrades["upgrade_generic"] = level
+    _HUB.getPlotData("home").upgrades["upgrade_generic"] = level-1
+    _HUB.getPlotData("office").upgrades["upgrade_generic"] = level-1
+    _SHOP.UpgradeShop("home", "upgrade_generic")
+    _SHOP.UpgradeShop("office", "upgrade_generic")
 end
 
 ---Increases the hub's level by 1
@@ -612,8 +614,8 @@ function _HUB.initializePlotData()
             plot_base.upgrades["upgrade_generic"] = 1
             plot_base.empty = math.random(#_HUB.NotUnlockedVisuals.NonBlocking)
             if i==16 then
-                plot_base.building = "home"
                 SV.HubData.Home = plot_base
+                _SHOP.InitializeShop("home", "home")
             else
                 plot_base.building = "office"
                 SV.HubData.Office = plot_base
