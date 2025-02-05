@@ -22,7 +22,7 @@ local intro_scene = {}
 -------------------------------
 ---intro_scene.Init(map)
 --Engine callback function
-function intro_scene.Init(map)
+function intro_scene.Init(_)
 
     --This will fill the localized strings table automatically based on the locale the game is
     -- currently in. You can use the MapStrings table after this line!
@@ -32,34 +32,34 @@ end
 
 ---intro_scene.Enter(map)
 --Engine callback function
-function intro_scene.Enter(map)
+function intro_scene.Enter(_)
     intro_scene.PlotScripting()
 end
 
 ---intro_scene.Exit(map)
 --Engine callback function
-function intro_scene.Exit(map)
+function intro_scene.Exit(_)
 
 
 end
 
 ---intro_scene.Update(map)
 --Engine callback function
-function intro_scene.Update(map)
+function intro_scene.Update(_)
 
 
 end
 
 ---intro_scene.GameSave(map)
 --Engine callback function
-function intro_scene.GameSave(map)
+function intro_scene.GameSave(_)
 
 
 end
 
 ---intro_scene.GameLoad(map)
 --Engine callback function
-function intro_scene.GameLoad(map)
+function intro_scene.GameLoad(_)
     intro_scene.PlotScripting()
 end
 
