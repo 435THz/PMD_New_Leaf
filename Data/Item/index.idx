@@ -1,5 +1,5 @@
 ﻿{
-"Version": "0.8.7.0",
+"Version": "0.8.8.0",
 "Object": {
 "$type": "System.Collections.Generic.Dictionary`2[[System.String, System.Private.CoreLib],[RogueEssence.Data.EntrySummary, RogueEssence]], System.Private.CoreLib",
 "apricorn_big": {
@@ -410,6 +410,28 @@
 "Released": true,
 "Comment": "1* exclusive items",
 "SortOrder": 16
+},
+"machine_recall_box": {
+"$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",
+"Icon": 12,
+"UsageType": 2,
+"States": [
+{
+"assembly": "PMDC, Version=0.8.8.0, Culture=neutral, PublicKeyToken=null",
+"type": "PMDC.Dungeon.MachineState"
+}
+],
+"Name": {
+"DefaultText": "Recall Box",
+"LocalTexts": {
+"de": "Abrufbox",
+"it": "Tecaricordo",
+"zh-hans": "招式回忆箱"
+}
+},
+"Released": true,
+"Comment": "",
+"SortOrder": 12
 },
 "loot_wish_fragment": {
 "$type": "RogueEssence.Data.ItemEntrySummary, RogueEssence",

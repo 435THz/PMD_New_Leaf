@@ -1,0 +1,17 @@
+﻿{
+  "Version": [
+    "0.0",
+    "0.8.8.0"
+  ],
+  "Object": {
+    "GroundUseActions": {
+      "_t": "a",
+      "0": {
+        "Selection": [
+          1,
+          0
+        ]
+      }
+    }
+  }
+}
