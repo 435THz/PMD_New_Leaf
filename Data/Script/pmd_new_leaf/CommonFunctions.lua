@@ -38,30 +38,33 @@ end
 
 ---Creates a deep copy of a table and returns it.
 ---this function checks for redundant paths to avoid infinite recursion.
-function table.deepcopy(orig, copies)
-    copies = copies or {}
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        if copies[orig] then
-            copy = copies[orig]
-        else
-            copy = {}
-            copies[orig] = copy
-            for orig_key, orig_value in next, orig, nil do
-                copy[table.deepcopy(orig_key, copies)] = table.deepcopy(orig_value, copies)
+---@param tbl table the table to deep copy
+function table.deepcopy(tbl)
+    local deepcopy = function(orig, copies)
+        local orig_type = type(orig)
+        local copy
+        if orig_type == 'table' then
+            if copies[orig] then
+                copy = copies[orig]
+            else
+                copy = {}
+                copies[orig] = copy
+                for orig_key, orig_value in next, orig, nil do
+                    copy[table.deepcopy(orig_key, copies)] = table.deepcopy(orig_value, copies)
+                end
+                setmetatable(copy, table.deepcopy(getmetatable(orig), copies))
             end
-            setmetatable(copy, table.deepcopy(getmetatable(orig), copies))
+        else -- number, string, boolean, etc
+            copy = orig
         end
-    else -- number, string, boolean, etc
-        copy = orig
+        return copy
     end
-    return copy
+    return deepcopy(tbl, {})
 end
 
----Thakes a list and returns a new, shuffled version of the integer pairs of the list.
----The list is new, meaning that the original is unmodified, but the items inside are not copies.
----Use table.deepcopy afterwards if you need to.
+---Takes a list and returns a new, shuffled version of the integer pairs in the list.
+---The returned list is new, meaning that tbl is left unmodified, but the items inside are not copies.
+---Use table.deepcopy afterwards if you need to edit them.
 ---@param tbl table a table to shuffle
 ---@return table a shuffled version of the table
 function table.shuffle(tbl)
