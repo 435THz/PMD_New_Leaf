@@ -46,7 +46,7 @@ function home_tier1.Enter(_)
         local size = 16
         local rect = RogueElements.Rect.FromPoints(RogueElements.Loc(x,y), RogueElements.Loc(x+size, y+size))
 
-        local trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.Action
+        local trigger = RogueEssence.Ground.GroundEntity.EEntityTriggerTypes.Touch
         local name = "Bed"
         local obj = RogueEssence.Ground.GroundObject(anim, RogueElements.Dir8.Down, rect, RogueElements.Loc(), trigger, true, name)
         obj.Passable = true
@@ -125,7 +125,7 @@ function home_tier1.Exit_Touch(_, _)
     _HUB.SetMarker(pos.X + marker.X, pos.Y + marker.Y)
 end
 
-function home_tier1.Bed_Action(_, _)
+function home_tier1.Bed_Touch(_, _)
     if SV.Intro.HubTutorialProgress<2 then
         UI:ChoiceMenuYesNo("Do you want to sleep?", false)
         UI:WaitForChoice()
