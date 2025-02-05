@@ -165,6 +165,66 @@ end
 --region COMMON+
 -------------------------------------------
 
+function COMMON_FUNC.StartNewRun()
+    if not DungeonRestrictionMenu.run() then
+        return
+    end
+    if not _SHOP.StorageCanStoreInventory() then
+        UI:WaitShowDialogue(STRINGS:FormatKey("NEW_RUN_DEPOSIT_FAIL"))
+        return
+    end
+    -- team remove
+    for i= _DATA.Save.ActiveTeam.Players.Count-1, 0, -1 do
+        if i >= SV.WishUpgrades.Player.TeamLimitUp+2 then
+            _GROUND:SilentSendHome(i)
+        else
+            COMMON_FUNC.SaveStartData(_DATA.Save.ActiveTeam.Players[i])
+        end
+    end
+    -- money deposit
+    local moneyLimit = _HUB.StartingMoneyTable[SV.WishUpgrades.Player.StartingMoneyUp]
+    local moneyToStore = math.max(0, GAME:GetPlayerMoney() - moneyLimit)
+    GAME:RemoveFromPlayerMoney(moneyToStore)
+    GAME:AddToPlayerMoneyBank(moneyToStore)
+    -- item deposit TODO either ignore exclusive or add upgrade that does that
+    local eq = GAME:GetPlayerEquippedCount()
+    local items = GAME:GetPlayerBagCount()
+    local invLimit = SV.WishUpgrades.Player.StartItems
+    local maxItems = math.max(0, invLimit - eq)
+    local maxEq = invLimit
+    local j = items-1
+    while j >= maxItems do
+        local item = GAME:GetPlayerBagItem(j)
+        GAME:TakePlayerBagItem(j, true)
+        GAME:GivePlayerStorageItem(item)
+        j = j -1
+    end
+    j = _DATA.Save.ActiveTeam.Players.Count-1
+    while eq >= maxEq do
+        local item = GAME:GetPlayerEquippedItem(j)
+        if item ~= nil and item.ID ~~ "" then
+            GAME:TakePlayerEquippedItem(j, true)
+            GAME:GivePlayerStorageItem(item)
+            eq = eq - 1
+        end
+        j = j -1
+    end
+    -- bonus limiting
+    local maxBoost = SV.WishUpgrades.Player.StartBoosts * 32
+    for i=0, _DATA.Save.ActiveTeam.Players.Count-1, 1 do
+        local char = _DATA.Save.ActiveTeam.Players[i]
+        COMMON_FUNC.SaveStartData(char)
+        char.MaxHPBonus = math.min(char.MaxHPBonus, maxBoost)
+        char.AtkBonus   = math.min(char.AtkBonus,   maxBoost)
+        char.DefBonus   = math.min(char.DefBonus,   maxBoost)
+        char.MAtkBonus  = math.min(char.MAtkBonus,  maxBoost)
+        char.MDefBonus  = math.min(char.MDefBonus,  maxBoost)
+        char.SpeedBonus = math.min(char.SpeedBonus, maxBoost)
+
+    end
+    GAME:EnterDungeon("ancient_trail", 0, 0, 0, RogueEssence.Data.GameProgress.DungeonStakes.Risk, true, true)
+end
+
 function COMMON_FUNC.EndSessionWithResults(result, zoneId, structureId, mapId, entryId)
     GAME:EndDungeonRun(result, zoneId, structureId, mapId, entryId, true, true)
     GAME:EnterZone(zoneId, structureId, mapId, entryId)
