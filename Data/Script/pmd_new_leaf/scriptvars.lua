@@ -64,6 +64,10 @@ SV.Intro = {
     --- true if the hub has been reached
     HubReached = false,
     --- 0 = nothing is done yet;
+    --- 1-5 = intro tutorials;
+    --- 6+  = dungeon tutorial proper
+    DungeonTutorialProgress = 0,
+    --- 0 = nothing is done yet;
     --- 1 = tents built;
     --- 2 = first slept;
     --- 3 = first run ended;
