@@ -186,7 +186,7 @@ function COMMON_FUNC.StartNewRun()
     local moneyToStore = math.max(0, GAME:GetPlayerMoney() - moneyLimit)
     GAME:RemoveFromPlayerMoney(moneyToStore)
     GAME:AddToPlayerMoneyBank(moneyToStore)
-    -- item deposit TODO either ignore exclusive or add upgrade that does that
+    -- item deposit
     local eq = GAME:GetPlayerEquippedCount()
     local items = GAME:GetPlayerBagCount()
     local invLimit = SV.WishUpgrades.Player.StartItems
@@ -195,16 +195,20 @@ function COMMON_FUNC.StartNewRun()
     local j = items-1
     while j >= maxItems do
         local item = GAME:GetPlayerBagItem(j)
-        GAME:TakePlayerBagItem(j, true)
-        GAME:GivePlayerStorageItem(item)
+        if not _DATA:GetItem(item.ID).CannotDrop then
+            GAME:TakePlayerBagItem(j, true)
+            GAME:GivePlayerStorageItem(item)
+        end
         j = j -1
     end
     j = _DATA.Save.ActiveTeam.Players.Count-1
     while eq >= maxEq do
         local item = GAME:GetPlayerEquippedItem(j)
         if item ~= nil and item.ID ~~ "" then
-            GAME:TakePlayerEquippedItem(j, true)
-            GAME:GivePlayerStorageItem(item)
+            if not _DATA:GetItem(item.ID).CannotDrop then
+                GAME:TakePlayerEquippedItem(j, true)
+                GAME:GivePlayerStorageItem(item)
+            end
             eq = eq - 1
         end
         j = j -1
