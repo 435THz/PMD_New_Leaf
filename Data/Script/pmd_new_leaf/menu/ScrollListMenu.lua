@@ -16,7 +16,7 @@ ScrollListMenu = Class("ScrollListMenu")
 --- @param start number the 1-based index of the option that will be selected at the start. Defaults to 1
 --- @param min_width number the minimum width tis menu can have. The actual width will be calculated depending on the options' text.
 --- @param no_expand boolean if true, the menu will not be expanded horizontally even if the text of some options can't fit
---- @param max_elem number the maximum number of elements allowed on screen at the same time. It must be at least 3. Defaults to 8.
+--- @param max_elem? number the maximum number of elements allowed on screen at the same time. It must be at least 3. Defaults to 8.
 function ScrollListMenu:initialize(x, y, options, callback, start, min_width, no_expand, max_elem)
     assert(self, "RecruitMainChoice:initialize(): self is nil!")
     self.selected = 1 --cursor position inside full list

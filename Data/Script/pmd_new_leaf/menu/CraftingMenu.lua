@@ -54,7 +54,7 @@ function CraftingMenu:generate_lists(recipes)
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return table #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
 function CraftingMenu:generate_options()
     local options = {}
     for i=1, #self.items, 1 do

@@ -8,6 +8,12 @@
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'pmd_new_leaf.menu.office.ShopSubUpgradeMenu'
 
+---@alias MarketPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:MarketData,empty:integer}
+---@alias MarketData {stock:MarketEntry,categories:table<string,MarketCategory>,specialization:MarketSpecialization,discount:boolean}
+---@alias MarketCategory {slots:integer,tier:integer}
+---@alias MarketSpecialization ""|"ammo"|"orbs"|"recruitment"|"survival"|"tm"|"utilities"|"wands"
+---@alias MarketEntry {Index:string,Amount?:integer,Price:integer}
+
 _SHOP.MarketTables = {
     MarketPools = {
         survival = {
@@ -157,6 +163,8 @@ _SHOP.MarketTables = {
     sub_order = {"sub_survival", "sub_recruitment", "sub_utilities", "sub_ammo", "sub_wands", "sub_orbs", "sub_tm"}
 }
 
+---Initializes a market shop's specific data
+---@param plot MarketPlot the plot's data structure
 function _SHOP.MarketInitializer(plot)
     plot.data = {
         stock = {},
@@ -166,6 +174,11 @@ function _SHOP.MarketInitializer(plot)
     }
 end
 
+---Runs the upgrade flow for the specified market, letting the player choose which upgrades to apply
+---@param plot MarketPlot the plot's data structure
+---@param index integer the plot index number
+---@param shop_id? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return string|false #an upgrade to apply, or false if none was chosen
 function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local upgrade = ""
@@ -188,12 +201,12 @@ function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
             if upgrade == "" then
                 upgrade = keys[1]
             else
-                return
+                return false
             end
         else
             upgrade, up_start = ShopUpgradeMenu.run(tree, keys, index, up_start)
         end
-        if upgrade == "exit" then return end
+        if upgrade == "exit" then return false end
         local sub_start
         local loop2 = true
         while loop2 do
@@ -231,6 +244,9 @@ function _SHOP.MarketUpgradeFlow(plot, index, shop_id)
     end
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot MarketPlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.MarketUpgrade(plot, upgrade)
     local pool = ""
     if string.match(upgrade, "sub_survival") then
@@ -278,6 +294,8 @@ function _SHOP.MarketUpgrade(plot, upgrade)
     end
 end
 
+---Restocks the market
+---@param plot MarketPlot the plot's data structure
 function _SHOP.MarketRestock(plot)
     local stock = {}
     local specialization_items = {}
@@ -308,17 +326,24 @@ function _SHOP.MarketRestock(plot)
     plot.data.stock = stock
 end
 
+---Rolls a single shop entry from a pool and returns it
+---@param pool_id string a pool id to roll for
+---@param tier integer the tier that pool is currently at
+---@return MarketEntry|nil #a market entry if one was selected, otherwise nil
 function _SHOP.MarketRoll(pool_id, tier)
     local pool = _SHOP.MarketTables.MarketPools[pool_id]
 
     local roll_table = pool[1]
-    if tier == 2 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll({pool[1], pool[2]})
-    elseif tier == 3 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll(pool) end
+    if tier == 2 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll({pool[1], pool[2]}) --[[@as table]]
+    elseif tier == 3 then roll_table = COMMON_FUNC.LengthWeightedTableListRoll(pool)  --[[@as table]] end
     local result = COMMON_FUNC.WeightlessRoll(roll_table)
     if result then return { Index = result.Index, Amount = result.Amount, Price = result.Price} end
     return nil
 end
 
+---Runs the interact flow for the given market, letting the player interact with the shop
+---@param plot MarketPlot the plot's data structure
+---@param index integer the plot index number
 function _SHOP.MarketInteract(plot, index)
     local catalog = { }
     for i = 1, #plot.data.stock, 1 do
@@ -408,6 +433,7 @@ function _SHOP.MarketInteract(plot, index)
     end
 end
 
+---Loads all TMs in the tm market pool. Cost and tier are based on the number of PP the moves have.
 function _SHOP.MarketLoadTMs()
     _SHOP.MarketTables.MarketPools.tm = {{},{},{}}
                           --1   2   3   4   5   6   7   8   9   10  11  12  13  14  15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31+
@@ -434,6 +460,9 @@ function _SHOP.MarketLoadTMs()
     end
 end
 
+---Returns the description that will be used for this shop in the office menu.
+---@param plot MarketPlot the plot's data structure
+---@return string #the plot's description
 function _SHOP.MarketGetDescription(plot)
     local l = {}
     for pool in pairs(plot.data.categories) do

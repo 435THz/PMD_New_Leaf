@@ -53,9 +53,11 @@ function SwapTributeMenu:initialize(confirm_action, refuse_action, choices)
 end
 
 --- Loads the item slots that will be part of the menu.
---- @return table, table an invSlot list and an InvItem list
+--- @return string[], table<string,integer> #a list of item ids and a table associating every id to its respective item amount
 function SwapTributeMenu:load_slots()
+    ---@type table<string,integer>
     local items = {}
+    ---@type string[]
     local ids = {}
 
     -- add equipped items
@@ -108,7 +110,7 @@ function SwapTributeMenu:load_slots()
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return table, {item:string,amount:integer}[] #a list of ``RogueEssence.Menu.MenuElementChoice`` objects and its corresponding list of option entries.
 function SwapTributeMenu:generate_options()
     local options = {}
     local optionData = {}
@@ -189,7 +191,7 @@ end
 
 --- Extract the list of selected slots.
 --- @param list table a table array containing the menu indices of the chosen items.
---- @return table a table array containing item ids.
+--- @return table #a table array containing item ids.
 function SwapTributeMenu:multiConfirm(list)
     local result = {}
     for _, index in pairs(list) do
@@ -205,8 +207,8 @@ end
 
 
 --- Creates a basic ``SwapTributeMenu`` instance using the provided parameters, then runs it and returns its output.
---- @param max_choices boolean if set, it will never be possible to select more than the amount of items defined here. Defaults to the amount of selectable items.
---- @return table a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
+--- @param max_choices integer The amount of items to select.
+--- @return table #a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
 function SwapTributeMenu.run(max_choices)
     local ret = {}
     local choose = function(list) ret = list end

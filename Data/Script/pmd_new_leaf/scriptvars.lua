@@ -22,6 +22,7 @@
 -----------------------------------------------
 -- General Defaults
 -----------------------------------------------
+
 SV.adventure =
 {
     Thief    = false
@@ -36,14 +37,22 @@ SV.missions =
 -----------------------------------------------
 -- Level Specific Defaults
 -----------------------------------------------
+
 SV.HubData = {
-    RunEnded = false, -- if true, teleporting the player to their home will play the wake up cutscene and set this back to false.
-    SkipNextMorning = false, -- if true, the next wake up cutscene will skip the next morning message and set this back to false
-    Marker = nil,     -- if set, the character will be teleported here upon hub load, and then this will be cleared.
-    Level = 1,        -- 1 to 10
-    Name = "Base",    -- without rank suffix. can be changed from rank 2 onwards
-    UseSuffix = true, -- can only be turned off at rank 4
-    Plots = {},       -- contains plot struct. See HubManager.lua for details
+    ---@type boolean if true, teleporting the player to their home will play the wake up cutscene and set this back to false.
+    RunEnded = false,
+    ---@type boolean if true, the next wake up cutscene will skip the next morning message and set this back to false
+    SkipNextMorning = false,
+    ---@type Loc if set, the character will be teleported here upon hub load, and then this will be cleared.
+    Marker = nil,
+    ---@type integer 1 to 10
+    Level = 1,
+    ---@type string without rank suffix. can be changed from rank 2 onwards
+    Name = "Base",
+    ---@type boolean can only be turned off starting from rank 4
+    UseSuffix = true,
+    ---@type PlotData[] contains plot struct. See HubManager.lua for details
+    Plots = {},
     Quests = {
         Unlocked = {},
         Completed = {}
@@ -75,8 +84,6 @@ SV.WishUpgrades = {
       Minibosses = 0,
       --- Vault Floors will spawn in dungeons in areas up to this value
       VaultFloors = 0,
-      --- Wishing Wells will spawn in dungeons in areas up to this value
-      WishingWell = 0,
       --- Purify a Corrupted Wish to get lots of fragments. But, the removed corruption will spread back into the dungeons...
       --- (acts like boss cells in Dead Cells after purifying)
       WishesPurified = 0,
@@ -100,22 +107,24 @@ SV.WishUpgrades = {
 }
 
 SV.Intro = {
-    --- true if the character creation sequence has been finished
+    ---@type boolean true if the character creation sequence has been finished
     CharacterCreated = false,
-    --- true if the starting Ruined Path cutscene happened
+    ---@type boolean true if the starting Ruined Path cutscene happened
     PelipperIntro = false,
-    --- true if the player was told about saving from the menu
+    ---@type boolean true if the player was told about saving from the menu
     SaveReminder = false,
-    --- if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
+    ---@type boolean if true, there will be a return-to-entrance cutscene when coming back to Ruined Path and this will be set to false again.
     DungeonFailed = false,
-    --- if true, then Jirachi will appear
+    ---@type boolean if true, then Jirachi will appear
     ObtainedWishFragments = false,
-    --- true if the hub has been reached
+    ---@type boolean true if the hub has been reached
     HubReached = false,
+    ---@type integer
     --- 0 = nothing is done yet;
     --- 1-5 = intro tutorials;
     --- 6+  = dungeon tutorial proper
     DungeonTutorialProgress = 0,
+    ---@type integer
     --- 0 = nothing is done yet;
     --- 1 = tents built;
     --- 2 = first slept;
@@ -125,7 +134,7 @@ SV.Intro = {
     --- 6 = first upgrade done;
     --- 7 = first town upgrade
     HubTutorialProgress = 0,
-    --- false until players hover over something that has Random effects, true forever from then on
+    ---@type boolean false until players hover over something that has Random effects, true forever from then on
     CafeRandomDiscovered = false
 }
 
@@ -175,6 +184,7 @@ SV.magnagate =
 -----------------------------------------------
 -- Level Specific Defaults - BASEGAME
 -----------------------------------------------
+
 SV.test_grounds =
 {
     SpokeToPooch = false,

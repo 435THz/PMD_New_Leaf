@@ -7,12 +7,18 @@
 _SHOP = {}
 _SHOP.Order = {"home", "office", "market", "exporter", "tutor", "appraisal", "trader", "cafe"}
 _SHOP.callbacks = {
-    initialize =   {}, --arguments: plot
-    upgrade_flow = {}, --arguments: plot, index, npc
-    upgrade =      {}, --arguments: plot, upgrade
-    endOfDay =     {}, --arguments: plot
-    interact =     {}, --arguments: plot, index
-    description =  {}  --arguments: plot
+    ---@type (fun(plot:PlotData))[]
+    initialize =   {},
+    ---@type (fun(plot:PlotData,index:PlotIndex,building:BuildingID):string|false)[]
+    upgrade_flow = {},
+    ---@type (fun(plot:PlotData,upgrade:string))[]
+    upgrade =      {},
+    ---@type (fun(plot:PlotData))[]
+    endOfDay =     {},
+    ---@type (fun(plot:PlotData,index:PlotIndex))[]
+    interact =     {},
+    ---@type (fun(plot:PlotData):string)[]
+    description =  {}
 }
 
 require 'pmd_new_leaf.shops.Appraisal'
@@ -24,20 +30,22 @@ require 'pmd_new_leaf.shops.Trader'
 require 'pmd_new_leaf.shops.Tutor'
 
 --- Runs the initialize callback associated to the given plot id's building.
---- @param index any home, office or any positive integer up to 15
---- @param building string a building id. It is only considered if no building exists in the given plot yet
+--- @param index PlotIndex home, office or any positive integer up to 15
+--- @param building? BuildingID a building id. It is only considered if no building exists in the given plot yet
 function _SHOP.InitializeShop(index, building)
     local plot = _HUB.getPlotData(index)
     if plot.building and plot.building ~= "" then building = plot.building end
     if _SHOP.callbacks.initialize[building] then
         _SHOP.callbacks.initialize[building](plot)
-        plot.building = building
+        plot.building = building --[[@as BuildingID]]
         PrintInfo("Initialized shop "..index)
     else
         plot.building = "" -- reset if invalid
     end
 end
 
+--- Applies the final changes after a newly built shop is initialized.
+--- @param index PlotIndex home, office or any positive integer up to 15
 function _SHOP.FinalizeShop(index)
     local plot = _HUB.getPlotData(index)
     local db = _HUB.ShopBase[plot.building]
@@ -47,14 +55,16 @@ function _SHOP.FinalizeShop(index)
 end
 
 --- Runs the upgrade_flow callback associated to the given plot id's building.
---- @param index any home, office or any positive integer up to 15
---- @param building string a building id. It is only considered if no building exists in the given plot yet
---- @return string an upgrade to apply
+--- @param index PlotIndex home, office or any positive integer up to 15
+--- @param building? BuildingID a building id. It is only considered if no building exists in the given plot yet
+--- @return string|false #an upgrade to apply, or false if none was chosen
 function _SHOP.ShopUpgradeFlow(index, building)
     local plot = _HUB.getPlotData(index)
     if plot.building and plot.building ~= "" then building = plot.building end
+    ---@type string|false
     local ret = false
     if _SHOP.callbacks.upgrade_flow[building] then
+        ---@cast building -?
         ret = _SHOP.callbacks.upgrade_flow[building](plot, index, building)
         PrintInfo("Ran upgrade flow for shop "..index)
     end
@@ -62,7 +72,7 @@ function _SHOP.ShopUpgradeFlow(index, building)
 end
 
 --- Runs the upgrade flow callback associated to the given plot id's building.
---- @param index any home, office or any positive integer up to 15
+--- @param index PlotIndex home, office or any positive integer up to 15
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.UpgradeShop(index, upgrade)
     local plot = _HUB.getPlotData(index)
@@ -86,7 +96,7 @@ function _SHOP.OnDayEnd()
 end
 
 --- Runs the endOfDay callback associated to the given plot id's building.
---- @param index any home, office or any positive integer up to 15
+--- @param index PlotIndex home, office or any positive integer up to 15
 function _SHOP.EndOfDay(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.endOfDay[plot.building] then
@@ -96,7 +106,7 @@ function _SHOP.EndOfDay(index)
 end
 
 --- Runs the interact callback associated to the given plot id's building.
---- @param index any home, office or any positive integer up to 15
+--- @param index PlotIndex home, office or any positive integer up to 15
 function _SHOP.ShopInteract(index)
     local plot = _HUB.getPlotData(index)
     if _SHOP.callbacks.interact[plot.building] then
@@ -117,7 +127,7 @@ end
 
 --- Should only be called by a shop's upgrade callback when all validity checks have been ran successfully.
 --- It adds the upgrade to the given shop structure.
---- @param plot table the plot's data structure
+--- @param plot PlotData the plot's data structure
 --- @param upgrade string the upgrade to be applied to the building
 function _SHOP.ConfirmShopUpgrade(plot, upgrade)
     if plot.upgrades[upgrade] then
@@ -128,7 +138,8 @@ function _SHOP.ConfirmShopUpgrade(plot, upgrade)
 end
 
 --- Returns the plot's description used by the plot management menu.
---- @param plot table the plot's data structure
+--- @param plot PlotData the plot's data structure
+--- @return string? #the description to be displayed
 function _SHOP.GetPlotDescription(plot, index)
     if _SHOP.callbacks.description[plot.building] then
         return _SHOP.callbacks.description[plot.building](plot)
@@ -157,8 +168,8 @@ end
 
 ---Returns the cost of an upgrade at a specific level.
 ---@param upgrade string an upgrade id
----@param level number the level to calculate the upgrade cost of
----@return table a list of `{item = string, amount = number}` values
+---@param level integer the level to calculate the upgrade cost of
+---@return ItemEntry[] #a list of `{item = string, amount = number}` values
 function _SHOP.GetUpgradeCost(upgrade, level)
     local lv = level
     local ret = {}
@@ -177,8 +188,8 @@ end
 ---Returns the cost of an upgrade at a specific level.
 ---@param upgrade string an upgrade id
 ---@param sub_choice string a sub_choice id
----@param level number the level to which to calculate the upgrade cost
----@return table a list of `{item = string, amount = number}` values
+---@param level integer the level to which to calculate the upgrade cost
+---@return ItemEntry[] #a list of `{item = string, amount = number}` values
 function _SHOP.GetFullUpgradeCost(upgrade, sub_choice, level)
     local res = _SHOP.GetUpgradeCost(upgrade, level)
     COMMON_FUNC.MergeItemLists(res, _SHOP.GetUpgradeCost(sub_choice, level))
@@ -187,20 +198,22 @@ end
 
 ---Builds the upgrade tree for the specified plot at the specified level.
 ---@param plot_id any home, office or any positive integer up to 15
----@param level number the target level to generate the upgrade tree for
----@param building string a building id. It is only considered if no building exists in the given plot yet
----@return table an upgrade tree
+---@param level integer the target level to generate the upgrade tree for
+---@param building? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return UpgradeTree, string[] #an upgrade tree, and the keys corresponding to the surface level entries
 function _SHOP.MakeUpgradeTree(plot_id, level, building)
     local plot = _HUB.getPlotData(plot_id)
     if plot.building and plot.building ~= "" then building = plot.building end
     local keys = {}
+    ---@type UpgradeTree
     local structure = {}
-    local upgrades = _HUB.ShopBase[building].Upgrades[level]
+    local upgrades = _HUB.ShopBase[building].Upgrades[level] --[[@as string[] ]]
     for _, upgrade in pairs(upgrades) do
         local data = _HUB.UpgradeTable[upgrade]
+        ---@type UpgradeBranch
         local branch = {
             has_sub = false,
-            sub = nil, -- {string}
+            sub = nil
         }
         local add = (not data.sub_choices) or #data.sub_choices==0
         if data.per_sub_choice then
@@ -227,25 +240,31 @@ function _SHOP.MakeUpgradeTree(plot_id, level, building)
     return structure, keys
 end
 
+---Checks if the plot contains all necessary requirements for a specific upgrade
+---@param requirements string[] the list of requirements this upgrade has
+---@param upgrade string the upgrade to test for
+---@param plot PlotData the plot's data structure
+---@param sub? string used to test sub-choices. Can be nil. If set, it will check for the specific sub-choice
+---@return boolean #true if all requirements are met, false otherwise
 function _SHOP.CheckUpgradeRequirements(requirements, upgrade, plot, sub)
     local formatted = upgrade
     if sub then formatted = STRINGS:Format("{0}_{1}", upgrade, sub) end
-    local level = math.max(0, plot.upgrades[formatted] or 0)
+    local level = math.max(0, #plot.upgrades[formatted] or 0)
     local max = _HUB.UpgradeTable[upgrade].max or 10
     if level >= max then return false end
-    for _, requirement in pairs(requirements) do
-        local neg = string.sub(requirement, 1, 1) == "!"
+    for _, requirement in pairs(requirements) do --requirement example: "!upgrade_generic:4"
+        local neg = string.sub(requirement, 1, 1) == "!" --in the example, neg would be true
         local min_lv = 1
-        local match_lv = string.match(requirement, ":%d+$")
-        if match_lv then min_lv = tonumber(string.sub(match_lv, 2)) or min_lv end
+        local match_lv = string.match(requirement, ":%d+$") --in the example, match_lv would be ":4"
+        if match_lv then min_lv = tonumber(string.sub(match_lv, 2)) or min_lv end --in the example, min_lv would be 4
         local s, e = 1, string.len(requirement)
         if neg then s = 2 end
         if match_lv then e = e-string.len(match_lv) end
-        local req = string.sub(requirement, s, e)
+        local req = string.sub(requirement, s, e) -- in the example, req would be "upgrade_generic"
 
-        local check = neg
+        local check = neg  --in the example, check would be true here
         if plot.upgrades[req] and plot.upgrades[req] >= min_lv then
-            check = not check
+            check = not check --in the example, check would be false if the plot has 4 or more "upgrade_generic"s
         end
         if check == false then return false end
     end
@@ -253,10 +272,16 @@ function _SHOP.CheckUpgradeRequirements(requirements, upgrade, plot, sub)
 end
 
 
+---Checks if the plot contains all necessary requirements for a specific sub-upgrade branch
+---@param requirements string[] the list of requirements this upgrade has
+---@param upgrade string the upgrade to test for
+---@param sub_choice string the specific sub_choice to test for
+---@param plot PlotData the plot's data structure
+---@return boolean #true if all requirements are met, false otherwise
 function _SHOP.CheckSubUpgradeRequirements(requirements, upgrade, sub_choice, plot)
     local formatted = {}
-    for _, requirement in pairs(requirements) do
-        table.insert(formatted, STRINGS:Format(requirement, sub_choice))
+    for _, requirement in pairs(requirements) do --requirement example: "market_unlock_{0}"
+        table.insert(formatted, STRINGS:Format(requirement, sub_choice)) --sub {0} out with the sub_choice in question
     end
     return _SHOP.CheckUpgradeRequirements(formatted, upgrade, plot, sub_choice)
 end

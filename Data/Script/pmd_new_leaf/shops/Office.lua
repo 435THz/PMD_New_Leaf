@@ -11,10 +11,16 @@ require 'pmd_new_leaf.menu.office.ShopManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotBuildMenu'
 require 'pmd_new_leaf.menu.office.ShopMoveMenu'
 
+---@alias OfficePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:OfficeData,empty:integer}
+---@alias OfficeData {}
+
+---Refreshes the quest board in the office
+---@param plot OfficePlot the plot's data structire
 function _SHOP.OfficeUpdate(plot)
     --TODO refresh quests
 end
 
+---Runs the interact flow for the town office
 function _SHOP.OfficeInteract(_, _)
     local npc = CH("Pelipper")
     local player = CH("PLAYER")
@@ -43,7 +49,7 @@ function _SHOP.OfficeInteract(_, _)
             while loop do
                 local chosen
                 -- BASE TOWN MENU
-                chosen, town_start = TownManagerMenu.run(town_start)
+                chosen = TownManagerMenu.run(town_start) --always slot 1 because it'll probably be the most used
                 PrintInfo("Result is "..tostring(chosen))
                 if chosen == "buildings" then
                     -- PLOT MANAGEMENT FLOW

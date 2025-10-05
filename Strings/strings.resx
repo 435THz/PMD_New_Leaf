@@ -397,6 +397,9 @@
   <data name="HOME_MAP_SUFFIX_TENT" xml:space="preserve">
     <value>Tent</value>
   </data>
+  <data name="HUB_DEPOSIT_FAIL" xml:space="preserve">
+    <value>Your deposit is too full.[pause=0] You'll need to get rid of some items,[pause=10] first.</value>
+  </data>
   <data name="HUB_PATTERN_SMALL" xml:space="preserve">
     <value>{0} {1}</value>
   </data>

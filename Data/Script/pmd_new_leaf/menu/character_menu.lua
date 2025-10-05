@@ -647,7 +647,7 @@ function CharacterSelectionMenu()
         local cb = function(move, index)
             self.data.egg_move = move
             self.data.egg_move_index = index-1
-            self:updateWindows(false, true, false)
+            self:updateWindows(false, true)
         end
         local sub_menu = CharacterEggMoveMenu:new(self, cb)
         _MENU:AddMenu(sub_menu.menu, true)
@@ -1150,7 +1150,7 @@ function CharacterSelectionMenu()
 
         --Index   Species
         for i=1, 3, 1 do
-            local index = ""
+            local index
             local mon= ""
             local index_text = ""
             local mon_text= ""

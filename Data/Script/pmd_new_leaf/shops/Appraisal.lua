@@ -8,6 +8,12 @@ require 'pmd_new_leaf.menu.AppraisalMenu'
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'origin.menu.InventorySelectMenu'
 
+---@alias AppraisalPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:AppraisalData,empty:integer}
+---@alias AppraisalData {stock:AppraisalEntry[],specializations:table<string,boolean>,opened:integer,slots:integer,checks:integer,reduce_all:boolean,instant_open:boolean}
+---@alias AppraisalEntry BoxEntry|TreasureEntry
+---@alias BoxEntry {item:InvItemLua,state:integer,open_at:integer}
+---@alias TreasureEntry {item:InvItemLua,opened:boolean}
+
 _SHOP.AppraisalTables = {
     -- level  1  2  3  4  5   6   7   8   9  10
     slots  = {4, 6, 6, 8, 8, 10, 12, 12, 14, 16},
@@ -38,14 +44,12 @@ _SHOP.AppraisalTables = {
                      "upgrade_appraisal_gorgeous", "upgrade_appraisal_deluxe"}
 }
 
+---Initializes an appraisal shop's specific data
+---@param plot AppraisalPlot the plot's data structure
 function _SHOP.AppraisalInitializer(plot)
     plot.data = {
-        stock = {
-            --{item = InvItem, state = int, open_at = int, opened = boolean}
-        },
-        specializations = {
-            --string = boolean
-        },
+        stock = {},
+        specializations = {},
         opened = 0,
         slots = 0,
         checks = 0,
@@ -54,6 +58,11 @@ function _SHOP.AppraisalInitializer(plot)
     }
 end
 
+---Runs the upgrade flow for the specified appraisal shop, letting the player choose which upgrades to apply
+---@param plot AppraisalPlot the plot's data structure
+---@param index integer the plot index number
+---@param shop_id? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return string|false #an upgrade to apply, or false if none was chosen
 function _SHOP.AppraisalUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local upgrade = ""
@@ -75,7 +84,7 @@ function _SHOP.AppraisalUpgradeFlow(plot, index, shop_id)
             table.sort(keys, function(a, b) return comp(a, b) end)
 
             upgrade, up_start = ShopUpgradeMenu.run(tree, keys, index, up_start)
-            if upgrade == "exit" then return end
+            if upgrade == "exit" then return false end
         end
         local curr = plot.upgrades[upgrade] or 0
         local cost = _SHOP.GetUpgradeCost(upgrade, curr+1)
@@ -99,10 +108,13 @@ function _SHOP.AppraisalUpgradeFlow(plot, index, shop_id)
             if level == 0 then UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
             else UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE")) end
         end
-        if level%2 == 0 then return end
+        if level%2 == 0 then return false end
     end
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot AppraisalPlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.AppraisalUpgrade(plot, upgrade)
     local level = _HUB.getPlotLevel(plot)
     local chest
@@ -155,6 +167,8 @@ function _SHOP.AppraisalUpgrade(plot, upgrade)
     end
 end
 
+---Updates the appraisal counters for the stocked chests
+---@param plot AppraisalPlot the plot's data structure
 function _SHOP.AppraisalUpdate(plot)
     local stock = plot.data.stock
 
@@ -167,7 +181,7 @@ function _SHOP.AppraisalUpdate(plot)
             end
         end
         if #eligible > 0 then
-            local opened = COMMON_FUNC.WeightedRoll(eligible)
+            local opened = COMMON_FUNC.WeightedRoll(eligible) --[[@as {Index:integer,Weight:integer}]]
             stock[opened.Index] = {_SHOP.AppraisalGetTreasure(stock[opened.Index]), opened = true}
             plot.data.opened = plot.data.opened + 1
         end
@@ -176,6 +190,7 @@ function _SHOP.AppraisalUpdate(plot)
     for _ = 1, plot.data.checks, 1 do
         if #stock == 0 then break end
         local entry, index = COMMON_FUNC.WeightlessRoll(stock)
+        ---@cast index integer
         local ticks = 1
         if plot.data.specializations[entry.item.ID] and math.random(1, 2) == 1 then ticks = 2 end
         for _=1, ticks, 1 do
@@ -190,6 +205,9 @@ function _SHOP.AppraisalUpdate(plot)
     end
 end
 
+---Runs the interact flow for the given appraisal shop, letting the player interact with it
+---@param plot AppraisalPlot the plot's data structure
+---@param index integer the plot index number
 function _SHOP.AppraisalInteract(plot, index)
     local price = 150
     local npc = CH("NPC_"..index)
@@ -282,6 +300,9 @@ function _SHOP.AppraisalInteract(plot, index)
     end
 end
 
+---Adds a list of items to the given shop's stock.
+---@param plot AppraisalPlot the plot's data structure
+---@param items InvSlot[] InvSlots pointing to the items to store
 function _SHOP.AppraisalAddToStock(plot, items)
     for i, slot in pairs(items) do
         local shift = i-1
@@ -300,6 +321,9 @@ function _SHOP.AppraisalAddToStock(plot, items)
     end
 end
 
+---Returns the description that will be used for this shop in the office menu.
+---@param plot AppraisalPlot the plot's data structure
+---@return string #the plot's description
 function _SHOP.AppraisalGetDescription(plot)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_APPRAISAL_BASE", plot.data.slots, plot.data.checks)
     local specs = table.get_keys(plot.data.specializations)
@@ -313,8 +337,11 @@ function _SHOP.AppraisalGetDescription(plot)
     return description
 end
 
+---Given an appraisal entry, it converts it into an opened treasure entry. If the supplied entry was already opened, it returns it directly
+---@param entry AppraisalEntry an appraisal entry
+---@return TreasureEntry #the opened treasure entry
 function _SHOP.AppraisalGetTreasure(entry)
-    if entry.opened then return entry end
+    if entry.opened then return entry --[[@as TreasureEntry]] end
     local box = entry.item
     local treasure_item = box.HiddenValue
     if not treasure_item or treasure_item == "" then treasure_item = "seed_plain" end
@@ -322,6 +349,7 @@ function _SHOP.AppraisalGetTreasure(entry)
     local stack = itemEntry.MaxStack
     local roll = _SHOP.AppraisalTables.stack_roll[treasure_item]
     if roll then stack = math.min(math.random(roll), stack) end
+    ---@type InvItemLua
     local newItem = {ID=treasure_item, Cursed = false, HiddenValue = "", Amount = stack, Price = 0}
     return {item = newItem, opened = true}
 end
