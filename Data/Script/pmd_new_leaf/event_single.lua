@@ -74,4 +74,15 @@ function SINGLE_CHAR_SCRIPT.TutorialScriptDungeon(owner, ownerChar, context, arg
 		end
 	end
 end
+--TODO currently unused
+function SINGLE_CHAR_SCRIPT.TutorialScriptItems(owner, ownerChar, context, args)
+	if context.User == nil then
+		UI:ResetSpeaker()
+		if args.Item == nil and not SV.Intro.FuckedUpCheck then
+			SOUND:PlayFanfare("Fanfare/Note")
+			UI:WaitShowDialogue("Man, MistressNebula fucked up hard this time...")
+			SV.Intro.FuckedUpCheck = nil
+			GAME:WaitFrames(20)
+		end
+	end
 end
