@@ -9,6 +9,10 @@ require 'pmd_new_leaf.menu.SmallShopMenu'
 require 'pmd_new_leaf.menu.CraftingMenu'
 require 'pmd_new_leaf.menu.JuiceMenu'
 
+---@alias CafePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:CafeData,empty:integer}
+---@alias CafeData {price:integer,boost_pools:integer,daily_pools:integer,craft_pools:integer,daily_amount:integer,iotd:CafeEntry[]}
+---@alias CafeEntry {Item:string,Weight:integer,Price:integer}
+
 _SHOP.CafeTables = {
     --level =       1    2   3   4   5   6   7   8   9   10
     prices =       {100, 90, 80, 70, 60, 50, 40, 25, 10, 0},
@@ -242,7 +246,8 @@ _SHOP.CafeTables = {
     }
 }
 
-
+---Initializes a cafe shop's specific data
+---@param plot CafePlot the plot's data structure
 function _SHOP.CafeInitializer(plot)
     plot.data = {
         price = 100,
@@ -254,7 +259,12 @@ function _SHOP.CafeInitializer(plot)
     }
 end
 
-function _SHOP.CafeUpgradeFlow(plot, _, _)
+---Runs the upgrade flow for the specified cafe, letting the player choose which upgrades to apply
+---@param plot CafePlot the plot's data structure
+---@param index integer the plot index number
+---@param shop_id? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return string|false #an upgrade to apply, or false if none was chosen
+function _SHOP.CafeUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local upgrade = "upgrade_cafe_base"
     local curr = plot.upgrades[upgrade] or 0
@@ -279,8 +289,12 @@ function _SHOP.CafeUpgradeFlow(plot, _, _)
         if level == 0 then UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
         else UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE")) end
     end
+    return false
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot CafePlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.CafeUpgrade(plot, upgrade)
     if upgrade ~= "upgrade_cafe_base" then return end
 
@@ -301,7 +315,8 @@ function _SHOP.CafeUpgrade(plot, upgrade)
     end
 end
 
-
+---Restocks the dailies for the given cafe
+---@param plot CafePlot the plot's data structure
 function _SHOP.CafeUpdate(plot)
     local new_iotd = {}
     for _=1, _SHOP.CafeTables.daily_amount[_HUB.getPlotLevel(plot)], 1 do
@@ -310,13 +325,19 @@ function _SHOP.CafeUpdate(plot)
     plot.data.iotd = new_iotd
 end
 
+---Rolls a daily special
+---@param tier integer the current daily item tier
+---@return CafeEntry
 function _SHOP.CafeRollItemOfTheDay(tier)
     local pool = {}
     for i=1, tier, 1 do table.merge(pool, _SHOP.CafeTables.daily_pool[i]) end
-    local item = COMMON_FUNC.WeightedRoll(pool)
+    local item = COMMON_FUNC.WeightedRoll(pool) --[[@as CafeEntry]]
     return item
 end
 
+---Runs the interact flow for the given cafe, letting the player interact with the shop
+---@param plot CafePlot the plot's data structure
+---@param index integer the plot index number
 function _SHOP.CafeInteract(plot, index)
     local npc = CH("NPC_"..index)
     UI:SetSpeaker(npc)
@@ -410,6 +431,7 @@ function _SHOP.CafeInteract(plot, index)
             end
         elseif result == 2 then
             if #plot.data.iotd > 0 then
+                ---@type {Item:InvItem,Price:integer}
                 local catalog = { }
                 for i = 1, #plot.data.iotd, 1 do
                     local entry = plot.data.iotd[i]
@@ -509,6 +531,12 @@ function _SHOP.CafeInteract(plot, index)
     end
 end
 
+---Calculates the boost to be added to a character
+---@param plot CafePlot the plot's data structure
+---@param cart InvSlot the items to be used
+---@param member Character the character to apply the boosts to
+---@param boost_table table the boost table at the top of this file
+---@return table, integer #TODO
 function _SHOP.CafeGetTotalBoost(plot, cart, member, boost_table)
     local boost_tbl = boost_table or {}
     if #boost_tbl == 0 then
@@ -640,6 +668,9 @@ function _SHOP.CafeGetTotalBoost(plot, cart, member, boost_table)
     return ret, random_amount
 end
 
+---Applies a list of boosts to the given character 
+---@param boost_data table a table containing the boosts to apply
+---@param member Character the character to apply the boost to
 function _SHOP.CafeApplyBoosts(boost_data, member)
     local boost = boost_data.boosts
 
@@ -793,6 +824,9 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
     end
 end
 
+---Returns the description that will be used for this shop in the office menu.
+---@param plot CafePlot the plot's data structure
+---@return string #the plot's description
 function _SHOP.CafeGetDescription(plot)
     local boost_string_maker_index = {1, 3, 4}
     local boost_string_elements = {STRINGS:FormatKey("CAFE_POOL_NAME_GUMMIES"), STRINGS:FormatKey("CAFE_POOL_NAME_BERRIES"), STRINGS:FormatKey("CAFE_POOL_NAME_SEEDS"), STRINGS:FormatKey("CAFE_POOL_NAME_MEDICINES")}

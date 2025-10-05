@@ -8,12 +8,18 @@
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'pmd_new_leaf.menu.SwapTributeMenu'
 
+---@alias TraderPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:TraderData,empty:integer}
+---@alias TraderData {stock:TraderEntry[],max_random:integer,reroll:integer,guarantee_chance:boolean}
+---@alias TraderEntry {Item:string,ReqItem:string[]}
+
 _SHOP.TraderTables = {
     --level = 1  2  3  4  5  6  7  8  9 10
     offers = {1, 2, 3, 4, 4, 5, 6, 7, 7, 8},
     prices = {1000, 5000, 25000}
 }
 
+---Initializes a trader shop's specific data
+---@param plot TraderPlot the plot's data structure
 function _SHOP.TraderInitializer(plot)
     plot.data = {
         stock = {},
@@ -23,7 +29,12 @@ function _SHOP.TraderInitializer(plot)
     }
 end
 
-function _SHOP.TraderUpgradeFlow(plot, _, _)
+---Runs the upgrade flow for the specified trader, letting the player choose which upgrades to apply
+---@param plot TraderPlot the plot's data structure
+---@param index integer the plot index number
+---@param shop_id? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return string|false #an upgrade to apply, or false if none was chosen
+function _SHOP.TraderUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local upgrade = "upgrade_trader_base"
     local curr = plot.upgrades[upgrade] or 0
@@ -48,8 +59,12 @@ function _SHOP.TraderUpgradeFlow(plot, _, _)
         if level == 0 then UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
         else UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE")) end
     end
+    return false
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot TraderPlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.TraderUpgrade(plot, upgrade)
     if upgrade ~= "upgrade_trader_base" then return end
 
@@ -66,9 +81,11 @@ function _SHOP.TraderUpgrade(plot, upgrade)
     end
 end
 
+---Restocks the trader
+---@param plot TraderPlot the plot's data structure
 function _SHOP.TraderRestock(plot)
-    local stock = {}
-    local indices = {}
+    local stock = {} --[[@as TraderEntry[] ]]
+    local indices = {} --[[@as integer[] ]]
 
     for i = 1, #COMMON_GEN.TRADES_RANDOM, 1 do
         -- check if the item is a 1* item and dex has been seen
@@ -99,6 +116,9 @@ function _SHOP.TraderRestock(plot)
     plot.data.stock = stock
 end
 
+---Given an item id, it checks if the item is an exclusive that affects a character in the current active party
+---@param item_id string the id of the item to check
+---@return boolean #true if a match was found, false otherwise
 function _SHOP.TraderIsPartyItem(item_id)
     local RarityDataType = luanet.import_type('PMDC.Data.RarityData')
     local rarity = _DATA.UniversalData:Get(luanet.ctype(RarityDataType))
@@ -116,6 +136,11 @@ function _SHOP.TraderIsPartyItem(item_id)
     return false
 end
 
+---Given a list of ``COMMON_GEN.TRADES_RANDOM`` indices, returns a randomly chosen index that corresponds to an
+---exclusive that affects a character in the current active party, along with its position in the list. If no
+---such item exists, it returns nil, nil.
+---@param indices integer[] A list of indices pointing at items in ``COMMON_GEN.TRADES_RANDOM``
+---@return integer?, integer? #the index and its position in the indices list, nil, nil otherwise
 function _SHOP.TraderGetPartyTrade(indices)
     local RarityDataType = luanet.import_type('PMDC.Data.RarityData')
     local rarity = _DATA.UniversalData:Get(luanet.ctype(RarityDataType))
@@ -142,6 +167,9 @@ function _SHOP.TraderGetPartyTrade(indices)
     return nil, nil
 end
 
+---Dynamically generates a list of selectable trades based on the items currently available to the player
+---@param plot TraderPlot the plot's data structure
+---@return TraderEntry[] a list of trades
 function _SHOP.TraderComputeCatalog(plot)
     --silk/dust/gem/globes
     local catalog = {
@@ -197,6 +225,9 @@ function _SHOP.TraderComputeCatalog(plot)
     return catalog
 end
 
+---Runs the interact flow for the given trader, letting the player interact with the shop
+---@param plot TraderPlot the plot's data structure
+---@param index integer the plot index number
 function _SHOP.TraderInteract(plot, index)
     local catalog = _SHOP.TraderComputeCatalog(plot)
 
@@ -327,6 +358,9 @@ function _SHOP.TraderInteract(plot, index)
     end
 end
 
+---Returns the description that will be used for this shop in the office menu.
+---@param plot TraderPlot the plot's data structure
+---@return string #the plot's description
 function _SHOP.TraderGetDescription(plot)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_TRADER_BASE", plot.data.max_random)
     if plot.data.reroll>0 then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_TRADER_ADVANTAGE") end

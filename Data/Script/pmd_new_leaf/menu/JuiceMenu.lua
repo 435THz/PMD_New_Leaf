@@ -53,7 +53,7 @@ function JuiceMenu:initialize(character, ingredients, confirm_action, refuse_act
 end
 
 --- Returns the list of ids of the items contained in the selected item slots.
---- @return table a list of ``string`` item ids.
+--- @return table #a list of ``string`` item ids.
 function JuiceMenu:getCart()
     local list = {}
     for i, choice in pairs(self.optionsList) do
@@ -65,7 +65,7 @@ function JuiceMenu:getCart()
 end
 
 --- Returns the selected menu option and its corresponding slot
---- @return table a table containing an ``option`` and a ``slot`` property
+--- @return table #a table containing an ``option`` and a ``slot`` property
 function JuiceMenu:getSelectedOption()
     local i = self.menu.CurrentChoiceTotal+1
     return {
@@ -75,7 +75,7 @@ function JuiceMenu:getSelectedOption()
 end
 
 --- Returns a newly created copy of this object
---- @return table a ``JuiceMenu``.
+--- @return table #a ``JuiceMenu``.
 function JuiceMenu:cloneMenu()
     return JuiceMenu:new(self.character, self.ingredients, self.confirmAction, self.refuseAction, self.includeEquips, self.boost_function)
 end
@@ -407,7 +407,7 @@ end
 --- @param includeEquips boolean if true, the party's equipped items will be included in the menu. Defaults to true.
 --- @param boost_function function the function that will be used by the preview window to calculate the total boost.
 --- @param max_choices number if set, it will never be possible to select more than the amount of items defined here. Defaults to the amount of selectable items.
---- @return table a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
+--- @return table #a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
 function JuiceMenu.run(character, ingredients, includeEquips, boost_function, max_choices)
     local ret = {}
     local choose = function(list) ret = list end

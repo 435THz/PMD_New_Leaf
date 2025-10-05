@@ -6,6 +6,9 @@
 ]]
 --require 'pmd_new_leaf.menu.StorageMenu' TODO
 
+---@alias HomePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:HomeData,empty:integer}
+---@alias HomeData {storage_limit:integer,stackable_mult:integer,unstack_limit:integer}
+
 _SHOP.HomeTables = {
     -- level          1   2    3    4    5    6    7    8    9    10
     storage_limit =  {64, 128, 200, 288, 384, 512, 640, 800, 960, 1000},
@@ -14,6 +17,8 @@ _SHOP.HomeTables = {
     unstack_limit =  {1,  1,   2,   3,   4,   5,   6,   7,   8,   9}
 }
 
+---Initializes the home's specific data
+---@param plot HomePlot the plot's data structure
 function _SHOP.HomeInitializer(plot)
     plot.data = {
         storage_limit = 64,
@@ -23,6 +28,9 @@ function _SHOP.HomeInitializer(plot)
     }
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot HomePlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.HomeUpgrade(plot, upgrade)
     if upgrade ~= "upgrade_generic" then return end
 
@@ -37,14 +45,19 @@ function _SHOP.HomeUpgrade(plot, upgrade)
     plot.data.unstack_limit = _SHOP.HomeTables.unstack_limit[level]
 end
 
-function _SHOP.StorageInteract() --TODO to be called directly
+---Runs the interact flow for the player storage
+function _SHOP.StorageInteract() --TODO
 
 end
 
+---Gets the home plot's internal data
+---@return table #the home plot's internal data table
 function _SHOP.HomeGetData()
     return _HUB.getPlotData("home").data
 end
 
+---Splits the storage slots in groups, following the rules dictated by the current home level.
+---@return {[integer]:{id:string,hidden:string,count:integer},items:table<string,integer[]>}
 function _SHOP.StorageGetSlots()
     local home = _SHOP.HomeGetData()
     local storage = home.storage
@@ -67,8 +80,10 @@ function _SHOP.StorageGetSlots()
     end
 end
 
---- @param keep_exclusives boolean if true, exclusives will not be deposited
-function _SHOP.StorageCanStoreInventory(keep_exclusives) --TODO
+---Checks if the inventory can be fully added to the storage list. 
+---@param store_treasures? boolean if true, treasure items will also be stored. Defaults to false
+---@return boolean #true if all items can fit in storage, false otherwise
+function _SHOP.StorageCanStoreInventory(store_treasures) --TODO
     local addAmount = function(slots, item)
         local home = _SHOP.HomeGetData()
         local depositLimit = home.storage_limit

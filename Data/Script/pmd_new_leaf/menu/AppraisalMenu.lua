@@ -46,7 +46,7 @@ function AppraisalMenu:initialize(data, confirm_action, refuse_action)
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return table #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
 function AppraisalMenu:generate_options()
     local options = {}
     for i=1, #self.slotList, 1 do
@@ -120,8 +120,8 @@ end
 AppraisalConfirmMenu = Class("AppraisalConfirmMenu")
 
 --- Creates a new ``AppraisalConfirmMenu`` instance using the provided object as parent.
---- @param item userdata the selected Item
---- @param parent userdata the parent menu
+--- @param item ItemData the selected Item
+--- @param parent Menu the parent menu
 function AppraisalConfirmMenu:initialize(item, parent, confirm)
     local x, y = parent.Bounds.Right, parent.Bounds.Top
     local width = 72
@@ -225,7 +225,7 @@ end
 
 --- Creates an ``AppraisalMenu`` instance using the provided plot data, then runs it and returns its output.
 --- @param data table the shop's data table
---- @return number the index of the selected object if one was selected, -1 if a deposit was requested, nil if the menu has been closed.
+--- @return number #the index of the selected object if one was selected, -1 if a deposit was requested, nil if the menu has been closed.
 function AppraisalMenu.run(data)
     local ret
     local choose = function(index)

@@ -1,3 +1,4 @@
+---@type table<string,UpgradeOption>
 _HUB.UpgradeTable = {
     market_unlock = {
         -- used as string reference when displaying
@@ -310,6 +311,7 @@ _HUB.UpgradeTable = {
     },
 }
 
+---@type table<BuildingID, BuildingData>
 _HUB.ShopBase = {
     -- TODO all tiers 2 and up
     home = {
@@ -761,7 +763,7 @@ _HUB.ShopBase = {
 
 -- these look exactly like shops graphics data, but never contain NPC_Pos or Marker_Pos
 _HUB.NotUnlockedVisuals = {
-    -- these also never contain solid Bounds
+    ---@type NonBlockingData[] these never contain solid Bounds
     NonBlocking = {
         {
             Base = "free_empty_1"
@@ -815,7 +817,7 @@ _HUB.NotUnlockedVisuals = {
             }
         }
     },
-    -- these do contain Bounds
+    ---@type BlockingData[] these can contain Bounds
     Blocking = {
         {
             Base = "empty_5",

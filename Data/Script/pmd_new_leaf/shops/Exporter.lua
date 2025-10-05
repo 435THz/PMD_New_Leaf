@@ -7,17 +7,21 @@
 require 'pmd_new_leaf.menu.ExporterMenu'
 require 'origin.menu.InventorySelectMenu'
 
+---@alias ExporterPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:ExporterData,empty:integer}
+---@alias ExporterData {stock:ExporterEntry[],earnings:integer,sold:integer,slots:integer,checks:integer,reduce_all:boolean,store_earnings:boolean,instant_sell:boolean}
+---@alias ExporterEntry {item:InvItemLua,state:integer,sell_at:integer}
+
 _SHOP.ExporterTables = {
     -- level  1  2  3  4  5   6   7   8   9  10
     slots  = {4, 6, 6, 8, 8, 10, 12, 12, 14, 16},
     checks = {3, 3, 4, 4, 5,  5,  6,  7,  7,  8}
 }
 
+---Initializes an exporter shop's specific data
+---@param plot ExporterPlot the plot's data structure
 function _SHOP.ExporterInitializer(plot)
     plot.data = {
-        stock = {
-            --{item = InvItem, state = int, sell_at = int}
-        },
+        stock = {},
         earnings = 0,
         sold = 0,
         slots = 0,
@@ -28,7 +32,12 @@ function _SHOP.ExporterInitializer(plot)
     }
 end
 
-function _SHOP.ExporterUpgradeFlow(plot, _, _)
+---Runs the upgrade flow for the specified exporter, letting the player choose which upgrades to apply
+---@param plot ExporterPlot the plot's data structure
+---@param index integer the plot index number
+---@param shop_id? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return string|false #an upgrade to apply, or false if none was chosen
+function _SHOP.ExporterUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local upgrade = "upgrade_exporter_base"
     local curr = plot.upgrades[upgrade] or 0
@@ -53,8 +62,12 @@ function _SHOP.ExporterUpgradeFlow(plot, _, _)
         if level == 0 then UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_BUILD"))
         else UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE")) end
     end
+    return false
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot ExporterPlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.ExporterUpgrade(plot, upgrade)
     if upgrade ~= "upgrade_exporter_base" then return end
 
@@ -76,6 +89,8 @@ function _SHOP.ExporterUpgrade(plot, upgrade)
     end
 end
 
+---Updates the sell counters for the stocked items
+---@param plot ExporterPlot the plot's data structure
 function _SHOP.ExporterUpdate(plot)
     local stock = plot.data.stock
     local new_earnings = 0
@@ -89,7 +104,7 @@ function _SHOP.ExporterUpdate(plot)
             end
         end
         if #eligible > 0 then
-            local sold = COMMON_FUNC.WeightedRoll(eligible)
+            local sold = COMMON_FUNC.WeightedRoll(eligible) --[[@as {Index:integer,Weight:integer}]]
             new_earnings = new_earnings + COMMON_FUNC.TblToInvItem(stock[sold.Index].item):GetSellValue()
             plot.data.sold = plot.data.sold + 1
             table.remove(stock, sold.Index)
@@ -115,6 +130,9 @@ function _SHOP.ExporterUpdate(plot)
     end
 end
 
+---Runs the interact flow for the given exporter, letting the player interact with the shop
+---@param plot ExporterPlot the plot's data structure
+---@param index integer the plot index number
 function _SHOP.ExporterInteract(plot, index)
     local npc = CH("NPC_"..index)
     UI:SetSpeaker(npc)
@@ -220,6 +238,9 @@ function _SHOP.ExporterInteract(plot, index)
     end
 end
 
+---Adds a list of items to the given shop's stock.
+---@param plot ExporterPlot the plot's data structure
+---@param items InvSlot[] InvSlots pointing to the items to store
 function _SHOP.ExporterAddToStock(plot, items)
     for i, slot in pairs(items) do
         local shift = i-1
@@ -238,6 +259,9 @@ function _SHOP.ExporterAddToStock(plot, items)
     end
 end
 
+---Returns the description that will be used for this shop in the office menu.
+---@param plot ExporterPlot the plot's data structure
+---@return string #the plot's description
 function _SHOP.ExporterGetDescription(plot)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_BASE",plot.data.slots, plot.data.checks)
     if plot.data.reduce_all then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_EXPORTER_BOOST") end

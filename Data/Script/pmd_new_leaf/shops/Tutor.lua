@@ -8,6 +8,11 @@ require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'origin.menu.skill.SkillTutorMenu'
 require 'origin.menu.team.AssemblySelectMenu'
 
+---@alias TutorPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:TutorData,empty:integer}
+---@alias TutorData {level_limit:integer,category:""|"egg"|"tutor",category_frequency:integer,category_slots:integer,category_stock:TutorEntry[],category_data:TutorCategory,category_permanent:boolean,permanent_stock:string[]}
+---@alias TutorCategory table<string,{forms:table<integer,integer>,left:integer}>
+---@alias TutorEntry {ID:string,Price:integer,days_left:integer}
+
 _SHOP.TutorTables = {
     -- level    1   2   3   4   5   6   7   8   9   10
     limit   = {10, 18, 24, 30, 36, 44, 56, 70, 85, 100},
@@ -18,30 +23,26 @@ _SHOP.TutorTables = {
     upgrade_order = {"upgrade_tutor_tutor", "upgrade_tutor_egg","upgrade_tutor_frequency", "upgrade_tutor_count"}
 }
 
+---Initializes a tutor shop's specific data
+---@param plot TutorPlot the plot's data structure
 function _SHOP.TutorInitializer(plot)
     plot.data = {
         level_limit = 0,
         category = "",
         category_frequency = 0,
         category_slots = 0,
-        category_stock = {
-            -- {ID = string, Price = int, days_left = int}
-        },
-        category_data = {
-         -- species = {
-         --     forms = {
-         --         [form_number] = int
-         --     }
-         --     left = int
-         -- }
-        },
+        category_stock = {},
+        category_data = {},
         category_permanent = false,
-        permanent_stock = {
-         -- string
-        }
+        permanent_stock = {}
     }
 end
 
+---Runs the upgrade flow for the specified tutor, letting the player choose which upgrades to apply
+---@param plot TutorPlot the plot's data structure
+---@param index integer the plot index number
+---@param shop_id? BuildingID a building id. It is only considered if no building exists in the given plot yet
+---@return string|false #an upgrade to apply, or false if none was chosen
 function _SHOP.TutorUpgradeFlow(plot, index, shop_id)
     local level = _HUB.getPlotLevel(plot)
     local new_level = level+1
@@ -64,7 +65,7 @@ function _SHOP.TutorUpgradeFlow(plot, index, shop_id)
             table.sort(keys, function(a, b) return comp(a, b) end)
 
             upgrade, up_start = ShopUpgradeMenu.run(tree, keys, index, up_start)
-            if upgrade == "exit" then return end
+            if upgrade == "exit" then return false end
         end
         local curr = plot.upgrades[upgrade] or 0
         local cost = _SHOP.GetUpgradeCost(upgrade, curr+1)
@@ -90,11 +91,14 @@ function _SHOP.TutorUpgradeFlow(plot, index, shop_id)
             else
                 UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_CANNOT_UPGRADE"))
             end
-            if _SHOP.TutorTables.base[new_level] then return end
+            if _SHOP.TutorTables.base[new_level] then return false end
         end
     end
 end
 
+---Checks if the supplied upgrade is valid, and updates the plot's data structure accordingly if it is.
+---@param plot TutorPlot the plot's data structure
+---@param upgrade string an upgrade id
 function _SHOP.TutorUpgrade(plot, upgrade)
     local new_level = _HUB.getPlotLevel(plot)+1
     local sub
@@ -123,7 +127,7 @@ function _SHOP.TutorUpgrade(plot, upgrade)
     plot.data.level_limit = _SHOP.TutorTables.limit[new_level]
     if sub then
         if new_level == 5 then
-            plot.data.category = sub
+            plot.data.category = sub --[[@as "egg"|"tutor"]]
             plot.data.category_frequency = 3
             plot.data.category_slots = 1
             table.insert(plot.data.category_stock, _SHOP.TutorRollSlot(plot))
@@ -144,6 +148,8 @@ function _SHOP.TutorUpgrade(plot, upgrade)
     end
 end
 
+---Updates the tutor's moves in stock
+---@param plot TutorPlot the plot's data structure
 function _SHOP.TutorUpdate(plot)
     if not plot.data.category or plot.data.category == "" then return end
     local assembly = _SHOP.TutorGetCharacters()
@@ -152,7 +158,6 @@ function _SHOP.TutorUpdate(plot)
         _SHOP.TutorAddSpecies(plot, species, form)
     end
     for _, slot in pairs(plot.data.category_stock) do
-        -- {ID = string, Price = int, days_left = int}
         if slot.days_left>1 then
             slot.days_left = slot.days_left-1
         else
@@ -162,18 +167,16 @@ function _SHOP.TutorUpdate(plot)
     end
 end
 
+---Initializes the catgory structure for a speecific species and form, used to keep track of how many
+---moves are still to be permanently unlocked for the specific species and form.
+---@param plot TutorPlot the plot's data structure
+---@param species string the species id to register
+---@param form integer the form id to register
 function _SHOP.TutorAddSpecies(plot, species, form)
     local data = plot.data.category_data
-    -- species = {
-    --     forms = {
-    --         [form_number] = int
-    --     }
-    --     left = int
-    -- }
     if not data[species] then
         data[species] = {
             forms = {
-                --   [form_number] = int
             },
             left = 0
         }
@@ -185,6 +188,11 @@ function _SHOP.TutorAddSpecies(plot, species, form)
     end
 end
 
+---Counts how many moves are not permanently unlocked yet for the given species and form.
+---@param plot TutorPlot the plot's data structure
+---@param species string the species id to register
+---@param form integer the form id to register
+---@return integer #the number of moves not permanently unlocked
 function _SHOP.TutorCountPool(plot, species, form)
     local f = _DATA:GetMonster(species).Forms[form]
     local count = 0
@@ -200,6 +208,9 @@ function _SHOP.TutorCountPool(plot, species, form)
     return count
 end
 
+---Chooses a new tutor entry
+---@param plot TutorPlot the plot's data structure
+---@return TutorEntry #a tutor option to add to the stock
 function _SHOP.TutorRollSlot(plot)
     local roll_table = {}
     local added = {}
@@ -224,6 +235,8 @@ function _SHOP.TutorRollSlot(plot)
             break
         end
         local result, index = COMMON_FUNC.WeightedRoll(roll_table)
+        ---@cast result -?
+        ---@cast index -?
         local form = _DATA:GetMonster(result.Species).Forms[result.Form]
         local movepool = form.SecretSkills --tutor
         if plot.data.category == "egg" then
@@ -261,6 +274,9 @@ function _SHOP.TutorRollSlot(plot)
     return {ID = move, Price = price, days_left = days}
 end
 
+---Runs the interact flow for the given tutor, letting the player interact with the shop
+---@param plot TutorPlot the plot's data structure
+---@param index integer the plot index number
 function _SHOP.TutorInteract(plot, index)
     local npc = CH("NPC_"..index)
     UI:SetSpeaker(npc)
@@ -410,18 +426,27 @@ function _SHOP.TutorInteract(plot, index)
     end
 end
 
+---Returns the list of all currently playable characters (team and assembly)
+---@return Character[] the list of all characters
 function _SHOP.TutorGetCharacters()
     local characters = {}
-    for char in luanet.each(LUA_ENGINE:MakeList(_DATA.Save.ActiveTeam.Players)) do table.insert(characters, char) end
+    for char in luanet.each(_DATA.Save.ActiveTeam.Players) do table.insert(characters, char) end
     local assembly = GAME:GetPlayerAssemblyTable()
     table.move(assembly, 1, #assembly, #characters+1, characters)
     return characters
 end
 
+---Generates the necessary tables to handle level-up moves purchasing
+---@param plot TutorPlot the plot's data structure
+---@param character Character the character to create the learnable list for
+---@return table<string,integer>, string[], {[0]:integer,[1]:string}[] #a mapping from skill id to price, a list of skills and a list of price entries
 function _SHOP.TutorGetLearnables(plot, character)
+    ---@type table<string,integer>
     local mapping = {}
-    local skills = {}
-    local prices = {}
+    ---@type string[]
+    local skills  = {}
+    ---@type {[0]:integer,[1]:string}[]
+    local prices  = {}
     local loop = function(form_data)
         for i = 0, form_data.LevelSkills.Count-1, 1 do
             local skill = form_data.LevelSkills[i].Skill
@@ -461,6 +486,10 @@ function _SHOP.TutorGetLearnables(plot, character)
     return mapping, skills, prices
 end
 
+---Generates the necessary table to handle tutor or egg moves purchasing, depending on the shop's category specialization
+---@param plot TutorPlot the plot's data structure
+---@param character Character the character to create the mapping for
+---@return table<string,{Cost:integer}> #a table that maps all available skill ids to their cost 
 function _SHOP.TutorGetTutorMoves(plot, character)
     local mapping = {}
 
@@ -498,6 +527,10 @@ function _SHOP.TutorGetTutorMoves(plot, character)
     return mapping
 end
 
+---Checks if the given character can access the tutor's relearn functionality.
+---@param plot TutorPlot the plot's data structure
+---@param character Character the character to check validity for
+---@return boolean #true if the character has at least one unknown move in its learnable list, false otherwise
 function _SHOP.TutorCanRelearn(plot, character)
     local loop = function(form_data)
         for i = 0, form_data.LevelSkills.Count-1, 1 do
@@ -522,6 +555,10 @@ function _SHOP.TutorCanRelearn(plot, character)
     return false
 end
 
+---Checks if the given character can access the tutor's tutor functionality.
+---@param plot TutorPlot the plot's data structure
+---@param character Character the character to check validity for
+---@return boolean #true if the character has at least one unknown move in its tutor list, false otherwise
 function _SHOP.TutorCanTutor(plot, character)
     local check = function(pool, skill)
         if character:HasBaseSkill(skill) then return false end
@@ -549,6 +586,9 @@ function _SHOP.TutorCanTutor(plot, character)
     return false
 end
 
+---Returns the cost value for the given move. The cost depends on the move's maximum PP
+---@param skill string a move id
+---@return integer the move's cost, according to the global tutor tables
 function _SHOP.TutorGetPrice(skill)
     local move = _DATA:GetSkill(skill)
     local price = _SHOP.TutorTables.charge_to_cost[#_SHOP.TutorTables.charge_to_cost]
@@ -558,6 +598,9 @@ function _SHOP.TutorGetPrice(skill)
     return price
 end
 
+---Adds a skill to the permanent stock, but only if the skill is in one of the temporary stock slots
+---@param plot TutorPlot the plot's data structure
+---@param skill_id string the id of the string
 function _SHOP.TutorMakePermanent(plot, skill_id)
     for _, slot in plot.data.category_slots do
         if slot.ID == skill_id then
@@ -568,6 +611,8 @@ function _SHOP.TutorMakePermanent(plot, skill_id)
     end
 end
 
+---Plays the tutor animation when a purchase is confirmed
+---@param chara any the GroundChar that is learning the move
 function _SHOP.TutorAnimation(chara)
     GAME:WaitFrames(10)
     GROUND:CharSetAnim(chara, "Strike", false)
@@ -586,6 +631,9 @@ function _SHOP.TutorAnimation(chara)
     GAME:WaitFrames(30)
 end
 
+---Returns the description that will be used for this shop in the office menu.
+---@param plot PlotData the plot's data structure
+---@return string #the plot's description
 function _SHOP.TutorGetDescription(plot)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_BASE", plot.data.level_limit)
     if plot.data.category ~= "" then STRINGS:FormatKey("PLOT_DESCRIPTION_TUTOR_CATEGORY", STRINGS:FormatKey("TUTOR_POOL_"..string.upper(plot.data.category)), plot.data.category_slots) end

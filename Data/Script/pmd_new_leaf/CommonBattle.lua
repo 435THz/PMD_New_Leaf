@@ -3,11 +3,11 @@
 ---Dynamically builds a boss moveset and assigns it to the character.
 ---The character's level should be assigned before running this script. Reduce the level afterwards to be illegal about it.
 ---The character is always allowed to have as many level-up moves as it can learn at its level.
----@param chara userdata the character to build.
+---@param chara any the character to build.
 ---@param tm_allowed number the maximum number of tm moves that the character is allowed to have. Defaults to 0
 ---@param tutor_allowed number the maximum number of tutor moves that the character is allowed to have. Defaults to 0
 ---@param egg_allowed number the maximum number of egg moves that the character is allowed to have. Defaults to 0
----@return table the list of slot types chosen, in the order they were applied. Slot types are "stab", "coverage", "damage" and "status". Useful to apply changes later on.
+---@return "stab"|"coverage"|"damage"|"status"[] #the list of slot types chosen, in the order they were applied. Slot types are "stab", "coverage", "damage" and "status". Useful to apply changes later on.
 function COMMON_FUNC.AssignBossMoves(chara, tm_allowed, tutor_allowed, egg_allowed)
     -- prepare lists
     local allowed = {level = 4}
@@ -338,6 +338,7 @@ function COMMON_FUNC._battle.selectMove(moveset_table, synergies, allowed, subta
     local result
     if #data_list > 0 then
         result = COMMON_FUNC.WeightedRoll(data_list)
+        ---@cast result -?
         COMMON_FUNC._battle.UpdateSynergies(result, synergies)
         result = result.ID
         local supertables = moveset_table.all[result].tables

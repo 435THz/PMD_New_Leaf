@@ -9,8 +9,8 @@ require 'pmd_new_leaf.shops.ShopInterface'
 --- If the supplied element is a table, this function will recursively print its entire contents,
 --- increasing the indentation for every new layer discovered.
 --- If the supplied element is not a table, it will just print its value.
---- @param element any the object to print
---- @param max_depth number the deepest layer this function will explore. if 1 or lower, it will only explore the first layer. Defaults to 20.
+--- @param elem any the object to print
+--- @param max_depth? number the deepest layer this function will explore. if 1 or lower, it will only explore the first layer. Defaults to 20.
 function printall(elem, max_depth)
     if max_depth == nil then max_depth = 20 end
     if max_depth < 1 then max_depth = 1 end
@@ -51,23 +51,23 @@ _HUB = _HUB or {}
 
 require 'pmd_new_leaf.ShopManager'
 
---- Maps ranks to level
+---@type integer[] Maps ranks to level
 _HUB.LevelRankTable = {1,1,2,2,2,3,3,3,4,4}
---- maps town name suffixes to rank
+---@type string[] maps town name suffixes to rank
 _HUB.RankSuffixKey = {"HUB_TIER_SMALL", "HUB_TIER_MEDIUM", "HUB_TIER_LARGE", "HUB_TIER_FINAL"}
---- maps town name patterns to rank
+---@type string[] maps town name patterns to rank
 _HUB.RankNamePatterns = {"HUB_PATTERN_SMALL", "HUB_PATTERN_MEDIUM", "HUB_PATTERN_LARGE", "HUB_PATTERN_FINAL"}
---- maps town ground map id to rank
+---@type string[] maps town ground map id to rank
 _HUB.RankHubMap = {"hub_small", "hub_medium", "hub_large", "hub_final"}
---- maps town map object id to rank
+---@type string[] maps town map object id to rank
 _HUB.RankPlotMap = {"map_small", "map_medium", "map_large", "map_final"}
---- maps town build limit to level
+---@type integer[] maps town build limit to level
 _HUB.LevelBuildLimit = {2,3,4,5,6,7,8,10,12,15}
---- maps town plots to rank
+---@type integer[] maps town plots to rank
 _HUB.RankPlotNumber = {3,6,10,15}
---- maps starting money limit to upgrade level
+---@type integer[] maps starting money limit to upgrade level
 _HUB.StartingMoneyTable = {[0] = 500,750,1000,1500,2000,3000}
---- maps a list of map coordinates to every rank. Ground Map version.
+---@type Loc[][] maps a list of map coordinates to every rank. Ground Map version.
 _HUB.PlotPositions = {
     -- rank 1
     {
@@ -127,7 +127,7 @@ _HUB.PlotPositions = {
         {X=304, Y=64}
     }
 }
---- maps a list of map coordinates to every rank. Office Plot Marker version. Entries do not include home and office
+---@type Loc[][] maps a list of map coordinates to every rank. Used for Plot Markers in the Office menu. Entries do not include home and office
 _HUB.PlotMarkerMapPositions = {
     -- rank 1
     {
@@ -176,7 +176,7 @@ _HUB.PlotMarkerMapPositions = {
         {X=48, Y=51}
     }
 }
---- lists of items required to upgrade the town to each level. table 1 is empty because town starts at level 1 anyway
+---@type {item:string,amount:integer}[][] lists of items required to upgrade the town to each level. table 1 is empty because town starts at level 1 anyway
 _HUB.LevelUpCosts = {
     {},
     {
@@ -212,7 +212,7 @@ _HUB.LevelUpCosts = {
 --region Getters
 -------------------------------------------
 
----@return userdata the very first Character created in the game.
+---@return Character #the very first Character created in the game.
 function _HUB.getFounder()
     for char in luanet.each(LUA_ENGINE:MakeList(_DATA.Save.ActiveTeam.Players)) do
         if char.IsFounder then return char end
@@ -221,15 +221,16 @@ function _HUB.getFounder()
     for _, char in ipairs(assembly) do
         if char.IsFounder then return char end
     end
-    return
+    ---@diagnostic disable-next-line: return-type-mismatch
+    return nil --should never be hit
 end
 
----@return number the current level of the hub itself
+---@return integer #the current level of the hub itself
 function _HUB.getHubLevel()
     return SV.HubData.Level
 end
 
----@return boolean true if there is at least 1 building that has a higher level than the town, false otherwise
+---@return boolean #true if there is at least 1 building that has a higher level than the town, false otherwise
 function _HUB.canUpgrade()
     for i=1, _HUB.getRankPlotNumber(), 1 do
         local plot = _HUB.getPlotData(i)
@@ -240,45 +241,45 @@ function _HUB.canUpgrade()
     return false
 end
 
----@param level number a number between 1 and 10
----@return table the list of {item: string, amount: int} entries that describes the items required to reach the given level
+---@param level integer a number between 1 and 10
+---@return ItemEntry[] #the list of {item: string, amount: int} entries that describes the items required to reach the given level
 function _HUB.getLevelUpItems(level)
     return _HUB.LevelUpCosts[level]
 end
 
----@return number the current rank of the hub itself
+---@return integer #the current rank of the hub itself
 function _HUB.getHubRank()
     return _HUB.LevelRankTable[_HUB.getHubLevel()]
 end
 
----@return string the current town suffix for the hub
+---@return string #the current town suffix for the hub
 function _HUB.getHubSuffix()
     return STRINGS:FormatKey(_HUB.RankSuffixKey[_HUB.getHubRank()])
 end
 
----@return string the id of the current ground map for the hub
+---@return string #the id of the current ground map for the hub
 function _HUB.getHubMap()
     return _HUB.RankHubMap[_HUB.getHubRank()]
 end
 
----@return string the id of the current map object for the hub
+---@return string #the id of the current map object for the hub
 function _HUB.getHubPlotMap()
     return _HUB.RankPlotMap[_HUB.getHubRank()]
 end
 
----@param lvl number the level to get the build limit of. Defaults to the current hub level.
----@return number the current maximum building number for the hub
+---@param lvl? integer the level to get the build limit of. Defaults to the current hub level.
+---@return integer #the current maximum building number for the hub
 function _HUB.getBuildLimit(lvl)
     local level = lvl or _HUB.getHubLevel()
     return _HUB.LevelBuildLimit[level]
 end
 
----@return number the number of plots supported by the current hub map.
+---@return integer #the number of plots supported by the current hub map.
 function _HUB.getRankPlotNumber()
     return _HUB.RankPlotNumber[_HUB.getHubRank()]
 end
 
----@return number the number of unlocked plots in the hub
+---@return integer #the number of unlocked plots in the hub
 function _HUB.getUnlockedNumber()
     local num = 0
     for i=1, _HUB.getRankPlotNumber(), 1 do
@@ -287,13 +288,13 @@ function _HUB.getUnlockedNumber()
     return num
 end
 
----@return number the current assembly limit. TODO will probably be scrapped
+---@return integer #the current assembly limit. TODO will probably be scrapped
 function _HUB.getAssemblyLimit()
     return _HUB.LevelAssemblyLimit[_HUB.getHubRank()]
 end
 
----@param colorless boolean set to true to not include color codes in the name. False by default
----@return string the current town name. Will not contain color codes if colorless is true
+---@param colorless? boolean set to true to not include color codes in the name. False by default
+---@return string #the current town name. Will not contain color codes if colorless is true
 function _HUB.getHubName(colorless)
     local ret = SV.HubData.Name
     if SV.HubData.UseSuffix then
@@ -304,25 +305,25 @@ function _HUB.getHubName(colorless)
     return "[color=#FFFFA5]"..ret.."[color]"
 end
 
----@return table the list of plot coordinates associated to the current hub rank
+---@return Loc[] #the list of plot coordinates associated to the current hub rank
 function _HUB.getPlotOriginList()
     return _HUB.PlotPositions[_HUB.getHubRank()]
 end
 
----@return table the list of office map plot coordinates associated to the current hub rank
+---@return Loc[] #the list off plot marker coordinates associated to the current hub rank, to use in the office menu
 function _HUB.getPlotMarkerOriginList()
-return _HUB.PlotMarkerMapPositions[_HUB.getHubRank()]
+    return _HUB.PlotMarkerMapPositions[_HUB.getHubRank()]
 end
 
----@param plot_id any home, office or any number up to the current rank's plot limit
----@return table a table containing the X and Y coordinates associated to the specified plot id for the current hub rank
+---@param plot_id "home"|"office"|integer home, office or any number up to the current rank's plot limit
+---@return Loc #a table containing the X and Y coordinates associated to the specified plot id for the current hub rank
 function _HUB.getPlotOrigin(plot_id)
     if plot_id == "home" then return _HUB.getPlotOriginList()[1] end
     if plot_id == "office" then return _HUB.getPlotOriginList()[2] end
     return _HUB.getPlotOriginList()[plot_id]
 end
----@param plot_id number any number up to the current rank's plot limit
----@return table a table containing the X and Y coordinates of the map token associated to the specified plot id for the current hub rank
+---@param plot_id integer any number up to the current rank's plot limit
+---@return Loc #a table containing the X and Y coordinates of the map token associated to the specified plot id for the current hub rank
 function _HUB.getPlotMarkerOrigin(plot_id)
     return _HUB.getPlotMarkerOriginList()[plot_id]
 end
@@ -364,10 +365,11 @@ function _HUB.LoadMapData()
 end
 
 ---Draws an empty plot by loading the specified empty plot image and the plot's objects in the specified position.
----@param plot_id any home, office or any number
----@param empty_image_id number the id of the asset that defines this plot's appearance when it's empty.
----@param pos table a table containing the X and Y coordinates of the plot's origin
+---@param plot_id "home"|"office"|integer home, office or any number
+---@param empty_image_id integer the id of the asset that defines this plot's appearance when it's empty.
+---@param pos Loc a table containing the X and Y coordinates of the plot's origin
 function _HUB.DrawEmpty(plot_id, empty_image_id, pos)
+    
     local graphics_data
     if empty_image_id > #_HUB.NotUnlockedVisuals.NonBlocking then
         graphics_data = _HUB.NotUnlockedVisuals.Blocking[empty_image_id-#_HUB.NotUnlockedVisuals.NonBlocking]
@@ -393,9 +395,9 @@ function _HUB.DrawEmpty(plot_id, empty_image_id, pos)
 end
 
 ---Draws a building by loading the specified building data in the specified position.
----@param plot_id any home, office or any number
----@param building_data table the plot's data structure
----@param pos table a table containing the X and Y coordinates of the plot's origin
+---@param plot_id PlotIndex home, office or any number
+---@param building_data PlotData the plot's data structure
+---@param pos Loc a table containing the X and Y coordinates of the plot's origin
 function _HUB.DrawBuilding(plot_id, building_data, pos)
     local rank = _HUB.getPlotRank(building_data)
     if not rank then
@@ -434,8 +436,8 @@ end
 
 --- Loads the specified decoration layer.
 --- @param deco string the name of the asset
---- @param pos table a table containing the X and Y coordinates of the plot's origin
---- @return userdata a GroundAnim object corresponding to the requested decoration
+--- @param pos Loc a table containing the X and Y coordinates of the plot's origin
+--- @return userdata #a GroundAnim object corresponding to the requested decoration
 function _HUB.GenerateDecoLayer(deco, pos)
     local object = RogueEssence.Content.ObjAnimData(deco, 1)
     local sheet = RogueEssence.Content.GraphicsManager.GetObject(deco)
@@ -445,11 +447,11 @@ function _HUB.GenerateDecoLayer(deco, pos)
 end
 
 --- Creates a new interactable NPC using the supplied data.
---- @param plot_id any home, office or any number
---- @param shopkeeper string the id of the shopkeeper's species
---- @param NPC_Loc table a table containing the X and Y offsets of the shopkeeper, starting from the plot's origin
---- @param pos table a table containing the X and Y coordinates of the plot's origin
---- @return userdata a GroundChar object corresponding to the requested NPC
+--- @param plot_id PlotIndex home, office or any number
+--- @param shopkeeper ShopkeeperData the shopkeeper's data
+--- @param NPC_Loc Loc a table containing the X and Y offsets of the shopkeeper, starting from the plot's origin
+--- @param pos Loc a table containing the X and Y coordinates of the plot's origin
+--- @return userdata #a GroundChar object corresponding to the requested NPC
 function _HUB.GenerateNPC(plot_id, shopkeeper, shiny, NPC_Loc, pos)
     local nickname = _DATA.DataIndices[RogueEssence.Data.DataManager.DataType.Monster]:Get(shopkeeper.species).Name:ToLocal()
     local name = "NPC_"..plot_id
@@ -464,10 +466,10 @@ function _HUB.GenerateNPC(plot_id, shopkeeper, shiny, NPC_Loc, pos)
 end
 
 --- Creates a list of objects using the supplied graphics data.
---- @param plot_id any home, office or any number
---- @param graphics_data table the Graphics table of the requested building. See ShopManager.lua for details
---- @param pos table a table containing the X and Y coordinates of the plot's origin
---- @return table a list of GroundObjects corresponding to all of the objects described in the Bounds data of this building.
+--- @param plot_id PlotIndex home, office or any number
+--- @param graphics_data GraphicsData the Graphics table of the requested building. See ShopManager.lua for details
+--- @param pos Loc a table containing the X and Y coordinates of the plot's origin
+--- @return userdata[] #a list of GroundObjects corresponding to all of the objects described in the Bounds data of this building.
 function _HUB.GenerateObjectList(plot_id, graphics_data, pos)
     local objects = {}
 
@@ -497,9 +499,9 @@ end
 
 --- Plots can require other decoration objects. This function creates a list of decorations using
 --- the supplied graphics data.
---- @param graphics_data table the Graphics table of the requested building. See ShopManager.lua for details
---- @param pos table a table containing the X and Y coordinates of the plot's origin
---- @return table a list of GroundAnim objects corresponding to all of the decorations described in the Decorations data of this building
+--- @param graphics_data GraphicsData the Graphics table of the requested building. See ShopManager.lua for details
+--- @param pos Loc a table containing the X and Y coordinates of the plot's origin
+--- @return userdata[] #a list of GroundAnim objects corresponding to all of the decorations described in the Decorations data of this building
 function _HUB.GenerateSubDecorationList(graphics_data, pos)
     local decos = {}
 
@@ -514,8 +516,8 @@ function _HUB.GenerateSubDecorationList(graphics_data, pos)
 end
 
 --- Loads a single decoration object.
---- @param display table a table containing the animation data for the specified decoration
---- @return userdata an ObjAnimData created using the supplied animation data
+--- @param display? DisplayData a table containing the animation data for the specified decoration
+--- @return userdata #an ObjAnimData created using the supplied animation data
 function _HUB.GenerateAnimData(display)
     local anim_index, frame_time, frame_start, frame_end = "", 1, -1, -1
     if display and display.Sprite then
@@ -532,7 +534,7 @@ end
 
 --- Makes sure the screen is black, then displays the hub name in the middle of the screen.
 --- if no_fade is false, the game will then fade in. It will stay black otherwise.
---- @param no_fade boolean if true, this function will not automatically fade back in after the title disappears. Defaults to false
+--- @param no_fade? boolean if true, this function will not automatically fade back in after the title disappears. Defaults to false
 function _HUB.ShowTitle(no_fade)
     GAME:FadeOut(false, 1)
     UI:WaitShowTitle(_HUB.getHubName(true), 30)
@@ -564,13 +566,20 @@ function _HUB.WakeUpHome()
     GAME:EnterGroundMap("hub_zone", "home_tier"..index, "Bed")
 end
 
+--- Regenerates stored recruits and items and adds them to the assembly and inventory respectively
+--- The inventory is cleared before generating items. The stored lists are cleared at the end of the execution.
+function _HUB.ProcessSavedRunData()
+
+end
+
 -------------------------------------------
 --region SV Interface
 -------------------------------------------
 
----@param level number the level to set the hub to
+--- Sets the hub to a specific level
+---@param level integer the level to set the hub to
 function _HUB.setHubLevel(level)
-    SV.HubData.Level = level
+    SV.HubData.Level = math.clamp(1, level, 10)
     _HUB.getPlotData("home").upgrades["upgrade_generic"] = level-1
     _HUB.getPlotData("office").upgrades["upgrade_generic"] = level-1
     _SHOP.UpgradeShop("home", "upgrade_generic")
@@ -589,17 +598,14 @@ function _HUB.initializePlotData()
         local rand = #_HUB.NotUnlockedVisuals.NonBlocking+#_HUB.NotUnlockedVisuals.Blocking
         if i>5 or (i>2 and i<5) then rand = rand end
 
+        ---@type PlotData
         local plot_base = {
             unlocked = false,
             building = "",
-            upgrades = {
-                -- {type = string, count = number}
-            },
-            shopkeeper = "",
+            upgrades = {},
+            shopkeeper = {},
             shopkeeper_shiny = false,
-            data = {
-                -- see shops folder
-            },
+            data = {}, -- see shops folder
             empty = math.random(rand)
         }
 
@@ -625,8 +631,8 @@ function _HUB.initializePlotData()
 end
 
 --- Returns the data of a specified plot
---- @param index any home, office or any positive integer up to 15
---- @return table the plot's entire data table
+--- @param index PlotIndex home, office or any positive integer up to 15
+--- @return PlotData #the plot's entire data table
 function _HUB.getPlotData(index)
     if index == "home"   then return SV.HubData.Home   end
     if index == "office" then return SV.HubData.Office end
@@ -634,8 +640,8 @@ function _HUB.getPlotData(index)
 end
 
 --- Returns the level of a specified plot
---- @param plot table the plot's data structure, obtained by calling _HUB.getPlotData(index)
---- @return table the plot's level
+--- @param plot PlotData the plot's data structure, obtained by calling _HUB.getPlotData(index)
+--- @return integer #the plot's level
 function _HUB.getPlotLevel(plot)
     local lvl = 0
     for _, count in pairs(plot.upgrades) do
@@ -645,8 +651,8 @@ function _HUB.getPlotLevel(plot)
 end
 
 --- Returns the rank of a specified plot
---- @param plot table the plot's data structure, obtained by calling _HUB.getPlotData(index)
---- @return table the plot's rank
+--- @param plot PlotData the plot's data structure, obtained by calling _HUB.getPlotData(index)
+--- @return integer #the plot's rank
 function _HUB.getPlotRank(plot)
     local lvl = _HUB.getPlotLevel(plot)
     return _HUB.LevelRankTable[lvl]
@@ -654,8 +660,8 @@ end
 
 --- Takes a list of shopkeepers and filters out any already used species, refilling the list again
 --- if and only if it ends up being fully empty.
---- @param shopkeepers table a shopkeepers list as defined in ShopManager.lua
---- @return table, boolean the filtered list of shopkeepers and a boolean that says whether or not the result should be shiny
+--- @param shopkeepers ShopkeeperData[] a shopkeepers list as defined in ShopManager.lua
+--- @return ShopkeeperData[], boolean #the filtered list of shopkeepers and a boolean that says whether or not the result should be shiny
 function _HUB.DiscardUsed(shopkeepers)
     local current = {}
     local list = {}
@@ -699,7 +705,7 @@ function _HUB.DiscardUsed(shopkeepers)
 end
 
 --- Unlocks the plot, allowing the player to build there.
---- @param index number a positive integer up to 15
+--- @param index integer a positive integer up to 15
 function _HUB.UnlockPlot(index)
     if index <= _HUB.getRankPlotNumber() and _HUB.getUnlockedNumber() < _HUB.getBuildLimit() then
         _HUB.getPlotData(index).unlocked = true
@@ -708,14 +714,14 @@ end
 
 --- Builds a new shop in the specified plot, but only if the plot itself is already unlocked.
 --- @param index number a positive integer up to 15
---- @param shop_type string the id of the shop to build
+--- @param shop_type BuildingID the id of the shop to build
 --- @param start_upgrade string the id of the first upgrade this shop will have. Defaults to upgrade_generic
---- @return boolean true if it went well, false if it failed
+--- @return boolean #true if it went well, false if it failed
 function _HUB.CreateShop(index, shop_type, start_upgrade)
     local success = false
     if not start_upgrade then start_upgrade = "upgrade_generic" end
     local data = _HUB.getPlotData(index)
-    if data.unlocked and data.building=="" then
+    if data.unlocked and data.building == "" then
         local db = _HUB.ShopBase[shop_type]
         if db then
             data.building = shop_type
@@ -734,12 +740,12 @@ function _HUB.CreateShop(index, shop_type, start_upgrade)
 end
 
 --- Applies the specified upgrade to the shop in the specified plot
---- @param index any home, office or any positive integer up to 15
+--- @param index PlotIndex home, office or any positive integer up to 15
 --- @param upgrade string the id of the upgrade that will be applied to this shop
---- @return boolean true if it went well, false if it failed
+--- @return boolean #true if it went well, false if it failed
 function _HUB.UpgradeShop(index, upgrade)
     local data = _HUB.getPlotData(index)
-    if data.unlocked and data.building~="" then
+    if data.unlocked and data.building ~= "" then
         local level = _HUB.getPlotLevel(data)
         _SHOP.UpgradeShop(index, upgrade)
         return level+1 == _HUB.getPlotLevel(data)
@@ -750,13 +756,13 @@ end
 --- Completely removes all shop data in the specified plot.
 --- For every upgrade, a part of its cost is salvaged and added to storage.
 --- @param index number any positive integer up to 15
---- @return table a list of {item=string, amount=number} objects representing the salvaged items
+--- @return ItemEntry[] #a list of {item=string, amount=number} objects representing the salvaged items
 function _HUB.RemoveShop(index)
     local plot = _HUB.getPlotData(index)
     local salvaged = _HUB.SalvageUpgrades(plot)
     plot.building = ""
     plot.upgrades = {}
-    plot.shopkeeper = ""
+    plot.shopkeeper = {}
     plot.data = {}
     return salvaged
 end
@@ -787,6 +793,9 @@ function _HUB.SwapPlots(index1, index2)
     plot2.data =       copy.data
 end
 
+---Calculates the amount of items to salvage when dismantling this shop
+---@param plot PlotData the plot to dismantle
+---@return ItemEntry[] #a list of salvaged items
 function _HUB.SalvageUpgrades(plot)
     local rate = 30 + _HUB.getHubLevel()
     local tools_rate = 40 + _HUB.getHubLevel()*2
@@ -821,6 +830,9 @@ function _HUB.SalvageUpgrades(plot)
     return salvage
 end
 
+---Splits an upgrade in its components, returning their ids
+---@param upgrade string an upgrade id to break
+---@return string, string? #the upgrade ids that make up the initial id. If it was not a composite upgrade, it only returns one id
 function _HUB.BreakSubUpgrade(upgrade)
     if _HUB.UpgradeTable[upgrade] then return upgrade end
     for id in pairs(_HUB.UpgradeTable) do

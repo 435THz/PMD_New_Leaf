@@ -51,7 +51,7 @@ function SmallShopMenu:initialize(title, items, confirm_action, refuse_action, m
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return table #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
 function SmallShopMenu:generate_options()
     local options = {}
     for i=1, #self.items, 1 do
@@ -105,8 +105,8 @@ end
 SmallShopChosenMenu = Class("SmallShopChosenMenu")
 
 --- Creates a new ``SmallShopChosenMenu`` instance using the provided object as parent.
---- @param item userdata the selected item
---- @param parent userdata the parent menu
+--- @param item ItemData the selected item
+--- @param parent Menu the parent menu
 --- @param confirm_text function the confirm button text
 --- @param confirm_action function the function that is called when the confirm button is pressed
 function SmallShopChosenMenu:initialize(item, parent, confirm_text, confirm_action)
@@ -139,7 +139,7 @@ end
 
 --- Creates a basic ``SmallShopMenu`` instance using the provided parameters, then runs it and returns its output.
 --- @param title string the title this window will have
---- @return table a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
+--- @return integer #the the chosen ``RogueEssence.Dungeon.InvSlot`` object's index.
 function SmallShopMenu.run(title, items)
     local ret = -1
     local choose = function(index) ret = index end
