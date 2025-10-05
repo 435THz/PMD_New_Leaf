@@ -54,7 +54,7 @@ end
 
 DungeonRestrictionList = Class("DungeonRestrictionList")
 
-function DungeonRestrictionDialog:initialize()
+function DungeonRestrictionList:initialize()
     local reqs = {}
     if SV.WishUpgrades.Player.TeamLimitUp<2 then
         table.insert(reqs, STRINGS:FormatKey("ZONE_RESTRICT_TEAM", SV.WishUpgrades.Player.TeamLimitUp+2))
@@ -70,7 +70,7 @@ function DungeonRestrictionDialog:initialize()
     end
 
     local tl = RogueElements.Loc(8, 8)
-    local br = RogueElements.Loc(144, GraphicsManager.MenuBG.TileHeight * 2 + Graphics.VERT_SPACE * (reqs+1))
+    local br = RogueElements.Loc(144, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight * 2 + Graphics.VERT_SPACE * (reqs+1))
     self.window = RogueEssence.Menu.SummaryMenu(RogueElements.Rect.FromPoints(tl, br))
 
     self.window.Elements:Add(RogueEssence.Menu.MenuText(STRINGS:FormatKey("NEW_RUN_TITLE"), RogueElements.Loc(Graphics.Manager.MenuBG.TileWidth * 2, Graphics.Manager.MenuBG.TileHeight), Color.Orange))

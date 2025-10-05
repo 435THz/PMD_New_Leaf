@@ -90,7 +90,7 @@ function _SHOP.ExporterUpdate(plot)
         end
         if #eligible > 0 then
             local sold = COMMON_FUNC.WeightedRoll(eligible)
-            new_earnings = new_earnings + stock[sold.Index].item:GetSellValue()
+            new_earnings = new_earnings + COMMON_FUNC.TblToInvItem(stock[sold.Index].item):GetSellValue()
             plot.data.sold = plot.data.sold + 1
             table.remove(stock, sold.Index)
         end
@@ -102,7 +102,7 @@ function _SHOP.ExporterUpdate(plot)
         if entry.state < entry.sell_at-1 then
             entry.state = entry.state+1
         else
-            new_earnings = new_earnings + entry.item:GetSellValue()
+            new_earnings = new_earnings + COMMON_FUNC.TblToInvItem(entry.item):GetSellValue()
             plot.data.sold = plot.data.sold + 1
             table.remove(stock, index)
         end
@@ -139,13 +139,13 @@ function _SHOP.ExporterInteract(plot, index)
                     loop = false
                 elseif choice > 0 then
                     local entry = plot.data.stock[choice]
-                    UI:ChoiceMenuYesNo(STRINGS:FormatKey('EXPORTER_CONFIRM_TAKE', entry.item:GetDisplayName()), false)
+                    UI:ChoiceMenuYesNo(STRINGS:FormatKey('EXPORTER_CONFIRM_TAKE', COMMON_FUNC.TblToInvItem(entry.item):GetDisplayName()), false)
                     UI:WaitForChoice()
                     if UI:ChoiceResult() then
                         UI:ResetSpeaker(false)
                         UI:SetCenter(true)
                         SOUND:PlaySE("Fanfare/Item")
-                        UI:WaitShowDialogue(STRINGS:FormatKey('RECEIVE_ITEM_MESSAGE', entry.item:GetDisplayName()))
+                        UI:WaitShowDialogue(STRINGS:FormatKey('RECEIVE_ITEM_MESSAGE', COMMON_FUNC.TblToInvItem(entry.item):GetDisplayName()))
                         GAME:GivePlayerItem(entry.item)
                         table.remove(plot.data.stock, choice)
                         UI:SetCenter(false)
@@ -233,7 +233,7 @@ function _SHOP.ExporterAddToStock(plot, items)
             GAME:TakePlayerBagItem(index, true)
         end
         local checks_required = math.ceil(math.max(1, math.log(item:GetSellValue()/10)))
-        local entry = {item = item, state = 0, sell_at = checks_required}
+        local entry = {item = COMMON_FUNC.InvItemToTbl(item), state = 0, sell_at = checks_required}
         table.insert(plot.data.stock, entry)
     end
 end

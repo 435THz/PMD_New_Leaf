@@ -447,7 +447,7 @@ function _SHOP.MarketGetDescription(plot)
     local description = STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_BASE", pools)
 
     if plot.data.specialization ~= "" then
-        description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_SPECIALIZATION", STRINGS:FormatKey("MARKET_POOL_", plot.data.specialization))
+        description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_SPECIALIZATION", STRINGS:FormatKey("MARKET_POOL_", string.upper(plot.data.specialization)))
     end
     if plot.data.discount then description = description..STRINGS:FormatKey("PLOT_DESCRIPTION_MARKET_DISCOUNT") end
     return description

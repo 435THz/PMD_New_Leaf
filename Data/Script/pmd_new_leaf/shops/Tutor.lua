@@ -380,7 +380,7 @@ function _SHOP.TutorInteract(plot, index)
                                 _SHOP.TutorAnimation(npc)
                                 SOUND:PlayFanfare("Fanfare/LearnSkill")
                                 UI:WaitShowDialogue(STRINGS:Format('TUTOR_LEARN_END', chosen_member:GetDisplayName(true), moveEntry:GetIconName()))
-                                if plot.data.category_permanent then _SHOP.TutorMakePermanent(chosen_move) end
+                                if plot.data.category_permanent then _SHOP.TutorMakePermanent(plot, chosen_move) end
                                 loop = false
                             end
                         else
@@ -483,13 +483,13 @@ function _SHOP.TutorGetTutorMoves(plot, character)
     end
 
     for _, slot in pairs(plot.data.category_stock) do
-        if check(form, slot.ID) then
+        if check(movepool, slot.ID) then
             local entry = {Cost = _SHOP.TutorGetPrice(slot.ID)}
             mapping[slot.ID] = entry
         end
     end
     for _, skill in pairs(plot.data.permanent_stock) do
-        if check(form, skill) then
+        if check(movepool, skill) then
             local entry = {Cost = _SHOP.TutorGetPrice(skill)}
             mapping[skill] = entry
         end

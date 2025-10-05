@@ -256,7 +256,7 @@ function hub_small.Entrance_home_Touch(_, _)
 end
 
 function hub_small.Storage_home_Action(_, _)
-    COMMON.ShowTeamStorageMenu()
+    _SHOP.StorageInteract()
 end
 
 function hub_small.Entrance_office_Touch(_, _)

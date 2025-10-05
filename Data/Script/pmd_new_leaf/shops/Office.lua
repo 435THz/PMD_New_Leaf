@@ -19,7 +19,7 @@ function _SHOP.OfficeInteract(_, _)
     local npc = CH("Pelipper")
     local player = CH("PLAYER")
     UI:SetSpeaker(npc)
-    local msg = STRINGS:FormatKey('OFFICE_INTRO', _HUB.getFounder():GetDisplayName())
+    local msg = STRINGS:FormatKey('OFFICE_INTRO', _HUB.getFounder():GetDisplayName(true))
     local exit = false
     while not exit do
         -- MAIN FLOW

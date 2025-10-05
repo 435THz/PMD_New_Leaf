@@ -301,7 +301,7 @@ function _SHOP.TraderInteract(plot, index)
                                 UI:SetSpeaker(npc)
 
                                 -- recompute the available trades
-                                catalog = _SHOP.TraderComputeCatalog()
+                                catalog = _SHOP.TraderComputeCatalog(plot)
 
                                 leave_shop = true
                             end

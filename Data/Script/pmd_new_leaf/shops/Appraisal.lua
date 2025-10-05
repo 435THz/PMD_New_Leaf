@@ -217,7 +217,7 @@ function _SHOP.AppraisalInteract(plot, index)
                     UI:ResetSpeaker(false)
                     UI:SetCenter(true)
                     SOUND:PlaySE("Fanfare/Item")
-                    UI:WaitShowDialogue(STRINGS:FormatKey('RECEIVE_ITEM_MESSAGE', entry.item:GetDisplayName()))
+                    UI:WaitShowDialogue(STRINGS:FormatKey('RECEIVE_ITEM_MESSAGE', COMMON_FUNC.TblToInvItem(entry.item):GetDisplayName()))
                     GAME:GivePlayerItem(entry.item)
                     table.remove(plot.data.stock, choice)
                     UI:SetCenter(false)
@@ -295,7 +295,7 @@ function _SHOP.AppraisalAddToStock(plot, items)
             GAME:TakePlayerBagItem(index, true)
         end
         local checks_required = _SHOP.AppraisalTables.durability_table[item.ID] or 10
-        local entry = {item = item, state = 0, open_at = checks_required}
+        local entry = {item = COMMON_FUNC.InvItemToTbl(item), state = 0, open_at = checks_required}
         table.insert(plot.data.stock, entry)
     end
 end
@@ -313,14 +313,17 @@ function _SHOP.AppraisalGetDescription(plot)
     return description
 end
 
-function _SHOP.AppraisalGetTreasure(box)
+function _SHOP.AppraisalGetTreasure(entry)
+    if entry.opened then return entry end
+    local box = entry.item
     local treasure_item = box.HiddenValue
     if not treasure_item or treasure_item == "" then treasure_item = "seed_plain" end
     local itemEntry = _DATA:GetItem(treasure_item)
     local stack = itemEntry.MaxStack
     local roll = _SHOP.AppraisalTables.stack_roll[treasure_item]
     if roll then stack = math.min(math.random(roll), stack) end
-    return RogueEssence.Dungeon.InvItem(treasure_item, false, stack)
+    local newItem = {ID=treasure_item, Cursed = false, HiddenValue = "", Amount = stack, Price = 0}
+    return {item = newItem, opened = true}
 end
 
 _SHOP.callbacks.initialize["appraisal"] =   _SHOP.AppraisalInitializer

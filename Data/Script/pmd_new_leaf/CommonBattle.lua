@@ -35,6 +35,7 @@ function COMMON_FUNC.AssignBossMoves(chara, tm_allowed, tutor_allowed, egg_allow
         end
         table.remove(slot_to_moves[slot_type], 1)
     end
+    return shuffled_slots
 end
 
 COMMON_FUNC._battle = {events = {}, states = {}}

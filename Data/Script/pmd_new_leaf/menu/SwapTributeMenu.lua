@@ -211,7 +211,7 @@ function SwapTributeMenu.run(max_choices)
     local ret = {}
     local choose = function(list) ret = list end
     local refuse = function() _MENU:RemoveMenu() end
-    local menu = SwapTributeMenu:new(title, choose, refuse, 176, max_choices)
+    local menu = SwapTributeMenu:new(choose, refuse, 176, max_choices)
     UI:SetCustomMenu(menu.menu)
     UI:WaitForChoice()
     return ret

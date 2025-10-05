@@ -178,7 +178,7 @@ function AppraisalSummaryWindow:SetItem(item)
         for _ = 0, item.Rarity, 1 do
             rarity = rarity.."\u{E10C}"
         end
-        rarity = Text.FormatKey("MENU_ITEM_RARITY", rarity)
+        rarity = STRINGS:FormatKey("MENU_ITEM_RARITY", rarity)
     else
         rarity = ""
     end

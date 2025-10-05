@@ -379,7 +379,7 @@ function _SHOP.CafeInteract(plot, index)
                                 end
 
                                 if ch then
-                                    local total_boost = _SHOP.CafeGetTotalBoost(plot, cart, member)
+                                    local total_boost = _SHOP.CafeGetTotalBoost(plot, cart, member, boost_tbl)
 
                                     for ii = #cart, 1, -1 do
                                         if cart[ii].IsEquipped then GAME:TakePlayerEquippedItem(cart[ii].Slot, true)
@@ -608,7 +608,7 @@ function _SHOP.CafeGetTotalBoost(plot, cart, member, boost_table)
             if boost.NegateStatC then negate_c = true end
             if boost.Rand ~= nil then
                 table.insert(random_data, boost.Rand)
-                random_amount = random_amount + (boost.Rand.Amount * boost.Rand.Rolls) or 0
+                random_amount = random_amount + ((boost.Rand.Amount * boost.Rand.Rolls) or 0)
             end
         end
     end

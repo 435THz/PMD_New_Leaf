@@ -512,3 +512,25 @@ function COMMON_FUNC.RestoreStartData(target)
     target.LuaData.StartData = nil
     SV.RunData.CharCounter = SV.RunData.CharCounter-1
 end
+
+---Converts an InvItem to a lua table
+---@param invItem InvItem the InvItem to convert
+---@return InvItemLua #a lua table that is equivalent to the supplied InvItem
+function COMMON_FUNC.InvItemToTbl(invItem)
+    return {
+        ID = invItem.ID,
+        Amount = invItem.Amount,
+        Cursed = invItem.Cursed,
+        HiddenValue = invItem.HiddenValue,
+        Price = invItem.Price
+    }
+end
+
+---Converts a lua-fied InvItem back into its original format
+---@param invItemTbl InvItemLua the InvItem table to restore
+---@return InvItem #the restored InvItem
+function COMMON_FUNC.TblToInvItem(invItemTbl)
+    local invItem = RogueEssence.Dungeon.InvItem(invItemTbl.ID, invItemTbl.Cursed, invItemTbl.Amount, invItemTbl.Price)
+    invItem.HiddenValue = invItemTbl.HiddenValue
+    return invItem
+end
