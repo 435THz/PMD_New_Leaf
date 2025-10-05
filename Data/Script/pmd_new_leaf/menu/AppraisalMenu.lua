@@ -38,7 +38,7 @@ function AppraisalMenu:initialize(data, confirm_action, refuse_action)
     -- create the summary windows
     local GraphicsManager = RogueEssence.Content.GraphicsManager
 
-    self.summary = ExporterSummaryWindow:new(16, self.menu.Bounds.Bottom, GraphicsManager.ScreenWidth-16, GraphicsManager.ScreenHeight-8)
+    self.summary = AppraisalSummaryWindow:new(16, self.menu.Bounds.Bottom, GraphicsManager.ScreenWidth-16, GraphicsManager.ScreenHeight-8)
     self.progress_summary = AppraisalProgressWindow:new(self.menu.Bounds.Right, self.menu.Bounds.Bottom - 14*2 - GraphicsManager.MenuBG.TileHeight*2)
     self.menu.SummaryMenus:Add(self.summary.window)
     self.menu.SummaryMenus:Add(self.progress_summary.window)
@@ -146,10 +146,10 @@ end
 
 
 
+--TODO clone of ExporterSummaryWindow
+AppraisalSummaryWindow = Class("AppraisalSummaryWindow")
 
-ExporterSummaryWindow = Class("ExporterSummaryWindow")
-
-function ExporterSummaryWindow:initialize(left, top, right, bottom)
+function AppraisalSummaryWindow:initialize(left, top, right, bottom)
     self.window = RogueEssence.Menu.SummaryMenu(RogueElements.Rect.FromPoints(
             RogueElements.Loc(left, top), RogueElements.Loc(right, bottom)))
 
@@ -166,7 +166,7 @@ function ExporterSummaryWindow:initialize(left, top, right, bottom)
     self.window.Elements:Add(self.rarity);
 end
 
-function ExporterSummaryWindow:SetItem(item)
+function AppraisalSummaryWindow:SetItem(item)
     local descr  = item.Desc:ToLocal()
     local price  = ""
     local rarity = ""
@@ -186,7 +186,7 @@ function ExporterSummaryWindow:SetItem(item)
     self:SetData(descr, rarity, price)
 end
 
-function ExporterSummaryWindow:SetData(description, rarity, price)
+function AppraisalSummaryWindow:SetData(description, rarity, price)
     self.description_box:SetAndFormatText(description)
     self.price_box:SetText(price)
     self.rarity:SetText(rarity)
