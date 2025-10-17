@@ -1,7 +1,8 @@
 ---@class List<T>: { [integer]: T, Count: integer }
 ---@alias InvSlot {Slot:integer,IsEquipped:boolean,IsValid:(fun():boolean)}
 ---@alias InvItem {ID:string,Cursed:boolean,HiddenValue:string,Amount:integer,Price:integer,GetSellValue:(fun(this:InvItem):integer),GetDisplayName:(fun(this:InvItem):string)}
----@alias ItemData {UsageType:userdata,MaxStack:integer}
+---@alias ItemData {Desc:LocalText,Rarity:integer,MaxStack:integer,Price:integer,UsageType:userdata}
+---@alias LocalText {ToLocal:(fun():string)}
 ---@alias MonsterID {Species:string,Form:integer,Skin:string,Gender:any}
 ---@alias SlotSkill {SkillNum:string,Charges:integer,CanForget:boolean}
 ---@alias Character {Name:string,BaseForm:MonsterID,BaseIntrinsics:List<string>,FormIntrinsicSlot:integer,BaseSkills:List<SlotSkill>,Level:integer,MaxHP:integer,BaseAtk:integer,BaseDef:integer,BaseMAtk:integer,BaseMDef:integer,BaseSpeed:integer,MaxHPBonus:integer,AtkBonus:integer,DefBonus:integer,MAtkBonus:integer,MDefBonus:integer,SpeedBonus:integer,LuaData:table,SetBaseIntrinsic:function,GetDisplayName:(fun(this:Character,trueName:boolean):string),HasBaseSkill:(fun(this:Character,skill_id:string):boolean)}

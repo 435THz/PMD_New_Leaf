@@ -9,9 +9,9 @@
 AppraisalMenu = Class("AppraisalMenu")
 
 --- Creates a new ``AppraisalMenu`` instance using the provided plot data and callbacks.
---- @param data table the shop's data table
---- @param confirm_action function the function that is called when the confirm button is pressed
---- @param refuse_action function the function that is called when the refuse button is pressed
+--- @param data AppraisalData the shop's data table
+--- @param confirm_action fun(index:integer) the function that is called when the confirm button is pressed
+--- @param refuse_action fun() the function that is called when the refuse button is pressed
 function AppraisalMenu:initialize(data, confirm_action, refuse_action)
 
     -- constants
@@ -46,7 +46,7 @@ function AppraisalMenu:initialize(data, confirm_action, refuse_action)
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return userdata[] #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
 function AppraisalMenu:generate_options()
     local options = {}
     for i=1, #self.slotList, 1 do
@@ -54,7 +54,7 @@ function AppraisalMenu:generate_options()
         local item = slot.item
 
         local enabled = slot.opened
-        local name = item:GetDisplayName()
+        local name = COMMON_FUNC.TblToInvItem(item):GetDisplayName()
         local text_name = RogueEssence.Menu.MenuText(name, RogueElements.Loc(2, 1), Color.White)
         local option = RogueEssence.Menu.MenuElementChoice(function() self:choose(i) end, enabled, text_name)
         table.insert(options, option)
@@ -74,7 +74,7 @@ end
 
 --- Closes the menu and calls the menu's confirmation callback.
 --- The result's index must be retrieved by accessing the choice variable of this object.
---- @param index number the index of the chosen character
+--- @param index integer the index of the chosen character
 function AppraisalMenu:choose(index)
     if index>=0 then
         local choose = function(answer)
@@ -146,9 +146,14 @@ end
 
 
 
---TODO clone of ExporterSummaryWindow
+--TODO clone of ExporterSummaryWindow?
 AppraisalSummaryWindow = Class("AppraisalSummaryWindow")
 
+---Initializes the appraisal menu's summary window.
+---@param left integer the x coordinate of the left side of the window relative to the screen's origin
+---@param top integer the y coordinate of the top of the window relative to the screen's origin
+---@param right integer the x coordinate of the right side of the window relative to the screen's origin
+---@param bottom integer the y coordinate of the bottom of the window relative to the screen's origin
 function AppraisalSummaryWindow:initialize(left, top, right, bottom)
     self.window = RogueEssence.Menu.SummaryMenu(RogueElements.Rect.FromPoints(
             RogueElements.Loc(left, top), RogueElements.Loc(right, bottom)))
@@ -166,6 +171,8 @@ function AppraisalSummaryWindow:initialize(left, top, right, bottom)
     self.window.Elements:Add(self.rarity);
 end
 
+---Updates the window with a new item.
+---@param item ItemData
 function AppraisalSummaryWindow:SetItem(item)
     local descr  = item.Desc:ToLocal()
     local price  = ""
@@ -186,6 +193,10 @@ function AppraisalSummaryWindow:SetItem(item)
     self:SetData(descr, rarity, price)
 end
 
+---Updates the window using custom data
+---@param description string a description to display
+---@param rarity string a text to display in the rarity section
+---@param price string a text to display in the price section
 function AppraisalSummaryWindow:SetData(description, rarity, price)
     self.description_box:SetAndFormatText(description)
     self.price_box:SetText(price)
@@ -200,6 +211,9 @@ end
 
 AppraisalProgressWindow = Class("AppraisalProgressWindow")
 
+---Initializes the window that displays the appraisal progress for the currently selected item
+---@param left integer the x coordinate of the left side of the window relative to the screen's origin
+---@param top integer the y coordinate of the top of the window relative to the screen's origin
 function AppraisalProgressWindow:initialize(left, top)
     local GraphicsManager = RogueEssence.Content.GraphicsManager
     self.window = RogueEssence.Menu.SummaryMenu(RogueElements.Rect.FromPoints(
@@ -211,6 +225,9 @@ function AppraisalProgressWindow:initialize(left, top)
     self.window.Elements:Add(self.progress)
 end
 
+---Sets the progress number to display
+---@param current integer the current progress
+---@param max integer the maximum value for the progress
 function AppraisalProgressWindow:SetProgress(current, max)
     self.progress:SetText(STRINGS:FormatKey("APPRAISAL_PROGRESS_NUMBER", current, max))
 end
@@ -224,8 +241,8 @@ end
 
 
 --- Creates an ``AppraisalMenu`` instance using the provided plot data, then runs it and returns its output.
---- @param data table the shop's data table
---- @return number #the index of the selected object if one was selected, -1 if a deposit was requested, nil if the menu has been closed.
+--- @param data AppraisalData the shop's data table
+--- @return integer? #the index of the selected object if one was selected, -1 if a deposit was requested, nil if the menu has been closed.
 function AppraisalMenu.run(data)
     local ret
     local choose = function(index)
