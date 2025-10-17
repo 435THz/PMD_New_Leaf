@@ -12,6 +12,9 @@ require 'pmd_new_leaf.menu.JuiceMenu'
 ---@alias CafePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:CafeData,empty:integer}
 ---@alias CafeData {price:integer,boost_pools:integer,daily_pools:integer,craft_pools:integer,daily_amount:integer,iotd:CafeEntry[]}
 ---@alias CafeEntry {Item:string,Weight:integer,Price:integer}
+---@alias CafeTotalBoosts {boosts:CafeBoosts,random:CafeBoostRandomEntry[],reverse_random:boolean}
+---@alias CafeBoosts {HP:integer,Atk:integer,Def:integer,SpAtk:integer,SpDef:integer,Speed:integer}
+---@alias CafeBoostRandomEntry {HP:boolean,Atk:boolean,Def:boolean,SpAtk:boolean,SpDef:boolean,Speed:boolean,Rolls:integer,Amount:integer}
 
 _SHOP.CafeTables = {
     --level =       1    2   3   4   5   6   7   8   9   10
@@ -536,7 +539,7 @@ end
 ---@param cart InvSlot the items to be used
 ---@param member Character the character to apply the boosts to
 ---@param boost_table table the boost table at the top of this file
----@return table, integer #TODO
+---@return CafeTotalBoosts, integer #a table containing all the boosts that should be applied to the character, and the number of boost points that will be randomly assigned.
 function _SHOP.CafeGetTotalBoost(plot, cart, member, boost_table)
     local boost_tbl = boost_table or {}
     if #boost_tbl == 0 then
@@ -669,7 +672,7 @@ function _SHOP.CafeGetTotalBoost(plot, cart, member, boost_table)
 end
 
 ---Applies a list of boosts to the given character 
----@param boost_data table a table containing the boosts to apply
+---@param boost_data CafeTotalBoosts a table containing the boosts to apply
 ---@param member Character the character to apply the boost to
 function _SHOP.CafeApplyBoosts(boost_data, member)
     local boost = boost_data.boosts
@@ -693,8 +696,8 @@ function _SHOP.CafeApplyBoosts(boost_data, member)
             local index = table.index_of(all_stats, key)
             if index and member[mem_stats[index]] + boost[all_stats[index]] < max_boost then
                 table.insert(stats, key)
-            elseif key == "Amount" then amount = value
-            elseif key == "Rolls" then rolls = value end
+            elseif key == "Amount" then amount = value --[[@as integer]]
+            elseif key == "Rolls" then rolls = value --[[@as integer]] end
         end
         for _=1, rolls, 1 do
             local stat = COMMON_FUNC.WeightlessRoll(stats)
