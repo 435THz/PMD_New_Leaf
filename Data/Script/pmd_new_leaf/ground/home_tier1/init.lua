@@ -155,7 +155,7 @@ function home_tier1.Bed_Touch(_, _)
             UI:WaitShowVoiceOver("The next morning...", 90)
 
 
-            SOUND:PlayBGM("A04. Canyon Camp.ogg", true)
+            SOUND:PlayBGM("Canyon Camp.ogg", true)
             GAME:FadeIn(20)
 
             GAME:WaitFrames(105)

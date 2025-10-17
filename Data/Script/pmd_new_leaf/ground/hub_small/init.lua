@@ -97,7 +97,7 @@ function hub_small.veryFirstVisit()
     UI:SetSpeaker(pelipper)
     UI:WaitShowDialogue("I see it![pause=0] That's the clearing we're looking for!")
 
-    SOUND:PlayBGM("A04. Canyon Camp.ogg", true)
+    SOUND:PlayBGM("Canyon Camp.ogg", true)
 
     --define coroutines
     local player_intro_walk = function()
