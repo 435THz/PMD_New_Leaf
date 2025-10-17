@@ -51,22 +51,22 @@ function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, m
     self.number_box = RogueEssence.Menu.MenuDigits(self.number, self.digits+1, RogueElements.Loc(self.menu.Bounds.Width//2 - (9 * (self.digits+1))//2, (self.menu.Bounds.Height + title_offset)//2 - 8))
 
     if draw_title then
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuText(self.title, RogueElements.Loc(self.menu.Bounds.Width//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), RogueElements.DirH.None))
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.VERT_SPACE + RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), self.menu.Bounds.Width - 12 * 2))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuText(self.title, RogueElements.Loc(self.menu.Bounds.Width//2, RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), RogueElements.DirH.None))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuDivider(RogueElements.Loc(12, Graphics.VERT_SPACE + RogueEssence.Content.GraphicsManager.MenuBG.TileHeight), self.menu.Bounds.Width - 12 * 2))
     end
-    self.menu.MenuElements:Add(self.sign_text)
-    self.menu.MenuElements:Add(self.number_box)
+    self.menu.Elements:Add(self.sign_text)
+    self.menu.Elements:Add(self.number_box)
     for i=0, self.digits, 1 do
         local digit_pos = self.number_box:GetDigitLoc(i)
         digit_pos.X = digit_pos.X -1
         digit_pos.Y = digit_pos.Y +12
-        self.menu.MenuElements:Add(RogueEssence.Menu.MenuDivider(digit_pos, 8))
+        self.menu.Elements:Add(RogueEssence.Menu.MenuDivider(digit_pos, 8))
     end
     self.cursors = {}
     self.cursors[1] = RogueEssence.Menu.MenuCursor(self.menu, RogueElements.Dir4.Up)
     self.cursors[2] = RogueEssence.Menu.MenuCursor(self.menu, RogueElements.Dir4.Down)
-    self.menu.MenuElements:Add(self.cursors[1])
-    self.menu.MenuElements:Add(self.cursors[2])
+    self.menu.Elements:Add(self.cursors[1])
+    self.menu.Elements:Add(self.cursors[2])
     self:DrawMenu()
 end
 
