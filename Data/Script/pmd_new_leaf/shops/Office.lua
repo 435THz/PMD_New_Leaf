@@ -296,15 +296,15 @@ function _SHOP.OfficeInteract(_, _)
             --TODO quest system
         elseif result == 4 then
             -- INFO
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1'))
-            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2'))
+            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_1', _HUB.getHubName()))
+            UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_2', _HUB.getHubSuffix(true)))
             if SV.Intro.ObtainedWishFragments or SV.Intro.HubTutorialProgress>=6 then
                 if _HUB.getHubRank() == 1 then
-                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3'))
+                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3', _HUB.getHubSuffix(true)))
                 elseif _HUB.getHubLevel() < 10 then
-                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3b'))
+                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3b', _HUB.getHubSuffix(true)))
                 else
-                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3c'))
+                    UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_3c', _HUB.getHubSuffix(true)))
                 end
             end
             UI:WaitShowDialogue(STRINGS:FormatKey('OFFICE_INFO_4'))
@@ -316,5 +316,5 @@ function _SHOP.OfficeInteract(_, _)
     end
 end
 
-_SHOP.callbacks.endOfDay["office"] =   _SHOP.OfficeUpdate
-_SHOP.callbacks.interact["office"] =   _SHOP.OfficeInteract
+_SHOP.callbacks.endOfDay["office"] = _SHOP.OfficeUpdate
+_SHOP.callbacks.interact["office"] = _SHOP.OfficeInteract

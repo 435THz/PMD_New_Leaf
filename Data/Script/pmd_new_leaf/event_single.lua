@@ -74,6 +74,7 @@ function SINGLE_CHAR_SCRIPT.TutorialScriptDungeon(owner, ownerChar, context, arg
 		end
 	end
 end
+
 --TODO currently unused
 function SINGLE_CHAR_SCRIPT.TutorialScriptItems(owner, ownerChar, context, args)
 	if context.User == nil then

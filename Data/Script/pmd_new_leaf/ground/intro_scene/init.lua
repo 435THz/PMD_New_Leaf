@@ -152,7 +152,7 @@ function intro_scene.CharacterSelect()
     _DATA.Save.ActiveTeam.Players[0].IsPartner = true -- cannot be removed from active team. TODO This will be an unlock later on.
     _DATA.Save.ActiveTeam.Players[0]:FullRestore()
     GAME:SetCharacterNickname(_DATA.Save.ActiveTeam.Players[0], menu.data.nickname)
-    GAME:SetTeamName("Envoy") --Team Envoy. This will be editable in the future
+    GAME:SetTeamName(STRINGS:FormatKey("STARTING_TEAM_NAME")) --This will be editable in the future
     COMMON.RespawnAllies()
     SV.Intro.CharacterCreated = true
 

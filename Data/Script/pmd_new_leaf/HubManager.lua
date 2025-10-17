@@ -252,9 +252,12 @@ function _HUB.getHubRank()
     return _HUB.LevelRankTable[_HUB.getHubLevel()]
 end
 
+---@param color? boolean if true, color the text with with the ground map color code. Defaults to false.
 ---@return string #the current town suffix for the hub
-function _HUB.getHubSuffix()
-    return STRINGS:FormatKey(_HUB.RankSuffixKey[_HUB.getHubRank()])
+function _HUB.getHubSuffix(color)
+    local ret = STRINGS:FormatKey(_HUB.RankSuffixKey[_HUB.getHubRank()])
+    if color then return "[color=#FFFFA5]"..ret.."[color]" end
+    return ret
 end
 
 ---@return string #the id of the current ground map for the hub

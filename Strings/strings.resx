@@ -587,7 +587,7 @@
     <value>You can also rename the {0} itself if you so desire.</value>
   </data>
   <data name="OFFICE_INFO_4" xml:space="preserve">
-    <value>The Federation also periodically sends us requests,[pause=10] so i keep track of them for you,[pause=10) too.</value>
+    <value>The Federation also periodically sends us requests,[pause=10] so i keep track of them for you.</value>
   </data>
   <data name="OFFICE_INFO_5" xml:space="preserve">
     <value>Some hove these requests may have some pretty valuable rewards,[pause=10] but,[pause=10] in the end,[pause=10] tackling them or not is up to you.</value>
@@ -888,6 +888,9 @@
   </data>
   <data name="SHOP_OPTION_TUTOR" xml:space="preserve">
     <value>Tutor</value>
+  </data>
+  <data name="STARTING_TEAM_NAME" xml:space="preserve">
+    <value>Expedition</value>
   </data>
   <data name="TOWN_MANAGER_DESCR_BUILDINGS" xml:space="preserve">
     <value>Unlock plots of land, build and upgrade shops to grow the {0}.</value>
