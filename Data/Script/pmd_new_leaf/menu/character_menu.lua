@@ -1,6 +1,7 @@
+---@diagnostic disable: undefined-field
 --[[
     character_menu.lua
-    Implements the character menu used in New Leaf's character selection sequence
+    Implements the character menu used in Forgotten Wishes's character selection sequence
 ]]--
 require 'origin.common'
 require 'pmd_new_leaf.Global'
@@ -8,19 +9,31 @@ require 'pmd_new_leaf.menu.GraphicsEssential'
 require 'pmd_new_leaf.menu.ChooseAmountMenu'
 require 'pmd_new_leaf.CommonFunctions'
 
+---@alias ChoiceListParentMenu CharacterSelectionMenu|CharacterEggMoveMenu
+
+--- Runs the entire system in private mode for some reason TODO unwrap
 function CharacterSelectionMenu()
+    ---@class CharacterSelectionMenu
     local CharacterSelectionMenu = Class('CharacterSelectionMenu')
 
     -- sub-menu initializations
+    ---@class CharacterChoiceListMenu
     local CharacterChoiceListMenu =          Class('CharacterChoiceListMenu')
+    ---@class CharacterEggMoveMenu
     local CharacterEggMoveMenu =             Class('CharacterEggMoveMenu')
+    ---@class CharacterEggMovePositionSelector
     local CharacterEggMovePositionSelector = Class('CharacterEggMovePositionSelector')
+    ---@class CharacterSpeciesMenu
     local CharacterSpeciesMenu =             Class('CharacterSpeciesMenu')
+    ---@class CharacterSignDocumentMenu
     local CharacterSignDocumentMenu =        Class('CharacterSignDocumentMenu')
 
     -------------------------------------------------------
     --region Initialization
     -------------------------------------------------------
+
+    --- Initializes the main SeletionMenu with the given list of species
+    --- @param species_list string[]
     function CharacterSelectionMenu:initialize(species_list)
         assert(self, "SingleItemDealMenu:initialize(): self is nil!")
         self.species_list = species_list
@@ -61,6 +74,7 @@ function CharacterSelectionMenu()
         self:updateWindows(true, true)
     end
 
+    --- Generates all the necessary windows and adds them to the two sides of the menu as needed
     function CharacterSelectionMenu:setupWindows()
         self:setupTitleWindow()
         self:setupPortrait()
@@ -70,6 +84,7 @@ function CharacterSelectionMenu()
         self:registerSubWindows()
     end
 
+    --- Generates the menu title window
     function CharacterSelectionMenu:setupTitleWindow()
         local top_left = RogueElements.Loc(16, 8)
         local bottom_right = RogueElements.Loc(Graphics.Manager.ScreenWidth//2 - 8, 8 + Graphics.LINE_HEIGHT + Graphics.Manager.MenuBG.TileHeight*2)
@@ -84,6 +99,7 @@ function CharacterSelectionMenu()
         self.title_window.Elements:Add(title)
     end
 
+    --- Generates the portrait window
     function CharacterSelectionMenu:setupPortrait()
         local top_left = RogueElements.Loc(16, 16 + self.title_window.Bounds.Height)
         local bottom_right = RogueElements.Loc(54+Graphics.Manager.MenuBG.TileWidth*2, 50 + self.title_window.Bounds.Height + Graphics.Manager.MenuBG.TileHeight*2)
@@ -96,6 +112,7 @@ function CharacterSelectionMenu()
         self.portrait_box.Elements:Add(self.portrait)
     end
 
+    --- Generates the move summary window
     function CharacterSelectionMenu:setupMoveSummary()
         local top_left = RogueElements.Loc(Graphics.Manager.ScreenWidth//2 + 8, 8)
         local bottom_right = RogueElements.Loc(Graphics.Manager.ScreenWidth - 16, Graphics.Manager.ScreenHeight//2 - 4)
@@ -124,13 +141,17 @@ function CharacterSelectionMenu()
         end
     end
 
+    --- Adds the given menu element to the right side of the menu's interactable and summary versions
     function CharacterSelectionMenu:addRight(element) self:addElement(element, self.right, self.right_summary) end
+    --- Adds the given menu element to the left side of the menu's interactable and summary versions
     function CharacterSelectionMenu:addLeft(element) self:addElement(element, self.left, self.left_summary) end
+    --- Adds the given menu element to the given interactable and summary menus
     function CharacterSelectionMenu:addElement(element, menu, menu_summary)
         menu.Elements:Add(element)
         menu_summary.Elements:Add(element)
     end
 
+    --- Generates the left window menu in both its interactable and summary version
     function CharacterSelectionMenu:setupLeftWindow()
         local x = 16
         local y = Graphics.Manager.ScreenHeight//2 + 4
@@ -180,6 +201,7 @@ function CharacterSelectionMenu()
         self:addLeft(self.shiny_name)
     end
 
+    --- Generates the right window menu in both its interactable and summary version
     function CharacterSelectionMenu:setupRightWindow()
         local x = Graphics.Manager.ScreenWidth//2 + 8
         local y = Graphics.Manager.ScreenHeight//2 + 4
@@ -221,6 +243,7 @@ function CharacterSelectionMenu()
         self:addRight(RogueEssence.Menu.MenuText("Sign document", RogueElements.Loc(self.menu_spacing, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*5 + 4)))
     end
 
+    --- Registers all the summary windows to the menu sides that need them
     function CharacterSelectionMenu:registerSubWindows()
         self.left.SummaryMenus:Add(self.title_window)
         self.left.SummaryMenus:Add(self.portrait_box)
@@ -232,9 +255,12 @@ function CharacterSelectionMenu()
         self.right.SummaryMenus:Add(self.left_summary)
     end
     -------------------------------------------------------
-    --region VisualUpdating
+    --region VisualUpdates
     -------------------------------------------------------
 
+    --- Updates all windows as necessary
+    ---@param portrait? boolean if true, it also updates the portrait window 
+    ---@param summary? boolean if true, it also updates the move summary window 
     function CharacterSelectionMenu:updateWindows(portrait, summary)
         self:updateLeft()
         self:updateRight()
@@ -242,6 +268,7 @@ function CharacterSelectionMenu()
         if summary  then self:updateSummary()  end
     end
 
+    --- Updates only the currently active menu
     function CharacterSelectionMenu:updateCurrent()
         if self.focused==1 then
             self:updateLeft()
@@ -250,6 +277,7 @@ function CharacterSelectionMenu()
         end
     end
 
+    --- Updates the left menu using the currently set data
     function CharacterSelectionMenu:updateLeft()
         self.monster = _DATA:GetMonster(self.data.species)
 
@@ -297,6 +325,7 @@ function CharacterSelectionMenu()
         end
     end
 
+    --- Updates the right menu using the currently set data
     function CharacterSelectionMenu:updateRight()
         self.right.Elements:Add(self.cursor_r)
 
@@ -327,10 +356,12 @@ function CharacterSelectionMenu()
 
     -------------------------------------------------------
 
+    --- Updates the portrait box using the currently set data
     function CharacterSelectionMenu:updatePortrait()
         self.portrait.Speaker = self:toMonsterID()
     end
 
+    --- Updates the move summary using the currently set data
     function CharacterSelectionMenu:updateSummary()
         --setting up data
         local level = 5
@@ -375,10 +406,14 @@ function CharacterSelectionMenu()
     --region Interaction
     -------------------------------------------------------
 
+    ---Gets the currently active menu window
+    ---@return Menu #the active window menu's c# object
     function CharacterSelectionMenu:getFocusedWindow()
         if self.focused == 1 then return self.left else return self.right end
     end
 
+    ---Processes inputs
+    ---@param input any the input object
     function CharacterSelectionMenu:Update(input)
         local window = self.selected[1]
         local option = self.selected[2]
@@ -426,7 +461,10 @@ function CharacterSelectionMenu()
         end
     end
 
-    -- skips inactive options. this is not pretty but the alternatives were way worse
+    --- Skips the inactive options when handling directional inputs.
+    --- This implementation is not pretty but the alternatives were way worse.
+    ---@param start_window integer the window that was selected before the update method changed it.
+    ---@param start_option integer the option index that was selected before the update method changed it.
     function CharacterSelectionMenu:redirectSelectedOption(start_window, start_option) --start_window and start_option mean which window option pair is the movement starting from
         local window = self.selected[1]
         local option = self.selected[2]
@@ -461,6 +499,7 @@ function CharacterSelectionMenu()
         self.selected[2] = option
     end
 
+    ---Changes the active window
     function CharacterSelectionMenu:toggleFocus()
         local window = self.selected[1]
         local option = self.selected[2]
@@ -479,6 +518,7 @@ function CharacterSelectionMenu()
         _MENU:ReplaceMenu(self:getFocusedWindow())
     end
 
+    --- Updates the active state of the various menu options
     function CharacterSelectionMenu:updatePermissions()
         self.monster = _DATA:GetMonster(self.data.species)
         self.form_active = self:monsterFormCount()>1
@@ -491,16 +531,22 @@ function CharacterSelectionMenu()
     --region Data Processing
     -------------------------------------------------------
 
+    ---Generates a MonsterID using the data stored in the menu
+    ---@return MonsterID #a MonsterID object
     function CharacterSelectionMenu:toMonsterID()
         local id = self.data
         local gender = self:toGender()
         return RogueEssence.Dungeon.MonsterID(id.species, id.form, id.skin, gender)
     end
 
+    ---Gets the gender object associated to the selected gender id
+    ---@return userdata #a gender object
     function CharacterSelectionMenu:toGender()
         return GLOBAL.GenderTable[self.data.gender+1]
     end
 
+    ---Returns the number of forms that the selected species has
+    ---@return integer #the number of forms
     function CharacterSelectionMenu:monsterFormCount()
         local count = 0
         for elem in luanet.each(self.monster.Forms) do
@@ -511,6 +557,8 @@ function CharacterSelectionMenu()
         return count
     end
 
+    ---Returns the list of egg moves that the selected form has
+    ---@return string[] #a list of skill ids
     function CharacterSelectionMenu:getMonsterEggMoves()
         local monster_species = self.data.species
         local monster_form = self.data.form
@@ -532,6 +580,7 @@ function CharacterSelectionMenu()
         end
         return moves
     end
+
     -------------------------------------------------------
     --region Callbacks
     -------------------------------------------------------
@@ -653,6 +702,7 @@ function CharacterSelectionMenu()
         _MENU:AddMenu(sub_menu.menu, true)
     end
 
+    ---Opens the SignDocumentMenu
     function CharacterSelectionMenu:signDocument()
         local cb = function(close_menu)
             self.confirmed = close_menu
@@ -666,7 +716,14 @@ function CharacterSelectionMenu()
     --region CharacterChoiceListMenu
     -------------------------------------------------------
 
-    --Menu parent, string window_name, List<string> options, int current, function callback, int pos
+    ---Initializes a new ChoiceListMenu.
+    ---@param parent ChoiceListParentMenu the parent menu
+    ---@param window_name string the name of the window
+    ---@param window_offset integer an offset for the y position of the window
+    ---@param options string[] a list of options
+    ---@param current integer the currently selected option
+    ---@param callback fun(index:integer) the function that will be called when an option is selected
+    ---@param pos integer them index of the first option that should be included in the initial view. This is just a suggestion, and can shift during initialization.
     function CharacterChoiceListMenu:initialize(parent, window_name, window_offset, options, current, callback, pos)
         assert(self, "RecruitMainChoice:initialize(): self is nil!")
         self.parent = parent
@@ -734,6 +791,7 @@ function CharacterSelectionMenu()
         self:DrawMenu()
     end
 
+    ---Draws the menu, updating the list of currently visible options
     function CharacterChoiceListMenu:DrawMenu()
         --fill options in
         local end_at = self.start_from+self.ELEMENTS - 1
@@ -744,9 +802,10 @@ function CharacterSelectionMenu()
         end
         --position cursor
         self.cursor.Loc = RogueElements.Loc(10, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(self.pos-1))
-        --no. no arrows here, you asshole.
     end
 
+    ---Processes inputs
+    ---@param input any the input object
     function CharacterChoiceListMenu:Update(input)
         if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
             _GAME:SE("Menu/Confirm")
@@ -782,6 +841,9 @@ function CharacterSelectionMenu()
         end
     end
 
+    --- Checks if a direction is being held and handles how often the options should shift
+    ---@param input any the input object
+    ---@param direction any the direction being held
     function CharacterChoiceListMenu:directionHold(input, direction)
         local INPUT_WAIT = 30
         local INPUT_GAP = 6
@@ -798,6 +860,8 @@ function CharacterSelectionMenu()
         return new_dir and (not old_dir or repeat_time)
     end
 
+    --- Changes the selected option
+    --- @param change integer the amount to change the selection by. Usually just +1 or -1
     function CharacterChoiceListMenu:updateSelection(change)
         self.selected = math.clamp(1,self.selected + change, #self.options)
         if self.selected == 1 then self.pos = 1
@@ -810,6 +874,9 @@ function CharacterSelectionMenu()
     --region CharacterEggMoveMenu
     -------------------------------------------------------
 
+    --- Initializes the EggMove handling menu
+    --- @param parent CharacterSelectionMenu the parent menu
+    --- @param updateCallback fun(move:string,index:number) the function to call whenever an operation is completed
     function CharacterEggMoveMenu:initialize(parent, updateCallback)
         assert(self, "RecruitMainChoice:initialize(): self is nil!")
         self.parent = parent
@@ -850,6 +917,7 @@ function CharacterSelectionMenu()
         self:DrawMenu()
     end
 
+    ---Draws the menu, displaying the available options
     function CharacterEggMoveMenu:DrawMenu()
         --egg_move
         local egg_move = "-----"
@@ -864,6 +932,8 @@ function CharacterSelectionMenu()
         self.cursor.Loc = RogueElements.Loc(10, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(self.pos))
     end
 
+    ---Processes inputs
+    ---@param input any the input object
     function CharacterEggMoveMenu:Update(input)
         if self.autoOpenEggMovePosition then --if auto menu opening is requested, grant the request
             self.autoOpenEggMovePosition = false
@@ -905,6 +975,7 @@ function CharacterSelectionMenu()
         end
     end
 
+    ---Opens the menu that allows players to choose their egg move
     function CharacterEggMoveMenu:openEggMoveSelection()
         local egg_moves = self.parent:getMonsterEggMoves()
         local options = {}
@@ -946,6 +1017,7 @@ function CharacterSelectionMenu()
         _MENU:AddMenu(sub_menu.menu, true)
     end
 
+    ---Opens the Egg Move position selector menu
     function CharacterEggMoveMenu:openEggMovePosition()
         local cb = function(index)
             self.egg_move_index = index or -1
@@ -962,17 +1034,23 @@ function CharacterSelectionMenu()
         _MENU:AddMenu(sub_menu.menu, true)
     end
 
+    ---Closes the menu and confirms its changes
     function CharacterEggMoveMenu:closeMenu()
         self.updateCallback(self.egg_move, self.egg_move_index)
         _MENU:RemoveMenu()
     end
 
+    ---Gets this menu
+    ---@return Menu this menu
     function CharacterEggMoveMenu:getFocusedWindow() return self.menu end
 
     -------------------------------------------------------
     --region CharacterEggMovePositionSelector
     -------------------------------------------------------
 
+    ---Initializes a new EggMovePositionSelector
+    ---@param parent CharacterEggMoveMenu the parent menu
+    ---@param callback fun(index:integer) function that will be called when closing the menu
     function CharacterEggMovePositionSelector:initialize(parent, callback)
         self.parent = parent
         self.callback = callback
@@ -1044,6 +1122,8 @@ function CharacterSelectionMenu()
         self.cursor.Loc = RogueElements.Loc(10, Graphics.Manager.MenuBG.TileHeight + Graphics.VERT_SPACE*(self.pos+1) + Graphics.DIVIDER_HEIGHT*2)
     end
 
+    ---Processes inputs
+    ---@param input any the input object
     function CharacterEggMovePositionSelector:Update(input)
         if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
             _GAME:SE("Menu/Confirm")
@@ -1085,6 +1165,11 @@ function CharacterSelectionMenu()
     --region CharacterSpeciesMenu
     -------------------------------------------------------
 
+    ---Initializes a new species selection menu
+    ---@param parent CharacterSelectionMenu the parent menu
+    ---@param list string[] a list of species ids to display
+    ---@param current integer the currently selected index
+    ---@param callback fun(species:string) the function to be called when the menu is closed
     function CharacterSpeciesMenu:initialize(parent, list, current, callback)
         self.parent = parent
         self.original_list = list -- to remove filter
@@ -1196,6 +1281,8 @@ function CharacterSelectionMenu()
         end
     end
 
+    ---Processes inputs
+    ---@param input any the input object
     function CharacterSpeciesMenu:Update(input)
         if self.menu_mode==0 then -- if scroll mode
             if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
@@ -1283,6 +1370,9 @@ function CharacterSelectionMenu()
         end
     end
 
+    --- Checks if a direction is being held and handles how often the options should shift
+    ---@param input any the input object
+    ---@param direction any the direction being held
     function CharacterSpeciesMenu:directionHold(input, direction)
         local INPUT_WAIT = 30
         local INPUT_GAP = 6
@@ -1299,6 +1389,8 @@ function CharacterSelectionMenu()
         return new_dir and (not old_dir or repeat_time)
     end
 
+    ---Applies a filter, removing any name that does not contain the given string
+    ---@param filter? string the new filter to apply. If null or empty, it reloads the original list
     function CharacterSpeciesMenu:apply_filter(filter)
         if filter == nil then filter = "" end
         self.filter = filter          --save for display
@@ -1318,6 +1410,9 @@ function CharacterSelectionMenu()
         self:DrawMenu()
     end
 
+    ---Performs binary search to find the requested dex number. Once found, it selects its corresponding entry.
+    ---If the index is not present, it jumps to the closest smaller index instead.
+    ---@param index integer the dex number to search for
     function CharacterSpeciesMenu:go_to(index)
         local len = #self.list
         local highest = _DATA:GetMonster(self.list[len]).IndexNum
@@ -1343,6 +1438,8 @@ function CharacterSelectionMenu()
     -------------------------------------------------------
     -- Index Search Menu
     -------------------------------------------------------
+
+    ---Opens the menu to enter the desired index.
     function CharacterSpeciesMenu:openIndexSelectionMenu()
         local w, h = 80, 64
         local x, y = (Graphics.Manager.ScreenWidth-w)//2, (Graphics.Manager.ScreenHeight-h)//2
@@ -1358,6 +1455,8 @@ function CharacterSelectionMenu()
     -------------------------------------------------------
     -- Species Search Menu
     -------------------------------------------------------
+
+    ---Opens the menu to enter the string filter
     function CharacterSpeciesMenu:openSpeciesFilterMenu()
         local confirm = function(ret)
             self.menu_mode = 0
@@ -1376,6 +1475,9 @@ function CharacterSelectionMenu()
     --region CharacterSignDocumentMenu
     -------------------------------------------------------
 
+    ---Initializes a new SignDocumentMenu
+    ---@param parent CharacterSelectionMenu the parent menu
+    ---@param callback fun(answer:boolean) if true, close the whole menu system and return the generated data structure to the calling method. If false, close just this menu
     function CharacterSignDocumentMenu:initialize(parent, callback)
         self.parent = parent
         self.callback = callback
@@ -1397,6 +1499,8 @@ function CharacterSelectionMenu()
         self.cursor.Loc = RogueElements.Loc(self.menu.Bounds.Width - Graphics.Manager.MenuBG.TileWidth - 34, Graphics.Manager.MenuBG.TileHeight)
     end
 
+    ---Processes inputs
+    ---@param input any the input object
     function CharacterSignDocumentMenu:Update(input)
         if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
             _GAME:SE("Menu/Confirm")
