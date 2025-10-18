@@ -1,3 +1,14 @@
+---@meta
+
+---@class Class<T> A root class that only exists to avoid missing :new issues
+local Class
+---Calls the initialization method
+---@generic T
+---@param this T #the object in question
+---@param ... any parameters for the initialize function
+---@return T
+function Class.new(this, ...) return this end
+
 ---@class List<T>: { [integer]: T, Count: integer }
 ---@alias InvSlot {Slot:integer,IsEquipped:boolean,IsValid:(fun():boolean)}
 ---@alias InvItem {ID:string,Cursed:boolean,HiddenValue:string,Amount:integer,Price:integer,GetSellValue:(fun(this:InvItem):integer),GetDisplayName:(fun(this:InvItem):string)}

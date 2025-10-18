@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-field
 --[[
     character_menu.lua
     Implements the character menu used in Forgotten Wishes's character selection sequence
@@ -13,19 +12,19 @@ require 'pmd_new_leaf.CommonFunctions'
 
 --- Runs the entire system in private mode for some reason TODO unwrap
 function CharacterSelectionMenu()
-    ---@class CharacterSelectionMenu
+    ---@class CharacterSelectionMenu : Class
     local CharacterSelectionMenu = Class('CharacterSelectionMenu')
 
     -- sub-menu initializations
-    ---@class CharacterChoiceListMenu
+    ---@class CharacterChoiceListMenu : Class
     local CharacterChoiceListMenu =          Class('CharacterChoiceListMenu')
-    ---@class CharacterEggMoveMenu
+    ---@class CharacterEggMoveMenu : Class
     local CharacterEggMoveMenu =             Class('CharacterEggMoveMenu')
-    ---@class CharacterEggMovePositionSelector
+    ---@class CharacterEggMovePositionSelector : Class
     local CharacterEggMovePositionSelector = Class('CharacterEggMovePositionSelector')
-    ---@class CharacterSpeciesMenu
+    ---@class CharacterSpeciesMenu : Class
     local CharacterSpeciesMenu =             Class('CharacterSpeciesMenu')
-    ---@class CharacterSignDocumentMenu
+    ---@class CharacterSignDocumentMenu : Class
     local CharacterSignDocumentMenu =        Class('CharacterSignDocumentMenu')
 
     -------------------------------------------------------
