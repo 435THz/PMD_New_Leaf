@@ -8,7 +8,7 @@
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'pmd_new_leaf.menu.office.ShopSubUpgradeMenu'
 
----@alias MarketPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:MarketData,empty:integer}
+---@alias MarketPlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:MarketData,empty:integer}
 ---@alias MarketData {stock:MarketEntry,categories:table<string,MarketCategory>,specialization:MarketSpecialization,discount:boolean}
 ---@alias MarketCategory {slots:integer,tier:integer}
 ---@alias MarketSpecialization ""|"ammo"|"orbs"|"recruitment"|"survival"|"tm"|"utilities"|"wands"

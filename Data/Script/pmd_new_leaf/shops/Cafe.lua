@@ -9,7 +9,7 @@ require 'pmd_new_leaf.menu.SmallShopMenu'
 require 'pmd_new_leaf.menu.CraftingMenu'
 require 'pmd_new_leaf.menu.JuiceMenu'
 
----@alias CafePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:CafeData,empty:integer}
+---@alias CafePlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:CafeData,empty:integer}
 ---@alias CafeData {price:integer,boost_pools:integer,daily_pools:integer,craft_pools:integer,daily_amount:integer,iotd:CafeEntry[]}
 ---@alias CafeEntry {Item:string,Weight:integer,Price:integer}
 ---@alias CafeTotalBoosts {boosts:CafeBoosts,random:CafeBoostRandomEntry[],reverse_random:boolean}

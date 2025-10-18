@@ -8,7 +8,7 @@ require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'origin.menu.skill.SkillTutorMenu'
 require 'origin.menu.team.AssemblySelectMenu'
 
----@alias TutorPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:TutorData,empty:integer}
+---@alias TutorPlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:TutorData,empty:integer}
 ---@alias TutorData {level_limit:integer,category:""|"egg"|"tutor",category_frequency:integer,category_slots:integer,category_stock:TutorEntry[],category_data:TutorCategory,category_permanent:boolean,permanent_stock:string[]}
 ---@alias TutorCategory table<string,{forms:table<integer,integer>,left:integer}>
 ---@alias TutorEntry {ID:string,Price:integer,days_left:integer}

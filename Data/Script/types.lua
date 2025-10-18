@@ -37,7 +37,7 @@ function Class.new(this, ...) return this end
 
 ---@alias GraphicsData BuildingGraphics|BlockingData|NonBlockingData
 
----@alias PlotData {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:table,empty:integer}
+---@alias PlotData {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:table,empty:integer}
 ---@alias UpgradeEntry {type:string,count:integer}
 ---@alias UpgradeTree table<string,UpgradeBranch>
 ---@alias UpgradeBranch {has_sub:boolean,sub?:string[]}

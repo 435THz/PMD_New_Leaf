@@ -8,7 +8,7 @@
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'pmd_new_leaf.menu.SwapTributeMenu'
 
----@alias TraderPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:TraderData,empty:integer}
+---@alias TraderPlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:TraderData,empty:integer}
 ---@alias TraderData {stock:TraderEntry[],max_random:integer,reroll:integer,guarantee_chance:boolean}
 ---@alias TraderEntry {Item:string,ReqItem:string[]}
 

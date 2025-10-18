@@ -6,7 +6,7 @@
 ]]
 --require 'pmd_new_leaf.menu.StorageMenu' TODO
 
----@alias HomePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:HomeData,empty:integer}
+---@alias HomePlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:HomeData,empty:integer}
 ---@alias HomeData {storage_limit:integer,stackable_mult:integer,unstack_limit:integer}
 
 _SHOP.HomeTables = {

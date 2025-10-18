@@ -11,7 +11,7 @@ require 'pmd_new_leaf.menu.office.ShopManagerMenu'
 require 'pmd_new_leaf.menu.office.PlotBuildMenu'
 require 'pmd_new_leaf.menu.office.ShopMoveMenu'
 
----@alias OfficePlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:OfficeData,empty:integer}
+---@alias OfficePlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:OfficeData,empty:integer}
 ---@alias OfficeData {}
 
 ---Refreshes the quest board in the office

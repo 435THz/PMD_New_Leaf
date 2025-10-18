@@ -8,7 +8,7 @@ require 'pmd_new_leaf.menu.AppraisalMenu'
 require 'pmd_new_leaf.menu.office.ShopUpgradeMenu'
 require 'origin.menu.InventorySelectMenu'
 
----@alias AppraisalPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:AppraisalData,empty:integer}
+---@alias AppraisalPlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:AppraisalData,empty:integer}
 ---@alias AppraisalData {stock:AppraisalEntry[],specializations:table<string,boolean>,opened:integer,slots:integer,checks:integer,reduce_all:boolean,instant_open:boolean}
 ---@alias AppraisalEntry BoxEntry|TreasureEntry
 ---@alias BoxEntry {item:InvItemLua,state:integer,open_at:integer}

@@ -7,7 +7,7 @@
 require 'pmd_new_leaf.menu.ExporterMenu'
 require 'origin.menu.InventorySelectMenu'
 
----@alias ExporterPlot {unlocked:boolean,building:BuildingID,upgrades:UpgradeEntry,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:ExporterData,empty:integer}
+---@alias ExporterPlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:ExporterData,empty:integer}
 ---@alias ExporterData {stock:ExporterEntry[],earnings:integer,sold:integer,slots:integer,checks:integer,reduce_all:boolean,store_earnings:boolean,instant_sell:boolean}
 ---@alias ExporterEntry {item:InvItemLua,state:integer,sell_at:integer}
 
