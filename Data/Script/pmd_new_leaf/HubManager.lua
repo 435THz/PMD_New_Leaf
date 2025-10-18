@@ -180,31 +180,31 @@ _HUB.PlotMarkerMapPositions = {
 _HUB.LevelUpCosts = {
     {},
     {
-        {item = "loot_wish_fragment", amount = 1 }
+        {Item = "loot_wish_fragment", Amount = 1 }
     },
     {
-        {item = "loot_wish_fragment", amount = 2 }
+        {Item = "loot_wish_fragment", Amount = 2 }
     },
     {
-        {item = "loot_wish_fragment", amount = 4 }
+        {Item = "loot_wish_fragment", Amount = 4 }
     },
     {
-        {item = "loot_wish_fragment", amount = 6 }
+        {Item = "loot_wish_fragment", Amount = 6 }
     },
     {
-        {item = "loot_wish_fragment", amount = 8 }
+        {Item = "loot_wish_fragment", Amount = 8 }
     },
     {
-        {item = "loot_wish_fragment", amount = 12 }
+        {Item = "loot_wish_fragment", Amount = 12 }
     },
     {
-        {item = "loot_wish_fragment", amount = 16 }
+        {Item = "loot_wish_fragment", Amount = 16 }
     },
     {
-        {item = "loot_wish_fragment", amount = 21 }
+        {Item = "loot_wish_fragment", Amount = 21 }
     },
     {
-        {item = "loot_wish_fragment", amount = 30 }
+        {Item = "loot_wish_fragment", Amount = 30 }
     }
 }
 
@@ -242,7 +242,7 @@ function _HUB.canUpgrade()
 end
 
 ---@param level integer a number between 1 and 10
----@return ItemEntry[] #the list of {item: string, amount: int} entries that describes the items required to reach the given level
+---@return ItemEntry[] #the list of {Item: string, Amount: int} entries that describes the items required to reach the given level
 function _HUB.getLevelUpItems(level)
     return _HUB.LevelUpCosts[level]
 end
@@ -759,7 +759,7 @@ end
 --- Completely removes all shop data in the specified plot.
 --- For every upgrade, a part of its cost is salvaged and added to storage.
 --- @param index number any positive integer up to 15
---- @return ItemEntry[] #a list of {item=string, amount=number} objects representing the salvaged items
+--- @return ItemEntry[] #a list of {Item=string, Amount=number} objects representing the salvaged items
 function _HUB.RemoveShop(index)
     local plot = _HUB.getPlotData(index)
     local salvaged = _HUB.SalvageUpgrades(plot)
@@ -812,18 +812,18 @@ function _HUB.SalvageUpgrades(plot)
             else cost = _SHOP.GetUpgradeCost(upgrade, l) end
             for _, entry in ipairs(cost) do
                 local amount = 0
-                for _=1, entry.amount, 1 do
-                    if entry.item == "loot_wish_fragment" then
-                        amount = entry.amount
+                for _=1, entry.Amount, 1 do
+                    if entry.Item == "loot_wish_fragment" then
+                        amount = entry.Amount
                         break
-                    elseif string.match(entry.item, "loot_building_tools") then
+                    elseif string.match(entry.Item, "loot_building_tools") then
                         if math.random(1, 100) <= tools_rate then amount = amount+1 end
                     else
                         if math.random(1, 100) <= rate then amount = amount+1 end
                     end
                 end
                 if amount>0 then
-                    entry.amount = amount
+                    entry.Amount = amount
                     table.insert(salvage, entry)
                 end
             end

@@ -256,34 +256,37 @@ end
 ---This function edits list in-place. It does not create a new table.
 ---@param list ItemEntry[]
 ---@param ... ItemEntry[]
+---@return ItemEntry[] #the resulting list, to allow for inline operations
 function COMMON_FUNC.MergeItemLists(list, ...)
     local lists = {...}
     for _, list2 in pairs(lists) do
         table.merge(list, list2)
     end
-    COMMON_FUNC.CompactItems(list)
+    return COMMON_FUNC.CompactItems(list)
 end
 
 ---Runs through a list and compacts multiple item entries into a single one, adding up their amount.
 ---This function edits list in-place. It does not create a new table.
----@param list ItemEntry[]
+---@param list ItemEntry[] the list to compact.
+---@return ItemEntry[] #the compacted list, to allow for inline operations
 function COMMON_FUNC.CompactItems(list)
     for i=1, #list-1, 1 do
         for j=#list, i+1, -1 do
             local entry1, entry2 = list[i], list[j]
-            if entry1.item == entry2.item then
-                entry1.amount = entry1.amount + entry2.amount
+            if entry1.Item == entry2.Item then
+                entry1.Amount = entry1.Amount + entry2.Amount
                 table.remove(list, j)
             end
         end
     end
+    return list
 end
 
 ---Runs a new NameMenu
 ---@param title string the title of the window
 ---@param notes string the lower text of the window
 ---@param start string the starting value
----@return string|false the new text if it's not an empty string, false otherwise
+---@return string|false #the new text if it's not an empty string, false otherwise
 function COMMON_FUNC.runTextInputMenu(title, notes, start)
     UI:NameMenu(title, notes, 116, start)
     UI:WaitForChoice()
@@ -378,15 +381,15 @@ end
 
 --- Removes a number of copies of specific items from the player's inventory.
 --- If storage is true, it will take from storage after depleting the stock in the inventory.
----@param cost_table ItemEntry[] a list of `{item = string, amount = number}` entries
+---@param cost_table ItemEntry[] a list of `{Item = string, Amount = number}` entries
 ---@param storage boolean if true, the function will start taking items from storage after the inventory has been emptied.
----@return ItemEntry[] #a list of `{item = string, amount = number}` entries where `amount` is the amount of copies of `item` NOT removed if the player didn't have enough, or `{}` if all requested copies have been removed..
+---@return ItemEntry[] #a list of `{Item = string, Amount = number}` entries where `Amount` is the amount of copies of `Item` NOT removed if the player didn't have enough, or `{}` if all requested copies have been removed.
 function COMMON_FUNC.RemoveItems(cost_table, storage)
     local fails = {}
     for _, entry in pairs(cost_table) do
-        local missing = COMMON_FUNC.RemoveItem(entry.item, entry.amount, storage)
+        local missing = COMMON_FUNC.RemoveItem(entry.Item, entry.Amount, storage)
         if missing > 0 then
-            table.insert(fails, {entry.item, missing})
+            table.insert(fails, {entry.Item, missing})
         end
     end
     return fails
@@ -396,23 +399,23 @@ end
 ---@param amount number the amount of money to check for
 ---@param check_bank? boolean if true, the function will also account for the money bank. Defaults to false.
 function COMMON_FUNC.CheckMoney(amount, check_bank)
-    return COMMON_FUNC.CheckCost({ { item = "(P)", amount = amount } }, check_bank)
+    return COMMON_FUNC.CheckCost({ { Item = "(P)", Amount = amount } }, check_bank)
 end
 
 --- Checks if the player has the given amount of items.
 --- If an item id is set to `"(P)"`, it will check the player's money instead.
----@param cost_table ItemEntry[] a list of `{item = string, amount = number}` entries
+---@param cost_table ItemEntry[] a list of `{Item = string, Amount = number}` entries
 ---@param check_storage? boolean if true, the function will also count the item in storage. Defaults to false.
 function COMMON_FUNC.CheckCost(cost_table, check_storage)
     for _, entry in ipairs(cost_table) do
-        if entry.item == "(P)" then
+        if entry.Item == "(P)" then
             local count = GAME:GetPlayerMoney()
             if check_storage then count = count + GAME:GetPlayerMoneyBank() end
-            if count < entry.amount then
+            if count < entry.Amount then
                 return false
             end
         else
-            if COMMON.GetPlayerItemCount(entry.item, check_storage) < entry.amount then
+            if COMMON.GetPlayerItemCount(entry.Item, check_storage) < entry.Amount then
                 return false
             end
         end

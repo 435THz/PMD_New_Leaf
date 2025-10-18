@@ -169,7 +169,7 @@ end
 ---Returns the cost of an upgrade at a specific level.
 ---@param upgrade string an upgrade id
 ---@param level integer the level to calculate the upgrade cost of
----@return ItemEntry[] #a list of `{item = string, amount = number}` values
+---@return ItemEntry[] #a list of `{Item = string, Amount = number}` values
 function _SHOP.GetUpgradeCost(upgrade, level)
     local lv = level
     local ret = {}
@@ -180,7 +180,7 @@ function _SHOP.GetUpgradeCost(upgrade, level)
     end
     local mult = level-lv+1
     for _, item in pairs(price[lv]) do
-        table.insert(ret, {item = item.item, amount = item.amount*mult})
+        table.insert(ret, {Item = item.Item, Amount = item.Amount*mult})
     end
     return ret
 end
@@ -189,7 +189,7 @@ end
 ---@param upgrade string an upgrade id
 ---@param sub_choice string a sub_choice id
 ---@param level integer the level to which to calculate the upgrade cost
----@return ItemEntry[] #a list of `{item = string, amount = number}` values
+---@return ItemEntry[] #a list of `{Item = string, Amount = number}` values
 function _SHOP.GetFullUpgradeCost(upgrade, sub_choice, level)
     local res = _SHOP.GetUpgradeCost(upgrade, level)
     COMMON_FUNC.MergeItemLists(res, _SHOP.GetUpgradeCost(sub_choice, level))

@@ -9,7 +9,7 @@ _HUB.UpgradeTable = {
         -- if sub-choices are used, this process is applied to them as well, and only at the end the prices
         -- are added together.
         price = {
-            { { item = "loot_building_tools", amount = 2 } }
+            { { Item = "loot_building_tools", Amount = 2 } }
         },
         -- all of these upgrades are required for this option to appear. Subchoice reference is {0} if per_sub_choice is true
         -- start with a ! for negation, end with : and a number to require a specific level or above
@@ -34,7 +34,7 @@ _HUB.UpgradeTable = {
     market_expand = {
         string = "UPGRADE_MARKET_EXPAND",
         price = {
-            { { item = "loot_building_tools", amount = 1 } },
+            { { Item = "loot_building_tools", Amount = 1 } },
         },
         requirements = { "market_unlock_{0}" },
         description = "UPGRADE_MARKET_EXPAND_DESCR",
@@ -47,8 +47,8 @@ _HUB.UpgradeTable = {
     market_tier = {
         string = "UPGRADE_MARKET_TIER",
         price = {
-            { { item = "loot_building_tools_uncommon", amount = 1 } },
-            { { item = "loot_building_tools_rare", amount = 1 } }
+            { { Item = "loot_building_tools_uncommon", Amount = 1 } },
+            { { Item = "loot_building_tools_rare", Amount = 1 } }
         },
         requirements = { "market_unlock_{0}" },
         description = "UPGRADE_MARKET_TIER_DESCR",
@@ -63,8 +63,8 @@ _HUB.UpgradeTable = {
         string = "UPGRADE_MARKET_SPECIALIZE",
         price = {
             {
-                { item = "loot_building_tools_uncommon", amount = 2 },
-                { item = "loot_pearl", amount = 1}
+                { Item = "loot_building_tools_uncommon", Amount = 2 },
+                { Item = "loot_pearl", Amount = 1}
             },
         },
         requirements = { "market_unlock_{0}" },
@@ -80,56 +80,56 @@ _HUB.UpgradeTable = {
         -- sub-choices can contain just a string and description parameter if they're never used as main choices
         string = "MARKET_POOL_SURVIVAL",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_SURVIVAL_DESCR"
     },
     sub_recruitment = {
         string = "MARKET_POOL_RECRUITMENT",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_RECRUITMENT_DESCR"
     },
     sub_utilities = {
         string = "MARKET_POOL_UTILITIES",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_UTILITIES_DESCR"
     },
     sub_ammo = {
         string = "MARKET_POOL_AMMO",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_AMMO_DESCR"
     },
     sub_wands = {
         string = "MARKET_POOL_WANDS",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_WANDS_DESCR"
     },
     sub_orbs = {
         string = "MARKET_POOL_ORBS",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_ORBS_DESCR"
     },
     sub_tm = {
         string = "MARKET_POOL_TM",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "MARKET_POOL_TM_DESCR"
     },
     upgrade_tutor_base = {
         string = "UPGRADE_GENERIC",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         max = 10
@@ -137,7 +137,7 @@ _HUB.UpgradeTable = {
     upgrade_tutor_tutor = {
         string = "TUTOR_POOL_TUTOR",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "TUTOR_POOL_TUTOR_DESCR",
         requirements = {},
@@ -146,7 +146,7 @@ _HUB.UpgradeTable = {
     upgrade_tutor_egg = {
         string = "TUTOR_POOL_EGG",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "TUTOR_POOL_EGG_DESCR",
         requirements = {},
@@ -155,7 +155,7 @@ _HUB.UpgradeTable = {
     upgrade_tutor_count = {
         string = "UPGRADE_TUTOR_COUNT",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "UPGRADE_TUTOR_COUNT_DESCR",
         requirements = {},
@@ -164,7 +164,7 @@ _HUB.UpgradeTable = {
     upgrade_tutor_frequency = {
         string = "UPGRADE_TUTOR_FREQUENCY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         description = "UPGRADE_TUTOR_FREQUENCY_DESCR",
         requirements = {},
@@ -173,7 +173,7 @@ _HUB.UpgradeTable = {
     upgrade_exporter_base = {
         string = "UPGRADE_GENERIC",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         max = 10
@@ -181,7 +181,7 @@ _HUB.UpgradeTable = {
     upgrade_trader_base = {
         string = "UPGRADE_GENERIC",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         max = 10
@@ -189,7 +189,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_base = {
         string = "UPGRADE_GENERIC",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         max = 10
@@ -197,7 +197,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_cute = {
         string = "APPRAISAL_BOX_CUTE",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_CUTE_DESCR",
@@ -206,7 +206,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_nifty = {
         string = "APPRAISAL_BOX_NIFTY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_NIFTY_DESCR",
@@ -215,7 +215,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_heavy = {
         string = "APPRAISAL_BOX_HEAVY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_HEAVY_DESCR",
@@ -224,7 +224,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_pretty = {
         string = "APPRAISAL_BOX_PRETTY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_PRETTY_DESCR",
@@ -233,7 +233,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_hard = {
         string = "APPRAISAL_BOX_HARD",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_HARD_DESCR",
@@ -242,7 +242,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_dainty = {
         string = "APPRAISAL_BOX_DAINTY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_DAINTY_DESCR",
@@ -251,7 +251,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_glittery = {
         string = "APPRAISAL_BOX_GLITTERY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_GLITTERY_DESCR",
@@ -260,7 +260,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_gorgeous = {
         string = "APPRAISAL_BOX_GORGEOUS",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_GORGEOUS_DESCR",
@@ -269,7 +269,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_deluxe = {
         string = "APPRAISAL_BOX_DELUXE",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_DELUXE_DESCR",
@@ -278,7 +278,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_shiny = {
         string = "APPRAISAL_BOX_SHINY",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_SHINY_DESCR",
@@ -287,7 +287,7 @@ _HUB.UpgradeTable = {
     upgrade_appraisal_sinister = {
         string = "APPRAISAL_BOX_SINISTER",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         description = "APPRAISAL_BOX_SINISTER_DESCR",
@@ -296,7 +296,7 @@ _HUB.UpgradeTable = {
     upgrade_cafe_base = {
         string = "UPGRADE_GENERIC",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         max = 10
@@ -304,7 +304,7 @@ _HUB.UpgradeTable = {
     upgrade_generic = {
         string = "UPGRADE_GENERIC",
         price = {
-            { { item = "ammo_stick", amount = 1 } }, --TODO currently placeholder
+            { { Item = "ammo_stick", Amount = 1 } }, --TODO currently placeholder
         },
         requirements = {},
         max = 10

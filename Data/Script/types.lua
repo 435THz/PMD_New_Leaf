@@ -10,7 +10,7 @@
 ---@alias Rect {X:integer,Y:integer,Width:integer,Height:integer,Left:integer,Right:integer,Top:integer,Bottom:integer}
 ---@alias Loc {X:integer,Y:integer}
 
----@alias ItemEntry {item:string,amount:integer}
+---@alias ItemEntry {Item:string,Amount:integer}
 ---@alias MonsterIDLua {Species:string,Form:integer,Skin:string,Gender:integer}
 ---@alias InvItemLua {ID:string,Cursed:boolean,HiddenValue:string,Amount:integer,Price:integer}
 ---@alias StartData {ability:string,boosts:{MHP:integer,ATK:integer,DEF:integer,SAT:integer,SDF:integer,SPE:integer},form_ability_slot:integer,form_data:MonsterIDLua,moves:string[]}
