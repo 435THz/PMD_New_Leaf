@@ -12,6 +12,7 @@ require 'pmd_new_leaf.menu.JuiceMenu'
 ---@alias CafePlot {unlocked:boolean,building:BuildingID,upgrades:table<string,integer>,shopkeeper:ShopkeeperData,shopkeeper_shiny:boolean,data:CafeData,empty:integer}
 ---@alias CafeData {price:integer,boost_pools:integer,daily_pools:integer,craft_pools:integer,daily_amount:integer,iotd:CafeEntry[]}
 ---@alias CafeEntry {Item:string,Weight:integer,Price:integer}
+---@alias CafeRecipe {Item:string,Amount:string?,ReqItems:(string|{[1]:string,[2]:integer})[]},
 ---@alias CafeTotalBoosts {boosts:CafeBoosts,random:CafeBoostRandomEntry[],reverse_random:boolean}
 ---@alias CafeBoosts {HP:integer,Atk:integer,Def:integer,SpAtk:integer,SpDef:integer,Speed:integer}
 ---@alias CafeBoostRandomEntry {HP:boolean,Atk:boolean,Def:boolean,SpAtk:boolean,SpDef:boolean,Speed:boolean,Rolls:integer,Amount:integer}
