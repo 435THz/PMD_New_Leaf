@@ -1,7 +1,7 @@
 --[[
     Home.lua
 
-    Your hoe. You live and handle storage here.
+    Your home. You live and handle storage here.
     This file contains all storage-specific callbacks and functionality data structures
 ]]
 --require 'pmd_new_leaf.menu.StorageMenu' TODO
