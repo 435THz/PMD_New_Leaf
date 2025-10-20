@@ -1,15 +1,55 @@
 ---@meta
 
----@class Class<T> A root class that only exists to avoid missing :new issues
-local Class
+---@class LuaClass<T> A root class that only exists to avoid missing :new issues
+local LuaClass
 ---Calls the initialization method
 ---@generic T
 ---@param this T #the object in question
 ---@param ... any parameters for the initialize function
 ---@return T
-function Class.new(this, ...) return this end
+function LuaClass.new(this, ...) return this end
 
----@class List<T>: { [integer]: T, Count: integer }
+---@class ScriptableMultiPageMenu : LuaClass
+---@field Bounds Rect
+---@field ChoiceChangedFunction fun()
+---@field MultiSelectChangedFunction fun()
+---@field UpdateFunction fun(input)
+---@field SummaryMenus List<Menu>
+---@field CurrentChoice integer
+---@field CurrentChoiceTotal integer
+---@field CurrentPage integer
+local ScriptableMultiPageMenu
+---Returns the choice at the given total index
+---@param index integer the index to fetch
+---@return Selectable
+function ScriptableMultiPageMenu:GetTotalChoiceAtIndex(index) end
+---Changes the current page to the requested one
+---@param page integer the page to set
+function ScriptableMultiPageMenu:SetCurrentPage(page) end
+
+---@class List<T> : { [integer]: T, Count: integer }
+local List
+---Adds the given element to the list
+---@generic T
+---@param this List<T>
+---@param elem T
+function List.Add(this, elem) end
+
+---@class Selectable
+---@field Enabled boolean
+---@field Selected boolean
+local Selectable
+---Silently changes the selection state
+---@param state boolean the state to set
+function Selectable:SilentSelect(state) end
+
+---@class ItemSummary : LuaClass
+---@field Bounds Rect
+local ItemSummary
+---Updates the displayed data using the giben InvItem
+---@param item InvItem
+function ItemSummary:SetItem(item) end
+
 ---@alias InvSlot {Slot:integer,IsEquipped:boolean,IsValid:(fun():boolean)}
 ---@alias InvItem {ID:string,Cursed:boolean,HiddenValue:string,Amount:integer,Price:integer,GetSellValue:(fun(this:InvItem):integer),GetDisplayName:(fun(this:InvItem):string)}
 ---@alias ItemData {Desc:LocalText,Rarity:integer,MaxStack:integer,Price:integer,UsageType:userdata}
