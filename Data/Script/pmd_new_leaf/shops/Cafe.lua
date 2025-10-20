@@ -15,7 +15,8 @@ require 'pmd_new_leaf.menu.JuiceMenu'
 ---@alias CafeRecipe {Item:string,Amount:string?,ReqItems:(string|{[1]:string,[2]:integer})[]},
 ---@alias CafeTotalBoosts {boosts:CafeBoosts,random:CafeBoostRandomEntry[],reverse_random:boolean}
 ---@alias CafeBoosts {HP:integer,Atk:integer,Def:integer,SpAtk:integer,SpDef:integer,Speed:integer}
----@alias CafeBoostRandomEntry {HP:boolean,Atk:boolean,Def:boolean,SpAtk:boolean,SpDef:boolean,Speed:boolean,Rolls:integer,Amount:integer}
+---@alias CafeBoostRandomEntry {HP?:boolean,Atk?:boolean,Def?:boolean,SpAtk?:boolean,SpDef?:boolean,Speed?:boolean,Rolls:integer,Amount:integer}
+---@alias CafeBoostEntry {HP:integer?,Atk:integer?,Def:integer?,SpAtk:integer?,SpDef:integer?,Speed:integer?,NegateStatA:boolean?,NegateStatB?:boolean,NegateStatC?:boolean,GummiEffect?:string,Rand?:CafeBoostRandomEntry}
 
 _SHOP.CafeTables = {
     --level =       1    2   3   4   5   6   7   8   9   10
@@ -24,6 +25,7 @@ _SHOP.CafeTables = {
     daily_tier =   {0,   1,  1,  1,  2,  2,  2,  2,  3,  3},
     daily_amount = {0,   1,  1,  1,  1,  1,  2,  2,  2,  2},
     craft_tier =   {0,   0,  0,  1,  1,  2,  2,  2,  2,  3},
+    ---@type table<string,CafeBoostEntry>[]
     boost_table = {
         {
             gummi_blue = { HP = 2, GummiEffect = 'water' },
@@ -215,6 +217,7 @@ _SHOP.CafeTables = {
             {Item = "boost_hp_up", Weight = 1, Price = 800},
         }
     },
+    ---@type CafeRecipe[][]
     crafts = {
         {
             {Item = "gummi_blue",    ReqItems = {"apricorn_blue",   "berry_passho"}},
@@ -477,6 +480,7 @@ function _SHOP.CafeInteract(plot, index)
                 UI:WaitShowDialogue(STRINGS:FormatKey('CAFE_OUT_OF_STOCK'))
             end
         elseif result == 3 then
+            ---@type CafeRecipe[]
             local recipes = { }
             for i=1, plot.data.craft_pools, 1 do table.merge(recipes, _SHOP.CafeTables.crafts[i]) end
 
@@ -484,22 +488,23 @@ function _SHOP.CafeInteract(plot, index)
             local loop = true
             while loop do
                 local chosen, crafts = CraftingMenu.run(recipes)
-                if chosen and crafts>0 then
-                    local result_amount = chosen.Amount or 1
-                    local result_str = COMMON_FUNC.PrintItemAmount(chosen.Item, result_amount*crafts, true)
+                local selected = recipes[chosen]
+                if selected and crafts>0 then
+                    local result_amount = selected.Amount or 1
+                    local result_str = COMMON_FUNC.PrintItemAmount(selected.Item, result_amount*crafts, true)
                     UI:ChoiceMenuYesNo(STRINGS:FormatKey('CAFE_CRAFT_ASK', result_str), false)
                     UI:WaitForChoice()
                     if UI:ChoiceResult() then
                         GAME:WaitFrames(15)
                         SOUND:PlayBattleSE('DUN_Drink')
-                        for _, item in ipairs(chosen.ReqItems) do
+                        for _, item in ipairs(selected.ReqItems) do
                             local id = ""
                             local amount = 1
                             if type(item) == "table" then id, amount = item[1], item[2]
                             else id = item end
                             COMMON_FUNC.RemoveItem(id, amount*crafts, true)
                         end
-                        GAME:GivePlayerItem(chosen.Item, result_amount*crafts)
+                        GAME:GivePlayerItem(selected.Item, result_amount*crafts)
                         GAME:WaitFrames(60)
 
                         UI:WaitShowDialogue(STRINGS:FormatKey('CAFE_CRAFT_END'))
@@ -539,7 +544,7 @@ end
 ---@param plot CafePlot the plot's data structure
 ---@param cart InvSlot the items to be used
 ---@param member Character the character to apply the boosts to
----@param boost_table table the boost table at the top of this file
+---@param boost_table table<string,CafeBoostEntry> the boost table at the top of this file
 ---@return CafeTotalBoosts, integer #a table containing all the boosts that should be applied to the character, and the number of boost points that will be randomly assigned.
 function _SHOP.CafeGetTotalBoost(plot, cart, member, boost_table)
     local boost_tbl = boost_table or {}

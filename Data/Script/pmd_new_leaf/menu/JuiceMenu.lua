@@ -53,7 +53,7 @@ function JuiceMenu:initialize(character, ingredients, confirm_action, refuse_act
 end
 
 --- Returns the list of ids of the items contained in the selected item slots.
---- @return table #a list of ``string`` item ids.
+--- @return InvSlot[] #a list of selected InvSlots.
 function JuiceMenu:getCart()
     local list = {}
     for i, choice in pairs(self.optionsList) do
@@ -65,7 +65,7 @@ function JuiceMenu:getCart()
 end
 
 --- Returns the selected menu option and its corresponding slot
---- @return table #a table containing an ``option`` and a ``slot`` property
+--- @return {option:Selectable,slot:InvSlot} #a table containing an ``option`` and a ``slot`` property
 function JuiceMenu:getSelectedOption()
     local i = self.menu.CurrentChoiceTotal+1
     return {
@@ -75,7 +75,7 @@ function JuiceMenu:getSelectedOption()
 end
 
 --- Returns a newly created copy of this object
---- @return table #a ``JuiceMenu``.
+--- @return JuiceMenu #a ``JuiceMenu``.
 function JuiceMenu:cloneMenu()
     return JuiceMenu:new(self.character, self.ingredients, self.confirmAction, self.refuseAction, self.includeEquips, self.boost_function)
 end
@@ -94,16 +94,16 @@ end
 
 
 
---- Summary menu that previews a drink's effect on a character's stats.
+---@class JuicePreviewSummary : LuaClass Summary menu that previews a drink's effect on a character's stats.
 JuicePreviewSummary = Class("JuicePreviewSummary")
 
 --- Generates a new JuicePreviewSummary object set in the provided coordinates using the provided data.
---- @param left number the x coordinate of the left side of the window.
---- @param top number the y coordinate of the top side of the window.
---- @param right number the x coordinate of the right side of the window.
---- @param bottom number the y coordinate of the bottom side of the window.
---- @param ingredient_effect_table table a list of key-value pairs where key is an item id and the value is a table of drink effects. See ``ground.base_camp_2.base_camp_2_juice`` for examples.
---- @param boost_function function the function that will be used by the preview window to calculate the total boost.
+--- @param left integer the x coordinate of the left side of the window.
+--- @param top integer the y coordinate of the top side of the window.
+--- @param right integer the x coordinate of the right side of the window.
+--- @param bottom integer the y coordinate of the bottom side of the window.
+--- @param ingredient_effect_table table<string,CafeBoostEntry> a list of key-value pairs where key is an item id and the value is a table of drink effects. See ``ground.base_camp_2.base_camp_2_juice`` for examples.
+--- @param boost_function fun(cart:InvItem[],char:Character,table:table<string,CafeBoostEntry>) the function that will be used by the preview window to calculate the total boost.
 function JuicePreviewSummary:initialize(left, top, right, bottom, character, ingredient_effect_table, boost_function)
     self.boost_function = boost_function
     self.character = character
@@ -198,8 +198,8 @@ function JuicePreviewSummary:initialize(left, top, right, bottom, character, ing
 end
 
 --- Updates the list of currently selected items in the menu and then updates the menu itself.
---- @param list table a list of ``string`` item ids.
---- @param current_option table a table containing an ``option`` and a ``slot`` property
+--- @param list InvSlot[] a list of ``string`` item ids.
+--- @param current_option {option:Selectable,slot:InvSlot} a table containing an ``option`` and a ``slot`` property
 function JuicePreviewSummary:setSlots(list, current_option)
     self.cart = list
     self.selected_option = current_option
@@ -223,7 +223,7 @@ function JuicePreviewSummary:updateData()
         table.insert(adj_cart, elem)
     end
 
-    local changes, random = self.boost_function(cart, self.character)
+    local changes,          random          = self.boost_function(cart,     self.character, self.ingredient_effect_table)
     local selected_changes, selected_random = self.boost_function(adj_cart, self.character, self.ingredient_effect_table)
 
     self.data.MaxHPBonus = self.startData.MaxHPBonus + changes.boosts.HP
@@ -313,20 +313,20 @@ function JuicePreviewSummary:updateMenu()
     end
 
     -- compute stat difference for coloring. factor in random sign
-    local hp_change = self.data.MaxHPBonus + stat_random_decimal(self.data.MaxHPRand) - self.startData.MaxHPBonus
-    local atk_change = self.data.AtkBonus + stat_random_decimal(self.data.AtkRand) - self.startData.AtkBonus
-    local def_change = self.data.DefBonus + stat_random_decimal(self.data.DefRand) - self.startData.DefBonus
-    local sat_change = self.data.MAtkBonus + stat_random_decimal(self.data.MAtkRand) - self.startData.MAtkBonus
-    local sdf_change = self.data.MDefBonus + stat_random_decimal(self.data.MDefRand) - self.startData.MDefBonus
-    local spd_change = self.data.SpeedBonus + stat_random_decimal(self.data.SpeedRand) - self.startData.SpeedBonus
+    local hp_change   = self.data.MaxHPBonus + stat_random_decimal(self.data.MaxHPRand) - self.startData.MaxHPBonus
+    local atk_change  = self.data.AtkBonus   + stat_random_decimal(self.data.AtkRand)   - self.startData.AtkBonus
+    local def_change  = self.data.DefBonus   + stat_random_decimal(self.data.DefRand)   - self.startData.DefBonus
+    local sat_change  = self.data.MAtkBonus  + stat_random_decimal(self.data.MAtkRand)  - self.startData.MAtkBonus
+    local sdf_change  = self.data.MDefBonus  + stat_random_decimal(self.data.MDefRand)  - self.startData.MDefBonus
+    local spd_change  = self.data.SpeedBonus + stat_random_decimal(self.data.SpeedRand) - self.startData.SpeedBonus
     local rand_change = self.data.Random
     -- compute stat adjustment for coloring. factor in random sign
-    local hp_adjust = self.selection_data.MaxHPBonus - self.data.MaxHPBonus + stat_random_decimal(self.selection_data.MaxHPRand - self.data.MaxHPRand)
-    local atk_adjust = self.selection_data.AtkBonus - self.data.AtkBonus + stat_random_decimal(self.selection_data.AtkRand - self.data.AtkRand)
-    local def_adjust = self.selection_data.DefBonus - self.data.DefBonus + stat_random_decimal(self.selection_data.DefRand - self.data.DefRand)
-    local sat_adjust = self.selection_data.MAtkBonus - self.data.MAtkBonus + stat_random_decimal(self.selection_data.MAtkRand - self.data.MDefRand)
-    local sdf_adjust = self.selection_data.MDefBonus - self.data.MDefBonus + stat_random_decimal(self.selection_data.MDefRand - self.data.MDefRand)
-    local spd_adjust = self.selection_data.SpeedBonus - self.data.SpeedBonus + stat_random_decimal(self.selection_data.SpeedRand - self.data.SpeedRand)
+    local hp_adjust   = self.selection_data.MaxHPBonus - self.data.MaxHPBonus + stat_random_decimal(self.selection_data.MaxHPRand - self.data.MaxHPRand)
+    local atk_adjust  = self.selection_data.AtkBonus -   self.data.AtkBonus   + stat_random_decimal(self.selection_data.AtkRand   - self.data.AtkRand)
+    local def_adjust  = self.selection_data.DefBonus -   self.data.DefBonus   + stat_random_decimal(self.selection_data.DefRand   - self.data.DefRand)
+    local sat_adjust  = self.selection_data.MAtkBonus -  self.data.MAtkBonus  + stat_random_decimal(self.selection_data.MAtkRand  - self.data.MDefRand)
+    local sdf_adjust  = self.selection_data.MDefBonus -  self.data.MDefBonus  + stat_random_decimal(self.selection_data.MDefRand  - self.data.MDefRand)
+    local spd_adjust  = self.selection_data.SpeedBonus - self.data.SpeedBonus + stat_random_decimal(self.selection_data.SpeedRand - self.data.SpeedRand)
     local rand_adjust = self.selection_data.Random - self.data.Random
 
     -- define +- text for stats
@@ -402,12 +402,12 @@ end
 
 
 --- Creates a ``JuiceMenu`` instance using the provided parameters, then runs it and returns its output.
---- @param character userdata the ``RogueEssence.Dungeon.Character`` that will receive this drink.
---- @param ingredients table a list of key-value pairs where the keys are item ids and the values are the drink effects, as specified in ``ground.base_camp_2.base_camp_2_juice``. Only items in this list will be enabled.
+--- @param character Character the ``RogueEssence.Dungeon.Character`` that will receive this drink.
+--- @param ingredients table<string,CafeBoostEntry> a list of key-value pairs where the keys are item ids and the values are the drink effects, as specified in ``ground.base_camp_2.base_camp_2_juice``. Only items in this list will be enabled.
 --- @param includeEquips boolean if true, the party's equipped items will be included in the menu. Defaults to true.
 --- @param boost_function function the function that will be used by the preview window to calculate the total boost.
---- @param max_choices number if set, it will never be possible to select more than the amount of items defined here. Defaults to the amount of selectable items.
---- @return table #a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
+--- @param max_choices? integer if set, it will never be possible to select more than the amount of items defined here. Defaults to the amount of selectable items.
+--- @return InvSlot[] #a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
 function JuiceMenu.run(character, ingredients, includeEquips, boost_function, max_choices)
     local ret = {}
     local choose = function(list) ret = list end
