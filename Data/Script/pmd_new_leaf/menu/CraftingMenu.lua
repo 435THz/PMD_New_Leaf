@@ -1,6 +1,6 @@
 require 'pmd_new_leaf.menu.ChooseAmountMenu'
 
----@class CraftingMenu : Class Menu that handles crafting recipes
+---@class CraftingMenu : LuaClass Menu that handles crafting recipes
 CraftingMenu = Class('CraftingMenu')
 
 ---Initializes a new CraftingMenu
@@ -106,7 +106,7 @@ end
 
 
 
----@class RecipeSummary : Class
+---@class RecipeSummary : LuaClass
 RecipeSummary = Class('RecipeSummary')
 
 ---Initializes the summary window that handles recipes
@@ -216,7 +216,7 @@ function CraftAmountMenu:Update(input)
             input:JustPressed(RogueEssence.FrameInput.InputType.Menu) then
         _GAME:SE("Menu/Skip")
         self.summary:SetMultiplier(1)
-        self.callback()
+        self.callback(self.start_number)
         _MENU:RemoveMenu()
     elseif self:directionHold(input, RogueElements.Dir8.Up) then
         self:change_number( 1)

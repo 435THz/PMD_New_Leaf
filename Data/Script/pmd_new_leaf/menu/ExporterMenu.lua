@@ -6,7 +6,7 @@
 
 require 'pmd_new_leaf.menu.summary.EditableSummary'
 
---- @class ExporterMenu : Class Menu used to view an exporter's stock and interact with it.
+--- @class ExporterMenu : LuaClass Menu used to view an exporter's stock and interact with it.
 ExporterMenu = Class("ExporterMenu")
 
 --- Creates a new ``ExporterMenu`` instance using the provided plot data and callbacks.
@@ -112,7 +112,7 @@ end
 
 
 
----@class ExporterConfirmMenu : Class A menu that asks the player what to do with the chosen exporter item
+---@class ExporterConfirmMenu : LuaClass A menu that asks the player what to do with the chosen exporter item
 ExporterConfirmMenu = Class("ExporterConfirmMenu")
 
 --- Creates a new ``ExporterConfirmMenu`` instance using the provided object as parent.
@@ -148,7 +148,7 @@ end
 
 
 
----@class ExporterProgressWindow : Class Window that displays the selling progress of the hoveder item
+---@class ExporterProgressWindow : LuaClass Window that displays the selling progress of the hoveder item
 ExporterProgressWindow = Class("ExporterProgressWindow")
 
 ---Initializes the window that displays the selling progress for the currently hovered item

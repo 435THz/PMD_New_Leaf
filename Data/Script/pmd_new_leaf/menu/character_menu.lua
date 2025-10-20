@@ -12,19 +12,19 @@ require 'pmd_new_leaf.CommonFunctions'
 
 --- Runs the entire system in private mode for some reason TODO unwrap
 function CharacterSelectionMenu()
-    ---@class CharacterSelectionMenu : Class
+    ---@class CharacterSelectionMenu : LuaClass
     local CharacterSelectionMenu = Class('CharacterSelectionMenu')
 
     -- sub-menu initializations
-    ---@class CharacterChoiceListMenu : Class
+    ---@class CharacterChoiceListMenu : LuaClass
     local CharacterChoiceListMenu =          Class('CharacterChoiceListMenu')
-    ---@class CharacterEggMoveMenu : Class
+    ---@class CharacterEggMoveMenu : LuaClass
     local CharacterEggMoveMenu =             Class('CharacterEggMoveMenu')
-    ---@class CharacterEggMovePositionSelector : Class
+    ---@class CharacterEggMovePositionSelector : LuaClass
     local CharacterEggMovePositionSelector = Class('CharacterEggMovePositionSelector')
-    ---@class CharacterSpeciesMenu : Class
+    ---@class CharacterSpeciesMenu : LuaClass
     local CharacterSpeciesMenu =             Class('CharacterSpeciesMenu')
-    ---@class CharacterSignDocumentMenu : Class
+    ---@class CharacterSignDocumentMenu : LuaClass
     local CharacterSignDocumentMenu =        Class('CharacterSignDocumentMenu')
 
     -------------------------------------------------------

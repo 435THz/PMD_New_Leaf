@@ -7,19 +7,19 @@
     This equivalent is NOT SAFE FOR REPLAYS. Do not use in dungeons until further notice.
 ]]
 require 'origin.common'
----@class ChooseAmountMenu : Class Menu for choosing a number.
+---@class ChooseAmountMenu : LuaClass Menu for choosing a number.
 ChooseAmountMenu = Class("ChooseAmountMenu")
 
 --- Creates a new ChooseAmountMenu instance using the provided data and callbacks.
---- @param x number the x coordinate of this window's origin
---- @param y number the y coordinate of this window's origin
---- @param width number the width of this window. Minimum width depends on the maximum digits the menu can hold
---- @param height number the height of this window. Cannot be lower than 80
+--- @param x integer the x coordinate of this window's origin
+--- @param y integer the y coordinate of this window's origin
+--- @param width integer the width of this window. Minimum width depends on the maximum digits the menu can hold
+--- @param height integer the height of this window. Cannot be lower than 80
 --- @param title string the title this window will have.
---- @param start_number number the number that this menu will start with.
---- @param min number the minimum number that can be inserted.
---- @param max number the maximum number that can be inserted.
---- @param callback function the function called when the player presses the confirm, cancel or menu button. It must accept a parameter.
+--- @param start_number integer the number that this menu will start with.
+--- @param min integer the minimum number that can be inserted.
+--- @param max integer the maximum number that can be inserted.
+--- @param callback fun(num:integer) the function called when the player presses the confirm, cancel or menu button. It must accept a parameter.
 function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, min, max, callback)
     -- loading parameters
     self.title = title

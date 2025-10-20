@@ -1,4 +1,4 @@
----@class EditableSummaryWindow : Class A window that can either display an item summary or a custom set of strings.
+---@class EditableSummaryWindow : LuaClass A window that can either display an item summary or a custom set of strings.
 EditableSummaryWindow = Class("EditableSummaryWindow")
 
 ---Initializes the exporter menu's summary window.

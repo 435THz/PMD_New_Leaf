@@ -150,7 +150,7 @@ end
 
 
 
----@class AppraisalProgressWindow : Class Window that displays the appraisal progress of the hovered item
+---@class AppraisalProgressWindow : LuaClass Window that displays the appraisal progress of the hovered item
 AppraisalProgressWindow = Class("AppraisalProgressWindow")
 
 ---Initializes the window that displays the appraisal progress for the currently hovered item

@@ -10,17 +10,17 @@
 require 'origin.common'
 require 'origin.menu.InventorySelectMenu'
 
---- Menu for selecting items from the player's inventory.
+--- @class JuiceMenu : InventorySelectMenu Menu for selecting items to make juice with from the player's inventory.
 JuiceMenu = Class("JuiceMenu", InventorySelectMenu)
 
 --- Creates a new ``JuiceMenu`` instance using the provided list and callbacks.
---- @param character userdata the ``RogueEssence.Dungeon.Character`` object the resulting drink's effect is to be applied to.
---- @param ingredients table a list of key-value pairs where key is an item id and the value is a table of drink effects. See ``ground.base_camp_2.base_camp_2_juice`` for examples.
---- @param confirm_action function the function called when the selection is confirmed. It will have a table array of ``RogueEssence.Dungeon.InvSlot`` objects passed to it as a parameter.
---- @param refuse_action function the function called when the player presses the cancel or menu button.
+--- @param character Character the ``RogueEssence.Dungeon.Character`` object the resulting drink's effect is to be applied to.
+--- @param ingredients CafeBoostEntry[] a list of key-value pairs where key is an item id and the value is a table of drink effects. See ``ground.base_camp_2.base_camp_2_juice`` for examples.
+--- @param confirm_action fun(cart:InvItem[]) the function called when the selection is confirmed. It will have a table array of ``RogueEssence.Dungeon.InvSlot`` objects passed to it as a parameter.
+--- @param refuse_action fun() the function called when the player presses the cancel or menu button.
 --- @param include_equips boolean if true, the menu will include equipped items.
---- @param boost_function function the function that will be used by the preview window to calculate the total boost.
---- @param max_choices number if set, it will never be possible to select more than the amount of items defined here. Defaults to the amount of selectable items.
+--- @param boost_function fun(cart:InvItem[],char:Character,table:table<string,CafeBoostEntry>) the function that will be used by the preview window to calculate the total boost.
+--- @param max_choices integer if set, it will never be possible to select more than the amount of items defined here. Defaults to the amount of selectable items.
 function JuiceMenu:initialize(character, ingredients, confirm_action, refuse_action, include_equips, boost_function, max_choices)
     -- parsing data
     self.character = character
