@@ -150,10 +150,10 @@ end
 
 
 
-
+---@class AppraisalProgressWindow : Class Window that displays the appraisal progress of the hovered item
 AppraisalProgressWindow = Class("AppraisalProgressWindow")
 
----Initializes the window that displays the appraisal progress for the currently selected item
+---Initializes the window that displays the appraisal progress for the currently hovered item
 ---@param left integer the x coordinate of the left side of the window relative to the screen's origin
 ---@param top integer the y coordinate of the top of the window relative to the screen's origin
 function AppraisalProgressWindow:initialize(left, top)
