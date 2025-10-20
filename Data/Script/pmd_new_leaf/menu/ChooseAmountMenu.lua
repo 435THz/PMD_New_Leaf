@@ -7,7 +7,7 @@
     This equivalent is NOT SAFE FOR REPLAYS. Do not use in dungeons until further notice.
 ]]
 require 'origin.common'
---- Menu for choosing a number.
+---@class ChooseAmountMenu : Class Menu for choosing a number.
 ChooseAmountMenu = Class("ChooseAmountMenu")
 
 --- Creates a new ChooseAmountMenu instance using the provided data and callbacks.
@@ -70,6 +70,7 @@ function ChooseAmountMenu:initialize(x, y, width, height, title, start_number, m
     self:DrawMenu()
 end
 
+--- Updates the menu's elements.
 function ChooseAmountMenu:DrawMenu()
     if self.number>=0 then self.sign_text:SetText("") else self.sign_text:SetText("-") end
     self.number_box.Amount = self.number
@@ -80,6 +81,8 @@ function ChooseAmountMenu:DrawMenu()
     self.cursors[2].Loc = RogueElements.Loc(pos.X, pos.Y + delta_y) -- down
 end
 
+---Processes inputs
+---@param input any the input object
 function ChooseAmountMenu:Update(input)
     if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
         _GAME:SE("Menu/Confirm")
@@ -87,7 +90,7 @@ function ChooseAmountMenu:Update(input)
         _MENU:RemoveMenu()
     elseif input:JustPressed(RogueEssence.FrameInput.InputType.Cancel) or
            input:JustPressed(RogueEssence.FrameInput.InputType.Menu) then
-        _GAME:SE("Menu/Confirm")
+        _GAME:SE("Menu/Cancel")
         self.callback(self.start_number)
         _MENU:RemoveMenu()
     elseif self:directionHold(input, RogueElements.Dir8.Up) then
@@ -115,6 +118,9 @@ function ChooseAmountMenu:Update(input)
     end
 end
 
+--- Checks if a direction is being held and handles how often the data should change as a result
+---@param input any the input object
+---@param direction any the direction being held
 function ChooseAmountMenu:directionHold(input, direction)
     local INPUT_WAIT = 30
     local INPUT_GAP = 6
@@ -131,6 +137,8 @@ function ChooseAmountMenu:directionHold(input, direction)
     return new_dir and (not old_dir or repeat_time)
 end
 
+---Calculates the final change to appy to the displayed number depending on the selected digit
+---@param vector 1|-1 the sign of the change
 function ChooseAmountMenu:change_number(vector)
     local num = self.number
     local change = vector*(10^self.selected)
@@ -145,7 +153,16 @@ function ChooseAmountMenu:change_number(vector)
 end
 
 
-
+---Runs a new ChooseAmountMenu, by itself, and returns the selected number
+---@param x integer the x position of the window's origin
+---@param y integer the y position of the window's origin
+---@param width integer the width of the window
+---@param height integer the height of the window
+---@param title string the title of the window
+---@param start_number integer the number the display will hold at the start
+---@param min integer the lowest number that can be selected
+---@param max integer the highest number that can be selected
+---@return integer #the selected number, or start_number if the menu was closed
 function ChooseAmountMenu.run(x, y, width, height, title, start_number, min, max)
     local ret = start_number
     local choose = function(number) ret = number end
@@ -155,6 +172,17 @@ function ChooseAmountMenu.run(x, y, width, height, title, start_number, min, max
     return ret
 end
 
+---Runs a new ChooseAmountMenu,adding it to an existing menu stack, and returns the selected number
+---@param x integer the x position of the window's origin
+---@param y integer the y position of the window's origin
+---@param width integer the width of the window
+---@param height integer the height of the window
+---@param title string the title of the window
+---@param start_number integer the number the display will hold at the start
+---@param min integer the lowest number that can be selected
+---@param max integer the highest number that can be selected
+---@param display_over boolean if true, the menu will appear on top of the previous menu, otherwise it will appear by itself
+---@return integer #the selected number, or start_number if the menu was closed
 function ChooseAmountMenu.add(x, y, width, height, title, start_number, min, max, display_over)
     local ret = start_number
     local choose = function(number) ret = number end

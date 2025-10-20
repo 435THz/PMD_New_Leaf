@@ -1,7 +1,13 @@
 require 'pmd_new_leaf.menu.ChooseAmountMenu'
 
-CraftingMenu = Class('CreateFermentMenu')
+---@class CraftingMenu : Class Menu that handles crafting recipes
+CraftingMenu = Class('CraftingMenu')
 
+---Initializes a new CraftingMenu
+---@param recipes CafeRecipe[] the list of recipes
+---@param confirm_action fun(index:integer,amount:integer) the funtion called when a craft is decided
+---@param refuse_action fun() the function called when the menu closes without any confirmation
+---@param menu_width integer minimum width of the menu
 function CraftingMenu:initialize(recipes, confirm_action, refuse_action, menu_width)
     -- constants
     self.MAX_ELEMENTS = 8
@@ -32,6 +38,10 @@ function CraftingMenu:initialize(recipes, confirm_action, refuse_action, menu_wi
     self:updateSummary()
 end
 
+---Generates the list of results and ingredients used by the menu
+---@param recipes CafeRecipe[] the list of recipes
+---@return ItemEntry[] #a list of results
+---@return ItemEntry[][] #a list of ingredient lists. Their index is the same as their result' index
 function CraftingMenu:generate_lists(recipes)
     local results, ingredients = {}, {}
     for _, recipe in ipairs(recipes) do
@@ -54,7 +64,7 @@ function CraftingMenu:generate_lists(recipes)
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return userdata[] #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
 function CraftingMenu:generate_options()
     local options = {}
     for i=1, #self.items, 1 do
@@ -73,8 +83,8 @@ function CraftingMenu:generate_options()
     return options
 end
 
---- Calls the menu's amount selection callback.
---- @param index number the index of the chosen item
+--- Opens the CraftAmountMenu.
+--- @param index integer the index of the chosen item
 function CraftingMenu:choose(index)
     local choose = function(answer)
         if answer then
@@ -96,9 +106,11 @@ end
 
 
 
-
+---@class RecipeSummary : Class
 RecipeSummary = Class('RecipeSummary')
 
+---Initializes the summary window that handles recipes
+---@param parent CraftingMenu the parent menu
 function RecipeSummary:initialize(parent)
     local left, bottom, right = parent.menu.Bounds.Right, parent.summary.Bounds.Y, parent.summary.Bounds.Right
     local top = bottom - Graphics.Manager.MenuBG.TileHeight * 2 - 14 * 5
@@ -119,17 +131,22 @@ function RecipeSummary:initialize(parent)
     self.window.Elements:Add(self.result)
 end
 
+---Loads the given recipe into the display elements
+---@param ingredients ItemEntry[]
+---@param result ItemEntry
 function RecipeSummary:SetRecipe(ingredients, result)
     self.ingredients = { ingredients[1], ingredients[2] }
     self.result_item = result
     self:UpdateText()
 end
-
+---Multiplies the amount of ingredients and results according to the given amount of crafts
+---@param value integer the number of crafts to calculate
 function RecipeSummary:SetMultiplier(value)
     self.crafts = value
     self:UpdateText()
 end
 
+---Updates the display text based on the values stored in the menu's fields
 function RecipeSummary:UpdateText()
     local text1, enough1 = self:PrintIngredientAmount(1)
     local text2, enough2 = self:PrintIngredientAmount(2)
@@ -141,6 +158,10 @@ function RecipeSummary:UpdateText()
     if enough1 and enough2 then self.result.Color = Color.White else self.result.Color = Color.Red end
 end
 
+---Returns the display text for the given ingredient, and a boolean that represents whether or not the player has enough copies of the item.
+---@param index integer the index of the ingredient in the recipe
+---@return string #the display text for the ingredient
+---@return boolean #true if the player has enough copies to craft the recipe, false otherwise
 function RecipeSummary:PrintIngredientAmount(index)
     if #self.ingredients < index then return "", true end
     local item_id = self.ingredients[index].Item
@@ -163,9 +184,15 @@ end
 
 
 
-
+---@class CraftAmountMenu : ChooseAmountMenu the menu handler for selecting the number of crafts to make
 CraftAmountMenu = Class('CraftAmountMenu', ChooseAmountMenu)
 
+---Initializes a new CraftAmountMenu
+---@param result ItemEntry the result of the recipe
+---@param ingredients ItemEntry[] the ingredients of the recipe
+---@param parent Menu the parent menu
+---@param summary RecipeSummary the recipe summary menu
+---@param callback fun(amount:integer) a function that is called when the desired amount of crafts to make is chosen
 function CraftAmountMenu:initialize(result, ingredients, parent, summary, callback)
     self.item = result
     self.ingredients = ingredients
@@ -178,6 +205,8 @@ function CraftAmountMenu:initialize(result, ingredients, parent, summary, callba
     ChooseAmountMenu.initialize(self, x, y, w, h, "", 1, 1, max, callback)
 end
 
+---Processes inputs
+---@param input any the input object
 function CraftAmountMenu:Update(input)
     if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
         _GAME:SE("Menu/Confirm")
@@ -221,7 +250,10 @@ end
 
 
 
-
+---Runs a new Crafting Menu using the provided list of recipes
+---@param recipes CafeRecipe[] the recipes to display
+---@return integer #the index of the selected entry
+---@return integer #the number of times the craft has been requested
 function CraftingMenu.run(recipes)
     local ret, ret2
     local choose = function(index, amount) ret, ret2 = recipes[index], amount end
