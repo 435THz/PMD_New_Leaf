@@ -153,10 +153,10 @@ function _SHOP.OfficeInteract(_, _)
                                             UI:ResetSpeaker(false)
                                             UI:SetCenter(true)
                                             if #salvaged>0 then
-                                                local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.item, entry.amount) end
+                                                local func = function(entry) return COMMON_FUNC.PrintItemAmount(entry.Item, entry.Amount) end
                                                 local salvage_str = COMMON_FUNC.BuildStringWithSeparators(salvaged, func)
                                                 for _, item in ipairs(salvaged) do
-                                                    GAME:GivePlayerStorageItem(item.item, item.amount)
+                                                    GAME:GivePlayerStorageItem(item.Item, item.Amount)
                                                 end
                                                 SOUND:PlaySE("Fanfare/Item")
                                                 UI:WaitShowDialogue(STRINGS:FormatKey("OFFICE_DEMOLISH_SHOP_SALVAGE", salvage_str))
