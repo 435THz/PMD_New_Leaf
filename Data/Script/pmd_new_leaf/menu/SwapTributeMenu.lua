@@ -8,12 +8,12 @@
 
 require 'pmd_new_leaf.CommonFunctions'
 
---- Menu for selecting items from the player's inventory.
+---@class SwapTributeMenu : LuaClass Menu for selecting exclusive items to swap.
 SwapTributeMenu = Class("SwapTributeMenu")
 
 --- Creates a new ``SwapTributeMenu`` instance using the provided data and callbacks.
---- @param confirm_action function the function called when the selection is confirmed. It will have a table array of ``RogueEssence.Dungeon.InvSlot`` objects passed to it as a parameter.
---- @param refuse_action function the function called when the player presses the cancel or menu button.
+--- @param confirm_action fun(list:stringlib[]) the function called when the selection is confirmed. It will have a table array of item ids passed to it as a parameter.
+--- @param refuse_action fun() the function called when the player presses the cancel or menu button.
 --- @param choices boolean number of choices necessary.
 function SwapTributeMenu:initialize(confirm_action, refuse_action, choices)
 
@@ -23,7 +23,7 @@ function SwapTributeMenu:initialize(confirm_action, refuse_action, choices)
     -- parsing data
     self.title = STRINGS:FormatKey("TRADER_TRIBUTE_TITLE")
     self.confirmAction = confirm_action
-    self.idList, self.itemList = self:load_items()
+    self.idList, self.itemList = self:load_slots()
     self.optionsList, self.optionsData = self:generate_options()
     self.range_choices = RogueElements.IntRange(choices, choices)
 
@@ -38,7 +38,8 @@ function SwapTributeMenu:initialize(confirm_action, refuse_action, choices)
     -- creating the menu
     local origin = RogueElements.Loc(16,16)
     local option_array = luanet.make_array(RogueEssence.Menu.MenuElementChoice, self.optionsList)
-    self.menu = RogueEssence.Menu.ScriptableMultiPageMenu(origin, 176, self.title, option_array, 0, self.MAX_ELEMENTS, refuse_action, refuse_action, false, self.max_choices, self.multiConfirmAction)
+    ---@type ScriptableMultiPageMenu
+    self.menu = RogueEssence.Menu.ScriptableMultiPageMenu(origin, 176, self.title, option_array, 0, self.MAX_ELEMENTS, refuse_action, refuse_action, false, choices, self.multiConfirmAction)
     self.menu.ChoiceChangedFunction = function() self:updateSummary() end
     self.menu.MultiSelectChangedFunction = function() self:updateList() end
 
@@ -110,7 +111,7 @@ function SwapTributeMenu:load_slots()
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table, {item:string,amount:integer}[] #a list of ``RogueEssence.Menu.MenuElementChoice`` objects and its corresponding list of option entries.
+--- @return MenuElementsChoice[], {item:string,amount:integer}[] #a list of ``RogueEssence.Menu.MenuElementChoice`` objects and its corresponding list of option entries.
 function SwapTributeMenu:generate_options()
     local options = {}
     local optionData = {}
@@ -131,11 +132,11 @@ end
 --- no.
 function SwapTributeMenu:choose(_) _GAME:SE("Menu/Cancel") end
 
-
+--- Duplicates an option after selecting it, so that the same item can be chosen twice if the player wants
 function SwapTributeMenu:updateList()
     local hover_option = self.menu.CurrentChoiceTotal
     local hover_data = self.menu.CurrentChoiceTotal+1
-    local options = self.menu.ExportChoices()
+    local options = self.menu:ExportChoices() --[[@as List<MenuElementsChoice>]]
     local data = self.optionsData
     local curr_option = options[hover_option]
     local curr_data = data[hover_data]
@@ -145,7 +146,8 @@ function SwapTributeMenu:updateList()
             local new_name = curr_name
             local new_data = {item = curr_data.item, amount = curr_data.amount-1}
             if new_data.amount>1 then new_name = STRINGS:Format("{0} ({1})", new_name, new_data.amount) end
-            curr_option:TetText(curr_name)
+            local textElement = curr_option.Elements[0] --[[@as MenuText]]
+            textElement:SetText(curr_name)
             local new_text = RogueEssence.Menu.MenuText(new_name, RogueElements.Loc(2, 1), Color.White)
             local new_option = RogueEssence.Menu.MenuElementChoice(function() self:choose() end, true, new_text)
             options:Insert(hover_option+1, new_option)
@@ -156,22 +158,27 @@ function SwapTributeMenu:updateList()
         local start = hover_data
         local finish = hover_data
         local max
-        while finish<options.Count and curr_data.item == data[finish].item do
+        ---Find the slot with the highest amount of that item by checking before and after the selected slot
+        ---All slots with the ame items are adjacent so noo need to handle skips
+        while finish<=options.Count and curr_data.item == data[finish].item do
             finish=finish+1
-            if not options[finish].Selected and (not max or data[finish].amount > data[max].amount) then
+            if not options[finish-1].Selected and (not max or data[finish].amount > data[max].amount) then
                 max = finish
             end
         end
-        while start>=0 and curr_data.item == data[start].item do
+        while start>0 and curr_data.item == data[start].item do
             start=start-1
-            if not options[start].Selected and (not max or data[start].amount > data[max].amount) then
+            if not options[start-1].Selected and (not max or data[start].amount >= data[max].amount) then --lower index takes priority
                 max = start
             end
         end
-        start, finish = start+1, finish-1
 
-        if max then
+        if max then --max is only nil if there is no other deselectd entry. In that case, do not change the options list
             data[max].amount = data[max].amount + curr_data.amount
+            local new_name = STRINGS:Format("{0} ({1})", _DATA:GetItem(data[max].item):GetIconName(), data[max].amount) --it will always be at least 2
+            local max_option = options[max-1]
+            local textElement = max_option.Elements[0] --[[@as MenuText]]
+            textElement:SetText(new_name)
             options:Remove(hover_option)
             table.remove(data, hover_data)
 --[[            if max>hover_data then max=max-1 end
@@ -180,7 +187,7 @@ function SwapTributeMenu:updateList()
 ]]
         end
     end
-    self.menu.ImportChoices(options)
+    self.menu:ImportChoices(options)
     self:updateSummary()
 end
 
@@ -190,12 +197,12 @@ function SwapTributeMenu:updateSummary()
 end
 
 --- Extract the list of selected slots.
---- @param list table a table array containing the menu indices of the chosen items.
---- @return table #a table array containing item ids.
+--- @param list integer[] a table array containing the menu indices of the chosen items.
+--- @return string[] #a table array containing item ids.
 function SwapTributeMenu:multiConfirm(list)
     local result = {}
     for _, index in pairs(list) do
-        local item_id = self.itemList[index+1]
+        local item_id = self.idList[index+1]
         table.insert(result, item_id)
     end
     return result
@@ -208,7 +215,7 @@ end
 
 --- Creates a basic ``SwapTributeMenu`` instance using the provided parameters, then runs it and returns its output.
 --- @param max_choices integer The amount of items to select.
---- @return table #a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
+--- @return InvSlot[] #a table array containing the chosen ``RogueEssence.Dungeon.InvSlot`` objects.
 function SwapTributeMenu.run(max_choices)
     local ret = {}
     local choose = function(list) ret = list end
@@ -220,7 +227,7 @@ function SwapTributeMenu.run(max_choices)
 end
 
 --- Checks if it would make sense to open a ``SwapTributeMenu``
---- @param required_num number the minimum amount of exclusive items required to open the menu
+--- @param required_num integer the minimum amount of exclusive items required to open the menu
 function SwapTributeMenu.canOpen(required_num)
     if required_num<=0 then return true end
     local found = 0

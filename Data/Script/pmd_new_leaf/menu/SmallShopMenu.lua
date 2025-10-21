@@ -8,15 +8,15 @@
 ]]
 
 
---- Menu for selecting items from the player's inventory.
+---@class SmallShopMenu : LuaClass Menu for selecting items from a pretty small selection. If there is only one item, it opens the ChosenMenu directly
 SmallShopMenu = Class("SmallShopMenu")
 
 --- Creates a new ``SmallShopMenu`` instance using the provided list and callbacks.
 --- @param title string the title this window will have.
---- @param items table the list of ``{Item = InvItem, Price = number}`` entries to display.
---- @param confirm_action function the function called when the selection is confirmed. It will have a table array of ``RogueEssence.Dungeon.InvSlot`` objects passed to it as a parameter.
---- @param refuse_action function the function called when the player presses the cancel or menu button.
---- @param menu_width number the width of this window. Default is 176.
+--- @param items {Item:InvItem,Price:integer}[] the list of ``{Item = InvItem, Price = number}`` entries to display.
+--- @param confirm_action fun(index:integer) the function called when the selection is confirmed. It will have an integer passed to it as a parameter.
+--- @param refuse_action fun() the function called when the player presses the cancel or menu button.
+--- @param menu_width? integer the width of this window. Default is 176.
 function SmallShopMenu:initialize(title, items, confirm_action, refuse_action, menu_width)
     -- constants
     self.MAX_ELEMENTS = 8
@@ -51,7 +51,7 @@ function SmallShopMenu:initialize(title, items, confirm_action, refuse_action, m
 end
 
 --- Processes the menu's properties and generates the ``RogueEssence.Menu.MenuElementChoice`` list that will be displayed.
---- @return table #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
+--- @return Selectable[] #a list of ``RogueEssence.Menu.MenuElementChoice`` objects.
 function SmallShopMenu:generate_options()
     local options = {}
     for i=1, #self.items, 1 do
@@ -72,7 +72,7 @@ end
 --- Closes the menu and calls the menu's confirmation callback.
 --- The result must be retrieved by accessing the choice variable of this object, which will hold
 --- the chosen index as the single element of a table array.
---- @param index number the index of the chosen item
+--- @param index integer the index of the chosen item
 function SmallShopMenu:choose(index)
     local choose = function(answer)
         if answer then
@@ -101,14 +101,14 @@ end
 
 
 
-
+---@class SmallShopChosenMenu : LuaClass Menu that allows the player to choose what to do with the selected item
 SmallShopChosenMenu = Class("SmallShopChosenMenu")
 
 --- Creates a new ``SmallShopChosenMenu`` instance using the provided object as parent.
 --- @param item ItemData the selected item
 --- @param parent Menu the parent menu
---- @param confirm_text function the confirm button text
---- @param confirm_action function the function that is called when the confirm button is pressed
+--- @param confirm_text string the confirm button text
+--- @param confirm_action fun(answer:boolean) the function that is called when the confirm button is pressed
 function SmallShopChosenMenu:initialize(item, parent, confirm_text, confirm_action)
     local x, y = parent.Bounds.Right, parent.Bounds.Top
     local width = 72
@@ -127,6 +127,8 @@ function SmallShopChosenMenu:initialize(item, parent, confirm_text, confirm_acti
     self.menu = RogueEssence.Menu.ScriptableSingleStripMenu(x, y, width, options, 0, function() self:choose(false) end)
 end
 
+---Wraps the confirmation callback and closes the menu as it calls it.
+---@param result boolean the selected answer
 function SmallShopChosenMenu:choose(result)
     _MENU:RemoveMenu()
     self.confirmAction(result)
