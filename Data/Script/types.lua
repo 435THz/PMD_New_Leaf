@@ -9,7 +9,18 @@ local LuaClass
 ---@return T
 function LuaClass.new(this, ...) return this end
 
----@class ScriptableMultiPageMenu : LuaClass
+---@class InputManager
+---@field Direction userdata
+---@field PrevDirection userdata
+---@field InputTime integer
+local InputManager
+---@param button any
+function InputManager:JustPressed(button) end
+
+
+
+
+---@class ScriptableMultiPageMenu
 ---@field Bounds Rect
 ---@field ChoiceChangedFunction fun()
 ---@field MultiSelectChangedFunction fun()
@@ -26,14 +37,62 @@ function ScriptableMultiPageMenu:GetTotalChoiceAtIndex(index) end
 ---Changes the current page to the requested one
 ---@param page integer the page to set
 function ScriptableMultiPageMenu:SetCurrentPage(page) end
+---@return List<Selectable>
+function ScriptableMultiPageMenu:ExportChoices() end
+---@param list List<Selectable>
+function ScriptableMultiPageMenu:ImportChoices(list) end
+
+
+
+---@class ItemSummary : LuaClass
+---@field Bounds Rect
+local ItemSummary
+---Updates the displayed data using the giben InvItem
+---@param item InvItem
+function ItemSummary:SetItem(item) end
+
+
+
+---@class MenuTextChoice : Selectable
+---@field Text MenuText
+---@field ChoiceAction fun()
+local MenuTextChoice
+function MenuTextChoice:OnConfirm() end
+
+---@class MenuElementsChoice : Selectable
+---@field Elements List<userdata>
+---@field ChoiceAction fun()
+local MenuElementsChoice
+
+---@class MenuText
+local MenuText
+---@param text string
+function MenuText:SetText(text) end
+---@return integer
+function MenuText:GetTextLength() end
+
+
 
 ---@class List<T> : { [integer]: T, Count: integer }
 local List
----Adds the given element to the list
----@generic T
+---Adds the given element to the end of the list
+---@generic T : any
 ---@param this List<T>
 ---@param elem T
 function List.Add(this, elem) end
+---Adds the given element to the list in the specified position, shifting all elements forwards by 1 from pos onward to make space for it.
+---@generic T : any
+---@param this List<T>
+---@param integer integer
+---@param elem T
+function List.Insert(this, integer, elem) end
+---Removes the element in the specified position, shifting all following elements backwards by 1 to fill the gap.
+---@generic T : any
+---@param this List<T>
+---@param integer integer
+function List.Remove(this, integer) end
+
+
 
 ---@class Selectable
 ---@field Enabled boolean
@@ -42,13 +101,9 @@ local Selectable
 ---Silently changes the selection state
 ---@param state boolean the state to set
 function Selectable:SilentSelect(state) end
+function Selectable:OnConfirm() end
 
----@class ItemSummary : LuaClass
----@field Bounds Rect
-local ItemSummary
----Updates the displayed data using the giben InvItem
----@param item InvItem
-function ItemSummary:SetItem(item) end
+
 
 ---@alias InvSlot {Slot:integer,IsEquipped:boolean,IsValid:(fun():boolean)}
 ---@alias InvItem {ID:string,Cursed:boolean,HiddenValue:string,Amount:integer,Price:integer,GetSellValue:(fun(this:InvItem):integer),GetDisplayName:(fun(this:InvItem):string)}

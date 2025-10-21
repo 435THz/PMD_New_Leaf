@@ -206,7 +206,7 @@ function CraftAmountMenu:initialize(result, ingredients, parent, summary, callba
 end
 
 ---Processes inputs
----@param input any the input object
+---@param input InputManager the input object
 function CraftAmountMenu:Update(input)
     if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
         _GAME:SE("Menu/Confirm")

@@ -412,7 +412,7 @@ function CharacterSelectionMenu()
     end
 
     ---Processes inputs
-    ---@param input any the input object
+    ---@param input InputManager the input object
     function CharacterSelectionMenu:Update(input)
         local window = self.selected[1]
         local option = self.selected[2]
@@ -804,7 +804,7 @@ function CharacterSelectionMenu()
     end
 
     ---Processes inputs
-    ---@param input any the input object
+    ---@param input InputManager the input object
     function CharacterChoiceListMenu:Update(input)
         if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
             _GAME:SE("Menu/Confirm")
@@ -841,8 +841,8 @@ function CharacterSelectionMenu()
     end
 
     --- Checks if a direction is being held and handles how often the options should shift
-    ---@param input any the input object
-    ---@param direction any the direction being held
+    ---@param input InputManager the input object
+    ---@param direction userdata the direction being held
     function CharacterChoiceListMenu:directionHold(input, direction)
         local INPUT_WAIT = 30
         local INPUT_GAP = 6
@@ -932,7 +932,7 @@ function CharacterSelectionMenu()
     end
 
     ---Processes inputs
-    ---@param input any the input object
+    ---@param input InputManager the input object
     function CharacterEggMoveMenu:Update(input)
         if self.autoOpenEggMovePosition then --if auto menu opening is requested, grant the request
             self.autoOpenEggMovePosition = false
@@ -1122,7 +1122,7 @@ function CharacterSelectionMenu()
     end
 
     ---Processes inputs
-    ---@param input any the input object
+    ---@param input InputManager the input object
     function CharacterEggMovePositionSelector:Update(input)
         if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
             _GAME:SE("Menu/Confirm")
@@ -1281,7 +1281,7 @@ function CharacterSelectionMenu()
     end
 
     ---Processes inputs
-    ---@param input any the input object
+    ---@param input InputManager the input object
     function CharacterSpeciesMenu:Update(input)
         if self.menu_mode==0 then -- if scroll mode
             if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
@@ -1370,8 +1370,8 @@ function CharacterSelectionMenu()
     end
 
     --- Checks if a direction is being held and handles how often the options should shift
-    ---@param input any the input object
-    ---@param direction any the direction being held
+    ---@param input InputManager the input object
+    ---@param direction userdata the direction being held
     function CharacterSpeciesMenu:directionHold(input, direction)
         local INPUT_WAIT = 30
         local INPUT_GAP = 6
@@ -1499,7 +1499,7 @@ function CharacterSelectionMenu()
     end
 
     ---Processes inputs
-    ---@param input any the input object
+    ---@param input InputManager the input object
     function CharacterSignDocumentMenu:Update(input)
         if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
             _GAME:SE("Menu/Confirm")

@@ -82,7 +82,7 @@ function ChooseAmountMenu:DrawMenu()
 end
 
 ---Processes inputs
----@param input any the input object
+---@param input InputManager the input object
 function ChooseAmountMenu:Update(input)
     if input:JustPressed(RogueEssence.FrameInput.InputType.Confirm) then
         _GAME:SE("Menu/Confirm")
@@ -119,8 +119,8 @@ function ChooseAmountMenu:Update(input)
 end
 
 --- Checks if a direction is being held and handles how often the data should change as a result
----@param input any the input object
----@param direction any the direction being held
+---@param input InputManager the input object
+---@param direction userdata the direction being held
 function ChooseAmountMenu:directionHold(input, direction)
     local INPUT_WAIT = 30
     local INPUT_GAP = 6

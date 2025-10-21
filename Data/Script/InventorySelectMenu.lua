@@ -61,7 +61,7 @@ function InventorySelectMenu:count_valid() end
 function InventorySelectMenu:choose(index) end
 
 --- Uses the current input to apply changes to the menu.
---- @param input any the ``RogueEssense.InputManager``.
+--- @param input InputManager the ``RogueEssense.InputManager``.
 function InventorySelectMenu:updateFunction(input) end
 
 --- Sorts the inventory and genertes a new menu to replace this one with, reselecting any
